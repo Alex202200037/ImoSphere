@@ -1,0 +1,109 @@
+html {
+  font-size: 14px;
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  background-color: #0d0d0d;
+  width: 100%;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #111;
+  color: white;
+}
+
+.navbar a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+  background-color: #0d0d0d;
+  color: white;
+  position: relative;
+}
+
+.hero-content {
+  flex: 1;
+}
+
+.hero-image {
+  float: left;
+  width: 50%;
+}
+
+.hero-image img {
+  width: 100%;
+  height: auto;
+}
+
+.selo {
+  position: absolute;
+  top: 20%;
+  left: 47.7%;
+  z-index: 10;
+}
+
+.selo img {
+  width: 100px;
+  height: auto;
+}
+
+.buttons .btn {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.browse {
+  background-color: #7b5cf3;
+  color: white;
+}
+
+.learn-more {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+.stats {
+  margin-top: 20px;
+  display: flex;
+  gap: 30px;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  padding: 40px;
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.feature-box {
+  text-align: center;
+  padding: 20px;
+}
+
+.btn:focus, 
+.btn:active:focus, 
+.btn-link.nav-link:focus, 
+.form-control:focus, 
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
