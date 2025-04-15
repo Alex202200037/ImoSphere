@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/alexandremiguel/ImoSphere/ImoSphere.csproj",
+      "projectUniqueName": "/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/ImoSphere.csproj",
       "projectName": "ImoSphere",
-      "projectPath": "/Users/alexandremiguel/ImoSphere/ImoSphere.csproj",
+      "projectPath": "/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/ImoSphere.csproj",
       "packagesPath": "/Users/alexandremiguel/.nuget/packages/",
-      "outputPath": "/Users/alexandremiguel/ImoSphere/obj/",
+      "outputPath": "/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/alexandremiguel/.nuget/NuGet/NuGet.Config"

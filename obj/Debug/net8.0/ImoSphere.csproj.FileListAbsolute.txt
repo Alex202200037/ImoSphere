@@ -28,3 +28,34 @@
 /Users/alexandremiguel/ImoSphere/obj/Debug/net8.0/ImoSphere.pdb
 /Users/alexandremiguel/ImoSphere/obj/Debug/net8.0/ImoSphere.genruntimeconfig.cache
 /Users/alexandremiguel/ImoSphere/obj/Debug/net8.0/ref/ImoSphere.dll
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/bin/Debug/net8.0/appsettings.Development.json
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/bin/Debug/net8.0/appsettings.json
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/bin/Debug/net8.0/ImoSphere.staticwebassets.runtime.json
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/bin/Debug/net8.0/ImoSphere
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/bin/Debug/net8.0/ImoSphere.deps.json
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/bin/Debug/net8.0/ImoSphere.runtimeconfig.json
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/bin/Debug/net8.0/ImoSphere.dll
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/bin/Debug/net8.0/ImoSphere.pdb
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/ImoSphere.GeneratedMSBuildEditorConfig.editorconfig
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/ImoSphere.AssemblyInfoInputs.cache
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/ImoSphere.AssemblyInfo.cs
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/ImoSphere.csproj.CoreCompileInputs.cache
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/ImoSphere.MvcApplicationPartsAssemblyInfo.cache
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/ImoSphere.RazorAssemblyInfo.cache
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/ImoSphere.RazorAssemblyInfo.cs
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/ImoSphere.sourcelink.json
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/staticwebassets.build.json
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/staticwebassets.development.json
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/staticwebassets/msbuild.ImoSphere.Microsoft.AspNetCore.StaticWebAssets.props
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/staticwebassets/msbuild.build.ImoSphere.props
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.ImoSphere.props
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.ImoSphere.props
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/staticwebassets.pack.json
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/scopedcss/bundle/ImoSphere.styles.css
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/scopedcss/projectbundle/ImoSphere.bundle.scp.css
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/ImoSphere.dll
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/refint/ImoSphere.dll
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/ImoSphere.pdb
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/ImoSphere.genruntimeconfig.cache
+/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/Debug/net8.0/ref/ImoSphere.dll

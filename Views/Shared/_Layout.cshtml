@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="~/ImoSphere.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <!-- Header Personalizado -->
     <header class="navbar">
         <div class="logo">🏙️ ImoSphere</div>
         <nav>
@@ -21,21 +20,18 @@
         </nav>
     </header>
 
-    <!-- Corpo da página -->
     <div class="container">
         <main role="main" class="pb-3">
-            @RenderBody()  <!-- Aqui o conteúdo da página será inserido -->
+            @RenderBody()
         </main>
     </div>
 
-    <!-- Footer Personalizado -->
     <footer class="footer">
         <div class="container">
             &copy; 2025 - ImoSphere - <a href="@Url.Action("Privacy", "Home")">Privacy</a>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
