@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/ImoSphere.csproj": {}
+    "/Users/max/IPS/PV/ImoSphere/ImoSphere.csproj": {}
   },
   "projects": {
-    "/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/ImoSphere.csproj": {
+    "/Users/max/IPS/PV/ImoSphere/ImoSphere.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/ImoSphere.csproj",
+        "projectUniqueName": "/Users/max/IPS/PV/ImoSphere/ImoSphere.csproj",
         "projectName": "ImoSphere",
-        "projectPath": "/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/ImoSphere.csproj",
-        "packagesPath": "/Users/alexandremiguel/.nuget/packages/",
-        "outputPath": "/Users/alexandremiguel/Documents/Documents - MacBook Pro de Alexandre/GitRepositorios/ImoSphere/obj/",
+        "projectPath": "/Users/max/IPS/PV/ImoSphere/ImoSphere.csproj",
+        "packagesPath": "/Users/max/.nuget/packages/",
+        "outputPath": "/Users/max/IPS/PV/ImoSphere/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/alexandremiguel/.nuget/NuGet/NuGet.Config"
+          "/Users/max/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -61,7 +61,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.402/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
