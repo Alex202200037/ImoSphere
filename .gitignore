@@ -2,54 +2,108 @@
 bin/
 obj/
 
-# User-specific files
+# ================================
+# Sistema operativo
+# ================================
+# MacOS hidden files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+
+# ================================
+# Diretórios de build .NET
+# ================================
+**/bin/
+**/obj/
+
+# Arquivos de configuração de usuário / IDE
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
 
-# Logs
-*.log
+# Se usar Visual Studio
+.vs/
 
-# Visual Studio Code
-.vscode/
-*.code-workspace
+# ================================
+# VS Code
+# ================================
+.vscode/*
+!.vscode/settings.json      # (se quiser partilhar convenções de formatação)
+!.vscode/extensions.json    # (se quiser fixar extensões recomendadas)
 
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Dependency directories
+# ================================
+# Pacotes e dependências
+# ================================
+# NPM / Node.js (Angular, tooling)
 node_modules/
-wwwroot/lib/
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
-# Publish output
+# ================================
+# Artifacts de publicação
+# ================================
 publish/
-*.publishsettings
+wwwroot/dist/
+dist/                        # output de builds front‑end
 
-# Environment files
+# ================================
+# Arquivos de configuração sensíveis
+# ================================
+# Variáveis de ambiente
 .env
-.env.*
+.env.*.local
+secrets.json
+appsettings.*.Development.json
+appsettings.*.Local.json
 
-# Rider IDE
+# Certificados e chaves privadas
+*.pfx
+*.key
+*.cer
+
+# ================================
+# Logs, caches e db temporárias
+# ================================
+*.log
+logs/
+*.cache
+*.sqlite
+*.db
+
+# ================================
+# Docker
+# ================================
+docker-compose.override.yml
+**/docker-compose.*.yml       # se contiver segredos
+**/data/                      # volumes mapeados
+
+# ================================
+# Ferramentas comuns
+# ================================
+# Rider / JetBrains
 .idea/
-*.iml
 
-# Resharper
-_ReSharper*/
-*.DotSettings.user
+# History plugins
+.history/
 
-# Temporary files
-*.tmp
-*.temp
-*.bak
-*.swp
-*.swo
-*.orig
+# ================================
+# Outros
+# ================================
+# Arquivos de sistema de backup
+*~ 
+.~*
 
-# Razor specific
-*.g.cshtml.cs
+# Debugger temp files
+*.pid
+*.seed
 
-# Miscellaneous
-.qodo
-/obj
+# Coverage
+coverage/
+*.coverdata
+*.coverage

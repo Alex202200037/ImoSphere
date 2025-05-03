@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ImoSphere")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9ec17b8652e152557e91a5fa18b8967de8c5cfdd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d504a5fd336c3b43f716b5408169936b1e92e4d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("ImoSphere")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ImoSphere")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
