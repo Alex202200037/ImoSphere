@@ -2,9 +2,27 @@
     ViewData["Title"] = "Contact Us";
 }
 
-<section class="contact-us">
+<div class="contact-us">
     <h1>Contact Us</h1>
     <p>If you have any questions or need more information, feel free to reach out to us!</p>
+    <section class="service-list" style="margin: 10px 0">
+        <div class="service-item">
+            <img src="~/images/contact1.png" alt="Email" class="-icon" />
+            <h5>info@ImoSphere.com</h5>
+        </div>
+        <div class="service-item">
+            <img src="~/images/contact2.png" alt="Phone" class="service-icon" />
+            <h5>+1 (123) 456-7890</h5>
+        </div>
+        <div class="service-item">
+            <img src="~/images/contact3.png" alt="Location" class="service-icon" />
+            <h5>Main Headquarters</h5>
+        </div>
+        <div class="service-item">
+            <img src="~/images/contact4.png" alt="Social" class="service-icon" />
+            <h5>Social Media</h5>
+        </div>
+    </section>
 
     <form asp-action="SubmitContactForm" method="post" class="contact-form">
         <div class="form-group">
@@ -24,4 +42,4 @@
 
         <button type="submit" class="btn btn-primary">Send Message</button>
     </form>
-</section>
+</div>

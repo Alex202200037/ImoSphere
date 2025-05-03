@@ -21,6 +21,54 @@
       "PackagePath": "staticwebassets/images/Selo.png"
     },
     {
+      "Id": "/Users/max/IPS/PV/ImoSphere/wwwroot/images/contact1.png",
+      "PackagePath": "staticwebassets/images/contact1.png"
+    },
+    {
+      "Id": "/Users/max/IPS/PV/ImoSphere/wwwroot/images/contact2.png",
+      "PackagePath": "staticwebassets/images/contact2.png"
+    },
+    {
+      "Id": "/Users/max/IPS/PV/ImoSphere/wwwroot/images/contact3.png",
+      "PackagePath": "staticwebassets/images/contact3.png"
+    },
+    {
+      "Id": "/Users/max/IPS/PV/ImoSphere/wwwroot/images/contact4.png",
+      "PackagePath": "staticwebassets/images/contact4.png"
+    },
+    {
+      "Id": "/Users/max/IPS/PV/ImoSphere/wwwroot/images/moradia1.jpg",
+      "PackagePath": "staticwebassets/images/moradia1.jpg"
+    },
+    {
+      "Id": "/Users/max/IPS/PV/ImoSphere/wwwroot/images/moradia2.jpg",
+      "PackagePath": "staticwebassets/images/moradia2.jpg"
+    },
+    {
+      "Id": "/Users/max/IPS/PV/ImoSphere/wwwroot/images/moradia3.jpg",
+      "PackagePath": "staticwebassets/images/moradia3.jpg"
+    },
+    {
+      "Id": "/Users/max/IPS/PV/ImoSphere/wwwroot/images/our-journey.png",
+      "PackagePath": "staticwebassets/images/our-journey.png"
+    },
+    {
+      "Id": "/Users/max/IPS/PV/ImoSphere/wwwroot/images/service1.png",
+      "PackagePath": "staticwebassets/images/service1.png"
+    },
+    {
+      "Id": "/Users/max/IPS/PV/ImoSphere/wwwroot/images/service2.png",
+      "PackagePath": "staticwebassets/images/service2.png"
+    },
+    {
+      "Id": "/Users/max/IPS/PV/ImoSphere/wwwroot/images/service3.png",
+      "PackagePath": "staticwebassets/images/service3.png"
+    },
+    {
+      "Id": "/Users/max/IPS/PV/ImoSphere/wwwroot/images/service4.png",
+      "PackagePath": "staticwebassets/images/service4.png"
+    },
+    {
       "Id": "/Users/max/IPS/PV/ImoSphere/wwwroot/js/site.js",
       "PackagePath": "staticwebassets/js/site.js"
     },

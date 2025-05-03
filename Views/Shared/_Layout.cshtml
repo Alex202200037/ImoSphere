@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,15 +9,16 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ImoSphere.styles.css" asp-append-version="true" />
 </head>
+
 <body>
     <header class="navbar">
         <div class="logo">🏙️ ImoSphere</div>
         <nav>
-            <a href="@Url.Action("Index", "Home")" style="color: var(--secondary-color);">Home</a>
-            <a href="@Url.Action("AboutUs", "Home")" style="color: var(--secondary-color)"">About Us</a>
-            <a href="@Url.Action("Properties", "Home")" style="color: var(--secondary-color)">Properties</a>
-            <a href="@Url.Action("Services", "Home")" style="color: var(--secondary-color)">Services</a>
-            <a href="@Url.Action("ContactUs", "Home")" class="contact-btn" style="color: var(--secondary-color)">Contact Us</a>
+            <a href="@Url.Action("Index", "Home")">Home</a>
+            <a href="@Url.Action("AboutUs", "Home")">About Us</a>
+            <a href="@Url.Action("Properties", "Home")">Properties</a>
+            <a href="@Url.Action("Services", "Home")">Services</a>
+            <a href="@Url.Action("ContactUs", "Home")" class="contact-btn">Contact Us</a>
         </nav>
     </header>
 
@@ -28,7 +30,7 @@
 
     <footer class="footer">
         <div class="container">
-            &copy; 2025 - ImoSphere - <a href="@Url.Action("Privacy", "Home")" style="color: var(--secondary-color)">Privacy</a>
+            &copy; 2025 - ImoSphere - <a href="@Url.Action("Privacy", "Home")">Privacy</a>
         </div>
     </footer>
 
@@ -37,4 +39,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
