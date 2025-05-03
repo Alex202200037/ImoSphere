@@ -107,3 +107,5 @@ docker-compose.override.yml
 coverage/
 *.coverdata
 *.coverage
+/bin/Debug/net8.0
+/bin/Debug
