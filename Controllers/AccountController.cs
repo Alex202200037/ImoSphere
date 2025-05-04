@@ -26,32 +26,32 @@ namespace ImoSphere.Controllers
             return View();
         }
 
-[HttpPost]
-[AllowAnonymous]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> Register(RegisterViewModel model)
-{
-    if (ModelState.IsValid)
-    {
-        var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-        var result = await _userManager.CreateAsync(user, model.Password);
-        
-        if (result.Succeeded)
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            await _signInManager.SignInAsync(user, isPersistent: false);
-            return RedirectToAction("Index", "Home");
-        }
-        else
-        {
-            foreach (var error in result.Errors)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-        }
-    }
+                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+                var result = await _userManager.CreateAsync(user, model.Password);
 
-    return View(model);
-}
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+
+            return View(model);
+        }
 
         // Ação para exibir o formulário de login
         [HttpGet]
@@ -62,37 +62,37 @@ public async Task<IActionResult> Register(RegisterViewModel model)
             return View();
         }
 
-[HttpPost]
-[AllowAnonymous]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
-{
-    ViewData["ReturnUrl"] = returnUrl;
-
-    if (ModelState.IsValid)
-    {
-        var user = await _userManager.FindByEmailAsync(model.Email); 
-        if (user == null) 
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
-            ModelState.AddModelError(string.Empty, "Invalid login attempt. User not found.");
-        }
-        else
-        {
-            var result = await _signInManager.PasswordSignInAsync(
-                model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            ViewData["ReturnUrl"] = returnUrl;
 
-            if (result.Succeeded)
+            if (ModelState.IsValid)
             {
-                return RedirectToLocal(returnUrl); 
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt. User not found.");
+                }
+                else
+                {
+                    var result = await _signInManager.PasswordSignInAsync(
+                        model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt. Incorrect password.");
+                    }
+                }
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt. Incorrect password.");
-            }
+            return View(model);
         }
-    }
-    return View(model);
-}
 
 
 

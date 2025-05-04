@@ -1,6 +1,6 @@
-using ImoSphere.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ImoSphere.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
