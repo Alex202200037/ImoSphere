@@ -1,11 +1,5 @@
 @model IEnumerable<ImoSphere.Models.Property>
 
-@{
-    ViewData["Title"] = "Properties";
-    var isAuthenticated = User.Identity.IsAuthenticated;
-    var isSeller = isAuthenticated && User.Identity.Name.EndsWith("@seller.com");
-}
-
 <section class="properties">
     <h1 class="text-center">Our Properties</h1>
     <p class="text-center">Explore the wide variety of properties available with ImoSphere. Find your dream home today!</p>
@@ -16,32 +10,22 @@
             <div class="property-item">
                 <img src="@property.ImageUrl" alt="@property.Name" class="property-image" />
                 <h2>@property.Name</h2>
-                <ul class="property-features">
-                    <li>@property.Bedrooms Bedrooms</li>
-                    <li>@property.Bathrooms Bathrooms</li>
-                    <li>@property.Area sq ft</li>
-                    <li>@property.Location</li>
-                    <li>Built in @property.YearBuilt</li>
-                </ul>
                 <p>@property.Description</p>
-                <p><strong>Price:</strong> @property.Price.ToString("C")</p>
+                <p><strong>Price:</strong> $@property.Price</p>
 
-                @if (isAuthenticated) 
+                @if (ViewBag.IsAuthenticated) 
                 {
-                    if (isSeller)
+                    if (ViewBag.IsSeller)
                     {
-                        <!-- Exibe o botão de "Edit Property" para vendedores -->
-                        <a href="@Url.Action("Edit", "Properties", new { id = property.Id })" class="btn btn-primary">Edit Property</a>
+                        <a href="@Url.Action("Edit", "Properties", new { id = property.Id })" class="btn btn-primary">Edit Property</a> 
                     }
                     else
                     {
-                        <!-- Exibe o botão de "View Details" para compradores -->
                         <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">View Details</a>
                     }
                 }
                 else
                 {
-                    <!-- Exibe o botão de "View Details" para não autenticados -->
                     <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">View Details</a>
                 }
             </div>

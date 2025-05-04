@@ -1,32 +1,40 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ImoSphere.Data; // <- importante!
+using System.Threading.Tasks;
 
 public class HomeController : Controller
 {
+    private readonly ApplicationDbContext _context;
+
+    // INJEÇÃO DE DEPENDÊNCIA: recebe o contexto pelo construtor
+    public HomeController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
 
     public IActionResult Index()
     {
         return View();
     }
 
-    // Página "About Us"
     public IActionResult AboutUs()
     {
         return View();
     }
 
-    // Página "Properties"
-    public IActionResult Properties()
+    // PROPERTIES: busca da BD
+    public async Task<IActionResult> Properties()
     {
-        return View();
+        var properties = await _context.Properties.ToListAsync();
+        return View(properties); // <- envia para a view
     }
 
-    // Página "Services"
     public IActionResult Services()
     {
         return View();
     }
 
-    // Página "Contact Us"
     public IActionResult ContactUs()
     {
         return View();

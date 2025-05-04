@@ -1,0 +1,35 @@
+@model ImoSphere.Models.Property
+
+@{
+    ViewData["Title"] = "Property Details";
+}
+@{
+    bool isSeller = ViewBag.IsSeller ?? false;
+}
+
+@if (isSeller)
+{
+    <a class="btn btn-primary" href="/Properties/Edit/@Model.Id">Edit Property</a>
+}
+else
+{
+    <p><strong>Location:</strong> @Model.Location</p>
+    <p><strong>Price:</strong> @Model.Price</p>
+    <!-- Add more public property details here -->
+}
+
+
+<section class="property-details">
+    <h1>@Model.Name</h1>
+    <img src="@Model.ImageUrl" alt="@Model.Name" class="property-image" />
+    <p><strong>Price:</strong> @Model.Price</p>
+    <p><strong>Description:</strong> @Model.Description</p>
+    <h3>Features</h3>
+    <ul>
+        <li>Bedrooms: @Model.Bedrooms</li>
+        <li>Bathrooms: @Model.Bathrooms</li>
+        <li>Area: @Model.Area m²</li>
+        <li>Location: @Model.Location</li>
+        <li>Year Built: @Model.YearBuilt</li>
+    </ul>
+</section>

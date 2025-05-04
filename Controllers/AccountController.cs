@@ -8,10 +8,9 @@ namespace ImoSphere.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager; // Defina explicitamente o tipo 'IdentityUser'
-        private readonly SignInManager<IdentityUser> _signInManager; // Defina explicitamente o tipo 'IdentityUser'
+        private readonly UserManager<IdentityUser> _userManager; 
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        // Construtor onde você injeta os serviços necessários
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
@@ -38,8 +37,7 @@ namespace ImoSphere.Controllers
 
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "Account");  // Redireciona para o login após o registro
                 }
                 else
                 {
@@ -49,7 +47,6 @@ namespace ImoSphere.Controllers
                     }
                 }
             }
-
             return View(model);
         }
 
@@ -62,47 +59,53 @@ namespace ImoSphere.Controllers
             return View();
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
-        {
-            ViewData["ReturnUrl"] = returnUrl;
+[HttpPost]
+[AllowAnonymous]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+{
+    ViewData["ReturnUrl"] = returnUrl;
 
-            if (ModelState.IsValid)
+    if (ModelState.IsValid)
+    {
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user == null)
+        {
+            ModelState.AddModelError(string.Empty, "Invalid login attempt. User not found.");
+        }
+        else
+        {
+            var result = await _signInManager.PasswordSignInAsync(
+                user, model.Password, model.RememberMe, lockoutOnFailure: false);
+
+            if (result.Succeeded)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user == null)
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt. User not found.");
-                }
-                else
-                {
-                    var result = await _signInManager.PasswordSignInAsync(
-                        model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-
-                    if (result.Succeeded)
-                    {
-                        return RedirectToLocal(returnUrl);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Invalid login attempt. Incorrect password.");
-                    }
-                }
+                return !string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)
+                    ? Redirect(returnUrl)
+                    : RedirectToAction("Index", "Home");
             }
-            return View(model);
+            else
+            {
+                await _signInManager.SignOutAsync();
+                ModelState.AddModelError(string.Empty, "Invalid login attempt. Incorrect password.");
+            }
         }
+    }
+
+    return View(model);
+}
 
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
-        }
+        // Ação para fazer logout
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Logout()
+{
+    await _signInManager.SignOutAsync();  // Realiza o logout
+    return RedirectToAction("Index", "Home");  // Redireciona para a página inicial após o logout
+}
+
 
         private IActionResult RedirectToLocal(string returnUrl)
         {

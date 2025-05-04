@@ -19,7 +19,19 @@
             <a href="@Url.Action("Properties", "Home")">Properties</a>
             <a href="@Url.Action("Services", "Home")">Services</a>
             <a href="@Url.Action("ContactUs", "Home")" class="contact-btn">Contact Us</a>
-            <a href="@Url.Action("Login", "Account")" class="login-btn">Login</a>
+            
+@if (User.Identity.IsAuthenticated) 
+{
+    <form action="@Url.Action("Logout", "Account")" method="post" style="display:inline;">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="login-btn">Logout</button>
+    </form>
+}
+else
+{
+    <a href="@Url.Action("Login", "Account")" class="login-btn">Login</a>
+}
+
         </nav>
     </header>
 
