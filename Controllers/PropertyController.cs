@@ -63,68 +63,68 @@ namespace ImoSphere.Controllers
             return View(property);
         }
 
-// POST: Properties/Edit/5
-[HttpPost]
-[ValidateAntiForgeryToken]
-[Authorize]
-public async Task<IActionResult> Edit(int id, Property property)
-{
-    if (id != property.Id)
-    {
-        return NotFound();
-    }
-
-    var isSeller = await IsUserSellerAsync();
-    if (!isSeller)
-    {
-        return RedirectToAction("Index", "Properties");
-    }
-
-    if (ModelState.IsValid)
-    {
-        try
+        // POST: Properties/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> Edit(int id, Property property)
         {
-            _context.Update(property);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!await _context.Properties.AnyAsync(e => e.Id == property.Id))
+            if (id != property.Id)
             {
                 return NotFound();
             }
-            else
+
+            var isSeller = await IsUserSellerAsync();
+            if (!isSeller)
             {
-                throw;
+                return RedirectToAction("Index", "Properties");
             }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(property);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!await _context.Properties.AnyAsync(e => e.Id == property.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+
+            return View(property);
+        }
+
+        // GET: Properties/Edit/5
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var property = await _context.Properties.FindAsync(id);
+            if (property == null)
+            {
+                return NotFound();
+            }
+
+            var isSeller = await IsUserSellerAsync();
+            if (!isSeller)
+            {
+                return RedirectToAction("Index", "Properties");
+            }
+
+            return View(property);
         }
     }
-
-    return View(property);
 }
-
-// GET: Properties/Edit/5
-[HttpGet]
-[Authorize]
-public async Task<IActionResult> Edit(int id)
-{
-    var property = await _context.Properties.FindAsync(id);
-    if (property == null)
-    {
-        return NotFound();
-    }
-
-    var isSeller = await IsUserSellerAsync();
-    if (!isSeller)
-    {
-        return RedirectToAction("Index", "Properties");
-    }
-
-    return View(property);
-}
-}
-    }
 
 
 

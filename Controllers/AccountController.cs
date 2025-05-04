@@ -8,7 +8,7 @@ namespace ImoSphere.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager; 
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
@@ -59,52 +59,52 @@ namespace ImoSphere.Controllers
             return View();
         }
 
-[HttpPost]
-[AllowAnonymous]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
-{
-    ViewData["ReturnUrl"] = returnUrl;
-
-    if (ModelState.IsValid)
-    {
-        var user = await _userManager.FindByEmailAsync(model.Email);
-        if (user == null)
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
-            ModelState.AddModelError(string.Empty, "Invalid login attempt. User not found.");
-        }
-        else
-        {
-            var result = await _signInManager.PasswordSignInAsync(
-                user, model.Password, model.RememberMe, lockoutOnFailure: false);
+            ViewData["ReturnUrl"] = returnUrl;
 
-            if (result.Succeeded)
+            if (ModelState.IsValid)
             {
-                return !string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)
-                    ? Redirect(returnUrl)
-                    : RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                await _signInManager.SignOutAsync();
-                ModelState.AddModelError(string.Empty, "Invalid login attempt. Incorrect password.");
-            }
-        }
-    }
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt. User not found.");
+                }
+                else
+                {
+                    var result = await _signInManager.PasswordSignInAsync(
+                        user, model.Password, model.RememberMe, lockoutOnFailure: false);
 
-    return View(model);
-}
+                    if (result.Succeeded)
+                    {
+                        return !string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)
+                            ? Redirect(returnUrl)
+                            : RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        await _signInManager.SignOutAsync();
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt. Incorrect password.");
+                    }
+                }
+            }
+
+            return View(model);
+        }
 
 
 
         // Ação para fazer logout
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> Logout()
-{
-    await _signInManager.SignOutAsync();  // Realiza o logout
-    return RedirectToAction("Index", "Home");  // Redireciona para a página inicial após o logout
-}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();  // Realiza o logout
+            return RedirectToAction("Index", "Home");  // Redireciona para a página inicial após o logout
+        }
 
 
         private IActionResult RedirectToLocal(string returnUrl)

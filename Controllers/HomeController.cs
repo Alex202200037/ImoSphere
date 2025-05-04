@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ImoSphere.Data; // <- importante!
+using ImoSphere.Data;
 using System.Threading.Tasks;
 
 public class HomeController : Controller
