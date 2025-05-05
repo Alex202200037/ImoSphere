@@ -1,20 +1,17 @@
 @model ImoSphere.Models.Property
 
 @{
-    ViewData["Title"] = "Edit Property";
+    ViewData["Title"] = "Add New Property";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit Property</h1>
-
 <head>
-<link rel="stylesheet" type="text/css" href="~/wwwroot/css/style.css" />
-
+    <link rel="stylesheet" type="text/css" href="~/css/style.css" />
 </head>
 
+<h1>Add New Property</h1>
 
-<form asp-action="Edit" method="post" class="contact-form" id="propertyForm">
-    <input type="hidden" asp-for="Id" />
-
+<form asp-action="Create" method="post">
     <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" />
@@ -54,15 +51,14 @@
         <label asp-for="Area"></label>
         <input asp-for="Area" class="form-control" />
     </div>
-
+    
     <div>
         <label asp-for="ImageUrl"></label>
         <input asp-for="ImageUrl" class="form-control" />
     </div>
 
-    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <button type="submit" class="btn btn-success">Save Property</button>
 </form>
-
 
 @if (TempData["SuccessMessage"] != null)
 {
@@ -83,4 +79,3 @@
         }, 2500);
     </script>
 }
-

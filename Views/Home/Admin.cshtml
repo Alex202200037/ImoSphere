@@ -1,0 +1,64 @@
+@* @using Microsoft.AspNetCore.Identity
+@using ImoSphere.Data
+@inject UserManager<IdentityUser> _userManager
+
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h1>Admin Dashboard</h1>
+
+<h3>Properties</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Location</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var property in Model)
+        {
+            <tr>
+                <td>@property.Name</td>
+                <td>@property.Price</td>
+                <td>@property.Location</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Properties", new { id = property.Id })" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", "Properties", new { id = property.Id })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Users</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in ViewData["Users"] as List<IdentityUser>)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>
+                    @foreach (var role in await _userManager.GetRolesAsync(user))
+                    {
+                        @role
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("ChangePassword", "Home", new { id = user.Id })" class="btn btn-info">Change Password</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> *@

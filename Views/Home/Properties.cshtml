@@ -1,5 +1,3 @@
-@model IEnumerable<ImoSphere.Models.Property>
-
 @{
     ViewData["Title"] = "Properties";
     var isAuthenticated = User.Identity.IsAuthenticated;
@@ -9,6 +7,14 @@
 <section class="properties">
     <h1 class="text-center">Our Properties</h1>
     <p style="text-align: center;">Explore the wide variety of properties available with ImoSphere. Find your dream home today!</p>
+
+
+    @if (isSeller)
+    {
+        <div class="text-center mb-3">
+            <a href="@Url.Action("Create", "Properties")" class="btn btn-success">➕ Add New Property</a>
+        </div>
+    }
 
     <div class="property-list">
         @foreach (var property in Model)
@@ -48,3 +54,4 @@
         }
     </div>
 </section>
+

@@ -63,46 +63,47 @@ namespace ImoSphere.Controllers
             return View(property);
         }
 
-        // POST: Properties/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> Edit(int id, Property property)
+[HttpPost]
+[ValidateAntiForgeryToken]
+[Authorize]
+public async Task<IActionResult> Edit(int id, Property property)
+{
+    if (id != property.Id)
+    {
+        return NotFound();
+    }
+
+    var isSeller = await IsUserSellerAsync();
+    if (!isSeller)
+    {
+        return RedirectToAction("Index", "Properties");
+    }
+
+    if (ModelState.IsValid)
+    {
+        try
         {
-            if (id != property.Id)
+            _context.Update(property);
+            await _context.SaveChangesAsync();
+            // Adiciona uma mensagem de sucesso para exibir no popup
+            TempData["SuccessMessage"] = "Changes saved successfully!";
+            return RedirectToAction(nameof(Edit), new { id = property.Id });  // Redireciona de volta para a página de edição
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!await _context.Properties.AnyAsync(e => e.Id == property.Id))
             {
                 return NotFound();
             }
-
-            var isSeller = await IsUserSellerAsync();
-            if (!isSeller)
+            else
             {
-                return RedirectToAction("Index", "Properties");
+                throw;
             }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(property);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!await _context.Properties.AnyAsync(e => e.Id == property.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-            }
-
-            return View(property);
         }
+    }
+
+    return View(property);
+}
 
         // GET: Properties/Edit/5
         [HttpGet]
@@ -118,11 +119,48 @@ namespace ImoSphere.Controllers
             var isSeller = await IsUserSellerAsync();
             if (!isSeller)
             {
-                return RedirectToAction("Index", "Properties");
+               return RedirectToAction("Properties", "Home");
             }
 
             return View(property);
         }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Create()
+        {
+            var isSeller = await IsUserSellerAsync();
+            if (!isSeller)
+            {
+                return RedirectToAction("Properties", "Home");
+            }
+
+            return View();
+        }
+
+// POST: Properties/Create
+[HttpPost]
+[ValidateAntiForgeryToken]
+[Authorize]
+public async Task<IActionResult> Create(Property property)
+{
+    // Verifica se o usuário é um vendedor
+    var isSeller = await IsUserSellerAsync();
+    if (!isSeller)
+    {
+        return RedirectToAction("Properties", "Home");
+    }
+
+    if (ModelState.IsValid)
+    {
+        _context.Update(property);
+            await _context.SaveChangesAsync();
+            // Adiciona uma mensagem de sucesso para exibir no popup
+            TempData["SuccessMessage"] = "Changes saved successfully!";
+            return RedirectToAction(nameof(Edit), new { id = property.Id });  // Redireciona de volta para a página de edição
+    }
+
+    return View(property);
+}
     }
 }
 

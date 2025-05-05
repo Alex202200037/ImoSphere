@@ -414,4 +414,37 @@ footer a:hover {
     grid-template-columns: repeat(3, 1fr);
     width: 70%;
   }
+
+  .popup-overlay {
+      width: 40%; height: 10%;
+      justify-content: center;
+      align-items: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+
+  .popup-content {
+      background-color: var(--secondary-color);
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      position: relative;
+  }
+
+  .spinner {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 20px auto;
+      border: 5px solid #ccc;
+      border-top: 5px solid #ff0000;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
 }

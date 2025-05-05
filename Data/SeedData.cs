@@ -56,7 +56,6 @@ namespace ImoSphere.Data
             }
             else
             {
-                // Se você quiser adicionar logs para garantir que o seeding não foi feito novamente:
                 Console.WriteLine("Properties já foram adicionadas à base de dados.");
             }
         }
