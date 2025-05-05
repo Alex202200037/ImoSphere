@@ -32,10 +32,10 @@
 
         <div>
             <p id="price"><strong>Price:</strong> @property.Price.ToString("C")</p>
-            <div class="button-group">
+            <div class="button-group d-flex justify-content-center gap-2">
                 @if (isAuthenticated)
                 {
-                    <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">View Details</a>
+                    <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">Details</a>
 
                     @if (User.IsInRole("Admin") || User.IsInRole("Seller"))
                     {

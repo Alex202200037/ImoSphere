@@ -9,9 +9,9 @@
     <link rel="stylesheet" type="text/css" href="~/css/style.css" />
 </head>
 
-<h1>Add New Property</h1>
+<h1 class="text-center">Add New Property</h1>
 
-<form asp-action="Create" method="post">
+<form asp-action="Create" method="post" class="contact-form">
     <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" />
@@ -51,13 +51,16 @@
         <label asp-for="Area"></label>
         <input asp-for="Area" class="form-control" />
     </div>
-    
+
     <div>
         <label asp-for="ImageUrl"></label>
         <input asp-for="ImageUrl" class="form-control" />
     </div>
 
-    <button type="submit" class="btn btn-success">Save Property</button>
+    <div class="d-flex justify-content-between w-100">
+        <button type="submit" class="btn btn-secondary w-50 me-2">Save Property</button>
+        <a asp-controller="Home" asp-action="Properties" class="btn btn-secondary w-50">Cancel</a>
+    </div>
 </form>
 
 @if (TempData["SuccessMessage"] != null)
@@ -72,7 +75,7 @@
     <script>
         // Exibe o popup de sucesso com um pequeno atraso
         document.getElementById("successPopup").style.display = "block";
-        
+
         setTimeout(function () {
             document.getElementById("successPopup").style.display = "none";
             window.location.href = '@Url.Action("Properties", "Home")'; // Redireciona após 2.5 segundos
