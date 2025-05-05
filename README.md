@@ -29,6 +29,10 @@
         }
     }
     ```
+3. Ensure the MS EFC is installed:
+    ```
+    dotnet add package Microsoft.EntityFrameworkCore
+    ```
 
 ### Running the Application
 1. Build the project:
@@ -43,6 +47,7 @@ or just:
     ```
     dotnet watch
     ```
+
 ### Users:
 1. Admin user:
     - **Email**: admin@imosphere.com
