@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ImoSphere.Data;
 using ImoSphere.Models;
+using ImoSphere.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 // Configurar os controladores com views
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
+
 
 var app = builder.Build();
 
@@ -38,6 +41,8 @@ app.UseAuthorization();   // E também autorização
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapHub<ChatHub>("/chatHub");
 
 // Seeding de dados
 using (var scope = app.Services.CreateScope())

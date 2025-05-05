@@ -24,6 +24,13 @@
         </div>
     </section>
 
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-message">
+            <strong>Success! </strong>@TempData["SuccessMessage"]
+        </div>
+    }
+
     <form asp-action="SubmitContactForm" method="post" class="contact-form">
         <div class="form-group">
             <label for="Name">Name</label>
@@ -43,3 +50,20 @@
         <button type="submit" class="btn btn-primary">Send Message</button>
     </form>
 </div>
+
+@section Scripts {
+    <script>
+        // Quando a página carregar
+        window.onload = function() {
+            var successMessage = document.getElementById('success-message'); // Seleciona a mensagem de sucesso
+
+            if (successMessage) {
+                // Depois de 2500ms, a mensagem de sucesso desaparecerá
+                setTimeout(function() {
+                    successMessage.classList.remove('show'); // Remove a classe 'show' para esconder
+                    successMessage.classList.add('fade'); // Adiciona a classe 'fade' para ocultar gradualmente
+                }, 2500); // 2500ms = 2,5 segundos
+            }
+        };
+    </script>
+}

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ImoSphere.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace ImoSphere.Data
 {
@@ -54,9 +55,74 @@ namespace ImoSphere.Data
 
                 await context.SaveChangesAsync();
             }
-            else
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            // Seed roles
+            var roles = new[] { "Admin", "Seller", "User" };
+            foreach (var role in roles)
             {
-                Console.WriteLine("Properties já foram adicionadas à base de dados.");
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
+
+            // Seed admin user
+            var adminEmail = "admin@imosphere.com";
+            var adminUser = await userManager.FindByEmailAsync(adminEmail);
+            if (adminUser == null)
+            {
+                adminUser = new IdentityUser
+                {
+                    UserName = "AdminUser", // Set a username for the admin
+                    Email = adminEmail,
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(adminUser, "Admin@123");
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
+            }
+
+            // Seed seller user
+            var sellerEmail = "seller@imosphere.com";
+            var sellerUser = await userManager.FindByEmailAsync(sellerEmail);
+            if (sellerUser == null)
+            {
+                sellerUser = new IdentityUser
+                {
+                    UserName = "SellerUser", // Set a username for the seller
+                    Email = sellerEmail,
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(sellerUser, "Seller@123");
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(sellerUser, "Seller");
+                }
+            }
+
+            // Seed regular user
+            var userEmail = "user@imosphere.com";
+            var regularUser = await userManager.FindByEmailAsync(userEmail);
+            if (regularUser == null)
+            {
+                regularUser = new IdentityUser
+                {
+                    UserName = "RegularUser", // Set a username for the regular user
+                    Email = userEmail,
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(regularUser, "User@123");
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(regularUser, "User");
+                }
             }
         }
     }
