@@ -3,7 +3,17 @@
 ## User Manual for ImoSphere
 
 ### Introduction
+O projeto ImoSphere consiste numa plataforma web desenvolvida com o objetivo de facilitar a mediação imobiliária digital, permitindo a navegação, visualização e gestão de propriedades por diferentes tipos de utilizadores, de acordo com os respetivos níveis de acesso. A aplicação foi desenvolvida em ambiente ASP.NET MVC com integração de base de dados SQLite para autenticação e gestão de conteúdos.
 
+A plataforma distingue-se por oferecer experiências adaptadas a quatro tipos de utilizadores:
+
+Utilizador Não Registado (Convidado): Pode explorar o site e aceder a páginas informativas como a página inicial, “Sobre Nós”, “Serviços”, “Contactos” e a listagem de propriedades. Contudo, não tem acesso aos detalhes completos das propriedades nem pode interagir com funcionalidades mais avançadas.
+Utilizador Registado (User): Após efetuar o registo e login, ganha acesso a funcionalidades adicionais, como o sistema de mensagens (simulado) com outros utilizadores, mantendo ainda acesso a todas as funcionalidades do convidado.
+Vendedor (Seller): Tem a possibilidade de criar, editar e gerir as suas propriedades, com validações e notificações de sucesso. Partilha com os utilizadores registados o acesso ao sistema de mensagens.
+Administrador (Admin): Possui acesso total à plataforma. Para além das funcionalidades dos Sellers, o Administrador pode gerir todos os utilizadores (criar, editar, eliminar) e controlar as mensagens enviadas através do formulário de contacto, incluindo marcar mensagens como lidas e eliminá-las. Tem ainda permissões para eliminar propriedades de qualquer utilizador.
+A interface foi concebida de forma intuitiva, com base em boas práticas de usabilidade, e com uma clara distinção entre as permissões de cada tipo de utilizador. A navegação é apoiada por menus consistentes, mensagens de validação e confirmação, bem como feedback visual sobre todas as ações realizadas.
+
+Este relatório detalha o comportamento da aplicação conforme o tipo de utilizador, suportado por capturas de ecrã das principais funcionalidades e páginas.
 
 ### Installation
 1. Clone the repository:
