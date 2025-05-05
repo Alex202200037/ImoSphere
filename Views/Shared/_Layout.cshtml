@@ -21,7 +21,14 @@
             <a href="@Url.Action("AboutUs", "Home")" class="contact-btn">About Us</a>
             <a href="@Url.Action("Properties", "Home")" class="contact-btn">Properties</a>
             <a href="@Url.Action("Services", "Home")" class="contact-btn">Services</a>
-            <a href="@Url.Action("ContactUs", "Home")" class="contact-btn">Contact Us</a>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <a href="@Url.Action("ViewMessages", "Home")" class="contact-btn">Messages</a>
+            }
+            else
+            {
+                <a href="@Url.Action("ContactUs", "Home")" class="contact-btn">Contact Us</a>
+            }
 
             @if (User.Identity.IsAuthenticated)
             {

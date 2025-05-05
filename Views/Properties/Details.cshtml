@@ -1,35 +1,48 @@
+<!-- filepath: /Users/max/IPS/PV/ImoSphere/Views/Properties/Details.cshtml -->
 @model ImoSphere.Models.Property
 
 @{
     ViewData["Title"] = "Property Details";
-}
-@{
     bool isSeller = ViewBag.IsSeller ?? false;
 }
 
-@if (isSeller)
-{
-    <a class="btn btn-primary" href="/Properties/Edit/@Model.Id">Edit Property</a>
-}
-else
-{
-    <p><strong>Location:</strong> @Model.Location</p>
-    <p><strong>Price:</strong> @Model.Price</p>
-    <!-- Add more public property details here -->
-}
+<section class="property-details container">
+    <div class="details-header">
+        <h1 class="text-center">@Model.Name</h1>
+    </div>
 
+    <div class="details-content">
+        <div class="details-info">
+            <h3>Description</h3>
+            <p>@Model.Description</p>
 
-<section class="property-details">
-    <h1>@Model.Name</h1>
-    <img src="@Model.ImageUrl" alt="@Model.Name" class="property-image" />
-    <p><strong>Price:</strong> @Model.Price</p>
-    <p><strong>Description:</strong> @Model.Description</p>
-    <h3>Features</h3>
-    <ul>
-        <li>Bedrooms: @Model.Bedrooms</li>
-        <li>Bathrooms: @Model.Bathrooms</li>
-        <li>Area: @Model.Area m²</li>
-        <li>Location: @Model.Location</li>
-        <li>Year Built: @Model.YearBuilt</li>
-    </ul>
+            <div class="details-meta">
+                <div class="meta-box">
+                    <p><strong>Location:</strong></p>
+                    <p>@Model.Location</p>
+                </div>
+                <div class="meta-box">
+                    <p><strong>Price:</strong></p>
+                    <p>@Model.Price.ToString("C")</p>
+                </div>
+            </div>
+
+            <div class="details-image">
+                <img src="@Model.ImageUrl" alt="@Model.Name" class="property-image" />
+            </div>
+
+            <h3>Features</h3>
+            <ul class="property-features">
+                <li><strong>Bedrooms:</strong> @Model.Bedrooms</li>
+                <li><strong>Bathrooms:</strong> @Model.Bathrooms</li>
+                <li><strong>Area:</strong> @Model.Area m²</li>
+                <li><strong>Year Built:</strong> @Model.YearBuilt</li>
+            </ul>
+
+            @if (isSeller)
+            {
+                <a class="btn btn-primary" href="/Properties/Edit/@Model.Id">Edit Property</a>
+            }
+        </div>
+    </div>
 </section>

@@ -15,7 +15,7 @@ namespace ImoSphere.Controllers
             _userManager = userManager;
         }
 
-        // Display all users
+        // Manage Users
         public async Task<IActionResult> Users()
         {
             var users = _userManager.Users.ToList();
@@ -32,6 +32,87 @@ namespace ImoSphere.Controllers
             }
 
             return View(userRoles);
+        }
+
+        // GET: Create Seller or Admin
+        [HttpGet]
+        [Route("Admin/CreateUser")] // Explicit route for the GET action
+        public IActionResult CreateUser()
+        {
+            return View();
+        }
+
+        // POST: Create Seller or Admin
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Admin/CreateUser")] // Explicit route for the POST action
+        public async Task<IActionResult> CreateUser(string email, string username, string role, string password)
+        {
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(role) || string.IsNullOrEmpty(password))
+            {
+                ModelState.AddModelError(string.Empty, "Email, username, role, and password are required.");
+                return View();
+            }
+
+            // Ensure the email contains -seller or -admin
+            if (role == "Seller" && !email.Contains("-seller"))
+            {
+                email = email.Replace("@", "-seller@");
+            }
+            else if (role == "Admin" && !email.Contains("-admin"))
+            {
+                email = email.Replace("@", "-admin@");
+            }
+
+            // Check if the email already exists
+            var existingUser = await _userManager.FindByEmailAsync(email);
+            if (existingUser != null)
+            {
+                ModelState.AddModelError(string.Empty, "A user with this email already exists.");
+                return View();
+            }
+
+            // Create the user
+            var user = new IdentityUser
+            {
+                UserName = username, // Assign the username
+                Email = email,
+                EmailConfirmed = true
+            };
+
+            var result = await _userManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                // Assign the role
+                var roleResult = await _userManager.AddToRoleAsync(user, role);
+                if (roleResult.Succeeded)
+                {
+                    TempData["SuccessMessage"] = $"{role} created successfully.";
+                    return RedirectToAction("Users");
+                }
+                else
+                {
+                    foreach (var error in roleResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            return View();
+        }
+
+        // Manage Properties (Admin can also manage properties)
+        public IActionResult ManageProperties()
+        {
+            return View();
         }
 
         // Display the Edit User form

@@ -55,7 +55,7 @@ namespace ImoSphere.Data
 
                 await context.SaveChangesAsync();
             }
-            
+
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
@@ -70,13 +70,13 @@ namespace ImoSphere.Data
             }
 
             // Seed admin user
-            var adminEmail = "admin@imosphere.com";
+            var adminEmail = "example-admin@imosphere.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)
             {
                 adminUser = new IdentityUser
                 {
-                    UserName = "AdminUser", // Set a username for the admin
+                    UserName = "AdminUser",
                     Email = adminEmail,
                     EmailConfirmed = true
                 };
@@ -89,13 +89,13 @@ namespace ImoSphere.Data
             }
 
             // Seed seller user
-            var sellerEmail = "seller@imosphere.com";
+            var sellerEmail = "example-seller@imosphere.com";
             var sellerUser = await userManager.FindByEmailAsync(sellerEmail);
             if (sellerUser == null)
             {
                 sellerUser = new IdentityUser
                 {
-                    UserName = "SellerUser", // Set a username for the seller
+                    UserName = "SellerUser",
                     Email = sellerEmail,
                     EmailConfirmed = true
                 };
@@ -108,13 +108,13 @@ namespace ImoSphere.Data
             }
 
             // Seed regular user
-            var userEmail = "user@imosphere.com";
+            var userEmail = "example@imosphere.com";
             var regularUser = await userManager.FindByEmailAsync(userEmail);
             if (regularUser == null)
             {
                 regularUser = new IdentityUser
                 {
-                    UserName = "RegularUser", // Set a username for the regular user
+                    UserName = "RegularUser",
                     Email = userEmail,
                     EmailConfirmed = true
                 };

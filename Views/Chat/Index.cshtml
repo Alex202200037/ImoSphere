@@ -5,10 +5,10 @@
 <h2 class="text-center">Chat</h2>
 
 <div id="chat-container">
-    <div id="messagesList" class="messages-list"></div> <!-- Message display area -->
+    <div id="messagesList" class="messages-list"></div>
 
     <div id="chat-input" class="chat-input">
-        <input type="text" id="userInput" placeholder="Your name" class="form-control user-input" />
+        <input type="text" id="userInput" placeholder="Email" class="form-control user-input" />
         <input type="text" id="messageInput" placeholder="Type your message..." class="form-control message-input" />
         <button id="sendButton" class="btn btn-primary send-button">Send</button>
     </div>
@@ -24,7 +24,7 @@
         connection.on("ReceiveMessage", (user, message) => {
             const messageDiv = document.createElement("div");
             messageDiv.classList.add("message");
-            messageDiv.innerHTML = `<strong>${user}:</strong> ${message}`;
+            messageDiv.innerHTML = `<strong>${user}:</strong> ${message} <span class="timestamp">${new Date().toLocaleTimeString()}</span>`;
             document.getElementById("messagesList").appendChild(messageDiv);
             document.getElementById("messagesList").scrollTop = document.getElementById("messagesList").scrollHeight; // Auto-scroll
         });

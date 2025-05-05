@@ -55,15 +55,15 @@ or just:
     ```
 ### Log In's
 1. Admin user:
-    - **Email**: admin@imosphere.com
+    - **Email**: example-admin@imosphere.com
     - **Password**: Admin@123
     - ***Can manage users and properties.***
 2. Seller:
-    - **Email**: seller@imosphere.com
+    - **Email**: example-seller@imosphere.com
     - **Password**: Seller@123
     - ***Can manage properties only.***
 2. Regular user:
-    - **Email**: user@imosphere.com
+    - **Email**: example@imosphere.com
     - **Password**: User@123
     - ***Can only view properties.***
 

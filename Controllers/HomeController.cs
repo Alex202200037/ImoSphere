@@ -2,10 +2,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ImoSphere.Data;
 using Microsoft.AspNetCore.Authorization;
+using ImoSphere.Models;
+using System.Collections.Generic;
 
 public class HomeController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private static List<Message> _messages = new List<Message>();
+    private static int _messageIdCounter = 1;
 
     // INJEÇÃO DE DEPENDÊNCIA: recebe o contexto pelo construtor
     public HomeController(ApplicationDbContext context)
@@ -40,6 +44,54 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult SubmitContactForm(string Name, string Email, string Message)
+    {
+        // Store the message in memory
+        _messages.Add(new Message
+        {
+            Id = _messageIdCounter++, // Assign a unique ID
+            Name = Name,
+            Email = Email,
+            Content = Message,
+            IsRead = false // Default to unread
+        });
+
+        // Show a success message
+        TempData["SuccessMessage"] = "Your message has been sent successfully!";
+        return RedirectToAction("ContactUs");
+    }
+
+    [Authorize(Roles = "Admin")]
+    public IActionResult ViewMessages()
+    {
+        return View(_messages);
+    }
+
+    [Authorize(Roles = "Admin")]
+    public IActionResult MarkAsRead(int id)
+    {
+        var message = _messages.FirstOrDefault(m => m.Id == id);
+        if (message != null)
+        {
+            message.IsRead = true;
+        }
+
+        return RedirectToAction("ViewMessages");
+    }
+
+    [Authorize(Roles = "Admin")]
+    public IActionResult DeleteMessage(int id)
+    {
+        var message = _messages.FirstOrDefault(m => m.Id == id);
+        if (message != null)
+        {
+            _messages.Remove(message);
+        }
+
+        return RedirectToAction("ViewMessages");
+    }
     public IActionResult Privacy()
     {
         return View();
