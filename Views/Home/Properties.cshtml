@@ -6,14 +6,13 @@
 
 <section class="properties">
     <h1 class="text-center">Our Properties</h1>
-    <p style="text-align: center;">Explore the wide variety of properties available with ImoSphere. Find your dream home
-        today!</p>
+    <p style="text-align: center;">Explore the wide variety of properties available with ImoSphere. Find your dream home today!</p>
 
 
     @if (isSeller)
     {
         <div class="text-center mb-3">
-            <a href="@Url.Action("Create", "Properties")" class="btn btn-success">➕ &nbsp; Add New Property</a>
+            <a href="@Url.Action("Create", "Properties")" class="btn btn-success">➕ Add New Property</a>
         </div>
     }
 
@@ -31,33 +30,28 @@
                     <li>Built in @property.YearBuilt</li>
                 </ul>
                 <p>@property.Description</p>
+                <p><strong>Price:</strong> @property.Price.ToString("C")</p>
 
-                <div>
-                    <p id="price"><strong>Price:</strong> @property.Price.ToString("C")</p>
-
-                    @if (isAuthenticated)
+                @if (isAuthenticated) 
+                {
+                    if (isSeller)
                     {
-                        if (isSeller)
-                        {
-                            <!-- Exibe o botão de "Edit Property" para vendedores -->
-                            <a href="@Url.Action("Edit", "Properties", new { id = property.Id })" class="btn btn-primary">Edit
-                                Property</a>
-                        }
-                        else
-                        {
-                            <!-- Exibe o botão de "View Details" para compradores -->
-                            <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">View
-                                Details</a>
-                        }
+                        <!-- Exibe o botão de "Edit Property" para vendedores -->
+                        <a href="@Url.Action("Edit", "Properties", new { id = property.Id })" class="btn btn-primary">Edit Property</a>
                     }
                     else
                     {
-                        <!-- Exibe o botão de "View Details" para não autenticados -->
-                        <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">View
-                            Details</a>
+                        <!-- Exibe o botão de "View Details" para compradores -->
+                        <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">View Details</a>
                     }
-                </div>
+                }
+                else
+                {
+                    <!-- Exibe o botão de "View Details" para não autenticados -->
+                    <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">View Details</a>
+                }
             </div>
         }
     </div>
 </section>
+

@@ -14,10 +14,6 @@
     <header class="navbar">
         <a href="@Url.Action("Index", "Home")" class="contact-btn">🏙️ ImoSphere</a>
         <nav>
-            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-            {
-                <a href="@Url.Action("Users", "Admin")" class="contact-btn" style="font-weight: bold;">Manage Users</a>
-            }
             <a href="@Url.Action("AboutUs", "Home")" class="contact-btn">About Us</a>
             <a href="@Url.Action("Properties", "Home")" class="contact-btn">Properties</a>
             <a href="@Url.Action("Services", "Home")" class="contact-btn">Services</a>
@@ -25,7 +21,6 @@
 
             @if (User.Identity.IsAuthenticated)
             {
-                <a href="@Url.Action("Index", "Chat")" class="contact-btn">Chat</a>
                 <form action="@Url.Action("Logout", "Account")" method="post" style="display:inline;">
                     @Html.AntiForgeryToken()
                     <button type="submit" class="login-btn">Logout</button>
