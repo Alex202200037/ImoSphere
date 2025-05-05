@@ -5,11 +5,6 @@
 ### Introduction
 ....
 
-### Prerequisites
-- .NET SDK installed on your system.
-- A supported database (e.g., SQL Server, MySQL, PostgreSQL) set up and running.
-- Connection string details for the database.
-
 ### Installation
 1. Clone the repository:
     ```bash
@@ -22,11 +17,6 @@
 3. Restore dependencies:
     ```bash
     dotnet restore
-    ```
-4. Add the migrations:
-    ```bash
-    dotnet ef migrations add InitialCreate
-    dotnet ef database update
     ```
 
 ### Configuration
@@ -53,11 +43,11 @@ or just:
     ```
     dotnet watch
     ```
-### Log In's
+### Users:
 1. Admin user:
     - **Email**: example-admin@imosphere.com
     - **Password**: Admin@123
-    - ***Can manage users and properties.***
+    - ***Can manage users, properties and messages.***
 2. Seller:
     - **Email**: example-seller@imosphere.com
     - **Password**: Seller@123
@@ -67,26 +57,11 @@ or just:
     - **Password**: User@123
     - ***Can only view properties.***
 
-
-### Features
-- **Database Integration**: Perform CRUD operations on the database.
-- **User Authentication**: Secure login and registration system.
-- **Reporting**: Generate and export reports.
-
-### Troubleshooting
-- **Database Connection Issues**: Verify the connection string in `appsettings.json`.
-- **Missing Dependencies**: Run `dotnet restore` to install missing packages.
-- **Runtime Errors**: Check the logs for detailed error messages.
-
 ## Team ImoSphere
 - Alexandre Miguel, 202200037
     -
-    - Database
-    - Controlers and Migrations
-    - Debug
+    - Email: 202200037@estudante.ips.pt
 
 - Bruna Rossa, 202200603
     -
-    - App Design
-    - Views and Models
-    - Debug
+    - Email: 202200603@estudante.ips.pt
