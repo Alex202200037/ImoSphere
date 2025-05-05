@@ -38,7 +38,7 @@ namespace ImoSphere.Controllers
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "User");
-                    return RedirectToAction("Login", "Account");  // Redireciona para o login após o registro
+                    return RedirectToAction("Login", "Account"); 
                 }
                 else
                 {
@@ -103,8 +103,8 @@ namespace ImoSphere.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();  // Realiza o logout
-            return RedirectToAction("Index", "Home");  // Redireciona para a página inicial após o logout
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home"); 
         }
 
 

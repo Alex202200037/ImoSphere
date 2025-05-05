@@ -12,7 +12,6 @@ public class HomeController : Controller
 
 private static List<Message> _messages = new List<Message>();
     private static int _messageIdCounter = 1;
-    // INJEÇÃO DE DEPENDÊNCIA: recebe o contexto pelo construtor
     public HomeController(ApplicationDbContext context)
     {
         _context = context;
@@ -28,11 +27,10 @@ private static List<Message> _messages = new List<Message>();
         return View();
     }
 
-    // PROPERTIES: busca da BD
     public async Task<IActionResult> Properties()
     {
         var properties = await _context.Properties.ToListAsync();
-        return View(properties); // <- envia para a view
+        return View(properties); 
     }
 
     public IActionResult Services()
@@ -53,17 +51,15 @@ private static List<Message> _messages = new List<Message>();
     [ValidateAntiForgeryToken]
     public IActionResult SubmitContactForm(string Name, string Email, string Message)
     {
-        // Store the message in memory
         _messages.Add(new Message
         {
-            Id = _messageIdCounter++, // Assign a unique ID
+            Id = _messageIdCounter++, 
             Name = Name,
             Email = Email,
             Content = Message,
-            IsRead = false // Default to unread
+            IsRead = false
         });
 
-        // Show a success message
         TempData["SuccessMessage"] = "Your message has been sent successfully!";
         return RedirectToAction("ContactUs");
     }

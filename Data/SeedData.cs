@@ -8,11 +8,9 @@ namespace ImoSphere.Data
     {
         public static async Task Initialize(IServiceProvider serviceProvider, ApplicationDbContext context)
         {
-            // Verifica se o banco de dados já foi criado
             context.Database.EnsureCreated();
 
-            // Adiciona algumas propriedades de exemplo, caso o banco de dados esteja vazio
-            if (!context.Properties.Any()) // Se a tabela 'Properties' estiver vazia
+            if (!context.Properties.Any()) 
             {
                 context.Properties.AddRange(
                     new Property
@@ -75,7 +73,7 @@ namespace ImoSphere.Data
             {
                 adminUser = new IdentityUser
                 {
-                    UserName = "AdminUser", // Set a username for the admin
+                    UserName = "AdminUser", 
                     Email = adminEmail,
                     EmailConfirmed = true
                 };
@@ -94,7 +92,7 @@ namespace ImoSphere.Data
             {
                 sellerUser = new IdentityUser
                 {
-                    UserName = "SellerUser", // Set a username for the seller
+                    UserName = "SellerUser",
                     Email = sellerEmail,
                     EmailConfirmed = true
                 };
@@ -113,7 +111,7 @@ namespace ImoSphere.Data
             {
                 regularUser = new IdentityUser
                 {
-                    UserName = "RegularUser", // Set a username for the regular user
+                    UserName = "RegularUser", 
                     Email = userEmail,
                     EmailConfirmed = true
                 };

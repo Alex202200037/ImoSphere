@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ImoSphere.Controllers
 {
-    [Authorize(Roles = "Admin,Seller,User")] // Restrict access to authorized roles
+    [Authorize(Roles = "Admin,Seller,User")] 
     public class PropertiesController : Controller
     {
         private readonly ApplicationDbContext _context;
