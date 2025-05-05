@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ImoSphere.Data;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using ImoSphere.Models;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ using System.Collections.Generic;
 public class HomeController : Controller
 {
     private readonly ApplicationDbContext _context;
-    private static List<Message> _messages = new List<Message>();
-    private static int _messageIdCounter = 1;
 
+private static List<Message> _messages = new List<Message>();
+    private static int _messageIdCounter = 1;
     // INJEÇÃO DE DEPENDÊNCIA: recebe o contexto pelo construtor
     public HomeController(ApplicationDbContext context)
     {
@@ -44,7 +45,11 @@ public class HomeController : Controller
         return View();
     }
 
-    [HttpPost]
+    public IActionResult Privacy()
+    {
+        return View();
+    }
+     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult SubmitContactForm(string Name, string Email, string Message)
     {
@@ -92,11 +97,6 @@ public class HomeController : Controller
 
         return RedirectToAction("ViewMessages");
     }
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
     [Authorize(Roles = "Admin")]
     public IActionResult AdminUser()
     {

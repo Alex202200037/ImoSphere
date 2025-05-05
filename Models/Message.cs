@@ -8,4 +8,4 @@ namespace ImoSphere.Models
         public string Content { get; set; }
         public bool IsRead { get; set; }
     }
-}
+} 

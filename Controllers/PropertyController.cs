@@ -112,7 +112,7 @@ namespace ImoSphere.Controllers
         // POST: Delete a property
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Seller")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var property = await _context.Properties.FindAsync(id);

@@ -2,18 +2,16 @@
 
 @{
     ViewData["Title"] = "Add New Property";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
-    </div>
-}
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/style.css" />
+</head>
 
-<h1 class="text-center">Add New Property</h1>
+<h1>Add New Property</h1>
 
-<form asp-action="Create" method="post" class="contact-form">
+<form asp-action="Create" method="post">
     <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" />

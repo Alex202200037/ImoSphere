@@ -32,11 +32,12 @@ namespace ImoSphere.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+                var user = new IdentityUser { UserName = model.Username, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "User");
                     return RedirectToAction("Login", "Account");  // Redireciona para o login após o registro
                 }
                 else

@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ImoSphere.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace ImoSphere.Data
 {
@@ -8,11 +8,11 @@ namespace ImoSphere.Data
     {
         public static async Task Initialize(IServiceProvider serviceProvider, ApplicationDbContext context)
         {
-            // Ensure the database is created
+            // Verifica se o banco de dados já foi criado
             context.Database.EnsureCreated();
 
-            // Seed properties
-            if (!context.Properties.Any())
+            // Adiciona algumas propriedades de exemplo, caso o banco de dados esteja vazio
+            if (!context.Properties.Any()) // Se a tabela 'Properties' estiver vazia
             {
                 context.Properties.AddRange(
                     new Property
@@ -55,7 +55,6 @@ namespace ImoSphere.Data
 
                 await context.SaveChangesAsync();
             }
-
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
@@ -70,13 +69,13 @@ namespace ImoSphere.Data
             }
 
             // Seed admin user
-            var adminEmail = "example-admin@imosphere.com";
+            var adminEmail = "admin@imosphere.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)
             {
                 adminUser = new IdentityUser
                 {
-                    UserName = "AdminUser",
+                    UserName = "AdminUser", // Set a username for the admin
                     Email = adminEmail,
                     EmailConfirmed = true
                 };
@@ -89,13 +88,13 @@ namespace ImoSphere.Data
             }
 
             // Seed seller user
-            var sellerEmail = "example-seller@imosphere.com";
+            var sellerEmail = "seller@imosphere.com";
             var sellerUser = await userManager.FindByEmailAsync(sellerEmail);
             if (sellerUser == null)
             {
                 sellerUser = new IdentityUser
                 {
-                    UserName = "SellerUser",
+                    UserName = "SellerUser", // Set a username for the seller
                     Email = sellerEmail,
                     EmailConfirmed = true
                 };
@@ -108,13 +107,13 @@ namespace ImoSphere.Data
             }
 
             // Seed regular user
-            var userEmail = "example@imosphere.com";
+            var userEmail = "user@imosphere.com";
             var regularUser = await userManager.FindByEmailAsync(userEmail);
             if (regularUser == null)
             {
                 regularUser = new IdentityUser
                 {
-                    UserName = "RegularUser",
+                    UserName = "RegularUser", // Set a username for the regular user
                     Email = userEmail,
                     EmailConfirmed = true
                 };

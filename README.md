@@ -3,7 +3,7 @@
 ## User Manual for ImoSphere
 
 ### Introduction
-....
+
 
 ### Installation
 1. Clone the repository:
@@ -45,15 +45,15 @@ or just:
     ```
 ### Users:
 1. Admin user:
-    - **Email**: example-admin@imosphere.com
+    - **Email**: admin@imosphere.com
     - **Password**: Admin@123
     - ***Can manage users, properties and messages.***
 2. Seller:
-    - **Email**: example-seller@imosphere.com
+    - **Email**: seller@imosphere.com
     - **Password**: Seller@123
     - ***Can manage properties only.***
 2. Regular user:
-    - **Email**: example@imosphere.com
+    - **Email**: user@imosphere.com
     - **Password**: User@123
     - ***Can only view properties.***
 
