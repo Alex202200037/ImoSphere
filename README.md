@@ -1,6 +1,8 @@
 # ImoSphere
 
-## User Manual for ImoSphere
+[Download the User Manual (PDF)](/UserManual_ImoSphere.pdf)
+
+## Tecnic Manual for ImoSphere
 
 ### Introduction
 O projeto ImoSphere consiste numa plataforma web desenvolvida com o objetivo de facilitar a mediação imobiliária digital, permitindo a navegação, visualização e gestão de propriedades por diferentes tipos de utilizadores, de acordo com os respetivos níveis de acesso. A aplicação foi desenvolvida em ambiente ASP.NET MVC com integração de base de dados SQLite para autenticação e gestão de conteúdos.
