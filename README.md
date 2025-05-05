@@ -3,7 +3,7 @@
 ## User Manual for ImoSphere
 
 ### Introduction
-
+....
 
 ### Prerequisites
 - .NET SDK installed on your system.
@@ -31,7 +31,7 @@
 
 ### Configuration
 1. Open the `appsettings.json` file.
-2. Verify the `ConnectionStrings` section has the database connection details:
+2. Ensure the `ConnectionStrings` section has the database connection details:
     ```json
     {
         "ConnectionStrings": {
@@ -53,6 +53,20 @@ or just:
     ```
     dotnet watch
     ```
+### Log In's
+1. Admin user:
+    - **Email**: admin@imosphere.com
+    - **Password**: Admin@123
+    - ***Can manage users and properties.***
+2. Seller:
+    - **Email**: seller@imosphere.com
+    - **Password**: Seller@123
+    - ***Can manage properties only.***
+2. Regular user:
+    - **Email**: user@imosphere.com
+    - **Password**: User@123
+    - ***Can only view properties.***
+
 
 ### Features
 - **Database Integration**: Perform CRUD operations on the database.

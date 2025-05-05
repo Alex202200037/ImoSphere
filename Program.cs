@@ -1,25 +1,28 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ImoSphere.Data;
-using ImoSphere.Models;
+using ImoSphere.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurar o contexto do banco de dados com SQLite
+// Configure the database context with SQLite
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Configurar os serviços do Identity
+// Configure Identity services
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-// Configurar os controladores com views
+// Add SignalR services
+builder.Services.AddSignalR(); // Register SignalR services
+
+// Configure controllers with views
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configurar a pipeline de middleware
+// Configure the middleware pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -31,20 +34,23 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();  // Certifique-se de que está usando autenticação
-app.UseAuthorization();   // E também autorização
+app.UseAuthentication();
+app.UseAuthorization();
 
-// Mapear as rotas padrão
+// Map default routes
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// Seeding de dados
+// Map the SignalR hub
+app.MapHub<ChatHub>("/chatHub");
+
+// Seed data
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationDbContext>();
-    await SeedData.Initialize(services, context);  // Chamando o método de seeding diretamente pela classe
+    await SeedData.Initialize(services, context);
 }
 
 app.Run();

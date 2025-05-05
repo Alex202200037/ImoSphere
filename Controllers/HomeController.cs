@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ImoSphere.Data;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 public class HomeController : Controller
 {
@@ -41,6 +41,12 @@ public class HomeController : Controller
     }
 
     public IActionResult Privacy()
+    {
+        return View();
+    }
+
+    [Authorize(Roles = "Admin")]
+    public IActionResult AdminUser()
     {
         return View();
     }

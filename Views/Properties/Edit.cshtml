@@ -66,21 +66,66 @@
 
 @if (TempData["SuccessMessage"] != null)
 {
-    <div id="successPopup" class="popup-overlay" style="display:none;">
+    <div id="successPopup" class="popup-overlay">
         <div class="popup-content">
             <div class="spinner"></div>
             <h2>@TempData["SuccessMessage"]</h2>
         </div>
     </div>
 
+    <style>
+        .popup-overlay {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40%;
+            height: 10%;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background-color: var(--secondary-color);
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 20px auto;
+            border: 5px solid #ccc;
+            border-top: 5px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+    </style>
+
     <script>
         // Exibe o popup de sucesso com um pequeno atraso
-        document.getElementById("successPopup").style.display = "block";
+        document.getElementById("successPopup").style.display = "flex";
         
         setTimeout(function () {
             document.getElementById("successPopup").style.display = "none";
             window.location.href = '@Url.Action("Properties", "Home")'; // Redireciona após 2.5 segundos
         }, 2500);
+
+        // Adiciona animação de rotação para o spinner
+        const keyframes = document.createElement('style');
+        keyframes.type = 'text/css';
+        keyframes.appendChild(document.createTextNode(`
+            @@keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `));
+        document.head.appendChild(keyframes);
     </script>
 }
 

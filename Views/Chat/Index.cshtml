@@ -1,0 +1,43 @@
+@{
+    ViewData["Title"] = "Chat";
+}
+
+<h2 class="text-center">Chat</h2>
+
+<div id="chat-container">
+    <div id="messagesList" class="messages-list"></div> <!-- Message display area -->
+
+    <div id="chat-input" class="chat-input">
+        <input type="text" id="userInput" placeholder="Your name" class="form-control user-input" />
+        <input type="text" id="messageInput" placeholder="Type your message..." class="form-control message-input" />
+        <button id="sendButton" class="btn btn-primary send-button">Send</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        connection.on("ReceiveMessage", (user, message) => {
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("message");
+            messageDiv.innerHTML = `<strong>${user}:</strong> ${message}`;
+            document.getElementById("messagesList").appendChild(messageDiv);
+            document.getElementById("messagesList").scrollTop = document.getElementById("messagesList").scrollHeight; // Auto-scroll
+        });
+
+        connection.start().catch(err => console.error(err.toString()));
+
+        document.getElementById("sendButton").addEventListener("click", () => {
+            const user = document.getElementById("userInput").value;
+            const message = document.getElementById("messageInput").value;
+            if (user && message) {
+                connection.invoke("SendMessage", user, message).catch(err => console.error(err.toString()));
+                document.getElementById("messageInput").value = ""; // Clear message input
+            }
+        });
+    </script>
+}
