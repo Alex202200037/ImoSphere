@@ -1,6 +1,7 @@
 @{
     ViewData["Title"] = "Properties";
     var isAuthenticated = User.Identity.IsAuthenticated;
+    var isSeller = isAuthenticated && User.Identity.Name.EndsWith("@seller.com");
 }
 
 <section class="properties">
@@ -9,7 +10,7 @@
         today!</p>
 
 
-    @if (User.IsInRole("Admin") || User.IsInRole("Seller"))
+    @if (isSeller)
     {
         <div class="text-center mb-3">
             <a href="@Url.Action("Create", "Properties")" class="btn btn-success">➕ &nbsp; Add New Property</a>
@@ -22,7 +23,7 @@
             <div class="property-item">
                 <img src="@property.ImageUrl" alt="@property.Name" class="property-image" />
                 <h2>@property.Name</h2>
-                <ul class="property-home-features">
+                <ul class="property-features">
                     <li>@property.Bedrooms Bedrooms</li>
                     <li>@property.Bathrooms Bathrooms</li>
                     <li>@property.Area sq ft</li>
@@ -33,33 +34,28 @@
 
                 <div>
                     <p id="price"><strong>Price:</strong> @property.Price.ToString("C")</p>
-                                        <div class="button-group">
-                        @if (isAuthenticated)
+
+                    @if (isAuthenticated)
+                    {
+                        if (isSeller)
                         {
-                            if (User.IsInRole("Admin") || User.IsInRole("Seller"))
-                            {
-                                <!-- Show the "Edit Property" button for Admins and Sellers -->
-                                <a href="@Url.Action("Edit", "Properties", new { id = property.Id })" class="btn btn-primary">Edit</a>
-                                <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">Details</a>
-                    
-                                <!-- Delete Button with Confirmation -->
-                                <form asp-action="Delete" asp-controller="Properties" method="post" class="d-inline-block" onsubmit="return confirm('Are you sure you want to delete this property?');">
-                                    <input type="hidden" name="id" value="@property.Id" />
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            }
-                            else
-                            {
-                                <!-- Show the "View Details" button for regular users -->
-                                <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">View Details</a>
-                            }
+                            <!-- Exibe o botão de "Edit Property" para vendedores -->
+                            <a href="@Url.Action("Edit", "Properties", new { id = property.Id })" class="btn btn-primary">Edit
+                                Property</a>
                         }
                         else
                         {
-                            <!-- Show the "View Details" button for unauthenticated users -->
-                            <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">View Details</a>
+                            <!-- Exibe o botão de "View Details" para compradores -->
+                            <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">View
+                                Details</a>
                         }
-                    </div>
+                    }
+                    else
+                    {
+                        <!-- Exibe o botão de "View Details" para não autenticados -->
+                        <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">View
+                            Details</a>
+                    }
                 </div>
             </div>
         }

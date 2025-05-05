@@ -4,59 +4,58 @@
     ViewData["Title"] = "Edit Property";
 }
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
-    </div>
-}
+<h1>Edit Property</h1>
 
-<h1 class="text-center">Edit Property</h1>
+<head>
+<link rel="stylesheet" type="text/css" href="~/wwwroot/css/style.css" />
 
-<form asp-action="Edit" method="post" class="contact-form">
+</head>
+
+
+<form asp-action="Edit" method="post" class="contact-form" id="propertyForm">
     <input type="hidden" asp-for="Id" />
 
-    <div class="form-group">
+    <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" />
     </div>
 
-    <div class="form-group">
+    <div>
         <label asp-for="Description"></label>
         <textarea asp-for="Description" class="form-control"></textarea>
-    </div class="form-group">
+    </div>
 
-    <div class="form-group">
+    <div>
         <label asp-for="Price"></label>
         <input asp-for="Price" class="form-control" />
     </div>
 
-    <div class="form-group">
+    <div>
         <label asp-for="Bedrooms"></label>
         <input asp-for="Bedrooms" class="form-control" />
     </div>
 
-    <div class="form-group">
+    <div>
         <label asp-for="Bathrooms"></label>
         <input asp-for="Bathrooms" class="form-control" />
     </div>
 
-    <div class="form-group">
+    <div>
         <label asp-for="YearBuilt"></label>
         <input asp-for="YearBuilt" class="form-control" />
     </div>
 
-    <div class="form-group">
+    <div>
         <label asp-for="Location"></label>
         <input asp-for="Location" class="form-control" />
     </div>
 
-    <div class="form-group">
+    <div>
         <label asp-for="Area"></label>
         <input asp-for="Area" class="form-control" />
     </div>
 
-    <div class="form-group">
+    <div>
         <label asp-for="ImageUrl"></label>
         <input asp-for="ImageUrl" class="form-control" />
     </div>
@@ -64,6 +63,69 @@
     <button type="submit" class="btn btn-primary">Save Changes</button>
 </form>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="successPopup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="spinner"></div>
+            <h2>@TempData["SuccessMessage"]</h2>
+        </div>
+    </div>
+
+    <style>
+        .popup-overlay {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40%;
+            height: 10%;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background-color: var(--secondary-color);
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 20px auto;
+            border: 5px solid #ccc;
+            border-top: 5px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+    </style>
+
+    <script>
+        // Exibe o popup de sucesso com um pequeno atraso
+        document.getElementById("successPopup").style.display = "flex";
+        
+        setTimeout(function () {
+            document.getElementById("successPopup").style.display = "none";
+            window.location.href = '@Url.Action("Properties", "Home")'; // Redireciona após 2.5 segundos
+        }, 2500);
+
+        // Adiciona animação de rotação para o spinner
+        const keyframes = document.createElement('style');
+        keyframes.type = 'text/css';
+        keyframes.appendChild(document.createTextNode(`
+            @@keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `));
+        document.head.appendChild(keyframes);
+    </script>
 }
+
