@@ -29,7 +29,10 @@ private static List<Message> _messages = new List<Message>();
 
     public async Task<IActionResult> Properties()
     {
-        var properties = await _context.Properties.ToListAsync();
+        var properties = await _context.Properties
+            .Include(p => p.Images)
+            .Include(p => p.Agency)
+            .ToListAsync();
         return View(properties); 
     }
 

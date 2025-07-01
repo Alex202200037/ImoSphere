@@ -55,8 +55,20 @@
     </div>
 
     <div>
-        <label asp-for="ImageUrl"></label>
-        <input asp-for="ImageUrl" class="form-control" />
+        <label>Images</label>
+        <input type="file" name="images" class="form-control" multiple accept="image/*" />
+        @if (Model.Images != null && Model.Images.Any())
+        {
+            <div class="mt-2">
+                <p>Existing Images:</p>
+                <div class="d-flex flex-wrap gap-2">
+                    @foreach (var img in Model.Images)
+                    {
+                        <img src="@img.ImageUrl" alt="Image" style="max-width: 100px; max-height: 100px; border-radius: 8px;" />
+                    }
+                </div>
+            </div>
+        }
     </div>
 
     <div class="d-flex justify-content-between w-100">

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace ImoSphere.Models
 {
@@ -11,7 +12,6 @@ namespace ImoSphere.Models
 
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string ImageUrl { get; set; }
 
         public int Bedrooms { get; set; }
         public int Bathrooms { get; set; }
@@ -19,5 +19,14 @@ namespace ImoSphere.Models
 
         public string Location { get; set; }
         public int YearBuilt { get; set; }
+
+        public int AgencyId { get; set; }
+        public Agency Agency { get; set; }
+        public ICollection<PropertyImage> Images { get; set; }
+
+        public Property()
+        {
+            Images = new List<PropertyImage>();
+        }
     }
 }

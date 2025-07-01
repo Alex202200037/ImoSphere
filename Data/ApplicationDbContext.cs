@@ -12,5 +12,9 @@ namespace ImoSphere.Data
         {
         }
         public DbSet<Property> Properties { get; set; }
+        public DbSet<Agency> Agencies { get; set; }
+        public DbSet<AgencyUser> AgencyUsers { get; set; }
+        public DbSet<PropertyImage> PropertyImages { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }
