@@ -25,13 +25,52 @@ namespace ImoSphere.Data
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            var roles = new[] { "Admin", "Comercial", "User" };
+            var roles = new[] { "SuperAdmin", "Admin", "Comercial", "User" };
             foreach (var role in roles)
             {
                 if (!await roleManager.RoleExistsAsync(role))
                 {
                     await roleManager.CreateAsync(new IdentityRole(role));
                 }
+            }
+
+            // Seed SuperAdmin
+            var superAdminEmail = "imosphere.admin@imosphere.com";
+            var superAdminUser = await userManager.FindByEmailAsync(superAdminEmail);
+            if (superAdminUser == null)
+            {
+                superAdminUser = new ApplicationUser
+                {
+                    UserName = "imosphere.admin",
+                    Email = superAdminEmail,
+                    EmailConfirmed = true
+                };
+                var result = await userManager.CreateAsync(superAdminUser, "Imosphere@123");
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(superAdminUser, "SuperAdmin");
+                }
+            }
+
+            // Adicionar agência especial ImoSphere
+            var imoSphereAgency = context.Agencies.FirstOrDefault(a => a.Name == "ImoSphere");
+            if (imoSphereAgency == null)
+            {
+                imoSphereAgency = new Agency { Name = "ImoSphere" };
+                context.Agencies.Add(imoSphereAgency);
+                context.SaveChanges();
+            }
+            // Garantir que o SuperAdmin está associado à agência ImoSphere
+            var superAdmin = userManager.FindByEmailAsync("imosphere.admin@imosphere.com").Result;
+            if (superAdmin != null && !context.AgencyUsers.Any(au => au.UserId == superAdmin.Id && au.AgencyId == imoSphereAgency.Id))
+            {
+                context.AgencyUsers.Add(new AgencyUser
+                {
+                    UserId = superAdmin.Id,
+                    AgencyId = imoSphereAgency.Id,
+                    Role = "SuperAdmin"
+                });
+                context.SaveChanges();
             }
 
             // 3. Criar admins e comerciais para cada agência

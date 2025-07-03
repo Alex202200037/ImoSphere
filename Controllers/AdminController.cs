@@ -2,80 +2,175 @@ using ImoSphere.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ImoSphere.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ImoSphere.Controllers
 {
-    [Authorize(Roles = "Admin")] // Restrict access to Admins only
+    [Authorize(Roles = "Admin,SuperAdmin")] // Restrict access to Admins and SuperAdmins
     public class AdminController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
 
-        public AdminController(UserManager<IdentityUser> userManager)
+        public AdminController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
 
         // Manage Users
         public async Task<IActionResult> Users()
         {
-            var users = _userManager.Users.ToList();
-            var userRoles = new List<UserWithRolesViewModel>();
-
-            foreach (var user in users)
+            var currentUser = await _userManager.GetUserAsync(User);
+            var roles = await _userManager.GetRolesAsync(currentUser);
+            var isSuperAdmin = roles.Contains("SuperAdmin");
+            List<UserWithRolesViewModel> userRoles = new();
+            if (isSuperAdmin)
             {
-                var roles = await _userManager.GetRolesAsync(user);
-                userRoles.Add(new UserWithRolesViewModel
+                var users = _userManager.Users.ToList();
+                foreach (var user in users)
                 {
-                    User = user,
-                    Roles = roles
-                });
+                    var userRolesList = await _userManager.GetRolesAsync(user);
+                    userRoles.Add(new UserWithRolesViewModel
+                    {
+                        User = user,
+                        Roles = userRolesList
+                    });
+                }
             }
-
+            else
+            {
+                // Só users da agência
+                var agencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == currentUser.Id);
+                if (agencyUser == null)
+                    return Forbid();
+                var agencyUsers = _context.AgencyUsers.Where(au => au.AgencyId == agencyUser.AgencyId).Select(au => au.UserId).ToList();
+                var users = _userManager.Users.Where(u => agencyUsers.Contains(u.Id)).ToList();
+                foreach (var user in users)
+                {
+                    var userRolesList = await _userManager.GetRolesAsync(user);
+                    userRoles.Add(new UserWithRolesViewModel
+                    {
+                        User = user,
+                        Roles = userRolesList
+                    });
+                }
+            }
             return View(userRoles);
         }
 
         // GET: Create Seller or Admin
         [HttpGet]
-        [Route("Admin/CreateUser")] // Explicit route for the GET action
-        public IActionResult CreateUser()
+        [Route("Admin/CreateUser")]
+        public async Task<IActionResult> CreateUser()
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var roles = await _userManager.GetRolesAsync(currentUser);
+            var isSuperAdmin = roles.Contains("SuperAdmin");
+            if (isSuperAdmin)
+            {
+                ViewBag.Agencies = _context.Agencies.ToList();
+            }
+            else
+            {
+                // Buscar agência do admin
+                var agencyUser = await _context.AgencyUsers.Include(au => au.Agency).FirstOrDefaultAsync(au => au.UserId == currentUser.Id);
+                if (agencyUser?.Agency == null)
+                    return Forbid();
+                var domain = $".{agencyUser.Agency.Name.ToLower()}@imosphere.com";
+                ViewBag.EmailDomain = domain;
+            }
             return View();
         }
 
         // POST: Create Seller or Admin
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Admin/CreateUser")] // Explicit route for the POST action
-        public async Task<IActionResult> CreateUser(string email, string username, string role, string password)
+        [Route("Admin/CreateUser")]
+        public async Task<IActionResult> CreateUser(string email, string emailPrefix, string username, string role, string password, int? agencyId)
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var roles = await _userManager.GetRolesAsync(currentUser);
+            var isSuperAdmin = roles.Contains("SuperAdmin");
+            if (!isSuperAdmin)
+            {
+                // Buscar agência do admin
+                var agencyUser = await _context.AgencyUsers.Include(au => au.Agency).FirstOrDefaultAsync(au => au.UserId == currentUser.Id);
+                if (agencyUser?.Agency == null)
+                    return Forbid();
+                var domain = $".{agencyUser.Agency.Name.ToLower()}@imosphere.com";
+                ViewBag.EmailDomain = domain;
+                if (string.IsNullOrEmpty(emailPrefix))
+                {
+                    ModelState.AddModelError(string.Empty, "Email prefix is required.");
+                    return View();
+                }
+                email = emailPrefix + domain;
+            }
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(role) || string.IsNullOrEmpty(password))
             {
                 ModelState.AddModelError(string.Empty, "Email, username, role, and password are required.");
+                if (isSuperAdmin) ViewBag.Agencies = _context.Agencies.ToList();
                 return View();
             }
-            // Check if the email already exists
             var existingUser = await _userManager.FindByEmailAsync(email);
             if (existingUser != null)
             {
                 ModelState.AddModelError(string.Empty, "A user with this email already exists.");
+                if (isSuperAdmin) ViewBag.Agencies = _context.Agencies.ToList();
                 return View();
             }
-
-            // Create the user
-            var user = new IdentityUser
+            var user = new ApplicationUser
             {
                 UserName = username,
                 Email = email,
                 EmailConfirmed = true
             };
-
             var result = await _userManager.CreateAsync(user, password);
             if (result.Succeeded)
             {
-                // Assign the role
                 var roleResult = await _userManager.AddToRoleAsync(user, role);
                 if (roleResult.Succeeded)
                 {
+                    // Associação à agência
+                    if (role == "Admin" || role == "Comercial" || role == "User")
+                    {
+                        int? agencyToAssign = null;
+                        if (isSuperAdmin)
+                        {
+                            agencyToAssign = agencyId;
+                        }
+                        else
+                        {
+                            var agencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == currentUser.Id);
+                            if (agencyUser == null)
+                                return Forbid();
+                            agencyToAssign = agencyUser.AgencyId;
+                        }
+                        if (agencyToAssign.HasValue)
+                        {
+                            _context.AgencyUsers.Add(new AgencyUser
+                            {
+                                UserId = user.Id,
+                                AgencyId = agencyToAssign.Value,
+                                Role = role
+                            });
+                            await _context.SaveChangesAsync();
+                        }
+                        else if (!isSuperAdmin)
+                        {
+                            // Admin não pode criar user sem agência
+                            ModelState.AddModelError(string.Empty, "Admins só podem criar utilizadores para a sua agência.");
+                            return View();
+                        }
+                    }
+                    else if (!isSuperAdmin)
+                    {
+                        // Admin não pode criar user sem agência
+                        ModelState.AddModelError(string.Empty, "Admins só podem criar utilizadores para a sua agência.");
+                        return View();
+                    }
                     TempData["SuccessMessage"] = $"{role} created successfully.";
                     return RedirectToAction("Users");
                 }
@@ -94,7 +189,7 @@ namespace ImoSphere.Controllers
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
+            if (isSuperAdmin) ViewBag.Agencies = _context.Agencies.ToList();
             return View();
         }
 

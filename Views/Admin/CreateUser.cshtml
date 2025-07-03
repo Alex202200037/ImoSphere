@@ -1,5 +1,7 @@
 @{
-    ViewData["Title"] = "Create User";
+    ViewBag.Title = "Create User";
+    var agencies = ViewBag.Agencies as List<ImoSphere.Models.Agency>;
+    var isSuperAdmin = agencies != null;
 }
 
 <h2 class="text-center">Create User</h2>
@@ -25,8 +27,17 @@
 
 <form asp-action="CreateUser" method="post" class="contact-form">
     <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" class="form-control" required />
+        <label>Email</label>
+        @if (isSuperAdmin) {
+            <input type="email" name="email" class="form-control" required />
+        } else {
+            <div class="input-group">
+                <input type="text" name="emailPrefix" class="form-control" required placeholder="Email prefix" />
+                <div class="input-group-append">
+                    <span class="input-group-text">@ViewBag.EmailDomain</span>
+                </div>
+            </div>
+        }
     </div>
 
     <div class="form-group">
@@ -37,9 +48,10 @@
     <div class="form-group">
         <label for="role">Role</label>
         <select id="role" name="role" class="form-control" required>
-            <option value="Seller">Seller</option>
+            <option value="Comercial">Comercial</option>
             <option value="Admin">Admin</option>
             <option value="User">User</option>
+            @if (isSuperAdmin) { <option value="SuperAdmin">SuperAdmin</option> }
         </select>
     </div>
 
@@ -47,6 +59,23 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password" class="form-control" required />
     </div>
+
+    @if (isSuperAdmin) {
+        <div class="form-group">
+            <label for="agencyId">Agency</label>
+            <select id="agencyId" name="agencyId" class="form-control">
+                <option value="">No agency (normal user)</option>
+                @foreach (var agency in agencies) {
+                    <option value="@agency.Id">@agency.Name</option>
+                }
+            </select>
+        </div>
+    } else {
+        <div class="form-group">
+            <label for="agency">Agency</label>
+            <input type="text" id="agency" class="form-control" value="@User?.Identity?.Name's agency (fixed)" disabled />
+        </div>
+    }
 
     <div class="d-flex justify-content-between w-100">
         <button type="submit" class="btn btn-primary w-50 me-2">Create User</button>

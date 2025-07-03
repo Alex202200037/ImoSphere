@@ -14,7 +14,7 @@
     <header class="navbar">
         <a href="@Url.Action("Index", "Home")" class="contact-btn">🏙️ ImoSphere</a>
         <nav>
-            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("SuperAdmin")))
             {
                 <a href="@Url.Action("Users", "Admin")" class="contact-btn" style="font-weight: bold;">Manage Users</a>
             }

@@ -10,7 +10,7 @@ namespace ImoSphere.Models
 
     [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at most {1} characters long.", MinimumLength = 6)]
-        [RegularExpression(@"^[a-zA-Z0-9_]+$", ErrorMessage = "The username can only contain letters, numbers, and underscores.")]
+        // [RegularExpression(@"^[a-zA-Z0-9_]+$", ErrorMessage = "The username can only contain letters, numbers, and underscores.")]
         public string Username { get; set; }
 
     [Required]
