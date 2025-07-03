@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt">
 
 <head>
@@ -33,6 +33,7 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <a href="@Url.Action("Index", "Chat")" class="contact-btn">Chat</a>
+                <a href="@Url.Action("Perfil", "Home")" class="contact-btn">Profile</a>
                 <form action="@Url.Action("Logout", "Account")" method="post" style="display:inline;">
                     @Html.AntiForgeryToken()
                     <button type="submit" class="login-btn">Logout</button>

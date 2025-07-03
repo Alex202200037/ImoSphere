@@ -92,6 +92,18 @@
 <form asp-action="Edit" method="post" class="contact-form" id="propertyForm" enctype="multipart/form-data">
     <input type="hidden" asp-for="Id" />
 
+    @if (ViewBag.UserRole == "Admin" && ViewBag.Comerciais != null)
+    {
+        <div>
+            <label for="CreatedByUserId">Comercial Responsável</label>
+            @Html.DropDownListFor(model => model.CreatedByUserId, (SelectList)ViewBag.Comerciais, new { @class = "form-control" })
+        </div>
+    }
+    else
+    {
+        <input type="hidden" asp-for="CreatedByUserId" />
+    }
+
     <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" />

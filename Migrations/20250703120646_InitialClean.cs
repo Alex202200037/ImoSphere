@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ImoSphere.Migrations
 {
     /// <inheritdoc />
-    public partial class FinalSeedFix : Migration
+    public partial class InitialClean : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,33 +62,6 @@ namespace ImoSphere.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Properties",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Bedrooms = table.Column<int>(type: "INTEGER", nullable: false),
-                    Bathrooms = table.Column<int>(type: "INTEGER", nullable: false),
-                    Area = table.Column<int>(type: "INTEGER", nullable: false),
-                    Location = table.Column<string>(type: "TEXT", nullable: false),
-                    YearBuilt = table.Column<int>(type: "INTEGER", nullable: false),
-                    AgencyId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Properties", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Properties_Agencies_AgencyId",
-                        column: x => x.AgencyId,
-                        principalTable: "Agencies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -225,6 +198,40 @@ namespace ImoSphere.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Properties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Bedrooms = table.Column<int>(type: "INTEGER", nullable: false),
+                    Bathrooms = table.Column<int>(type: "INTEGER", nullable: false),
+                    Area = table.Column<int>(type: "INTEGER", nullable: false),
+                    Location = table.Column<string>(type: "TEXT", nullable: false),
+                    YearBuilt = table.Column<int>(type: "INTEGER", nullable: false),
+                    AgencyId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CreatedByUserId = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Properties", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Properties_Agencies_AgencyId",
+                        column: x => x.AgencyId,
+                        principalTable: "Agencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Properties_AspNetUsers_CreatedByUserId",
+                        column: x => x.CreatedByUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PropertyImages",
                 columns: table => new
                 {
@@ -297,6 +304,11 @@ namespace ImoSphere.Migrations
                 column: "AgencyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Properties_CreatedByUserId",
+                table: "Properties",
+                column: "CreatedByUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PropertyImages_PropertyId",
                 table: "PropertyImages",
                 column: "PropertyId");
@@ -330,13 +342,13 @@ namespace ImoSphere.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Properties");
 
             migrationBuilder.DropTable(
                 name: "Agencies");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

@@ -24,6 +24,9 @@ namespace ImoSphere.Models
         public Agency Agency { get; set; }
         public ICollection<PropertyImage> Images { get; set; }
 
+        public string CreatedByUserId { get; set; }
+        public ApplicationUser CreatedByUser { get; set; }
+
         public Property()
         {
             Images = new List<PropertyImage>();

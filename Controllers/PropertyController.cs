@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ImoSphere.Controllers
 {
@@ -55,6 +56,15 @@ namespace ImoSphere.Controllers
         [Authorize(Roles = "Admin,Comercial")]
         public async Task<IActionResult> Create(Property property, List<IFormFile> images)
         {
+            // Remover erros de validação destes campos antes de validar (igual ao Edit)
+            ModelState.Remove("Agency");
+            ModelState.Remove("property.Agency");
+            ModelState.Remove("Images");
+            ModelState.Remove("property.Images");
+            ModelState.Remove("CreatedByUser");
+            ModelState.Remove("property.CreatedByUser");
+            ModelState.Remove("CreatedByUserId");
+            ModelState.Remove("property.CreatedByUserId");
             if (!ModelState.IsValid)
             {
                 return View(property);
@@ -67,6 +77,8 @@ namespace ImoSphere.Controllers
                 return Forbid();
             }
             property.AgencyId = agencyUser.AgencyId;
+            property.CreatedByUserId = user.Id;
+            property.CreatedByUser = user;
             property.Images = new List<PropertyImage>();
             if (images != null && images.Count > 0)
             {
@@ -103,7 +115,18 @@ namespace ImoSphere.Controllers
             }
             var user = await _userManager.GetUserAsync(User);
             var agencyUser = _context.AgencyUsers.FirstOrDefault(au => au.UserId == user.Id);
-            if (agencyUser == null || property.AgencyId != agencyUser.AgencyId)
+            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+            ViewBag.UserRole = isAdmin ? "Admin" : "Comercial";
+            if (isAdmin)
+            {
+                // Lista de comerciais da agência como SelectList
+                var comerciais = await _context.AgencyUsers
+                    .Where(au => au.AgencyId == agencyUser.AgencyId && au.Role == "Comercial")
+                    .Select(au => au.User)
+                    .ToListAsync();
+                ViewBag.Comerciais = new SelectList(comerciais, "Id", "UserName", property.CreatedByUserId);
+            }
+            if (agencyUser == null || property.AgencyId != agencyUser.AgencyId || (!isAdmin && property.CreatedByUserId != user.Id))
             {
                 return Forbid();
             }
@@ -116,42 +139,52 @@ namespace ImoSphere.Controllers
         [Authorize(Roles = "Admin,Comercial")]
         public async Task<IActionResult> Edit(int id, Property property, List<IFormFile> images, List<int> removeImageIds)
         {
-            System.Diagnostics.Debug.WriteLine("---- RECEBIDO DO FORM ----");
-            System.Diagnostics.Debug.WriteLine($"Name: {property.Name}");
-            System.Diagnostics.Debug.WriteLine($"Description: {property.Description}");
-            System.Diagnostics.Debug.WriteLine($"Price: {property.Price}");
-            System.Diagnostics.Debug.WriteLine($"Bedrooms: {property.Bedrooms}");
-            System.Diagnostics.Debug.WriteLine($"Bathrooms: {property.Bathrooms}");
-            System.Diagnostics.Debug.WriteLine($"Area: {property.Area}");
-            System.Diagnostics.Debug.WriteLine($"Location: {property.Location}");
-            System.Diagnostics.Debug.WriteLine($"YearBuilt: {property.YearBuilt}");
-            System.Diagnostics.Debug.WriteLine($"Id: {property.Id}");
-
             if (id != property.Id)
             {
                 return BadRequest("Invalid property ID.");
             }
             ModelState.Remove("Agency");
             ModelState.Remove("property.Agency");
-            if (!ModelState.IsValid)
+            // Carregar a propriedade original antes de permissões/validação
+            var existingProperty = await _context.Properties.Include(p => p.Images).FirstOrDefaultAsync(p => p.Id == id);
+            if (existingProperty == null)
             {
-                ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                return View(property);
+                return NotFound("Property not found.");
             }
             var user = await _userManager.GetUserAsync(User);
             var agencyUser = _context.AgencyUsers.FirstOrDefault(au => au.UserId == user.Id);
+            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
             if (agencyUser == null)
             {
                 return Forbid();
             }
-            var existingProperty = await _context.Properties.Include(p => p.Images).FirstOrDefaultAsync(p => p.Id == id);
-            if (existingProperty == null || existingProperty.AgencyId != agencyUser.AgencyId)
+            // Usar os dados da propriedade original para permissões
+            if (existingProperty.AgencyId != agencyUser.AgencyId || (!isAdmin && existingProperty.CreatedByUserId != user.Id))
             {
                 return Forbid();
             }
+            // Remover sempre os erros de validação destes campos antes de validar
+            ModelState.Remove("CreatedByUser");
+            ModelState.Remove("property.CreatedByUser");
+            ModelState.Remove("CreatedByUserId");
+            ModelState.Remove("property.CreatedByUserId");
+            if (!ModelState.IsValid)
+            {
+                if (isAdmin)
+                {
+                    var comerciais = await _context.AgencyUsers
+                        .Where(au => au.AgencyId == agencyUser.AgencyId && au.Role == "Comercial")
+                        .Select(au => au.User)
+                        .ToListAsync();
+                    ViewBag.Comerciais = new SelectList(comerciais, "Id", "UserName");
+                }
+                ViewBag.UserRole = isAdmin ? "Admin" : "Comercial";
+                ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return View(property);
+            }
             try
             {
-                // Atualizar campos básicos
+                // Atualizar campos editáveis
                 existingProperty.Name = property.Name;
                 existingProperty.Description = property.Description;
                 existingProperty.Price = property.Price;
@@ -161,6 +194,17 @@ namespace ImoSphere.Controllers
                 existingProperty.Location = property.Location;
                 existingProperty.YearBuilt = property.YearBuilt;
                 existingProperty.AgencyId = agencyUser.AgencyId;
+                // Só o admin pode alterar o comercial responsável
+                if (isAdmin)
+                {
+                    existingProperty.CreatedByUserId = property.CreatedByUserId;
+                    existingProperty.CreatedByUser = await _context.ApplicationUsers.FindAsync(property.CreatedByUserId);
+                }
+                else
+                {
+                    existingProperty.CreatedByUserId = user.Id;
+                    existingProperty.CreatedByUser = user;
+                }
 
                 // Remover imagens marcadas
                 if (removeImageIds != null && removeImageIds.Count > 0)
@@ -219,7 +263,8 @@ namespace ImoSphere.Controllers
             }
             var user = await _userManager.GetUserAsync(User);
             var agencyUser = _context.AgencyUsers.FirstOrDefault(au => au.UserId == user.Id);
-            if (agencyUser == null || property.AgencyId != agencyUser.AgencyId)
+            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+            if (agencyUser == null || property.AgencyId != agencyUser.AgencyId || (!isAdmin && property.CreatedByUserId != user.Id))
             {
                 return Forbid();
             }

@@ -1,0 +1,54 @@
+@model ImoSphere.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Perfil Admin";
+    var agency = ViewBag.Agency as string;
+    var comerciaisComCasas = ViewBag.ComerciaisComCasas as List<(ImoSphere.Models.ApplicationUser Comercial, List<ImoSphere.Models.Property> Casas)>;
+}
+<h2>Perfil Admin</h2>
+<p><strong>Nome:</strong> @Model.UserName</p>
+<p><strong>Email:</strong> @Model.Email</p>
+<p><strong>Agência:</strong> @agency</p>
+<h3>Comerciais da agência</h3>
+@if (comerciaisComCasas != null && comerciaisComCasas.Any())
+{
+    foreach (var (comercial, casas) in comerciaisComCasas)
+    {
+        <div style="margin-bottom: 2em;">
+            <h4>@comercial.UserName (@comercial.Email)</h4>
+            @if (casas != null && casas.Any())
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Localização</th>
+                            <th>Preço</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var casa in casas)
+                    {
+                        <tr>
+                            <td>@casa.Name</td>
+                            <td>@casa.Location</td>
+                            <td>@casa.Price.ToString("C")</td>
+                            <td>
+                                <a asp-controller="Properties" asp-action="Edit" asp-route-id="@casa.Id" class="btn btn-sm btn-primary">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Este comercial ainda não criou casas.</p>
+            }
+        </div>
+    }
+}
+else
+{
+    <p>Não existem comerciais nesta agência.</p>
+} 

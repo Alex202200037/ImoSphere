@@ -109,6 +109,11 @@ namespace ImoSphere.Data
             // 5. Criar casas para cada agência
             if (!context.Properties.Any())
             {
+                // Obter os comerciais de cada agência
+                var eraComercial = await userManager.FindByEmailAsync("comercial1.era@imosphere.com");
+                var remaxComercial = await userManager.FindByEmailAsync("comercial1.remax@imosphere.com");
+                var centuryComercial = await userManager.FindByEmailAsync("comercial1.century21@imosphere.com");
+
                 var properties = new List<Property>
                 {
                     new Property
@@ -122,6 +127,7 @@ namespace ImoSphere.Data
                         Location = "Downtown",
                         YearBuilt = 2015,
                         AgencyId = agencies.First(a => a.Name == "ERA").Id,
+                        CreatedByUserId = eraComercial?.Id,
                         Images = new List<PropertyImage>
                         {
                             new PropertyImage { ImageUrl = "/images/moradia1.jpg" },
@@ -140,6 +146,7 @@ namespace ImoSphere.Data
                         Location = "Countryside",
                         YearBuilt = 2005,
                         AgencyId = agencies.First(a => a.Name == "REMAX").Id,
+                        CreatedByUserId = remaxComercial?.Id,
                         Images = new List<PropertyImage>
                         {
                             new PropertyImage { ImageUrl = "/images/moradia2.jpg" },
@@ -158,6 +165,7 @@ namespace ImoSphere.Data
                         Location = "Beachfront",
                         YearBuilt = 2020,
                         AgencyId = agencies.First(a => a.Name == "Century21").Id,
+                        CreatedByUserId = centuryComercial?.Id,
                         Images = new List<PropertyImage>
                         {
                             new PropertyImage { ImageUrl = "/images/moradia3.jpg" },

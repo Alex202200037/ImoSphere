@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ImoSphere.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250701171058_FinalSeedFix")]
-    partial class FinalSeedFix
+    [Migration("20250703120646_InitialClean")]
+    partial class InitialClean
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,6 +79,10 @@ namespace ImoSphere.Migrations
                     b.Property<int>("Bedrooms")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("CreatedByUserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -100,6 +104,8 @@ namespace ImoSphere.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AgencyId");
+
+                    b.HasIndex("CreatedByUserId");
 
                     b.ToTable("Properties");
                 });
@@ -359,7 +365,15 @@ namespace ImoSphere.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ImoSphere.Models.ApplicationUser", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Agency");
+
+                    b.Navigation("CreatedByUser");
                 });
 
             modelBuilder.Entity("ImoSphere.Models.PropertyImage", b =>

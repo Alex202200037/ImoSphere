@@ -1,0 +1,41 @@
+@model ImoSphere.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Perfil";
+    var casas = ViewBag.Casas as List<ImoSphere.Models.Property>;
+    var agency = ViewBag.Agency as string;
+}
+<h2>Perfil Comercial</h2>
+<p><strong>Nome:</strong> @Model.UserName</p>
+<p><strong>Email:</strong> @Model.Email</p>
+<p><strong>Agência:</strong> @agency</p>
+<h3>As minhas casas</h3>
+@if (casas != null && casas.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Localização</th>
+                <th>Preço</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var casa in casas)
+        {
+            <tr>
+                <td>@casa.Name</td>
+                <td>@casa.Location</td>
+                <td>@casa.Price.ToString("C")</td>
+                <td>
+                    <a asp-controller="Properties" asp-action="Edit" asp-route-id="@casa.Id" class="btn btn-sm btn-primary">Edit</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Não tem casas criadas.</p>
+} 

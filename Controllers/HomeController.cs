@@ -52,6 +52,7 @@ public class HomeController : Controller
                 userAgency = agencyUser?.Agency?.Name;
                 var roles = await _userManager.GetRolesAsync(user);
                 userRole = roles.FirstOrDefault();
+                ViewBag.UserId = user.Id;
             }
         }
         ViewBag.UserAgency = userAgency;
@@ -123,5 +124,41 @@ public class HomeController : Controller
     public IActionResult AdminUser()
     {
         return View();
+    }
+
+    [Authorize]
+    public async Task<IActionResult> Perfil()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+            return RedirectToAction("Login", "Account");
+        var roles = await _userManager.GetRolesAsync(user);
+        var isAdmin = roles.Contains("Admin");
+        var agencyUser = await _context.AgencyUsers.Include(au => au.Agency).FirstOrDefaultAsync(au => au.UserId == user.Id);
+        if (isAdmin)
+        {
+            // Admin: lista comerciais da agência e casas de cada comercial
+            var comerciais = await _context.AgencyUsers
+                .Where(au => au.AgencyId == agencyUser.AgencyId && au.Role == "Comercial")
+                .Include(au => au.User)
+                .ToListAsync();
+            var comerciaisComCasas = new List<(ApplicationUser Comercial, List<Property> Casas)>();
+            foreach (var comercial in comerciais)
+            {
+                var casas = await _context.Properties.Where(p => p.CreatedByUserId == comercial.UserId).ToListAsync();
+                comerciaisComCasas.Add((comercial.User, casas));
+            }
+            ViewBag.Agency = agencyUser.Agency?.Name;
+            ViewBag.ComerciaisComCasas = comerciaisComCasas;
+            return View("PerfilAdmin", user);
+        }
+        else
+        {
+            // Comercial: lista casas criadas por ele
+            var casas = await _context.Properties.Where(p => p.CreatedByUserId == user.Id).ToListAsync();
+            ViewBag.Agency = agencyUser.Agency?.Name;
+            ViewBag.Casas = casas;
+            return View("PerfilComercial", user);
+        }
     }
 }
