@@ -5,16 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using ImoSphere.Models;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 public class HomeController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-private static List<Message> _messages = new List<Message>();
+    private static List<Message> _messages = new List<Message>();
     private static int _messageIdCounter = 1;
-    public HomeController(ApplicationDbContext context)
+    public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
     public IActionResult Index()
@@ -33,6 +36,26 @@ private static List<Message> _messages = new List<Message>();
             .Include(p => p.Images)
             .Include(p => p.Agency)
             .ToListAsync();
+
+        string userAgency = null;
+        string userRole = null;
+        if (User.Identity.IsAuthenticated)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                var agencyUser = await _context.AgencyUsers
+                    .Where(au => au.UserId == user.Id)
+                    .Include(au => au.Agency)
+                    .FirstOrDefaultAsync();
+
+                userAgency = agencyUser?.Agency?.Name;
+                var roles = await _userManager.GetRolesAsync(user);
+                userRole = roles.FirstOrDefault();
+            }
+        }
+        ViewBag.UserAgency = userAgency;
+        ViewBag.UserRole = userRole;
         return View(properties); 
     }
 

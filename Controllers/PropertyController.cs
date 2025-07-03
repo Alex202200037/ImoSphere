@@ -96,7 +96,7 @@ namespace ImoSphere.Controllers
         [Authorize(Roles = "Admin,Comercial")]
         public async Task<IActionResult> Edit(int id)
         {
-            var property = await _context.Properties.Include(p => p.Images).FirstOrDefaultAsync(p => p.Id == id);
+            var property = await _context.Properties.Include(p => p.Images).Include(p => p.Agency).FirstOrDefaultAsync(p => p.Id == id);
             if (property == null)
             {
                 return NotFound("Property not found.");
@@ -114,14 +114,28 @@ namespace ImoSphere.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Comercial")]
-        public async Task<IActionResult> Edit(int id, Property property, List<IFormFile> images)
+        public async Task<IActionResult> Edit(int id, Property property, List<IFormFile> images, List<int> removeImageIds)
         {
+            System.Diagnostics.Debug.WriteLine("---- RECEBIDO DO FORM ----");
+            System.Diagnostics.Debug.WriteLine($"Name: {property.Name}");
+            System.Diagnostics.Debug.WriteLine($"Description: {property.Description}");
+            System.Diagnostics.Debug.WriteLine($"Price: {property.Price}");
+            System.Diagnostics.Debug.WriteLine($"Bedrooms: {property.Bedrooms}");
+            System.Diagnostics.Debug.WriteLine($"Bathrooms: {property.Bathrooms}");
+            System.Diagnostics.Debug.WriteLine($"Area: {property.Area}");
+            System.Diagnostics.Debug.WriteLine($"Location: {property.Location}");
+            System.Diagnostics.Debug.WriteLine($"YearBuilt: {property.YearBuilt}");
+            System.Diagnostics.Debug.WriteLine($"Id: {property.Id}");
+
             if (id != property.Id)
             {
                 return BadRequest("Invalid property ID.");
             }
+            ModelState.Remove("Agency");
+            ModelState.Remove("property.Agency");
             if (!ModelState.IsValid)
             {
+                ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
                 return View(property);
             }
             var user = await _userManager.GetUserAsync(User);
@@ -146,6 +160,18 @@ namespace ImoSphere.Controllers
                 existingProperty.Area = property.Area;
                 existingProperty.Location = property.Location;
                 existingProperty.YearBuilt = property.YearBuilt;
+                existingProperty.AgencyId = agencyUser.AgencyId;
+
+                // Remover imagens marcadas
+                if (removeImageIds != null && removeImageIds.Count > 0)
+                {
+                    var imagesToRemove = existingProperty.Images.Where(img => removeImageIds.Contains(img.Id)).ToList();
+                    foreach (var img in imagesToRemove)
+                    {
+                        _context.PropertyImages.Remove(img);
+                    }
+                }
+
                 // Upload de novas imagens
                 if (images != null && images.Count > 0)
                 {
@@ -201,6 +227,27 @@ namespace ImoSphere.Controllers
             await _context.SaveChangesAsync();
             TempData["SuccessMessage"] = "Property deleted successfully.";
             return RedirectToAction("Properties", "Home");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Comercial")]
+        public async Task<IActionResult> RemoveImage(int propertyId, int imageId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var agencyUser = _context.AgencyUsers.FirstOrDefault(au => au.UserId == user.Id);
+            var property = await _context.Properties.Include(p => p.Images).FirstOrDefaultAsync(p => p.Id == propertyId);
+            if (property == null || agencyUser == null || property.AgencyId != agencyUser.AgencyId)
+            {
+                return Forbid();
+            }
+            var image = property.Images.FirstOrDefault(i => i.Id == imageId);
+            if (image != null)
+            {
+                _context.PropertyImages.Remove(image);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Edit", new { id = propertyId });
         }
     }
 }

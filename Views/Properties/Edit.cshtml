@@ -10,8 +10,86 @@
     <link rel="stylesheet" type="text/css" href="~/wwwroot/css/style.css" />
 </head>
 
+<style>
+    .image-thumb-container {
+        position: relative;
+        display: inline-block;
+        margin-right: 12px;
+        margin-bottom: 12px;
+        width: 100px;
+        height: 100px;
+        vertical-align: top;
+    }
+    .image-thumb-container img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        display: block;
+    }
+    .remove-checkbox {
+        display: none;
+    }
+    .remove-label {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 24px;
+        height: 24px;
+        background: rgba(220, 53, 69, 0.85);
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+        opacity: 0.8;
+        transition: background 0.2s, opacity 0.2s;
+        z-index: 2;
+        border: 2px solid #fff;
+    }
+    .remove-checkbox:checked + .remove-label {
+        background: #fff;
+        color: #dc3545;
+        border: 2px solid #dc3545;
+        opacity: 1;
+    }
+    .remove-label:hover {
+        opacity: 1;
+        background: #dc3545;
+    }
+</style>
 
-<form asp-action="Edit" method="post" class="contact-form" id="propertyForm">
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+        @foreach (var entry in ViewData.ModelState)
+        {
+            foreach (var error in entry.Value.Errors)
+            {
+                <li>@entry.Key: @error.ErrorMessage</li>
+            }
+        }
+        </ul>
+    </div>
+}
+
+@if (ViewBag.Errors != null && ((List<string>)ViewBag.Errors).Any())
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in (List<string>)ViewBag.Errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
+
+<form asp-action="Edit" method="post" class="contact-form" id="propertyForm" enctype="multipart/form-data">
     <input type="hidden" asp-for="Id" />
 
     <div>
@@ -57,26 +135,32 @@
     <div>
         <label>Images</label>
         <input type="file" name="images" class="form-control" multiple accept="image/*" />
-        @if (Model.Images != null && Model.Images.Any())
-        {
-            <div class="mt-2">
-                <p>Existing Images:</p>
-                <div class="d-flex flex-wrap gap-2">
-                    @foreach (var img in Model.Images)
-                    {
-                        <img src="@img.ImageUrl" alt="Image" style="max-width: 100px; max-height: 100px; border-radius: 8px;" />
-                    }
-                </div>
-            </div>
-        }
     </div>
+
+    @if (Model.Images != null && Model.Images.Any())
+    {
+        <div class="mt-2">
+            <p>Existing Images:</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0;">
+                @for (int i = 0; i < Model.Images.Count(); i++)
+                {
+                    var img = Model.Images.ElementAt(i);
+                    <div class="image-thumb-container">
+                        <img src="@img.ImageUrl" alt="Image" />
+                        <input type="checkbox" name="removeImageIds" value="@img.Id" id="remove-img-@img.Id" class="remove-checkbox" />
+                        <label for="remove-img-@img.Id" class="remove-label" title="Marcar para remover">&times;</label>
+                    </div>
+                }
+            </div>
+            <small>Selecione as imagens a remover e clique em "Save Changes".</small>
+        </div>
+    }
 
     <div class="d-flex justify-content-between w-100">
         <button type="submit" class="btn btn-secondary w-50 me-2">Save Changes</button>
         <a asp-controller="Home" asp-action="Properties" class="btn btn-secondary w-50">Cancel</a>
     </div>
 </form>
-
 
 @if (TempData["SuccessMessage"] != null)
 {
