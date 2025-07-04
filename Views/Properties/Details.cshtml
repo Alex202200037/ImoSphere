@@ -1,32 +1,25 @@
 @model ImoSphere.Models.Property
 
 @{
-    ViewData["Title"] = "Property Details";
+    ViewData["Title"] = "Detalhes da Propriedade";
     bool isSeller = ViewBag.IsSeller ?? false;
+    bool canContact = ViewBag.CanContact ?? false;
+    string comercialName = ViewBag.ComercialName as string;
+    string comercialId = ViewBag.ComercialId as string;
+    string agencyLogo = ViewBag.AgencyLogo as string;
 }
 
 <section class="property-details container">
-    <div class="details-header">
-        <h1 class="text-center">@Model.Name</h1>
+    <div class="details-header d-flex align-items-center" style="gap:18px;justify-content:center;">
+        @if (!string.IsNullOrEmpty(agencyLogo))
+        {
+            <img src="@agencyLogo" alt="Agência" style="height:48px;width:auto;max-width:80px;object-fit:contain;vertical-align:middle;" />
+        }
+        <h1 class="text-center" style="margin:0 0 0 12px;font-size:2.1rem;font-weight:700;">@Model.Name</h1>
     </div>
-
-    <div class="details-content">
-        <div class="details-info">
-            <h3>Description</h3>
-            <p>@Model.Description</p>
-
-            <div class="details-meta">
-                <div class="meta-box">
-                    <p><strong>Location:</strong></p>
-                    <p>@Model.Location</p>
-                </div>
-                <div class="meta-box">
-                    <p><strong>Price:</strong></p>
-                    <p>@Model.Price.ToString("C")</p>
-                </div>
-            </div>
-
-            <div class="details-image">
+    <div class="details-content row mt-4">
+        <div class="col-md-7">
+            <div class="details-image mb-4">
                 @if (Model.Images != null && Model.Images.Any())
                 {
                     <div id="propertyCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -34,7 +27,7 @@
                             @for (int i = 0; i < Model.Images.Count; i++)
                             {
                                 <div class="carousel-item @(i == 0 ? "active" : "")">
-                                    <img src="@Url.Content(Model.Images.ElementAt(i).ImageUrl)" alt="@Model.Name" class="d-block w-100 property-image" style="max-height: 400px; object-fit: cover;" />
+                                    <img src="@Url.Content(Model.Images.ElementAt(i).ImageUrl)" alt="@Model.Name" class="d-block w-100 property-image" style="max-height: 400px; object-fit: cover; border-radius:12px;" />
                                 </div>
                             }
                         </div>
@@ -53,19 +46,62 @@
                     <p>No images available.</p>
                 }
             </div>
-
-            <h3>Features</h3>
-            <ul class="property-features">
-                <li><strong>Bedrooms:</strong> @Model.Bedrooms</li>
-                <li><strong>Bathrooms:</strong> @Model.Bathrooms</li>
-                <li><strong>Area:</strong> @Model.Area m²</li>
-                <li><strong>Year Built:</strong> @Model.YearBuilt</li>
-            </ul>
-
+        </div>
+        <div class="col-md-5">
+            <div class="details-meta mb-3">
+                <div class="meta-box" style="min-width:160px;">
+                    <span style="font-size:1.1rem;font-weight:600;">@Model.Location</span>
+                </div>
+                <div class="meta-box" style="min-width:160px;">
+                    <span style="font-size:1.1rem;font-weight:600;color:var(--secondary-color);">@Model.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("pt-PT"))</span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <h4 style="font-size:1.15rem;font-weight:600;">Descrição</h4>
+                <p style="color:#bbb;">@Model.Description</p>
+            </div>
+            <div class="mb-3">
+                <h4 style="font-size:1.15rem;font-weight:600;">Características</h4>
+                <ul class="property-features d-flex flex-wrap gap-3" style="list-style:none;padding:0;">
+                    <li><span title="Quartos">🛏️</span> <b>@Model.Bedrooms</b></li>
+                    <li><span title="WC's">🛁</span> <b>@Model.Bathrooms</b></li>
+                    <li><span title="Área">📐</span> <b>@Model.Area m²</b></li>
+                    <li><span title="Ano">🏗️</span> <b>@Model.YearBuilt</b></li>
+                </ul>
+            </div>
+            @if (canContact)
+            {
+                <div class="contact-block p-3 mb-3" style="background:#181818;border-radius:10px;box-shadow:0 2px 8px #0001;">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span style="font-size:1.1rem;font-weight:600;">Comercial responsável:</span>
+                        <span style="font-size:1.1rem;">@comercialName</span>
+                    </div>
+                    @if (ViewBag.HasConversation == true)
+                    {
+                        <a href="/Chat/Index?propertyId=@Model.Id&comercialId=@comercialId" class="btn btn-primary w-100">Abrir Chat</a>
+                    }
+                    else
+                    {
+                        <form method="post" action="/Chat/StartContactSend" class="mb-2">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="propertyId" value="@Model.Id" />
+                            <input type="hidden" name="comercialId" value="@comercialId" />
+                            <textarea name="message" class="form-control mb-2" rows="2" placeholder="Escreva a sua mensagem para o comercial..." required style="resize:none;"></textarea>
+                            <button type="submit" class="btn btn-primary w-100">Contactar via Chat</button>
+                        </form>
+                    }
+                </div>
+            }
             @if (isSeller)
             {
-                <a class="btn btn-primary" href="/Properties/Edit/@Model.Id">Edit Property</a>
+                <a class="btn btn-outline-warning w-100" href="/Properties/Edit/@Model.Id">Editar Propriedade</a>
             }
         </div>
     </div>
 </section>
+<style>
+    .details-header { margin-bottom: 18px; }
+    .meta-box { background: #232323; border-radius: 8px; padding: 12px 18px; margin-bottom: 10px; text-align: center; }
+    .property-features li { background: #232323; border-radius: 6px; padding: 7px 14px; font-size: 1.05rem; color: #e0e0e0; margin-bottom: 6px; }
+    .contact-block { border: 1px solid #232323; }
+</style>

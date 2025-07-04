@@ -32,7 +32,10 @@
 
             @if (User.Identity.IsAuthenticated)
             {
-                <a href="@Url.Action("Index", "Chat")" class="contact-btn">Chat</a>
+                <a href="@Url.Action("Index", "Chat")" class="contact-btn" id="chatLink">
+                    Chat
+                    <span id="unreadBadge" class="unread-badge" style="display:none;background:var(--secondary-color);color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;margin-left:5px;"></span>
+                </a>
                 <a href="@Url.Action("Perfil", "Home")" class="contact-btn">Profile</a>
                 <form action="@Url.Action("Logout", "Account")" method="post" style="display:inline;">
                     @Html.AntiForgeryToken()
@@ -62,6 +65,55 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+        <script>
+            // Notificações globais para utilizadores autenticados
+            const globalConnection = new signalR.HubConnectionBuilder()
+                .withUrl("/chatHub")
+                .build();
+            
+            globalConnection.on("ReceiveNotification", (message, count) => {
+                const badge = document.getElementById("unreadBadge");
+                if (badge) {
+                    badge.textContent = count;
+                    badge.style.display = count > 0 ? "inline-flex" : "none";
+                }
+                
+                // Mostrar notificação toast
+                if (count > 0) {
+                    showToast("Nova mensagem recebida!", "info");
+                }
+            });
+            
+            globalConnection.start().then(() => {
+                // Entrar no grupo global do utilizador
+                const userId = "@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value";
+                if (userId) {
+                    globalConnection.invoke("JoinUserGroup", userId).catch(err => console.error(err.toString()));
+                }
+            }).catch(err => console.error(err.toString()));
+            
+            function showToast(message, type = "info") {
+                // Criar toast notification
+                const toast = document.createElement("div");
+                toast.className = `toast-notification ${type}`;
+                toast.innerHTML = `
+                    <div style="background:#181818;border:1px solid #333;border-radius:8px;padding:12px 16px;margin:10px;box-shadow:0 4px 12px #0003;color:#e0e0e0;font-size:0.9rem;">
+                        ${message}
+                    </div>
+                `;
+                toast.style.cssText = "position:fixed;top:20px;right:20px;z-index:9999;animation:slideIn 0.3s ease;";
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.animation = "slideOut 0.3s ease";
+                    setTimeout(() => document.body.removeChild(toast), 300);
+                }, 3000);
+            }
+        </script>
+    }
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

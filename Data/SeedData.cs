@@ -8,9 +8,19 @@ namespace ImoSphere.Data
     {
         public static async Task Initialize(IServiceProvider serviceProvider, ApplicationDbContext context)
         {
+            // VERIFICAÇÃO INICIAL: Se já existem propriedades, não fazer seed
+            if (context.Properties.Any())
+            {
+                Console.WriteLine("[SEED] Base de dados já contém dados. Skipping seed.");
+                return;
+            }
+
+            Console.WriteLine("[SEED] Iniciando seed de dados...");
+
             // 1. Criar imobiliárias
             if (!context.Agencies.Any())
             {
+                Console.WriteLine("[SEED] Criando agências...");
                 context.Agencies.AddRange(
                     new Agency { Name = "ERA" },
                     new Agency { Name = "REMAX" },
@@ -19,6 +29,7 @@ namespace ImoSphere.Data
                     new Agency { Name = "Fine and Country" }
                 );
                 await context.SaveChangesAsync();
+                Console.WriteLine("[SEED] Agências criadas com sucesso.");
             }
 
             var agencies = context.Agencies.ToList();
@@ -33,6 +44,7 @@ namespace ImoSphere.Data
                 if (!await roleManager.RoleExistsAsync(role))
                 {
                     await roleManager.CreateAsync(new IdentityRole(role));
+                    Console.WriteLine($"[SEED] Role '{role}' criada.");
                 }
             }
 
@@ -41,6 +53,7 @@ namespace ImoSphere.Data
             var superAdminUser = await userManager.FindByEmailAsync(superAdminEmail);
             if (superAdminUser == null)
             {
+                Console.WriteLine("[SEED] Criando SuperAdmin...");
                 superAdminUser = new ApplicationUser
                 {
                     UserName = "imosphere.admin",
@@ -51,6 +64,11 @@ namespace ImoSphere.Data
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(superAdminUser, "SuperAdmin");
+                    Console.WriteLine("[SEED] SuperAdmin criado com sucesso.");
+                }
+                else
+                {
+                    Console.WriteLine($"[SEED] Falha a criar SuperAdmin: {string.Join(", ", result.Errors.Select(e => e.Description))}");
                 }
             }
 
@@ -58,6 +76,7 @@ namespace ImoSphere.Data
             var imoSphereAgency = context.Agencies.FirstOrDefault(a => a.Name == "ImoSphere");
             if (imoSphereAgency == null)
             {
+                Console.WriteLine("[SEED] Criando agência ImoSphere...");
                 imoSphereAgency = new Agency { Name = "ImoSphere" };
                 context.Agencies.Add(imoSphereAgency);
                 await context.SaveChangesAsync();
@@ -74,6 +93,7 @@ namespace ImoSphere.Data
                     Role = "SuperAdmin"
                 });
                 await context.SaveChangesAsync();
+                Console.WriteLine("[SEED] SuperAdmin associado à agência ImoSphere.");
             }
 
             // 3. Criar admins e comerciais para cada agência
@@ -141,9 +161,24 @@ namespace ImoSphere.Data
                 new { Nome = "Funchal", Lat = 32.6669, Lng = -16.9241 }
             };
             
-            // Lista de imagens disponíveis
+            // Lista de imagens disponíveis (apenas .jpg e .png para melhor compatibilidade)
             var imagens = new[] {
-                "house-casas-1.png", "casa_de_luxo.jpg", "feature.jpg", "JLF_6309.jpg.webp", "AAFComporta05.jpg", "Imativa_Casa_Carrasco_0013.jpg.webp", "180403355.jpg", "Imagem-de-Destaque-Casas-de-Arroz.jpg", "0151b87c-49b2-4117-9c79-264f2633a6ec.jpg", "ar6.jpg", "images.jpeg", "n7_copiar.jpg", "1bba87_000fdde40f714a8f99b412fd80ecf8a8~mv2.jpeg.avif", "images-2.jpeg", "casa-de-campo-paisagismo-inspirado-jardins-italianos-renata-guastelli-credito-miro-martins-8.jpg", "19TV.jpg.webp", "original.webp", "17ecf3bc3e5cd42c747108943682cf09_12.jpg", "01HMRYZCWGNCVNJ3E3V6B3R9B6.jpg", "a95b817470363d6ec74e72531f039257fe83b8af_600x435.jpg", "FACHADA_1.jpg.webp", "casa-pre-fabricada-150-1.jpg", "images-3.jpeg", "3197765d4430d0a57076bbcabc28904d_10335872.jpg", "b8cfa3_bd5e9a28633e4265b3e4ebcfa35a98a6~mv2.png.avif", "images-4.jpeg", "P466-FOTOS_11-Foto-1024x576.jpg", "images-5.jpeg", "preco-casa-modular-38-01.jpg", "af728a9c-b5a6-4510-9618-29d6fb4cd94e.jpg", "353cd957-94e4-4216-a234-282da200b005-1-1024x696.jpg", "o-charme-e-requinte-das-casas-da-madeira3.jpg", "images-6.jpeg", "01_HCG_blog_INTRO_850x450-1-1.jpg", "casa-pre-fabricada-158-1.jpg", "images-7.jpeg", "Passion-House-M1-by-Architect-11-qdy3pf27lthjzd3r90ytfkna07hbawykiemiut4imk.jpg", "1-6-1.jpg", "BIG-20-EXT-1.jpg", "11-e1725896785207-768x384.jpg", "preco-casa-modular-25-01.jpg", "casas-modernas-2024.webp", "avantecture-0vdrg5pr7ny-unsplash.jpg", "spain-4789793_960_720.jpg", "images-8.jpeg", "galivon-casas-modulares-t3-imocasapronta-2.jpg", "casa_de_madeira_pre-fabricada_de_design_moderno.jpg", "01HMRVW9KQZY4HNH91G9SC97EM.jpg"
+                "house-casas-1.png", "casa_de_luxo.jpg", "feature.jpg", "AAFComporta05.jpg", "180403355.jpg", 
+                "Imagem-de-Destaque-Casas-de-Arroz.jpg", "0151b87c-49b2-4117-9c79-264f2633a6ec.jpg", "ar6.jpg", 
+                "images.jpeg", "n7_copiar.jpg", "images-2.jpeg", 
+                "casa-de-campo-paisagismo-inspirado-jardins-italianos-renata-guastelli-credito-miro-martins-8.jpg", 
+                "17ecf3bc3e5cd42c747108943682cf09_12.jpg", "01HMRYZCWGNCVNJ3E3V6B3R9B6.jpg", 
+                "a95b817470363d6ec74e72531f039257fe83b8af_600x435.jpg", "casa-pre-fabricada-150-1.jpg", 
+                "images-3.jpeg", "3197765d4430d0a57076bbcabc28904d_10335872.jpg", "images-4.jpeg", 
+                "P466-FOTOS_11-Foto-1024x576.jpg", "images-5.jpeg", "preco-casa-modular-38-01.jpg", 
+                "af728a9c-b5a6-4510-9618-29d6fb4cd94e.jpg", "353cd957-94e4-4216-a234-282da200b005-1-1024x696.jpg", 
+                "o-charme-e-requinte-das-casas-da-madeira3.jpg", "images-6.jpeg", 
+                "01_HCG_blog_INTRO_850x450-1-1.jpg", "casa-pre-fabricada-158-1.jpg", "images-7.jpeg", 
+                "Passion-House-M1-by-Architect-11-qdy3pf27lthjzd3r90ytfkna07hbawykiemiut4imk.jpg", "1-6-1.jpg", 
+                "BIG-20-EXT-1.jpg", "11-e1725896785207-768x384.jpg", "preco-casa-modular-25-01.jpg", 
+                "avantecture-0vdrg5pr7ny-unsplash.jpg", "spain-4789793_960_720.jpg", "images-8.jpeg", 
+                "galivon-casas-modulares-t3-imocasapronta-2.jpg", "casa_de_madeira_pre-fabricada_de_design_moderno.jpg", 
+                "01HMRVW9KQZY4HNH91G9SC97EM.jpg", "moradia1.jpg", "moradia2.jpg", "moradia3.jpg"
             };
             
             var imgIdx = 0;
@@ -268,12 +303,14 @@ namespace ImoSphere.Data
             }
             
             await context.SaveChangesAsync();
+            Console.WriteLine($"[SEED] {context.Properties.Count()} propriedades criadas com sucesso.");
 
             // 4. Criar utilizador comum sem agência
             var userEmail = "user@imosphere.com";
             var regularUser = await userManager.FindByEmailAsync(userEmail);
             if (regularUser == null)
             {
+                Console.WriteLine("[SEED] Criando utilizador comum...");
                 regularUser = new ApplicationUser
                 {
                     UserName = "RegularUser",
@@ -284,8 +321,15 @@ namespace ImoSphere.Data
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(regularUser, "User");
+                    Console.WriteLine("[SEED] Utilizador comum criado com sucesso.");
+                }
+                else
+                {
+                    Console.WriteLine($"[SEED] Falha a criar utilizador comum: {string.Join(", ", result.Errors.Select(e => e.Description))}");
                 }
             }
+
+            Console.WriteLine("[SEED] Seed de dados concluído com sucesso!");
         }
     }
 }

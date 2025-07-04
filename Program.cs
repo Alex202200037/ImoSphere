@@ -49,12 +49,27 @@ app.MapControllerRoute(
 
 app.MapHub<ChatHub>("/chatHub");
 
-// Seeding de dados
+// Seeding de dados - CORRIGIDO: Migrations primeiro, depois seed
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationDbContext>();
-    await SeedData.Initialize(services, context);  // Chamando o método de seeding diretamente pela classe
+    
+    try
+    {
+        Console.WriteLine("[STARTUP] Aplicando migrações...");
+        context.Database.Migrate();
+        Console.WriteLine("[STARTUP] Migrações aplicadas com sucesso.");
+        
+        Console.WriteLine("[STARTUP] Iniciando seed de dados...");
+        await SeedData.Initialize(services, context);
+        Console.WriteLine("[STARTUP] Seed de dados concluído.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"[STARTUP] Erro durante inicialização: {ex.Message}");
+        throw;
+    }
 }
 
 app.Run();

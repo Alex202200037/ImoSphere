@@ -1,4 +1,4 @@
-@model IEnumerable<ImoSphere.Models.Property>
+@model ImoSphere.Models.PropertyFilterViewModel
 @using System.Linq
 @{
     ViewData["Title"] = "Properties";
@@ -8,76 +8,330 @@
     var userId = ViewBag.UserId as string;
 }
 
-<h1 class="text-center">Our Properties</h1>
-<p style="text-align: center;">
-    Explore the wide variety of properties available with ImoSphere. Find your dream home today!
-</p>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar de Filtros -->
+        <div class="col-md-3">
+            <div class="card filter-sidebar">
+                <div class="card-header">
+                    <h5 class="mb-0">🔍 Filtros</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get" id="filterForm">
+                        @if (Model.ShowMap)
+                        {
+                            <input type="hidden" name="showMap" value="true" />
+                        }
+                        <!-- Preço -->
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Preço (€)</strong></label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="minPrice" placeholder="Min" value="@Model.MinPrice" />
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="maxPrice" placeholder="Max" value="@Model.MaxPrice" />
+                                </div>
+                            </div>
+                        </div>
 
-@if (userRole == "Admin" || userRole == "Comercial" || userRole == "SuperAdmin")
-{
-    <div class="text-center mb-3">
-        <a href="@Url.Action("Create", "Properties")" class="btn btn-success">➕ Add New Property</a>
-    </div>
-}
+                        <!-- WC's -->
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Nº de WC's</strong></label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="minBathrooms" placeholder="Min" value="@Model.MinBathrooms" />
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="maxBathrooms" placeholder="Max" value="@Model.MaxBathrooms" />
+                                </div>
+                            </div>
+                        </div>
 
-<div class="property-list">
-@foreach (var property in Model)
-{
-    <div class="property-item">
-        <div style="position: relative; display: inline-block;">
-            @if (property.Images != null && property.Images.Any())
+                        <!-- Quartos -->
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Nº de Quartos</strong></label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="minBedrooms" placeholder="Min" value="@Model.MinBedrooms" />
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="maxBedrooms" placeholder="Max" value="@Model.MaxBedrooms" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Área -->
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Área (m²)</strong></label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="minArea" placeholder="Min" value="@Model.MinArea" />
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="maxArea" placeholder="Max" value="@Model.MaxArea" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ano de Construção -->
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Ano de Construção</strong></label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="minYearBuilt" placeholder="Min" value="@Model.MinYearBuilt" />
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="maxYearBuilt" placeholder="Max" value="@Model.MaxYearBuilt" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Localização -->
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Localização</strong></label>
+                            <input type="text" class="form-control" name="location" placeholder="Ex: Lisboa, Porto..." value="@Model.Location" />
+                        </div>
+
+                        <!-- Agências -->
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Agências</strong></label>
+                            @foreach (var agency in Model.AvailableAgencies)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="agencyIds" value="@agency.Id" 
+                                           @(Model.AgencyIds.Contains(agency.Id) ? "checked" : "") />
+                                    <label class="form-check-label">@agency.Name</label>
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Ordenação -->
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Ordenar por</strong></label>
+                            <select class="form-select" name="sortBy">
+                                @if (Model.SortBy == "Name")
+                                {
+                                    <option value="Name" selected>Nome</option>
+                                }
+                                else
+                                {
+                                    <option value="Name">Nome</option>
+                                }
+                                @if (Model.SortBy == "Price")
+                                {
+                                    <option value="Price" selected>Preço</option>
+                                }
+                                else
+                                {
+                                    <option value="Price">Preço</option>
+                                }
+                                @if (Model.SortBy == "Area")
+                                {
+                                    <option value="Area" selected>Área</option>
+                                }
+                                else
+                                {
+                                    <option value="Area">Área</option>
+                                }
+                                @if (Model.SortBy == "Bedrooms")
+                                {
+                                    <option value="Bedrooms" selected>Quartos</option>
+                                }
+                                else
+                                {
+                                    <option value="Bedrooms">Quartos</option>
+                                }
+                                @if (Model.SortBy == "Bathrooms")
+                                {
+                                    <option value="Bathrooms" selected>WC's</option>
+                                }
+                                else
+                                {
+                                    <option value="Bathrooms">WC's</option>
+                                }
+                                @if (Model.SortBy == "YearBuilt")
+                                {
+                                    <option value="YearBuilt" selected>Ano</option>
+                                }
+                                else
+                                {
+                                    <option value="YearBuilt">Ano</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Ordem</strong></label>
+                            <select class="form-select" name="sortOrder">
+                                @if (Model.SortOrder == "asc")
+                                {
+                                    <option value="asc" selected>Crescente</option>
+                                }
+                                else
+                                {
+                                    <option value="asc">Crescente</option>
+                                }
+                                @if (Model.SortOrder == "desc")
+                                {
+                                    <option value="desc" selected>Decrescente</option>
+                                }
+                                else
+                                {
+                                    <option value="desc">Decrescente</option>
+                                }
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">🔍 Aplicar Filtros</button>
+                        <a href="@Url.Action("Properties", "Home")" class="btn btn-outline-secondary w-100 mt-2">🔄 Limpar Filtros</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1>🏠 Nossas Propriedades</h1>
+                <div>
+                    @if (userRole == "Admin" || userRole == "Comercial" || userRole == "SuperAdmin")
+                    {
+                        <a href="@Url.Action("Create", "Properties")" class="btn btn-success">➕ Adicionar Propriedade</a>
+                    }
+                    <a href="@Url.Action("Properties", "Home", new { showMap = !Model.ShowMap, minPrice = Model.MinPrice, maxPrice = Model.MaxPrice, minBathrooms = Model.MinBathrooms, maxBathrooms = Model.MaxBathrooms, minBedrooms = Model.MinBedrooms, maxBedrooms = Model.MaxBedrooms, minArea = Model.MinArea, maxArea = Model.MaxArea, minYearBuilt = Model.MinYearBuilt, maxYearBuilt = Model.MaxYearBuilt, location = Model.Location, agencyIds = Model.AgencyIds, sortBy = Model.SortBy, sortOrder = Model.SortOrder })" class="btn btn-outline-info ms-2">@((Model.ShowMap ? "Ver Lista" : "Ver no Mapa"))</a>
+                </div>
+            </div>
+
+            <!-- Barra de Resultados -->
+            <div class="alert alert-info results-header">
+                <span class="results-count">@Model.FilteredResults</span> de <strong>@Model.TotalResults</strong> propriedades encontradas
+            </div>
+
+            @if (Model.ShowMap)
             {
-                <img src="@Url.Content(property.Images.First().ImageUrl)" alt="@property.Name" class="property-image" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px;" />
+                <div id="propertiesMap" style="width: 100%; height: 600px; border-radius: 12px; margin-bottom: 32px;"></div>
+                <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+                <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var map = L.map('propertiesMap').setView([39.5, -8.0], 7);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            attribution: '© OpenStreetMap'
+                        }).addTo(map);
+                        var properties = [
+                            @foreach (var p in Model.Properties.Where(p => p.Latitude.HasValue && p.Longitude.HasValue))
+                            {
+                                var agencyLogo = p.Agency?.Name != null ? $"/images/{p.Agency.Name.ToLower()}.png" : null;
+                                <text>{
+                                    id: @p.Id,
+                                    name: '@p.Name.Replace("'", "\'")',
+                                    price: '@p.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("pt-PT"))',
+                                    location: '@p.Location.Replace("'", "\'")',
+                                    image: '@(p.Images?.FirstOrDefault()?.ImageUrl ?? "/images/placeholder.png")',
+                                    lat: @p.Latitude.Value.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                                    lng: @p.Longitude.Value.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                                    agencyLogo: '@agencyLogo'
+                                },</text>
+                            }
+                        ];
+                        // Offset para pins sobrepostos
+                        var coordMap = {};
+                        properties.forEach(function (prop) {
+                            var key = prop.lat + ',' + prop.lng;
+                            if (!coordMap[key]) coordMap[key] = 0;
+                            var offset = coordMap[key] * 0.0001; // ~10m
+                            coordMap[key]++;
+                            var lat = parseFloat(prop.lat) + offset;
+                            var lng = parseFloat(prop.lng) + offset;
+                            // Custom icon com logo da agência
+                            var iconHtml = `<div style='position:relative;width:38px;height:48px;'>` +
+                                `<img src='https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png' style='width:38px;height:48px;filter:drop-shadow(0 2px 4px #0003);'/>` +
+                                (prop.agencyLogo ? `<img src='${prop.agencyLogo}' style='position:absolute;top:6px;left:7px;width:24px;height:24px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px #0002;'/>` : '') +
+                                `</div>`;
+                            var customIcon = L.divIcon({
+                                html: iconHtml,
+                                iconSize: [38, 48],
+                                className: ''
+                            });
+                            var marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
+                            var popupHtml = `<div style='min-width:180px;max-width:220px;text-align:center;'>` +
+                                `<img src='${prop.image}' style='width:100%;height:100px;object-fit:cover;border-radius:8px;margin-bottom:6px;' />` +
+                                `<div style='font-weight:600;margin-bottom:2px;'>${prop.name}</div>` +
+                                `<div style='color:#888;font-size:0.95em;margin-bottom:2px;'>${prop.location}</div>` +
+                                `<div style='color:#7c3aed;font-weight:600;margin-bottom:4px;'>${prop.price}</div>` +
+                                `<a href='/Properties/Details/${prop.id}' class='btn btn-primary btn-sm' style='margin-top:4px;'>Ver detalhes</a>` +
+                                `</div>`;
+                            marker.bindPopup(popupHtml);
+                        });
+                    });
+                </script>
             }
             else
             {
-                <img src="@Url.Content("/images/placeholder.png")" alt="No image" class="property-image" style="max-height:200px;object-fit:cover;" />
+                <!-- Lista de Propriedades -->
+                <div class="property-list grid-clean">
+@foreach (var property in Model.Properties)
+{
+    <div class="property-item clean-card">
+        <div style="position: relative; display: block;">
+            @if (property.Images != null && property.Images.Any())
+            {
+                <img src="@Url.Content(property.Images.First().ImageUrl)" alt="@property.Name" class="property-image" />
             }
-            <div style="position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.8); border-radius: 6px; padding: 2px 8px;">
+            else
+            {
+                <img src="@Url.Content("/images/placeholder.png")" alt="No image" class="property-image" />
+            }
+            <div style="position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.7); border-radius: 6px; padding: 2px 8px;">
                 @{
                     var agencyName = property.Agency?.Name ?? "";
                     var logoFile = $"/images/{agencyName.ToLower()}.png";
                 }
-                <img src="@Url.Content(logoFile)" alt="@agencyName Logo" style="height: 32px; max-width: 60px; object-fit: contain;" onerror="this.style.display='none';this.parentElement.innerHTML='@agencyName';" />
+                <img src="@Url.Content(logoFile)" alt="@agencyName Logo" style="height: 28px; max-width: 50px; object-fit: contain;" onerror="this.style.display='none';this.parentElement.innerHTML='@agencyName';" />
             </div>
         </div>
-        <h2>@property.Name</h2>
+        <h2 style="font-size:1.1rem;font-weight:600;margin:10px 0 5px 0;">@property.Name</h2>
         <ul class="property-home-features">
-            <li>@property.Bedrooms Bedrooms</li>
-            <li>@property.Bathrooms Bathrooms</li>
-            <li>@property.Area sq ft</li>
+            <li>@property.Bedrooms quartos</li>
+            <li>@property.Bathrooms WC's</li>
+            <li>@property.Area m²</li>
             <li>@property.Location</li>
-            <li>Built in @property.YearBuilt</li>
+            <li>Construída em @property.YearBuilt</li>
         </ul>
-        <p>@property.Description</p>
-
+        <p style="font-size:0.95rem;min-height:60px;">@property.Description</p>
         <div>
-            <p id="price"><strong>Price:</strong> @property.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("pt-PT"))</p>
+            <p id="price" style="font-size:1.1rem;"><strong>Preço:</strong> @property.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("pt-PT"))</p>
             <div class="button-group d-flex justify-content-center gap-2">
                 @if (isAuthenticated)
                 {
-                    <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">Details</a>
+                    <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">Detalhes</a>
                     if (userRole == "SuperAdmin" || (userRole == "Admin" && property.Agency.Name == userAgency) || (userRole == "Comercial" && property.CreatedByUserId == userId))
                     {
-                        <a href="@Url.Action("Edit", "Properties", new { id = property.Id })" class="btn btn-warning">Edit</a>
+                        <a href="@Url.Action("Edit", "Properties", new { id = property.Id })" class="btn btn-warning">Editar</a>
                     }
                     if (userRole == "SuperAdmin" || (userRole == "Admin" && property.Agency.Name == userAgency))
                     {
-                        <form asp-action="Delete" asp-controller="Properties" method="post" class="d-inline-block" onsubmit="return confirm('Are you sure you want to delete this property?');">
+                        <form asp-action="Delete" asp-controller="Properties" method="post" class="d-inline-block" onsubmit="return confirm('Tem a certeza que quer apagar esta propriedade?');">
                             <input type="hidden" name="id" value="@property.Id" />
                             @Html.AntiForgeryToken()
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger">Apagar</button>
                         </form>
                     }
                 }
                 else
                 {
-                    <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">View Details</a>
+                    <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-primary">Ver Detalhes</a>
                 }
             </div>
         </div>
     </div>
 }
+                </div>
+            }
+        </div>
+    </div>
 </div>
 
 @if (TempData["SuccessMessage"] != null)
@@ -93,22 +347,67 @@
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Popup de sucesso
             const popup = document.getElementById('popupOverlay');
-
             if (popup) {
                 popup.style.display = 'flex';
                 popup.style.justifyContent = 'center';
                 popup.style.alignItems = 'center';
-
                 popup.style.opacity = 0;
                 popup.style.transition = "opacity 0.5s ease-in-out";
                 setTimeout(() => popup.style.opacity = 1, 100);
-
                 setTimeout(() => {
                     popup.style.opacity = 0;
                     setTimeout(() => popup.style.display = 'none', 500);
                 }, 1500);
             }
+
+            // Melhorar UX dos filtros
+            const filterForm = document.getElementById('filterForm');
+            const inputs = filterForm.querySelectorAll('input, select');
+            
+            // Auto-submit quando alterar ordenação
+            const sortSelects = filterForm.querySelectorAll('select[name="sortBy"], select[name="sortOrder"]');
+            sortSelects.forEach(select => {
+                select.addEventListener('change', () => {
+                    filterForm.submit();
+                });
+            });
+
+            // Debounce para inputs de texto (localização)
+            let timeout;
+            const locationInput = filterForm.querySelector('input[name="location"]');
+            if (locationInput) {
+                locationInput.addEventListener('input', () => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        filterForm.submit();
+                    }, 1000); // 1 segundo de delay
+                });
+            }
+
+            // Feedback visual para checkboxes de agências
+            const agencyCheckboxes = filterForm.querySelectorAll('input[name="agencyIds"]');
+            agencyCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    // Adicionar classe visual
+                    const label = checkbox.nextElementSibling;
+                    if (checkbox.checked) {
+                        label.style.color = 'var(--secondary-color)';
+                        label.style.fontWeight = 'bold';
+                    } else {
+                        label.style.color = 'var(--primary-color)';
+                        label.style.fontWeight = 'normal';
+                    }
+                });
+            });
+
+            // Mostrar loading ao submeter filtros
+            filterForm.addEventListener('submit', () => {
+                const submitBtn = filterForm.querySelector('button[type="submit"]');
+                submitBtn.innerHTML = '⏳ Aplicando...';
+                submitBtn.disabled = true;
+            });
         });
     </script>
 }

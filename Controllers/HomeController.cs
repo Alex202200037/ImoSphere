@@ -30,15 +30,78 @@ public class HomeController : Controller
         return View();
     }
 
-    public async Task<IActionResult> Properties()
+    public async Task<IActionResult> Properties(
+        decimal? minPrice = null, decimal? maxPrice = null,
+        int? minBathrooms = null, int? maxBathrooms = null,
+        int? minBedrooms = null, int? maxBedrooms = null,
+        int? minArea = null, int? maxArea = null,
+        int? minYearBuilt = null, int? maxYearBuilt = null,
+        string location = null, List<int> agencyIds = null,
+        string sortBy = "Name", string sortOrder = "asc",
+        bool showMap = false)
     {
-        var properties = await _context.Properties
+        var query = _context.Properties
             .Include(p => p.Images)
             .Include(p => p.Agency)
-            .ToListAsync();
+            .AsQueryable();
 
+        // Filtros
+        if (minPrice.HasValue)
+            query = query.Where(p => p.Price >= minPrice.Value);
+        if (maxPrice.HasValue)
+            query = query.Where(p => p.Price <= maxPrice.Value);
+        if (minBathrooms.HasValue)
+            query = query.Where(p => p.Bathrooms >= minBathrooms.Value);
+        if (maxBathrooms.HasValue)
+            query = query.Where(p => p.Bathrooms <= maxBathrooms.Value);
+        if (minBedrooms.HasValue)
+            query = query.Where(p => p.Bedrooms >= minBedrooms.Value);
+        if (maxBedrooms.HasValue)
+            query = query.Where(p => p.Bedrooms <= maxBedrooms.Value);
+        if (minArea.HasValue)
+            query = query.Where(p => p.Area >= minArea.Value);
+        if (maxArea.HasValue)
+            query = query.Where(p => p.Area <= maxArea.Value);
+        if (minYearBuilt.HasValue)
+            query = query.Where(p => p.YearBuilt >= minYearBuilt.Value);
+        if (maxYearBuilt.HasValue)
+            query = query.Where(p => p.YearBuilt <= maxYearBuilt.Value);
+        if (!string.IsNullOrEmpty(location))
+            query = query.Where(p => p.Location.Contains(location));
+        if (agencyIds != null && agencyIds.Any())
+            query = query.Where(p => agencyIds.Contains(p.AgencyId));
+
+        var totalResults = await _context.Properties.CountAsync();
+        var availableAgencies = await _context.Agencies.ToListAsync();
+        var properties = await query.ToListAsync();
+
+        // Corrigir ordenação para SQLite (Price e Area em memória)
+        switch (sortBy.ToLower())
+        {
+            case "price":
+                properties = sortOrder == "asc" ? properties.OrderBy(p => p.Price).ToList() : properties.OrderByDescending(p => p.Price).ToList();
+                break;
+            case "area":
+                properties = sortOrder == "asc" ? properties.OrderBy(p => p.Area).ToList() : properties.OrderByDescending(p => p.Area).ToList();
+                break;
+            case "bedrooms":
+                properties = sortOrder == "asc" ? properties.OrderBy(p => p.Bedrooms).ToList() : properties.OrderByDescending(p => p.Bedrooms).ToList();
+                break;
+            case "bathrooms":
+                properties = sortOrder == "asc" ? properties.OrderBy(p => p.Bathrooms).ToList() : properties.OrderByDescending(p => p.Bathrooms).ToList();
+                break;
+            case "yearbuilt":
+                properties = sortOrder == "asc" ? properties.OrderBy(p => p.YearBuilt).ToList() : properties.OrderByDescending(p => p.YearBuilt).ToList();
+                break;
+            default:
+                properties = sortOrder == "asc" ? properties.OrderBy(p => p.Name).ToList() : properties.OrderByDescending(p => p.Name).ToList();
+                break;
+        }
+
+        // User info
         string userAgency = null;
         string userRole = null;
+        string userId = null;
         if (User.Identity.IsAuthenticated)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -52,12 +115,38 @@ public class HomeController : Controller
                 userAgency = agencyUser?.Agency?.Name;
                 var roles = await _userManager.GetRolesAsync(user);
                 userRole = roles.FirstOrDefault();
-                ViewBag.UserId = user.Id;
+                userId = user.Id;
             }
         }
+
+        var filterModel = new PropertyFilterViewModel
+        {
+            MinPrice = minPrice,
+            MaxPrice = maxPrice,
+            MinBathrooms = minBathrooms,
+            MaxBathrooms = maxBathrooms,
+            MinBedrooms = minBedrooms,
+            MaxBedrooms = maxBedrooms,
+            MinArea = minArea,
+            MaxArea = maxArea,
+            MinYearBuilt = minYearBuilt,
+            MaxYearBuilt = maxYearBuilt,
+            Location = location,
+            AgencyIds = agencyIds ?? new List<int>(),
+            SortBy = sortBy,
+            SortOrder = sortOrder,
+            Properties = properties,
+            AvailableAgencies = availableAgencies,
+            TotalResults = totalResults,
+            FilteredResults = properties.Count,
+            ShowMap = showMap
+        };
+
         ViewBag.UserAgency = userAgency;
         ViewBag.UserRole = userRole;
-        return View(properties); 
+        ViewBag.UserId = userId;
+        
+        return View(filterModel);
     }
 
     public IActionResult Services()
