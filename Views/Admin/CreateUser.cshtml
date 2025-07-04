@@ -64,16 +64,32 @@
         <div class="form-group">
             <label for="agencyId">Agency</label>
             <select id="agencyId" name="agencyId" class="form-control">
-                <option value="">No agency (normal user)</option>
+                <option value="">Sem agência</option>
                 @foreach (var agency in agencies) {
                     <option value="@agency.Id">@agency.Name</option>
                 }
             </select>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var roleSelect = document.getElementById('role');
+                var agencySelect = document.getElementById('agencyId');
+                function toggleAgency() {
+                    if (roleSelect.value === 'Comercial' || roleSelect.value === 'Admin') {
+                        agencySelect.disabled = false;
+                    } else {
+                        agencySelect.value = '';
+                        agencySelect.disabled = true;
+                    }
+                }
+                roleSelect.addEventListener('change', toggleAgency);
+                toggleAgency(); // inicial
+            });
+        </script>
     } else {
         <div class="form-group">
             <label for="agency">Agency</label>
-            <input type="text" id="agency" class="form-control" value="@User?.Identity?.Name's agency (fixed)" disabled />
+            <input type="text" id="agency" class="form-control" value="@ViewBag.AdminAgencyName" disabled />
         </div>
     }
 
