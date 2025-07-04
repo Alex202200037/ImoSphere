@@ -22,7 +22,8 @@
             {
                 foreach (var comercial in (SelectList)ViewBag.AgencyComerciais)
                 {
-                    <option value="@comercial.Value" @(safeModel.CreatedByUserId == comercial.Value ? "selected" : "")>@comercial.Text</option>
+                    var isSelected = safeModel.CreatedByUserId == comercial.Value;
+                    @:<text><option value="@comercial.Value"@(isSelected ? " selected=\"selected\"" : "")>@comercial.Text</option></text>
                 }
             }
         </select>
