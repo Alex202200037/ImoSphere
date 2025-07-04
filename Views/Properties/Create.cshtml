@@ -3,6 +3,12 @@
 @{
     ViewData["Title"] = "Add New Property";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var propertyModel = Model ?? new ImoSphere.Models.Property();
+    var viewData = new ViewDataDictionary(ViewData);
+    viewData.Remove("UserRole");
+    viewData.Remove("IsCreate");
+    viewData["UserRole"] = ViewBag.UserRole;
+    viewData["IsCreate"] = ViewBag.IsCreate;
 }
 
 <head>
@@ -11,57 +17,113 @@
 
 <h1 class="text-center">Add New Property</h1>
 
-<form asp-action="Create" method="post" class="contact-form" enctype="multipart/form-data">
-    <div>
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-    </div>
-
-    <div>
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-    </div>
-
-    <div>
-        <label asp-for="Price"></label>
-        <input asp-for="Price" class="form-control" />
-    </div>
-
-    <div>
-        <label asp-for="Bedrooms"></label>
-        <input asp-for="Bedrooms" class="form-control" />
-    </div>
-
-    <div>
-        <label asp-for="Bathrooms"></label>
-        <input asp-for="Bathrooms" class="form-control" />
-    </div>
-
-    <div>
-        <label asp-for="YearBuilt"></label>
-        <input asp-for="YearBuilt" class="form-control" />
-    </div>
-
-    <div>
-        <label asp-for="Location"></label>
-        <input asp-for="Location" class="form-control" />
-    </div>
-
-    <div>
-        <label asp-for="Area"></label>
-        <input asp-for="Area" class="form-control" />
-    </div>
-
-    <div>
-        <label>Images</label>
-        <input type="file" name="images" class="form-control" multiple accept="image/*" />
-    </div>
-
+<form asp-action="Create" method="post" class="contact-form" id="propertyForm" enctype="multipart/form-data">
+    @await Html.PartialAsync("_PropertyForm", Model, viewData)
     <div class="d-flex justify-content-between w-100">
-        <button type="submit" class="btn btn-secondary w-50 me-2">Save Property</button>
+        <button type="submit" class="btn btn-secondary w-50 me-2">Add Property</button>
         <a asp-controller="Home" asp-action="Properties" class="btn btn-secondary w-50">Cancel</a>
     </div>
 </form>
+
+<!-- Modal do mapa -->
+<div id="mapModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
+    <div style="background:#222; padding:20px; border-radius:12px; max-width:90vw; max-height:90vh; box-shadow:0 4px 32px #000; position:relative;">
+        <button type="button" id="closeMapBtn" style="position:absolute; top:18px; right:18px; width:36px; height:36px; font-size:1.3em; background:#333; border:none; color:#fff; border-radius:50%; box-shadow:0 2px 8px #0004; z-index:10001; display:flex; align-items:center; justify-content:center; transition:background 0.2s; cursor:pointer;">&times;</button>
+        <div id="map" style="width:60vw; min-width:320px; height:50vh; min-height:300px;"></div>
+    </div>
+</div>
+<style>
+#closeMapBtn:hover {
+    background: #d32f2f !important;
+    color: #fff !important;
+}
+</style>
+@section Scripts {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // --- Autocomplete Nominatim ---
+        let acTimeout;
+        const locInput = document.getElementById('locationInput');
+        const latInput = document.getElementById('latitudeInput');
+        const lngInput = document.getElementById('longitudeInput');
+        let acList = document.createElement('div');
+        acList.style.position = 'absolute';
+        acList.style.background = '#222';
+        acList.style.zIndex = 10000;
+        acList.style.width = locInput.offsetWidth + 'px';
+        acList.style.maxHeight = '200px';
+        acList.style.overflowY = 'auto';
+        acList.style.borderRadius = '0 0 8px 8px';
+        acList.style.boxShadow = '0 4px 16px #0008';
+        acList.style.display = 'none';
+        locInput.parentNode.appendChild(acList);
+        locInput.addEventListener('input', function() {
+            clearTimeout(acTimeout);
+            if (this.value.length < 3) { acList.style.display = 'none'; return; }
+            acTimeout = setTimeout(() => {
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(this.value)}&addressdetails=1&limit=5`)
+                    .then(res => res.json())
+                    .then(data => {
+                        acList.innerHTML = '';
+                        data.forEach(item => {
+                            let opt = document.createElement('div');
+                            opt.textContent = item.display_name;
+                            opt.style.padding = '8px';
+                            opt.style.cursor = 'pointer';
+                            opt.onmouseover = () => opt.style.background = '#444';
+                            opt.onmouseout = () => opt.style.background = '';
+                            opt.onclick = () => {
+                                locInput.value = item.display_name;
+                                latInput.value = item.lat;
+                                lngInput.value = item.lon;
+                                acList.style.display = 'none';
+                            };
+                            acList.appendChild(opt);
+                        });
+                        acList.style.display = data.length ? 'block' : 'none';
+                    });
+            }, 300);
+        });
+        document.addEventListener('click', e => { if (!acList.contains(e.target) && e.target !== locInput) acList.style.display = 'none'; });
+        // --- Modal do mapa ---
+        const mapModal = document.getElementById('mapModal');
+        const openMapBtn = document.getElementById('openMapBtn');
+        const closeMapBtn = document.getElementById('closeMapBtn');
+        let map, marker;
+        openMapBtn.onclick = function() {
+            mapModal.style.display = 'flex';
+            setTimeout(() => { if (!map) initMap(); else map.invalidateSize(); }, 100);
+        };
+        closeMapBtn.onclick = function() { mapModal.style.display = 'none'; };
+        function initMap() {
+            let lat = parseFloat(latInput.value) || 38.7223;
+            let lng = parseFloat(lngInput.value) || -9.1393;
+            map = L.map('map').setView([lat, lng], 7);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+            marker = L.marker([lat, lng], {draggable:true}).addTo(map);
+            marker.on('dragend', function(e) {
+                let pos = marker.getLatLng();
+                latInput.value = pos.lat;
+                lngInput.value = pos.lng;
+                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.lat}&lon=${pos.lng}&format=json`)
+                    .then(res => res.json())
+                    .then(data => { locInput.value = data.display_name || `${pos.lat},${pos.lng}`; });
+            });
+            map.on('click', function(e) {
+                marker.setLatLng(e.latlng);
+                latInput.value = e.latlng.lat;
+                lngInput.value = e.latlng.lng;
+                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${e.latlng.lat}&lon=${e.latlng.lng}&format=json`)
+                    .then(res => res.json())
+                    .then(data => { locInput.value = data.display_name || `${e.latlng.lat},${e.latlng.lng}`; });
+            });
+        }
+    </script>
+}
 
 @if (TempData["SuccessMessage"] != null)
 {

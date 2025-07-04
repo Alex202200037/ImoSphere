@@ -27,6 +27,9 @@ namespace ImoSphere.Models
         public string CreatedByUserId { get; set; }
         public ApplicationUser CreatedByUser { get; set; }
 
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+
         public Property()
         {
             Images = new List<PropertyImage>();

@@ -1,0 +1,296 @@
+@model ImoSphere.Models.Property
+@{
+    var safeModel = Model ?? new ImoSphere.Models.Property();
+    var isCreate = ViewBag.IsCreate != null && (bool)ViewBag.IsCreate;
+    var isEdit = !isCreate;
+    var userRole = ViewBag.UserRole as string;
+}
+<div style="color: #ff0; background: #222; padding: 4px 8px; font-size: 0.95em; margin-bottom: 8px;">
+    DEBUG: userRole=@userRole, isCreate=@isCreate
+</div>
+@if (userRole == "SuperAdmin" && isCreate)
+{
+    <div>
+        <label for="AgencyId">Agência</label>
+        @Html.DropDownListFor(m => m.AgencyId, (SelectList)ViewBag.Agencies, "Selecione a agência", new { @class = "form-control", id = "agencyDropdown" })
+    </div>
+    <div>
+        <label for="CreatedByUserId">Comercial Responsável</label>
+        <select id="comercialDropdown" name="CreatedByUserId" class="form-control">
+            <option value="">Selecione o comercial</option>
+            @if (ViewBag.AgencyComerciais != null)
+            {
+                foreach (var comercial in (SelectList)ViewBag.AgencyComerciais)
+                {
+                    <option value="@comercial.Value" @(safeModel.CreatedByUserId == comercial.Value ? "selected" : "")>@comercial.Text</option>
+                }
+            }
+        </select>
+    </div>
+    <script>
+        function loadComerciais(agencyId) {
+            var comercialDropdown = document.getElementById('comercialDropdown');
+            comercialDropdown.innerHTML = '';
+            var defaultOpt = document.createElement('option');
+            defaultOpt.value = '';
+            defaultOpt.text = 'Selecione o comercial';
+            comercialDropdown.appendChild(defaultOpt);
+            if (!agencyId) return;
+            fetch('/Properties/GetComerciaisByAgency?agencyId=' + agencyId)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(function (user) {
+                        var opt = document.createElement('option');
+                        opt.value = user.id;
+                        opt.text = user.userName;
+                        comercialDropdown.appendChild(opt);
+                    });
+                });
+        }
+        document.getElementById('agencyDropdown').addEventListener('change', function () {
+            loadComerciais(this.value);
+        });
+    </script>
+}
+else if (userRole == "SuperAdmin" && isEdit)
+{
+    <div>
+        <label>Agência</label>
+        <input type="text" class="form-control" value="@safeModel.Agency?.Name" readonly />
+    </div>
+    <div>
+        <label>Comercial Responsável</label>
+        <input type="text" class="form-control" value="@safeModel.CreatedByUser?.UserName" readonly />
+    </div>
+}
+else if (userRole == "Admin")
+{
+    <div>
+        <label>Agência</label>
+        <input type="text" class="form-control" value="@safeModel.Agency?.Name" readonly />
+    </div>
+    <div>
+        <label for="CreatedByUserId">Comercial Responsável</label>
+        @Html.DropDownListFor(m => m.CreatedByUserId, (SelectList)ViewBag.Comerciais, "Selecione o comercial", new { @class = "form-control" })
+    </div>
+}
+else
+{
+    <div>
+        <label>Agência</label>
+        <input type="text" class="form-control" value="@safeModel.Agency?.Name" readonly />
+    </div>
+    <div>
+        <label>Comercial Responsável</label>
+        <input type="text" class="form-control" value="@safeModel.CreatedByUser?.UserName" readonly />
+    </div>
+}
+<div>
+    <label asp-for="Name"></label>
+    <input asp-for="Name" class="form-control" value="@safeModel.Name" />
+</div>
+<div>
+    <label asp-for="Description"></label>
+    <textarea asp-for="Description" class="form-control">@safeModel.Description</textarea>
+</div>
+<div>
+    <label asp-for="Price"></label>
+    <input asp-for="Price" class="form-control" value="@safeModel.Price" />
+</div>
+<div>
+    <label asp-for="Bedrooms"></label>
+    <input asp-for="Bedrooms" class="form-control" value="@safeModel.Bedrooms" />
+</div>
+<div>
+    <label asp-for="Bathrooms"></label>
+    <input asp-for="Bathrooms" class="form-control" value="@safeModel.Bathrooms" />
+</div>
+<div>
+    <label asp-for="YearBuilt"></label>
+    <input asp-for="YearBuilt" class="form-control" value="@safeModel.YearBuilt" />
+</div>
+<div>
+    <label asp-for="Area"></label>
+    <input asp-for="Area" class="form-control" value="@safeModel.Area" /> m²
+</div>
+<div>
+    <label asp-for="Location"></label>
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <input asp-for="Location" class="form-control" id="locationInput" autocomplete="off" style="flex:1;" value="@safeModel.Location" />
+        <button type="button" id="openMapBtn" class="btn btn-secondary" title="Escolher no mapa">📍</button>
+    </div>
+</div>
+<input type="hidden" name="Latitude" id="latitudeInput" value="@safeModel.Latitude" />
+<input type="hidden" name="Longitude" id="longitudeInput" value="@safeModel.Longitude" />
+@if (isEdit)
+{
+    <input type="hidden" asp-for="Id" value="@safeModel.Id" />
+}
+<div>
+    <label>Images</label>
+    <input type="file" name="images" class="form-control" multiple accept="image/*" />
+</div>
+@if (safeModel.Images != null && safeModel.Images.Any())
+{
+    <div class="mt-2">
+        <p>Existing Images:</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 0;">
+            @for (int i = 0; i < safeModel.Images.Count(); i++)
+            {
+                var img = safeModel.Images.ElementAt(i);
+                <div class="image-thumb-container">
+                    <img src="@img.ImageUrl" alt="Image" />
+                    <input type="checkbox" name="removeImageIds" value="@img.Id" id="remove-img-@img.Id" class="remove-checkbox" />
+                    <label for="remove-img-@img.Id" class="remove-label" title="Marcar para remover">&times;</label>
+                </div>
+            }
+        </div>
+        <small>Selecione as imagens a remover e clique em "Save Changes".</small>
+    </div>
+}
+<!-- Modal do mapa -->
+<div id="mapModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
+    <div style="background:#222; padding:20px; border-radius:12px; max-width:90vw; max-height:90vh; box-shadow:0 4px 32px #000; position:relative;">
+        <button type="button" id="closeMapBtn" style="position:absolute; top:18px; right:18px; width:36px; height:36px; font-size:1.3em; background:#333; border:none; color:#fff; border-radius:50%; box-shadow:0 2px 8px #0004; z-index:10001; display:flex; align-items:center; justify-content:center; transition:background 0.2s; cursor:pointer;">&times;</button>
+        <div id="map" style="width:60vw; min-width:320px; height:50vh; min-height:300px;"></div>
+    </div>
+</div>
+<style>
+#closeMapBtn:hover {
+    background: #d32f2f !important;
+    color: #fff !important;
+}
+.image-thumb-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 12px;
+    margin-bottom: 12px;
+    width: 100px;
+    height: 100px;
+    vertical-align: top;
+}
+.image-thumb-container img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: block;
+}
+.remove-checkbox { display: none; }
+.remove-label {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    background: rgba(220, 53, 69, 0.85);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: background 0.2s, opacity 0.2s;
+    z-index: 2;
+    border: 2px solid #fff;
+}
+.remove-checkbox:checked + .remove-label {
+    background: #fff;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+    opacity: 1;
+}
+.remove-label:hover {
+    opacity: 1;
+    background: #dc3545;
+}
+</style>
+@section Scripts {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // --- Autocomplete Nominatim ---
+        let acTimeout;
+        const locInput = document.getElementById('locationInput');
+        const latInput = document.getElementById('latitudeInput');
+        const lngInput = document.getElementById('longitudeInput');
+        let acList = document.createElement('div');
+        acList.style.position = 'absolute';
+        acList.style.background = '#222';
+        acList.style.zIndex = 10000;
+        acList.style.width = locInput.offsetWidth + 'px';
+        acList.style.maxHeight = '200px';
+        acList.style.overflowY = 'auto';
+        acList.style.borderRadius = '0 0 8px 8px';
+        acList.style.boxShadow = '0 4px 16px #0008';
+        acList.style.display = 'none';
+        locInput.parentNode.appendChild(acList);
+        locInput.addEventListener('input', function() {
+            clearTimeout(acTimeout);
+            if (this.value.length < 3) { acList.style.display = 'none'; return; }
+            acTimeout = setTimeout(() => {
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(this.value)}&addressdetails=1&limit=5`)
+                    .then(res => res.json())
+                    .then(data => {
+                        acList.innerHTML = '';
+                        data.forEach(item => {
+                            let opt = document.createElement('div');
+                            opt.textContent = item.display_name;
+                            opt.style.padding = '8px';
+                            opt.style.cursor = 'pointer';
+                            opt.onmouseover = () => opt.style.background = '#444';
+                            opt.onmouseout = () => opt.style.background = '';
+                            opt.onclick = () => {
+                                locInput.value = item.display_name;
+                                latInput.value = item.lat;
+                                lngInput.value = item.lon;
+                                acList.style.display = 'none';
+                            };
+                            acList.appendChild(opt);
+                        });
+                        acList.style.display = data.length ? 'block' : 'none';
+                    });
+            }, 300);
+        });
+        document.addEventListener('click', e => { if (!acList.contains(e.target) && e.target !== locInput) acList.style.display = 'none'; });
+        // --- Modal do mapa ---
+        const mapModal = document.getElementById('mapModal');
+        const openMapBtn = document.getElementById('openMapBtn');
+        const closeMapBtn = document.getElementById('closeMapBtn');
+        let map, marker;
+        openMapBtn.onclick = function() {
+            mapModal.style.display = 'flex';
+            setTimeout(() => { if (!map) initMap(); else map.invalidateSize(); }, 100);
+        };
+        closeMapBtn.onclick = function() { mapModal.style.display = 'none'; };
+        function initMap() {
+            let lat = parseFloat(latInput.value) || 38.7223;
+            let lng = parseFloat(lngInput.value) || -9.1393;
+            map = L.map('map').setView([lat, lng], 7);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+            marker = L.marker([lat, lng], {draggable:true}).addTo(map);
+            marker.on('dragend', function(e) {
+                let pos = marker.getLatLng();
+                latInput.value = pos.lat;
+                lngInput.value = pos.lng;
+                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.lat}&lon=${pos.lng}&format=json`)
+                    .then(res => res.json())
+                    .then(data => { locInput.value = data.display_name || `${pos.lat},${pos.lng}`; });
+            });
+            map.on('click', function(e) {
+                marker.setLatLng(e.latlng);
+                latInput.value = e.latlng.lat;
+                lngInput.value = e.latlng.lng;
+                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${e.latlng.lat}&lon=${e.latlng.lng}&format=json`)
+                    .then(res => res.json())
+                    .then(data => { locInput.value = data.display_name || `${e.latlng.lat},${e.latlng.lng}`; });
+            });
+        }
+    </script>
+} 
