@@ -474,5 +474,39 @@ namespace ImoSphere.Controllers
                 .ToListAsync();
             return Json(comerciais);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,SuperAdmin")]
+        public async Task<IActionResult> TransferOwner([FromBody] TransferOwnerRequest req)
+        {
+            if (req == null || req.PropertyId <= 0 || string.IsNullOrEmpty(req.NewOwnerId))
+                return Json(new { success = false, message = "Dados inválidos." });
+            var property = await _context.Properties.FindAsync(req.PropertyId);
+            if (property == null)
+                return Json(new { success = false, message = "Propriedade não encontrada." });
+            var user = await _userManager.GetUserAsync(User);
+            var isSuperAdmin = await _userManager.IsInRoleAsync(user, "SuperAdmin");
+            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+            var agencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == user.Id);
+            if (!isSuperAdmin)
+            {
+                if (agencyUser == null || property.AgencyId != agencyUser.AgencyId || !isAdmin)
+                    return Json(new { success = false, message = "Sem permissões para transferir esta propriedade." });
+            }
+            // Validar se newOwnerId é comercial da agência
+            var newOwner = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == req.NewOwnerId && au.AgencyId == property.AgencyId && au.Role == "Comercial");
+            if (newOwner == null)
+                return Json(new { success = false, message = "Novo responsável inválido." });
+            property.CreatedByUserId = req.NewOwnerId;
+            await _context.SaveChangesAsync();
+            return Json(new { success = true });
+        }
+
+        public class TransferOwnerRequest
+        {
+            public int PropertyId { get; set; }
+            public string NewOwnerId { get; set; }
+        }
     }
 }

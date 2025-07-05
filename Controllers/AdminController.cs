@@ -44,13 +44,18 @@ namespace ImoSphere.Controllers
             }
             else
             {
-                // Para Admin: mostrar lista simples dos seus comerciais
+                // Para Admin: mostrar lista simples dos seus comerciais supervisionados
                 var agencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == currentUser.Id);
                 if (agencyUser == null)
                     return Forbid();
-                    
-                var agencyUsers = _context.AgencyUsers.Where(au => au.AgencyId == agencyUser.AgencyId).Select(au => au.UserId).ToList();
-                var users = _userManager.Users.Where(u => agencyUsers.Contains(u.Id)).ToList();
+                
+                // Só os comerciais supervisionados por este admin
+                var supervisedComerciais = _context.AgencyUsers
+                    .Where(au => au.AdminId == currentUser.Id && au.Role == "Comercial")
+                    .Select(au => au.UserId)
+                    .ToList();
+
+                var users = _userManager.Users.Where(u => supervisedComerciais.Contains(u.Id)).ToList();
                 
                 List<UserWithRolesViewModel> userRoles = new();
                 foreach (var user in users)

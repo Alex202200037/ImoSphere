@@ -237,19 +237,27 @@ public class HomeController : Controller
         var agencyUser = await _context.AgencyUsers.Include(au => au.Agency).FirstOrDefaultAsync(au => au.UserId == user.Id);
         if (isAdmin)
         {
-            // Admin: lista comerciais da agência e casas de cada comercial
+            // Admin: lista apenas comerciais supervisionados por ele
             var comerciais = await _context.AgencyUsers
-                .Where(au => au.AgencyId == agencyUser.AgencyId && au.Role == "Comercial")
+                .Where(au => au.AgencyId == agencyUser.AgencyId && au.Role == "Comercial" && au.AdminId == user.Id)
                 .Include(au => au.User)
                 .ToListAsync();
             var comerciaisComCasas = new List<(ApplicationUser Comercial, List<Property> Casas)>();
+            var userRolesList = new List<UserWithRolesViewModel>();
             foreach (var comercial in comerciais)
             {
-                var casas = await _context.Properties.Where(p => p.CreatedByUserId == comercial.UserId).ToListAsync();
+                var casas = await _context.Properties
+                    .Where(p => p.CreatedByUserId == comercial.UserId)
+                    .Include(p => p.Images)
+                    .Include(p => p.Agency)
+                    .ToListAsync();
                 comerciaisComCasas.Add((comercial.User, casas));
+                var userRoles = await _userManager.GetRolesAsync(comercial.User);
+                userRolesList.Add(new UserWithRolesViewModel { User = comercial.User, Roles = userRoles });
             }
             ViewBag.Agency = agencyUser.Agency?.Name;
             ViewBag.ComerciaisComCasas = comerciaisComCasas;
+            ViewBag.UserList = userRolesList;
             return View("PerfilAdmin", user);
         }
         else
