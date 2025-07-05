@@ -283,6 +283,11 @@ namespace ImoSphere.Data
                         for (int i = 0; i < casasCount; i++)
                         {
                             var cidade = cidadesPortugal[rnd.Next(cidadesPortugal.Length)];
+                            
+                            // Adicionar variação nas coordenadas para evitar sobreposição
+                            var latVariation = (rnd.NextDouble() - 0.5) * 0.01; // ±0.005 graus (~500m)
+                            var lngVariation = (rnd.NextDouble() - 0.5) * 0.01; // ±0.005 graus (~500m)
+                            
                             var nomeCasa = $"{(i == 0 ? "Penthouse" : i == 1 ? "Moradia de Luxo" : "Vivenda Exclusiva")} em {cidade.Nome}";
                             var descricao = $"{nomeCasa} com piscina privativa, jardim paisagístico, acabamentos premium, vista panorâmica e localização privilegiada em {cidade.Nome}. Inclui garagem para vários carros, cozinha equipada com eletrodomésticos topo de gama, suite master com closet e spa, e sistema de domótica de última geração. Ideal para quem procura exclusividade, conforto e requinte.";
                             // Preço múltiplo de 100.000 entre 500.000 e 3.000.000
@@ -301,8 +306,8 @@ namespace ImoSphere.Data
                                 Bathrooms = wc,
                                 Area = area,
                                 Location = cidade.Nome,
-                                Latitude = cidade.Lat,
-                                Longitude = cidade.Lng,
+                                Latitude = cidade.Lat + latVariation,
+                                Longitude = cidade.Lng + lngVariation,
                                 YearBuilt = ano,
                                 AgencyId = agency.Id,
                                 CreatedByUserId = comercialUser.Id,

@@ -9,6 +9,7 @@
 }
 
 <div class="properties-container">
+    @Html.AntiForgeryToken()
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar de Filtros -->
@@ -262,9 +263,21 @@
                                                     <i class="fas fa-building me-1"></i>@property.Agency?.Name
                                                 </small>
                                             </div>
-                                            <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-outline-primary btn-sm">
-                                                <i class="fas fa-eye me-1"></i>Ver Detalhes
-                                            </a>
+                                            <div class="d-flex gap-2">
+                                                @if (CanEditProperty(property, userRole, userId, userAgency))
+                                                {
+                                                    <a href="@Url.Action("Edit", "Properties", new { id = property.Id })" class="btn btn-outline-warning btn-sm" title="Editar">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <button type="button" class="btn btn-outline-danger btn-sm" title="Eliminar" 
+                                                            onclick="confirmDelete(@property.Id, '@property.Name')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                }
+                                                <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-outline-primary btn-sm">
+                                                    <i class="fas fa-eye me-1"></i>Ver Detalhes
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -290,6 +303,34 @@
             "kw" => "/images/kw.png",
             _ => "/images/remax.png" // Default logo
         };
+    }
+
+    private bool CanEditProperty(Property property, string userRole, string userId, string userAgency)
+    {
+        // SuperAdmin pode tudo
+        if (userRole == "SuperAdmin")
+            return true;
+            
+        // Comercial só pode editar as suas próprias casas
+        if (userRole == "Comercial" && property.CreatedByUserId == userId)
+            return true;
+            
+        // Admin só pode editar casas dos seus comerciais
+        if (userRole == "Admin")
+        {
+            // Verificar se a propriedade é da mesma agência do admin
+            if (property.Agency?.Name == userAgency)
+            {
+                // Verificar se o comercial responsável é supervisionado por este admin
+                var supervisedComercialIds = ViewBag.SupervisedComercialIds as List<string>;
+                if (supervisedComercialIds != null && supervisedComercialIds.Contains(property.CreatedByUserId))
+                {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
 }
 
@@ -367,6 +408,194 @@
                 submitBtn.innerHTML = '⏳ Aplicando...';
                 submitBtn.disabled = true;
             });
+        });
+
+        // Função para confirmar eliminação de propriedade
+        function confirmDelete(propertyId, propertyName) {
+            if (confirm(`Tem a certeza que deseja eliminar a propriedade "${propertyName}"?\n\nEsta ação não pode ser desfeita.`)) {
+                // Criar form para enviar o POST
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/Properties/Delete/${propertyId}`;
+                
+                // Adicionar token CSRF
+                const csrfToken = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+                if (csrfToken) {
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '__RequestVerificationToken';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+                }
+                
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+        // Inicializar mapa OpenStreetMap
+        function initializeMap() {
+            const mapContainer = document.getElementById('map');
+            if (!mapContainer) return;
+
+            // Dados das propriedades do servidor
+            const properties = @Html.Raw(Json.Serialize(Model.Properties.Select(p => new {
+                id = p.Id,
+                name = p.Name,
+                price = p.Price,
+                location = p.Location,
+                bedrooms = p.Bedrooms,
+                bathrooms = p.Bathrooms,
+                area = p.Area,
+                latitude = p.Latitude,
+                longitude = p.Longitude,
+                agencyName = p.Agency?.Name,
+                imageUrl = p.Images?.FirstOrDefault()?.ImageUrl
+            })));
+
+            if (properties.length === 0) {
+                mapContainer.innerHTML = '<div class="text-center p-4"><p class="text-muted">Nenhuma propriedade encontrada para mostrar no mapa.</p></div>';
+                return;
+            }
+
+            // Calcular centro do mapa baseado nas propriedades
+            const validProperties = properties.filter(p => p.latitude && p.longitude);
+            if (validProperties.length === 0) {
+                mapContainer.innerHTML = '<div class="text-center p-4"><p class="text-muted">Nenhuma propriedade com coordenadas válidas encontrada.</p></div>';
+                return;
+            }
+
+            const centerLat = validProperties.reduce((sum, p) => sum + p.latitude, 0) / validProperties.length;
+            const centerLng = validProperties.reduce((sum, p) => sum + p.longitude, 0) / validProperties.length;
+
+            // Inicializar mapa
+            const map = L.map('map').setView([centerLat, centerLng], 8);
+
+            // Adicionar tile layer do OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Forçar o Leaflet a ajustar o tamanho do mapa
+            setTimeout(() => { map.invalidateSize(); }, 300);
+            window.addEventListener('resize', () => { map.invalidateSize(); });
+
+            // Função para obter logo da agência
+            function getAgencyLogo(agencyName) {
+                const name = agencyName?.toLowerCase().replace(" ", "");
+                switch (name) {
+                    case "remax": return "/images/remax.png";
+                    case "era": return "/images/era.png";
+                    case "century21": return "/images/century21.png";
+                    case "fineandcountry": return "/images/fine and country.png";
+                    case "kw": return "/images/kw.png";
+                    default: return "/images/remax.png";
+                }
+            }
+
+            // Agrupar propriedades por localização para evitar sobreposição
+            const locationGroups = {};
+            validProperties.forEach(property => {
+                const key = `${property.latitude.toFixed(4)}_${property.longitude.toFixed(4)}`;
+                if (!locationGroups[key]) {
+                    locationGroups[key] = [];
+                }
+                locationGroups[key].push(property);
+            });
+
+            // Adicionar marcadores para cada grupo de propriedades
+            Object.keys(locationGroups).forEach(locationKey => {
+                const propertiesInLocation = locationGroups[locationKey];
+                const baseLat = propertiesInLocation[0].latitude;
+                const baseLng = propertiesInLocation[0].longitude;
+
+                if (propertiesInLocation.length === 1) {
+                    // Propriedade única - marcador normal
+                    addPropertyMarker(propertiesInLocation[0], baseLat, baseLng, map);
+                } else {
+                    // Múltiplas propriedades - espalhar os marcadores
+                    propertiesInLocation.forEach((property, index) => {
+                        // Calcular offset para espalhar os marcadores
+                        const offset = 0.001; // Aproximadamente 100m
+                        const angle = (index / propertiesInLocation.length) * 2 * Math.PI;
+                        const offsetLat = baseLat + (offset * Math.cos(angle));
+                        const offsetLng = baseLng + (offset * Math.sin(angle));
+                        
+                        addPropertyMarker(property, offsetLat, offsetLng, map);
+                    });
+                }
+            });
+
+            // Função para adicionar marcador de propriedade
+            function addPropertyMarker(property, lat, lng, map) {
+                // Criar ícone com logo da agência
+                const icon = L.divIcon({
+                    className: 'custom-marker',
+                    html: `<div class="marker-container">
+                            <img src="${getAgencyLogo(property.agencyName)}" alt="${property.agencyName}" 
+                                 style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); object-fit: cover;">
+                          </div>`,
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16]
+                });
+
+                // Criar popup com foto da casa
+                const popupContent = `
+                    <div class="property-popup">
+                        <div class="popup-image">
+                            <img src="${property.imageUrl || '/images/house-casas-1.png'}" alt="${property.name}" 
+                                 style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 12px;">
+                        </div>
+                        <h5>${property.name}</h5>
+                        <div class="price">€${property.price.toLocaleString('pt-PT')}</div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i> ${property.location}
+                        </div>
+                        <div class="features">
+                            <div class="feature">
+                                <i class="fas fa-bed"></i> ${property.bedrooms}
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-bath"></i> ${property.bathrooms}
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-ruler-combined"></i> ${property.area}m²
+                            </div>
+                        </div>
+                        <div class="agency-badge">
+                            <img src="${getAgencyLogo(property.agencyName)}" alt="${property.agencyName}" 
+                                 style="height: 20px; margin-right: 8px;">
+                            <span>${property.agencyName}</span>
+                        </div>
+                        <a href="/Properties/Details/${property.id}" class="btn btn-primary btn-sm">
+                            Ver Detalhes
+                        </a>
+                    </div>
+                `;
+
+                // Adicionar marcador ao mapa
+                L.marker([lat, lng], { icon: icon })
+                    .addTo(map)
+                    .bindPopup(popupContent, {
+                        maxWidth: 300,
+                        className: 'property-popup'
+                    });
+            }
+
+            // Ajustar zoom para mostrar todas as propriedades
+            if (validProperties.length > 1) {
+                const group = new L.featureGroup(validProperties.map(p => L.latLng(p.latitude, p.longitude)));
+                map.fitBounds(group.getBounds().pad(0.1));
+            }
+        }
+
+        // Inicializar mapa quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Se estiver no modo mapa, inicializar
+            if (document.getElementById('map')) {
+                initializeMap();
+            }
         });
     </script>
 }

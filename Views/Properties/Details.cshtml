@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="~/css/property-details.css" asp-append-version="true" />
 </head>
 
+@Html.AntiForgeryToken()
+
 <section class="property-details container">
     <div class="details-header d-flex align-items-center">
         @if (!string.IsNullOrEmpty(agencyLogo))
@@ -98,8 +100,37 @@
             }
             @if (isSeller)
             {
-                <a class="btn btn-outline-warning w-100" href="/Properties/Edit/@Model.Id">Editar Propriedade</a>
+                <div class="d-grid gap-2">
+                    <a class="btn btn-outline-warning" href="/Properties/Edit/@Model.Id">Editar Propriedade</a>
+                    <button type="button" class="btn btn-outline-danger" onclick="confirmDelete(@Model.Id, '@Model.Name')">
+                        Eliminar Propriedade
+                    </button>
+                </div>
             }
         </div>
     </div>
 </section>
+
+<script>
+    function confirmDelete(propertyId, propertyName) {
+        if (confirm(`Tem a certeza que deseja eliminar a propriedade "${propertyName}"?\n\nEsta ação não pode ser desfeita.`)) {
+            // Criar form para enviar o POST
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/Properties/Delete/${propertyId}`;
+            
+            // Adicionar token CSRF
+            const csrfToken = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+            if (csrfToken) {
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '__RequestVerificationToken';
+                csrfInput.value = csrfToken;
+                form.appendChild(csrfInput);
+            }
+            
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>

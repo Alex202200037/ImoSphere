@@ -102,6 +102,7 @@ public class HomeController : Controller
         string userAgency = null;
         string userRole = null;
         string userId = null;
+        List<string> supervisedComercialIds = null;
         if (User.Identity.IsAuthenticated)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -112,10 +113,19 @@ public class HomeController : Controller
                     .Include(au => au.Agency)
                     .FirstOrDefaultAsync();
 
-                userAgency = agencyUser?.AgencyId.ToString();
+                userAgency = agencyUser?.Agency?.Name;
                 var roles = await _userManager.GetRolesAsync(user);
                 userRole = roles.FirstOrDefault();
                 userId = user.Id;
+                
+                // Se for Admin, buscar os IDs dos comerciais que supervisiona
+                if (userRole == "Admin" && agencyUser != null)
+                {
+                    supervisedComercialIds = await _context.AgencyUsers
+                        .Where(au => au.AgencyId == agencyUser.AgencyId && au.Role == "Comercial" && au.AdminId == user.Id)
+                        .Select(au => au.UserId)
+                        .ToListAsync();
+                }
             }
         }
 
@@ -145,6 +155,7 @@ public class HomeController : Controller
         ViewBag.UserAgency = userAgency;
         ViewBag.UserRole = userRole;
         ViewBag.UserId = userId;
+        ViewBag.SupervisedComercialIds = supervisedComercialIds;
         
         return View(filterModel);
     }

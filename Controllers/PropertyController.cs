@@ -50,10 +50,34 @@ namespace ImoSphere.Controllers
             var isAdmin = roles.Contains("Admin");
             var isComercial = roles.Contains("Comercial");
             var agencyUser = user != null ? _context.AgencyUsers.FirstOrDefault(au => au.UserId == user.Id) : null;
-            // Só é seller se for comercial responsável OU admin da agência da casa
-            bool isSeller = (userId == property.CreatedByUserId) || (isAdmin && agencyUser != null && property.AgencyId == agencyUser.AgencyId);
-            // Só mostra botão de chat se não for seller nem superadmin
-            bool canContact = !isSeller && !isSuperAdmin;
+            
+            // Lógica de permissões igual à da lista de propriedades
+            bool canEdit = false;
+            if (isSuperAdmin)
+            {
+                canEdit = true;
+            }
+            else if (isComercial && userId == property.CreatedByUserId)
+            {
+                canEdit = true;
+            }
+            else if (isAdmin && agencyUser != null && property.AgencyId == agencyUser.AgencyId)
+            {
+                // Verificar se o comercial responsável é supervisionado por este admin
+                var supervisedComercialIds = await _context.AgencyUsers
+                    .Where(au => au.AgencyId == agencyUser.AgencyId && au.Role == "Comercial" && au.AdminId == user.Id)
+                    .Select(au => au.UserId)
+                    .ToListAsync();
+                
+                if (supervisedComercialIds.Contains(property.CreatedByUserId))
+                {
+                    canEdit = true;
+                }
+            }
+            
+            // Só mostra botão de chat se não for quem pode editar nem superadmin
+            bool canContact = !canEdit && !isSuperAdmin;
+            
             // Info do comercial responsável
             var comercial = await _context.Users.FindAsync(property.CreatedByUserId);
             // Verificar se já existe conversa
@@ -65,7 +89,7 @@ namespace ImoSphere.Controllers
                      (userId == c.ComercialId && c.UserId == comercialIdValue)) &&
                     c.Messages.Any());
             ViewBag.HasConversation = existingConversation != null;
-            ViewBag.IsSeller = isSeller;
+            ViewBag.IsSeller = canEdit; // Mudança: usar canEdit em vez de isSeller
             ViewBag.CanContact = canContact;
             ViewBag.ComercialName = comercial?.UserName;
             ViewBag.ComercialId = comercial?.Id;
