@@ -1,0 +1,204 @@
+@model List<ImoSphere.Models.UserWithRolesViewModel>
+@using ImoSphere.Data;
+@inject ApplicationDbContext _context;
+@{
+    ViewBag.Title = "My Agency Users";
+}
+
+<div class="users-management-container">
+    <div class="page-header">
+        <h2>My Agency Users</h2>
+        <a class="btn btn-primary" asp-action="CreateUser">
+            <i class="fas fa-plus"></i> Create New User
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null) {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    
+    @if (TempData["ErrorMessage"] != null) {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="no-data-message">
+            <i class="fas fa-users"></i>
+            <h3>No users in your agency</h3>
+            <p>You haven't created any users yet. Click "Create New User" to get started.</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th><i class="fas fa-user"></i> Username</th>
+                        <th><i class="fas fa-envelope"></i> Email</th>
+                        <th><i class="fas fa-user-tag"></i> Role</th>
+                        <th><i class="fas fa-cogs"></i> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model) {
+                        <tr>
+                            <td>
+                                <div class="user-info">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span class="username">@user.User.UserName</span>
+                                </div>
+                            </td>
+                            <td>@user.User.Email</td>
+                            <td>
+                                @foreach (var role in user.Roles)
+                                {
+                                    <span class="badge bg-primary">@role</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a class="btn btn-sm btn-info" asp-action="EditUser" asp-route-id="@user.User.Id" title="Edit User">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form class="delete-user-form" data-user-id="@user.User.Id" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Delete User">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<!-- Modal de transferência de dependências -->
+<div class="modal fade" id="transferModal" tabindex="-1" aria-labelledby="transferModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="transferModalLabel">Transferir dependências</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="transferModalMessage" class="mb-3"></div>
+        <div id="transferSelectContainer" style="display:none;">
+          <label for="transferSelect" class="form-label">Escolha o utilizador substituto:</label>
+          <select id="transferSelect" class="form-select"></select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="confirmTransferBtn">Transferir e Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Interceptar clique em Delete
+        const deleteForms = document.querySelectorAll('.delete-user-form');
+        deleteForms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const userId = form.getAttribute('data-user-id');
+                // AJAX para verificar dependências
+                fetch(`/Admin/CheckUserDependencies?id=${userId}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        console.log('Resposta do backend (check):', data);
+                        if (data.needsTransfer) {
+                            // Mostrar modal
+                            const modal = new bootstrap.Modal(document.getElementById('transferModal'));
+                            document.getElementById('transferModalMessage').innerHTML = data.message;
+                            const select = document.getElementById('transferSelect');
+                            select.innerHTML = '';
+                            if (data.substitutes && data.substitutes.length > 0) {
+                                document.getElementById('transferSelectContainer').style.display = '';
+                                data.substitutes.forEach(u => {
+                                    const opt = document.createElement('option');
+                                    opt.value = u.id;
+                                    opt.textContent = u.name;
+                                    select.appendChild(opt);
+                                });
+                                document.getElementById('confirmTransferBtn').onclick = function() {
+                                    confirmTransfer(userId, select.value);
+                                };
+                            } else {
+                                document.getElementById('transferSelectContainer').style.display = 'none';
+                                document.getElementById('confirmTransferBtn').onclick = null;
+                            }
+                            modal.show();
+                        } else if (data.canDelete) {
+                            // Eliminação direta
+                            fetch(`/Admin/TransferAndDeleteUser?id=${userId}&substituteId=`, { method: 'POST' })
+                                .then(r => r.json())
+                                .then(data => {
+                                    console.log('Resposta do backend (delete direto):', data);
+                                    if (data.success) {
+                                        removeUserRow(userId);
+                                        showSuccessPopup('Utilizador eliminado com sucesso!');
+                                    } else {
+                                        alert(data.message || 'Erro ao eliminar utilizador.');
+                                    }
+                                })
+                                .catch(err => {
+                                    alert('Erro de comunicação com o servidor.');
+                                    console.error(err);
+                                });
+                        } else if (data.message) {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(err => {
+                        alert('Erro de comunicação com o servidor.');
+                        console.error(err);
+                    });
+            });
+        });
+
+        function confirmTransfer(userId, substituteId) {
+            fetch(`/Admin/TransferAndDeleteUser?id=${userId}&substituteId=${substituteId}`, { method: 'POST' })
+                .then(r => r.json())
+                .then(data => {
+                    console.log('Resposta do backend (transfer):', data);
+                    if (data.success) {
+                        removeUserRow(userId);
+                        showSuccessPopup('Utilizador eliminado com sucesso!');
+                    } else {
+                        alert(data.message || 'Erro ao eliminar utilizador.');
+                    }
+                })
+                .catch(err => {
+                    alert('Erro de comunicação com o servidor.');
+                    console.error(err);
+                });
+        }
+
+        function removeUserRow(userId) {
+            const row = document.querySelector(`form[data-user-id='${userId}']`)?.closest('tr');
+            if (row) row.remove();
+        }
+
+        function showSuccessPopup(message) {
+            const popup = document.createElement('div');
+            popup.className = 'alert alert-success position-fixed top-0 end-0 m-4';
+            popup.style.zIndex = 9999;
+            popup.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            document.body.appendChild(popup);
+            setTimeout(() => popup.remove(), 2500);
+        }
+    });
+</script> 

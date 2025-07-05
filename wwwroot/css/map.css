@@ -1,0 +1,93 @@
+/* Map Modal Styles */
+.map-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.map-modal.show {
+    display: flex;
+}
+
+.map-container {
+    background: #222;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 90vw;
+    max-height: 90vh;
+    box-shadow: 0 4px 32px #000;
+    position: relative;
+}
+
+.map-close-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.3em;
+    background: #333;
+    border: none;
+    color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px #0004;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+.map-close-btn:hover {
+    background: #d32f2f !important;
+    color: #fff !important;
+}
+
+.map-content {
+    width: 60vw;
+    min-width: 320px;
+    height: 50vh;
+    min-height: 300px;
+}
+
+/* Autocomplete Styles */
+.autocomplete-list {
+    position: absolute;
+    background: #222;
+    z-index: 10000;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 16px #0008;
+    display: none;
+}
+
+.autocomplete-item {
+    padding: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.autocomplete-item:hover {
+    background: #444;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .map-content {
+        width: 90vw;
+        height: 60vh;
+    }
+    
+    .map-container {
+        padding: 15px;
+    }
+} 

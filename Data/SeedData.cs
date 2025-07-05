@@ -195,6 +195,7 @@ namespace ImoSphere.Data
                 
                 // Admin
                 var adminUser = await userManager.FindByEmailAsync(agencySeed.Admin.Email);
+                AgencyUser adminAgencyUser = null;
                 if (adminUser == null)
                 {
                     adminUser = new ApplicationUser
@@ -207,12 +208,13 @@ namespace ImoSphere.Data
                     if (result.Succeeded)
                     {
                         await userManager.AddToRoleAsync(adminUser, "Admin");
-                        context.AgencyUsers.Add(new AgencyUser
+                        adminAgencyUser = new AgencyUser
                         {
                             UserId = adminUser.Id,
                             AgencyId = agency.Id,
                             Role = "Admin"
-                        });
+                        };
+                        context.AgencyUsers.Add(adminAgencyUser);
                         await context.SaveChangesAsync();
                         Console.WriteLine($"[SEED] Admin criado: {adminUser.UserName} ({adminUser.Email})");
                     }
@@ -221,6 +223,11 @@ namespace ImoSphere.Data
                         Console.WriteLine($"[SEED] Falha a criar admin {agencySeed.Admin.Email}: {string.Join(", ", result.Errors.Select(e => e.Description))}");
                         continue;
                     }
+                }
+                else
+                {
+                    // Se o admin já existe, buscar o seu AgencyUser
+                    adminAgencyUser = context.AgencyUsers.FirstOrDefault(au => au.UserId == adminUser.Id && au.AgencyId == agency.Id);
                 }
                 
                 // Comerciais
@@ -243,15 +250,28 @@ namespace ImoSphere.Data
                             {
                                 UserId = comercialUser.Id,
                                 AgencyId = agency.Id,
-                                Role = "Comercial"
+                                Role = "Comercial",
+                                AdminId = adminAgencyUser?.UserId // Associar ao admin da agência
                             });
                             await context.SaveChangesAsync();
-                            Console.WriteLine($"[SEED] Comercial criado: {comercialUser.UserName} ({comercialUser.Email})");
+                            Console.WriteLine($"[SEED] Comercial criado: {comercialUser.UserName} ({comercialUser.Email}) - Admin: {adminAgencyUser?.UserId}");
                         }
                         else
                         {
                             Console.WriteLine($"[SEED] Falha a criar comercial {comercialSeed.Email}: {string.Join(", ", result.Errors.Select(e => e.Description))}");
                             continue;
+                        }
+                    }
+                    else
+                    {
+                        // Se o comercial já existe, verificar se tem AdminId associado
+                        var existingAgencyUser = context.AgencyUsers.FirstOrDefault(au => au.UserId == comercialUser.Id && au.AgencyId == agency.Id);
+                        if (existingAgencyUser != null && existingAgencyUser.AdminId == null && adminAgencyUser != null)
+                        {
+                            // Atualizar o AdminId se não estiver definido
+                            existingAgencyUser.AdminId = adminAgencyUser.UserId;
+                            await context.SaveChangesAsync();
+                            Console.WriteLine($"[SEED] AdminId atualizado para comercial existente: {comercialUser.UserName} - Admin: {adminAgencyUser.UserId}");
                         }
                     }
                     

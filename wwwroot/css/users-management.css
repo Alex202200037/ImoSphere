@@ -1,0 +1,544 @@
+/* Users Management Styles */
+.users-management-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+.page-header h2 {
+    color: var(--primary-color);
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+/* Filters Section */
+.filters-section {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(136, 68, 255, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.filters-form .form-label {
+    color: #e0e0e0;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.filters-form .form-select {
+    background: #2d2d2d;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 15px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.filters-form .form-select:focus {
+    border-color: #8844ff;
+    box-shadow: 0 0 0 0.2rem rgba(136, 68, 255, 0.25);
+    background: #2d2d2d;
+    color: #fff;
+}
+
+.filters-form .btn-outline-secondary {
+    border-color: #666;
+    color: #ccc;
+    transition: all 0.3s;
+}
+
+.filters-form .btn-outline-secondary:hover {
+    background: #8844ff;
+    border-color: #8844ff;
+    color: #fff;
+}
+
+/* Cartões ERA/REMAX - gradiente original */
+.agency-card {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(136, 68, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    margin-bottom: 24px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+.agency-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(136, 68, 255, 0.25);
+    background: linear-gradient(135deg, #2d1457 0%, #8844ff 100%);
+}
+
+/* SuperAdmin cartão - gradiente dourado original */
+.imosphere-card {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    box-shadow: 0 8px 32px rgba(255, 215, 0, 0.1);
+}
+
+.imosphere-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(255, 215, 0, 0.2);
+}
+
+/* Cabeçalho dos cartões - stats à direita */
+.agency-header, .imosphere-card .agency-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1.5px solid #a259ff44;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #7c3aed 100%);
+    color: white;
+}
+
+.agency-name, .imosphere-card .agency-name {
+    font-size: 1.4rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.agency-stats {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-left: auto;
+}
+
+/* SuperAdmin específico */
+.imosphere-card .agency-header {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    color: #1a1a1a;
+}
+
+.imosphere-card .agency-name i,
+.imosphere-card .admin-name i {
+    color: #1a1a1a;
+}
+
+.imosphere-card .agency-stats {
+    background: rgba(26, 26, 26, 0.2);
+    color: #1a1a1a;
+}
+
+.imosphere-card .admin-name {
+    color: #ffd700;
+}
+
+/* Conteúdo dos cartões */
+.agency-content {
+    padding: 20px 25px;
+    background: #1a1a1a;
+}
+
+.imosphere-card .agency-content {
+    background: #1a1a1a;
+}
+
+/* Grupos de Admin */
+.admin-group {
+    margin-bottom: 20px;
+    border: 1px solid #333;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #2d2d2d;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.admin-group:hover {
+    border-color: #8844ff;
+    box-shadow: 0 4px 16px rgba(136, 68, 255, 0.15);
+}
+
+.imosphere-admin-group {
+    background: linear-gradient(135deg, #2d1457 0%, #8844ff 100%);
+    border-color: #a259ff;
+}
+
+/* Cabeçalho do Admin */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #2d1457 0%, #8844ff 100%);
+    color: white;
+}
+
+.admin-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-email {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    font-weight: 400;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Botões */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #8844ff 0%, #a259ff 100%);
+    color: white;
+    border: 1px solid #8844ff;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #a259ff 0%, #b366ff 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(136, 68, 255, 0.3);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
+    color: white;
+    border: 1px solid #dc3545;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #e74c3c 0%, #f39c12 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
+    color: white;
+    border: 1px solid #17a2b8;
+}
+
+.btn-info:hover {
+    background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+}
+
+/* Lista de Comerciais */
+.comerciais-list {
+    padding: 15px 20px;
+    background: #1a1a1a;
+}
+
+.comercial-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #333;
+    transition: background 0.3s;
+}
+
+.comercial-item:hover {
+    background: rgba(136, 68, 255, 0.1);
+}
+
+.comercial-item:last-child {
+    border-bottom: none;
+}
+
+.comercial-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #e0e0e0;
+}
+
+.comercial-name {
+    font-weight: 500;
+    color: #fff;
+}
+
+.comercial-email {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.comercial-actions {
+    display: flex;
+    gap: 6px;
+}
+
+/* Mensagens de estado */
+.no-comerciais, .no-admins {
+    padding: 20px;
+    text-align: center;
+    color: #888;
+    background: #2d2d2d;
+    border-radius: 8px;
+    margin: 10px 20px;
+}
+
+.no-comerciais i, .no-admins i {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    display: block;
+    color: #666;
+}
+
+/* Comerciais sem Admin */
+.comerciais-without-admin {
+    margin-top: 20px;
+    border-top: 2px solid #333;
+    padding-top: 20px;
+}
+
+.section-title {
+    color: #8844ff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Mensagem sem dados */
+.no-data-message {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+}
+
+.no-data-message i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    display: block;
+    color: #666;
+}
+
+.no-data-message h3 {
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+/* Popup de sucesso/erro - DESIGN COESO */
+.imospopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 320px;
+    max-width: 90vw;
+    background: linear-gradient(135deg, #2d1457 0%, #8844ff 100%);
+    color: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(136,68,255,0.18), 0 1.5px 8px #8844ff44;
+    z-index: 99999;
+    padding: 2rem 2.5rem 1.5rem 2.5rem;
+    text-align: center;
+    font-size: 1.1rem;
+    animation: imospopupfadein 0.3s;
+    border: 2.5px solid #a259ff;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-weight: 500;
+}
+
+.imospopup .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.3rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.imospopup .close-btn:hover { 
+    opacity: 1; 
+}
+
+@keyframes imospopupfadein {
+    from { 
+        opacity: 0; 
+        transform: translate(-50%, -60%) scale(0.95); 
+    }
+    to   { 
+        opacity: 1; 
+        transform: translate(-50%, -50%) scale(1); 
+    }
+}
+
+.imospopup.error {
+    background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
+    border-color: #f39c12;
+}
+
+/* Modal de transferência */
+.modal-content {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border: 1px solid #8844ff;
+    border-radius: 16px;
+    color: #fff;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #2d1457 0%, #8844ff 100%);
+    border-bottom: 1px solid #a259ff;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.modal-title {
+    color: #fff;
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.modal-footer {
+    border-top: 1px solid #333;
+    padding: 20px 25px;
+}
+
+/* Form controls no modal */
+.modal .form-label {
+    color: #e0e0e0;
+    font-weight: 500;
+}
+
+.modal .form-select {
+    background: #2d2d2d;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 15px;
+}
+
+.modal .form-select:focus {
+    border-color: #8844ff;
+    box-shadow: 0 0 0 0.2rem rgba(136, 68, 255, 0.25);
+    background: #2d2d2d;
+    color: #fff;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .users-management-container {
+        padding: 15px;
+    }
+    
+    .page-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .agency-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .agency-stats {
+        margin-left: 0;
+    }
+    
+    .admin-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .admin-actions {
+        justify-content: center;
+    }
+    
+    .comercial-item {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .comercial-actions {
+        justify-content: center;
+    }
+}
+
+/* Alertas */
+.alert {
+    border-radius: 12px;
+    border: none;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    border-left: 4px solid #20c997;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
+    color: white;
+    border-left: 4px solid #e74c3c;
+}
+
+.alert i {
+    margin-right: 8px;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #8844ff 0%, #a259ff 100%);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #a259ff 0%, #b366ff 100%);
+} 

@@ -12,65 +12,7 @@
 
 <h1 class="text-center">Edit Property</h1>
 
-<head>
-    <link rel="stylesheet" type="text/css" href="~/wwwroot/css/style.css" />
-</head>
 
-<style>
-    .image-thumb-container {
-        position: relative;
-        display: inline-block;
-        margin-right: 12px;
-        margin-bottom: 12px;
-        width: 100px;
-        height: 100px;
-        vertical-align: top;
-    }
-    .image-thumb-container img {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        display: block;
-    }
-    .remove-checkbox {
-        display: none;
-    }
-    .remove-label {
-        position: absolute;
-        top: 6px;
-        right: 6px;
-        width: 24px;
-        height: 24px;
-        background: rgba(220, 53, 69, 0.85);
-        color: #fff;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 16px;
-        cursor: pointer;
-        opacity: 0.8;
-        transition: background 0.2s, opacity 0.2s;
-        z-index: 2;
-        border: 2px solid #fff;
-    }
-    .remove-checkbox:checked + .remove-label {
-        background: #fff;
-        color: #dc3545;
-        border: 2px solid #dc3545;
-        opacity: 1;
-    }
-    .remove-label:hover {
-        opacity: 1;
-        background: #dc3545;
-    }
-    #closeMapBtn:hover {
-        background: #d32f2f !important;
-        color: #fff !important;
-    }
-</style>
 
 @if (!ViewData.ModelState.IsValid)
 {
@@ -109,7 +51,7 @@
 
 @if (TempData["SuccessMessage"] != null)
 {
-    <div id="successPopup" class="popup-overlay" style="display:none;">
+    <div id="successPopup" class="popup-overlay success-popup">
         <div class="popup-content">
             <div class="spinner"></div>
             <h2>@TempData["SuccessMessage"]</h2>
@@ -117,21 +59,25 @@
     </div>
 
     <script>
-        // Exibe o popup de sucesso com um pequeno atraso
-        document.getElementById("successPopup").style.display = "block";
+        // Exibe o popup de sucesso com animação
+        const popup = document.getElementById("successPopup");
+        popup.classList.add("show");
 
         setTimeout(function () {
-            document.getElementById("successPopup").style.display = "none";
-            window.location.href = '@Url.Action("Properties", "Home")'; // Redireciona após 2.5 segundos
+            popup.classList.remove("show");
+            popup.classList.add("fade-out");
+            setTimeout(function() {
+                window.location.href = '@Url.Action("Properties", "Home")';
+            }, 300);
         }, 2500);
     </script>
 }
 
 <!-- Modal do mapa -->
-<div id="mapModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
-    <div style="background:#222; padding:20px; border-radius:12px; max-width:90vw; max-height:90vh; box-shadow:0 4px 32px #000; position:relative;">
-        <button type="button" id="closeMapBtn" style="position:absolute; top:18px; right:18px; width:36px; height:36px; font-size:1.3em; background:#333; border:none; color:#fff; border-radius:50%; box-shadow:0 2px 8px #0004; z-index:10001; display:flex; align-items:center; justify-content:center; transition:background 0.2s; cursor:pointer;">&times;</button>
-        <div id="map" style="width:60vw; min-width:320px; height:50vh; min-height:300px;"></div>
+<div id="mapModal" class="map-modal">
+    <div class="map-container">
+        <button type="button" id="closeMapBtn" class="map-close-btn">&times;</button>
+        <div id="map" class="map-content"></div>
     </div>
 </div>
 
@@ -145,15 +91,8 @@
         const latInput = document.getElementById('latitudeInput');
         const lngInput = document.getElementById('longitudeInput');
         let acList = document.createElement('div');
-        acList.style.position = 'absolute';
-        acList.style.background = '#222';
-        acList.style.zIndex = 10000;
+        acList.className = 'autocomplete-list';
         acList.style.width = locInput.offsetWidth + 'px';
-        acList.style.maxHeight = '200px';
-        acList.style.overflowY = 'auto';
-        acList.style.borderRadius = '0 0 8px 8px';
-        acList.style.boxShadow = '0 4px 16px #0008';
-        acList.style.display = 'none';
         locInput.parentNode.appendChild(acList);
         locInput.addEventListener('input', function() {
             clearTimeout(acTimeout);
@@ -165,11 +104,8 @@
                         acList.innerHTML = '';
                         data.forEach(item => {
                             let opt = document.createElement('div');
+                            opt.className = 'autocomplete-item';
                             opt.textContent = item.display_name;
-                            opt.style.padding = '8px';
-                            opt.style.cursor = 'pointer';
-                            opt.onmouseover = () => opt.style.background = '#444';
-                            opt.onmouseout = () => opt.style.background = '';
                             opt.onclick = () => {
                                 locInput.value = item.display_name;
                                 latInput.value = item.lat;
@@ -189,10 +125,10 @@
         const closeMapBtn = document.getElementById('closeMapBtn');
         let map, marker;
         openMapBtn.onclick = function() {
-            mapModal.style.display = 'flex';
+            mapModal.classList.add('show');
             setTimeout(() => { if (!map) initMap(); else map.invalidateSize(); }, 100);
         };
-        closeMapBtn.onclick = function() { mapModal.style.display = 'none'; };
+        closeMapBtn.onclick = function() { mapModal.classList.remove('show'); };
         function initMap() {
             let lat = parseFloat(latInput.value) || 38.7223;
             let lng = parseFloat(lngInput.value) || -9.1393;

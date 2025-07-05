@@ -72,7 +72,7 @@ public class HomeController : Controller
             query = query.Where(p => agencyIds.Contains(p.AgencyId));
 
         var totalResults = await _context.Properties.CountAsync();
-        var availableAgencies = await _context.Agencies.ToListAsync();
+        var availableAgencies = await _context.Agencies.Where(a => a.Name != "ImoSphere").ToListAsync();
         var properties = await query.ToListAsync();
 
         // Corrigir ordenação para SQLite (Price e Area em memória)

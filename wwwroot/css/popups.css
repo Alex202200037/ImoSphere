@@ -1,0 +1,126 @@
+/* Popup Styles */
+.popup-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+}
+
+.popup-content {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    max-width: 450px;
+    width: 90%;
+    border: 1px solid rgba(136, 68, 255, 0.2);
+    position: relative;
+    animation: popupSlideIn 0.3s ease-out;
+}
+
+.popup-content h2 {
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 20px 0 15px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 20px auto;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top: 4px solid #8844ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes popupSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Success popup specific styles */
+.success-popup .popup-content {
+    border-color: rgba(76, 175, 80, 0.3);
+}
+
+.success-popup .spinner {
+    border-top-color: #4caf50;
+}
+
+/* Error popup specific styles */
+.error-popup .popup-content {
+    border-color: rgba(244, 67, 54, 0.3);
+}
+
+.error-popup .spinner {
+    border-top-color: #f44336;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .popup-content {
+        padding: 25px 20px;
+        max-width: 90%;
+        margin: 20px;
+    }
+    
+    .popup-content h2 {
+        font-size: 1.2rem;
+    }
+    
+    .spinner {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Ensure popup is always on top */
+.popup-overlay {
+    z-index: 99999 !important;
+}
+
+/* Hide popup initially */
+.popup-overlay[style*="display: none"] {
+    display: none !important;
+}
+
+/* Show popup with animation */
+.popup-overlay.show {
+    display: flex !important;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+} 

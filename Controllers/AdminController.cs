@@ -20,15 +20,39 @@ namespace ImoSphere.Controllers
         }
 
         // Manage Users
-        public async Task<IActionResult> Users()
+        public async Task<IActionResult> Users(int? agencyId = null, string? adminId = null)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var roles = await _userManager.GetRolesAsync(currentUser);
             var isSuperAdmin = roles.Contains("SuperAdmin");
-            List<UserWithRolesViewModel> userRoles = new();
+            
             if (isSuperAdmin)
             {
-                var users = _userManager.Users.ToList();
+                // Para SuperAdmin: mostrar hierarquia organizada
+                var hierarchy = await BuildUserHierarchy(agencyId, adminId);
+                var filterModel = new UserFilterViewModel
+                {
+                    SelectedAgencyId = agencyId,
+                    SelectedAdminId = adminId,
+                    Agencies = await _context.Agencies.ToListAsync(),
+                    Admins = await GetAdminsForFilter(agencyId)
+                };
+                
+                ViewBag.FilterModel = filterModel;
+                ViewBag.IsSuperAdmin = true;
+                return View("UsersHierarchy", hierarchy);
+            }
+            else
+            {
+                // Para Admin: mostrar lista simples dos seus comerciais
+                var agencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == currentUser.Id);
+                if (agencyUser == null)
+                    return Forbid();
+                    
+                var agencyUsers = _context.AgencyUsers.Where(au => au.AgencyId == agencyUser.AgencyId).Select(au => au.UserId).ToList();
+                var users = _userManager.Users.Where(u => agencyUsers.Contains(u.Id)).ToList();
+                
+                List<UserWithRolesViewModel> userRoles = new();
                 foreach (var user in users)
                 {
                     var userRolesList = await _userManager.GetRolesAsync(user);
@@ -37,27 +61,154 @@ namespace ImoSphere.Controllers
                         User = user,
                         Roles = userRolesList
                     });
+                }
+                
+                ViewBag.IsSuperAdmin = false;
+                return View("UsersSimple", userRoles);
+            }
+        }
+
+        private async Task<List<UserHierarchyViewModel>> BuildUserHierarchy(int? agencyId = null, string? adminId = null)
+        {
+            var hierarchy = new List<UserHierarchyViewModel>();
+            bool showImoSphere = false;
+            // Mostrar ImoSphere apenas se não houver filtro de agência OU se o filtro for para a agência especial ImoSphere (id 0 ou nome "ImoSphere")
+            if (!agencyId.HasValue || agencyId == 0)
+            {
+                showImoSphere = true;
+            }
+            else
+            {
+                var agency = await _context.Agencies.FindAsync(agencyId);
+                if (agency != null && agency.Name == "ImoSphere")
+                {
+                    showImoSphere = true;
+                }
+            }
+            // Adicionar SuperAdmins no topo (só se não há filtro por admin específico)
+            if (showImoSphere && string.IsNullOrEmpty(adminId))
+            {
+                var superAdmins = await _userManager.GetUsersInRoleAsync("SuperAdmin");
+                if (superAdmins.Any())
+                {
+                    var superAdminHierarchy = new UserHierarchyViewModel
+                    {
+                        AgencyId = 0, // ID especial para ImoSphere
+                        AgencyName = "ImoSphere"
+                    };
+                    foreach (var superAdmin in superAdmins)
+                    {
+                        var adminGroup = new AdminGroup { Admin = superAdmin };
+                        adminGroup.Comerciais = new List<ApplicationUser>(); // SuperAdmins não têm comerciais
+                        superAdminHierarchy.Admins.Add(adminGroup);
+                    }
+                    hierarchy.Add(superAdminHierarchy);
+                }
+            }
+            // Se há filtro por admin específico, buscar a agência desse admin
+            if (!string.IsNullOrEmpty(adminId))
+            {
+                var adminAgencyUser = await _context.AgencyUsers
+                    .Include(au => au.Agency)
+                    .FirstOrDefaultAsync(au => au.UserId == adminId && au.Role == "Admin");
+                if (adminAgencyUser?.Agency != null)
+                {
+                    var agencyHierarchy = new UserHierarchyViewModel
+                    {
+                        AgencyId = adminAgencyUser.Agency.Id,
+                        AgencyName = adminAgencyUser.Agency.Name
+                    };
+                    // Buscar o admin específico
+                    var admin = await _userManager.FindByIdAsync(adminId);
+                    if (admin != null)
+                    {
+                        var adminGroup = new AdminGroup { Admin = admin };
+                        // Buscar comerciais desse admin específico
+                        var agencyUsers = await _context.AgencyUsers
+                            .Include(au => au.User)
+                            .Where(au => au.AgencyId == adminAgencyUser.Agency.Id)
+                            .ToListAsync();
+                        adminGroup.Comerciais = agencyUsers
+                            .Where(au => au.Role == "Comercial" && au.AdminId == admin.Id)
+                            .Select(au => au.User)
+                            .ToList();
+                        agencyHierarchy.Admins.Add(adminGroup);
+                    }
+                    hierarchy.Add(agencyHierarchy);
                 }
             }
             else
             {
-                // Só users da agência
-                var agencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == currentUser.Id);
-                if (agencyUser == null)
-                    return Forbid();
-                var agencyUsers = _context.AgencyUsers.Where(au => au.AgencyId == agencyUser.AgencyId).Select(au => au.UserId).ToList();
-                var users = _userManager.Users.Where(u => agencyUsers.Contains(u.Id)).ToList();
-                foreach (var user in users)
+                // Lógica normal sem filtro por admin específico
+                var agenciesQuery = _context.Agencies.AsQueryable();
+                if (agencyId.HasValue && agencyId != 0)
                 {
-                    var userRolesList = await _userManager.GetRolesAsync(user);
-                    userRoles.Add(new UserWithRolesViewModel
+                    agenciesQuery = agenciesQuery.Where(a => a.Id == agencyId.Value);
+                }
+                agenciesQuery = agenciesQuery.Where(a => a.Name != "ImoSphere");
+                var agencies = await agenciesQuery.ToListAsync();
+                foreach (var agency in agencies)
+                {
+                    var agencyHierarchy = new UserHierarchyViewModel
                     {
-                        User = user,
-                        Roles = userRolesList
-                    });
+                        AgencyId = agency.Id,
+                        AgencyName = agency.Name
+                    };
+                    // Buscar todos os AgencyUsers da agência
+                    var agencyUsers = await _context.AgencyUsers
+                        .Include(au => au.User)
+                        .Where(au => au.AgencyId == agency.Id)
+                        .ToListAsync();
+                    // Admins
+                    var admins = agencyUsers.Where(au => au.Role == "Admin").Select(au => au.User).ToList();
+                    // Comerciais sem admin
+                    var comerciaisSemAdmin = agencyUsers.Where(au => au.Role == "Comercial" && au.AdminId == null).Select(au => au.User).ToList();
+                    // Para cada admin, buscar comerciais desse admin
+                    foreach (var admin in admins)
+                    {
+                        var adminGroup = new AdminGroup { Admin = admin };
+                        adminGroup.Comerciais = agencyUsers
+                            .Where(au => au.Role == "Comercial" && au.AdminId == admin.Id)
+                            .Select(au => au.User)
+                            .ToList();
+                        agencyHierarchy.Admins.Add(adminGroup);
+                    }
+                    // Comerciais sem admin
+                    agencyHierarchy.Comerciais = comerciaisSemAdmin;
+                    hierarchy.Add(agencyHierarchy);
                 }
             }
-            return View(userRoles);
+            return hierarchy;
+        }
+        
+        private async Task<List<ApplicationUser>> GetAdminsForFilter(int? agencyId)
+        {
+            var query = _context.AgencyUsers
+                .Where(au => au.Role == "Admin");
+                
+            if (agencyId.HasValue)
+            {
+                query = query.Where(au => au.AgencyId == agencyId.Value);
+            }
+            
+            var adminUserIds = await query.Select(au => au.UserId).ToListAsync();
+            return await _userManager.Users.Where(u => adminUserIds.Contains(u.Id)).ToListAsync();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAdminsByAgency(int agencyId)
+        {
+            var adminUserIds = await _context.AgencyUsers
+                .Where(au => au.AgencyId == agencyId && au.Role == "Admin")
+                .Select(au => au.UserId)
+                .ToListAsync();
+
+            var admins = await _userManager.Users
+                .Where(u => adminUserIds.Contains(u.Id))
+                .Select(u => new { id = u.Id, userName = u.UserName })
+                .ToListAsync();
+
+            return Json(admins);
         }
 
         // GET: Create Seller or Admin
@@ -88,32 +239,59 @@ namespace ImoSphere.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Admin/CreateUser")]
-        public async Task<IActionResult> CreateUser(string email, string emailPrefix, string username, string role, string password, int? agencyId)
+        public async Task<IActionResult> CreateUser(string email, string emailPrefix, string username, string role, string password, int? agencyId, string? adminId)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var roles = await _userManager.GetRolesAsync(currentUser);
             var isSuperAdmin = roles.Contains("SuperAdmin");
-            if (!isSuperAdmin)
+
+            // Montar email corretamente
+            if (string.IsNullOrEmpty(emailPrefix))
             {
-                // Buscar agência do admin
-                var agencyUser = await _context.AgencyUsers.Include(au => au.Agency).FirstOrDefaultAsync(au => au.UserId == currentUser.Id);
-                if (agencyUser?.Agency == null)
-                    return Forbid();
-                var domain = $".{agencyUser.Agency.Name.ToLower()}@imosphere.com";
-                ViewBag.EmailDomain = domain;
-                if (string.IsNullOrEmpty(emailPrefix))
+                ModelState.AddModelError(string.Empty, "Email prefix is required.");
+                if (isSuperAdmin) ViewBag.Agencies = _context.Agencies.ToList();
+                return View();
+            }
+
+            if (role == "SuperAdmin")
+            {
+                email = emailPrefix + ".imosphere@imosphere.com";
+                agencyId = null; // Não associar agência
+            }
+            else
+            {
+                string domain = "";
+                if (isSuperAdmin)
                 {
-                    ModelState.AddModelError(string.Empty, "Email prefix is required.");
-                    return View();
+                    // Buscar agência pelo id
+                    var agency = await _context.Agencies.FirstOrDefaultAsync(a => a.Id == agencyId);
+                    if (agency == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Agency is required.");
+                        ViewBag.Agencies = _context.Agencies.ToList();
+                        return View();
+                    }
+                    domain = $".{agency.Name.ToLower().Replace(" ", "")}@imosphere.com";
+                }
+                else
+                {
+                    // Buscar agência do admin
+                    var agencyUser = await _context.AgencyUsers.Include(au => au.Agency).FirstOrDefaultAsync(au => au.UserId == currentUser.Id);
+                    if (agencyUser?.Agency == null)
+                        return Forbid();
+                    domain = $".{agencyUser.Agency.Name.ToLower().Replace(" ", "")}@imosphere.com";
+                    agencyId = agencyUser.AgencyId;
                 }
                 email = emailPrefix + domain;
             }
+
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(role) || string.IsNullOrEmpty(password))
             {
                 ModelState.AddModelError(string.Empty, "Email, username, role, and password are required.");
                 if (isSuperAdmin) ViewBag.Agencies = _context.Agencies.ToList();
                 return View();
             }
+
             var existingUser = await _userManager.FindByEmailAsync(email);
             if (existingUser != null)
             {
@@ -121,6 +299,7 @@ namespace ImoSphere.Controllers
                 if (isSuperAdmin) ViewBag.Agencies = _context.Agencies.ToList();
                 return View();
             }
+
             var user = new ApplicationUser
             {
                 UserName = username,
@@ -150,12 +329,26 @@ namespace ImoSphere.Controllers
                         }
                         if (agencyToAssign.HasValue)
                         {
-                            _context.AgencyUsers.Add(new AgencyUser
+                            var agencyUser = new AgencyUser
                             {
                                 UserId = user.Id,
                                 AgencyId = agencyToAssign.Value,
                                 Role = role
-                            });
+                            };
+                            // Se for comercial, guardar AdminId
+                            if (role == "Comercial")
+                            {
+                                if (isSuperAdmin && !string.IsNullOrEmpty(adminId))
+                                {
+                                    agencyUser.AdminId = adminId;
+                                }
+                                else if (!isSuperAdmin)
+                                {
+                                    // Admin comum: o próprio é o responsável
+                                    agencyUser.AdminId = currentUser.Id;
+                                }
+                            }
+                            _context.AgencyUsers.Add(agencyUser);
                             await _context.SaveChangesAsync();
                         }
                         else if (!isSuperAdmin)
@@ -303,30 +496,191 @@ namespace ImoSphere.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteUser(string id)
+        [HttpGet]
+        public async Task<IActionResult> CheckUserDependencies(string id)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                return BadRequest("User ID is required.");
-            }
-
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
+                return Json(new { canDelete = false, needsTransfer = false, message = "Utilizador não encontrado." });
+            
+            // PROTEÇÃO CRÍTICA: Nunca permitir eliminar o SuperAdmin principal
+            if (user.Email == "imosphere.admin@imosphere.com")
+                return Json(new { canDelete = false, needsTransfer = false, message = "Não é possível eliminar o SuperAdmin principal do sistema." });
+            
+            var roles = await _userManager.GetRolesAsync(user);
+            var role = roles.FirstOrDefault();
+            if (role == "Comercial")
             {
-                return NotFound("User not found.");
+                // Verificar se tem casas
+                var agencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == user.Id);
+                var properties = await _context.Properties.Where(p => p.CreatedByUserId == user.Id).ToListAsync();
+                if (properties.Count == 0)
+                    return Json(new { canDelete = true, needsTransfer = false });
+                // Procurar outros comerciais da mesma equipa
+                var substitutes = await _context.AgencyUsers
+                    .Where(au => au.AgencyId == agencyUser.AgencyId && au.Role == "Comercial" && au.UserId != user.Id)
+                    .Select(au => new { id = au.UserId, name = au.User.UserName })
+                    .ToListAsync();
+                if (substitutes.Count == 0)
+                    return Json(new { canDelete = false, needsTransfer = true, message = "Não é possível eliminar este comercial porque não existe comercial substituto na equipa.", substitutes = new object[0] });
+                return Json(new { canDelete = false, needsTransfer = true, message = $"Este comercial tem {properties.Count} casa(s). Escolha um comercial substituto:", substitutes });
             }
-
-            var result = await _userManager.DeleteAsync(user);
-            if (result.Succeeded)
+            else if (role == "Admin")
             {
-                TempData["SuccessMessage"] = "User deleted successfully.";
-                return RedirectToAction("Users");
+                // Verificar se tem comerciais
+                var agencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == user.Id);
+                var comerciais = await _context.AgencyUsers.Where(au => au.AdminId == user.Id).ToListAsync();
+                if (comerciais.Count == 0)
+                    return Json(new { canDelete = true, needsTransfer = false });
+                // Procurar outros admins da agência
+                var substitutes = await _context.AgencyUsers
+                    .Where(au => au.AgencyId == agencyUser.AgencyId && au.Role == "Admin" && au.UserId != user.Id)
+                    .Select(au => new { id = au.UserId, name = au.User.UserName })
+                    .ToListAsync();
+                if (substitutes.Count == 0)
+                    return Json(new { canDelete = false, needsTransfer = true, message = "Não é possível eliminar este admin porque não existe admin substituto na agência.", substitutes = new object[0] });
+                return Json(new { canDelete = false, needsTransfer = true, message = $"Este admin tem {comerciais.Count} comercial(is). Escolha um admin substituto:", substitutes });
             }
+            else
+            {
+                // SuperAdmin/User: eliminação direta
+                return Json(new { canDelete = true, needsTransfer = false });
+            }
+        }
 
-            TempData["ErrorMessage"] = "Failed to delete user.";
-            return RedirectToAction("Users");
+        [HttpPost]
+        [Route("Admin/TransferAndDeleteUser")]
+        public async Task<IActionResult> TransferAndDeleteUser(string id, string substituteId)
+        {
+            Console.WriteLine($"[TransferAndDeleteUser] id recebido: {id}, substituteId: {substituteId}");
+            try
+            {
+                var user = await _userManager.FindByIdAsync(id);
+                if (user == null)
+                {
+                    Console.WriteLine($"[TransferAndDeleteUser] Utilizador não encontrado para id: {id}");
+                    return Json(new { success = false, message = "Utilizador não encontrado." });
+                }
+                
+                // PROTEÇÃO CRÍTICA: Nunca permitir eliminar o SuperAdmin principal
+                if (user.Email == "imosphere.admin@imosphere.com")
+                {
+                    Console.WriteLine($"[TransferAndDeleteUser] Tentativa de eliminar SuperAdmin principal bloqueada: {user.Email}");
+                    return Json(new { success = false, message = "Não é possível eliminar o SuperAdmin principal do sistema." });
+                }
+                
+                var roles = await _userManager.GetRolesAsync(user);
+                var role = roles.FirstOrDefault();
+                if (role == "Comercial")
+                {
+                    // Transferir casas
+                    var properties = await _context.Properties.Where(p => p.CreatedByUserId == user.Id).ToListAsync();
+                    foreach (var prop in properties)
+                    {
+                        prop.CreatedByUserId = substituteId;
+                    }
+                    // Transferir conversas de chat onde é Comercial
+                    var convsComercial = await _context.ChatConversations.Where(c => c.ComercialId == user.Id).ToListAsync();
+                    foreach (var conv in convsComercial)
+                    {
+                        conv.ComercialId = substituteId;
+                    }
+                    // Transferir conversas de chat onde é User
+                    var convsUser = await _context.ChatConversations.Where(c => c.UserId == user.Id).ToListAsync();
+                    foreach (var conv in convsUser)
+                    {
+                        conv.UserId = substituteId;
+                    }
+                    // Remover mensagens do utilizador
+                    var messages = await _context.ChatMessages.Where(m => m.SenderId == user.Id).ToListAsync();
+                    _context.ChatMessages.RemoveRange(messages);
+                    await _context.SaveChangesAsync();
+                    // Eliminar AgencyUser e ApplicationUser
+                    var agencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == user.Id);
+                    if (agencyUser != null)
+                        _context.AgencyUsers.Remove(agencyUser);
+                    await _context.SaveChangesAsync();
+                    await _userManager.DeleteAsync(user);
+                    return Json(new { success = true });
+                }
+                else if (role == "Admin")
+                {
+                    // Transferir comerciais
+                    var comerciais = await _context.AgencyUsers.Where(au => au.AdminId == user.Id).ToListAsync();
+                    foreach (var comercial in comerciais)
+                    {
+                        comercial.AdminId = substituteId;
+                    }
+                    // Transferir conversas de chat onde é User ou Comercial
+                    var convsComercial = await _context.ChatConversations.Where(c => c.ComercialId == user.Id).ToListAsync();
+                    foreach (var conv in convsComercial)
+                    {
+                        conv.ComercialId = substituteId;
+                    }
+                    var convsUser = await _context.ChatConversations.Where(c => c.UserId == user.Id).ToListAsync();
+                    foreach (var conv in convsUser)
+                    {
+                        conv.UserId = substituteId;
+                    }
+                    // Remover mensagens do utilizador
+                    var messages = await _context.ChatMessages.Where(m => m.SenderId == user.Id).ToListAsync();
+                    _context.ChatMessages.RemoveRange(messages);
+                    await _context.SaveChangesAsync();
+                    // Eliminar AgencyUser e ApplicationUser
+                    var agencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == user.Id);
+                    if (agencyUser != null)
+                        _context.AgencyUsers.Remove(agencyUser);
+                    await _context.SaveChangesAsync();
+                    await _userManager.DeleteAsync(user);
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    // SuperAdmin/User: eliminação direta
+                    // Transferir conversas de chat onde é User ou Comercial
+                    var convsComercial = await _context.ChatConversations.Where(c => c.ComercialId == user.Id).ToListAsync();
+                    foreach (var conv in convsComercial)
+                    {
+                        conv.ComercialId = substituteId;
+                    }
+                    var convsUser = await _context.ChatConversations.Where(c => c.UserId == user.Id).ToListAsync();
+                    foreach (var conv in convsUser)
+                    {
+                        conv.UserId = substituteId;
+                    }
+                    // Remover mensagens do utilizador
+                    var messages = await _context.ChatMessages.Where(m => m.SenderId == user.Id).ToListAsync();
+                    _context.ChatMessages.RemoveRange(messages);
+                    await _context.SaveChangesAsync();
+                    var agencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == user.Id);
+                    if (agencyUser != null)
+                        _context.AgencyUsers.Remove(agencyUser);
+                    await _context.SaveChangesAsync();
+                    await _userManager.DeleteAsync(user);
+                    return Json(new { success = true });
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                // Diagnóstico: procurar dependências que ainda bloqueiam
+                var dependencies = new List<string>();
+                if (await _context.Properties.AnyAsync(p => p.CreatedByUserId == id))
+                    dependencies.Add("propriedades");
+                if (await _context.ChatConversations.AnyAsync(c => c.UserId == id || c.ComercialId == id))
+                    dependencies.Add("conversas de chat");
+                if (await _context.ChatMessages.AnyAsync(m => m.SenderId == id))
+                    dependencies.Add("mensagens de chat");
+                if (await _context.AgencyUsers.AnyAsync(au => au.UserId == id || au.AdminId == id))
+                    dependencies.Add("registos de agência");
+                var msg = dependencies.Count > 0
+                    ? $"Não foi possível eliminar o utilizador porque ainda existem dependências: {string.Join(", ", dependencies)}. Transfira ou remova todas as referências antes de eliminar."
+                    : "Erro ao eliminar utilizador. Por favor, tente novamente.";
+                return Json(new { success = false, message = msg });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Erro inesperado ao eliminar utilizador: " + ex.Message });
+            }
         }
     }
 }

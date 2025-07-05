@@ -27,7 +27,11 @@ namespace ImoSphere.Controllers
         // GET: List all properties
         public async Task<IActionResult> Index()
         {
-            var properties = await _context.Properties.Include(p => p.Images).Include(p => p.Agency).ToListAsync();
+            var properties = await _context.Properties
+                .Include(p => p.Images)
+                .Include(p => p.Agency)
+                .Where(p => p.Agency.Name != "ImoSphere")
+                .ToListAsync();
             return View(properties);
         }
 
@@ -81,7 +85,7 @@ namespace ImoSphere.Controllers
             var property = new Property();
             if (isSuperAdmin)
             {
-                var agencies = await _context.Agencies.ToListAsync();
+                var agencies = await _context.Agencies.Where(a => a.Name != "ImoSphere").ToListAsync();
                 ViewBag.Agencies = new SelectList(agencies, "Id", "Name");
                 if (property.AgencyId == 0 && agencies.Any())
                     property.AgencyId = agencies.First().Id;
@@ -146,7 +150,7 @@ namespace ImoSphere.Controllers
                 ViewBag.UserRole = isSuperAdmin ? "SuperAdmin" : (isAdmin ? "Admin" : "Comercial");
                 if (isSuperAdmin)
                 {
-                    var agencies = await _context.Agencies.ToListAsync();
+                    var agencies = await _context.Agencies.Where(a => a.Name != "ImoSphere").ToListAsync();
                     ViewBag.Agencies = new SelectList(agencies, "Id", "Name");
                     int agencyId = property.AgencyId > 0 ? property.AgencyId : agencies.FirstOrDefault()?.Id ?? 0;
                     var agencyComerciais = await _context.AgencyUsers

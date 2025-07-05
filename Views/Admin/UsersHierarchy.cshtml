@@ -1,0 +1,403 @@
+@model List<ImoSphere.Models.UserHierarchyViewModel>
+@using ImoSphere.Data;
+@inject ApplicationDbContext _context;
+@{
+    ViewBag.Title = "Users Management";
+    var filterModel = ViewBag.FilterModel as ImoSphere.Models.UserFilterViewModel;
+}
+
+<div class="users-management-container">
+    <div class="page-header">
+        <h2>Users Management</h2>
+        <a class="btn btn-primary" asp-action="CreateUser">
+            <i class="fas fa-plus"></i> Create New User
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null) {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    
+    @if (TempData["ErrorMessage"] != null) {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Filtros -->
+    <div class="filters-section">
+        <form method="get" class="filters-form">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="agencyId" class="form-label">Filter by Agency:</label>
+                    <select name="agencyId" id="agencyId" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Agencies</option>
+                        @foreach (var agency in filterModel.Agencies)
+                        {
+                                                    <option value="@agency.Id" selected="@(filterModel.SelectedAgencyId == agency.Id)">
+                            @agency.Name
+                        </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="adminId" class="form-label">Filter by Admin:</label>
+                    <select name="adminId" id="adminId" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Admins</option>
+                        @foreach (var admin in filterModel.Admins)
+                        {
+                            <option value="@admin.Id" selected="@(filterModel.SelectedAdminId == admin.Id)">
+                                @admin.UserName
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <a href="@Url.Action("Users")" class="btn btn-outline-secondary">
+                        <i class="fas fa-times"></i> Clear Filters
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Hierarquia de Utilizadores -->
+    <div class="hierarchy-container">
+        @if (!Model.Any())
+        {
+            <div class="no-data-message">
+                <i class="fas fa-users"></i>
+                <h3>No users found</h3>
+                <p>No users match the current filters.</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var agency in Model)
+            {
+                <div class="agency-card @(agency.AgencyId == 0 ? "imosphere-card" : "")">
+                    <div class="agency-header">
+                        <h3 class="agency-name">
+                            @if (agency.AgencyId == 0)
+                            {
+                                <i class="fas fa-crown"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-building"></i>
+                            }
+                            @agency.AgencyName
+                        </h3>
+                        <span class="agency-stats">
+                            @if (agency.AgencyId == 0)
+                            {
+                                @(agency.Admins.Count + " SuperAdmin(s)")
+                            }
+                            else
+                            {
+                                @(agency.Admins.Count + " Admin(s), " + agency.Admins.Sum(a => a.Comerciais.Count) + " Comercial(s)")
+                            }
+                        </span>
+                    </div>
+
+                    <div class="agency-content">
+                        @if (agency.Admins.Any())
+                        {
+                            @foreach (var adminGroup in agency.Admins)
+                            {
+                                <div class="admin-group@(agency.AgencyId == 0 ? " imosphere-admin-group" : "")">
+                                    <div class="admin-header">
+                                        <h4 class="admin-name">
+                                            @if (agency.AgencyId == 0)
+                                            {
+                                                <i class="fas fa-crown"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fas fa-user-shield"></i>
+                                            }
+                                            @adminGroup.Admin.UserName
+                                            <span class="admin-email">(@adminGroup.Admin.Email)</span>
+                                        </h4>
+                                        <div class="admin-actions">
+                                            <a class="btn btn-sm btn-info" asp-action="EditUser" asp-route-id="@adminGroup.Admin.Id">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                            @if (adminGroup.Admin.Email != "imosphere.admin@imosphere.com")
+                                            {
+                                                <form class="delete-user-form" data-user-id="@adminGroup.Admin.Id" method="post" style="display:inline;">
+                                                    <button type="submit" class="btn btn-sm btn-danger">
+                                                        <i class="fas fa-trash"></i> Delete
+                                                    </button>
+                                                </form>
+                                            }
+                                        </div>
+                                    </div>
+                                    @if (agency.AgencyId != 0)
+                                    {
+                                        if (adminGroup.Comerciais.Any())
+                                        {
+                                            <div class="comerciais-list">
+                                                @foreach (var comercial in adminGroup.Comerciais)
+                                                {
+                                                    <div class="comercial-item">
+                                                        <div class="comercial-info">
+                                                            <i class="fas fa-user"></i>
+                                                            <span class="comercial-name">@comercial.UserName</span>
+                                                            <span class="comercial-email">(@comercial.Email)</span>
+                                                        </div>
+                                                        <div class="comercial-actions">
+                                                            <a class="btn btn-sm btn-info" asp-action="EditUser" asp-route-id="@comercial.Id">
+                                                                <i class="fas fa-edit"></i> Edit
+                                                            </a>
+                                                            <form class="delete-user-form" data-user-id="@comercial.Id" method="post" style="display:inline;">
+                                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                                    <i class="fas fa-trash"></i> Delete
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="no-comerciais">
+                                                <i class="fas fa-info-circle"></i>
+                                                <span>No comerciais assigned to this admin.</span>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="no-admins">
+                                <i class="fas fa-info-circle"></i>
+                                <span>No admins in this agency.</span>
+                            </div>
+                        }
+
+                        @if (agency.Comerciais.Any() && !agency.Admins.Any())
+                        {
+                            <div class="comerciais-without-admin">
+                                <h4 class="section-title">
+                                    <i class="fas fa-users"></i>
+                                    Comerciais without Admin
+                                </h4>
+                                <div class="comerciais-list">
+                                    @foreach (var comercial in agency.Comerciais)
+                                    {
+                                        <div class="comercial-item">
+                                            <div class="comercial-info">
+                                                <i class="fas fa-user"></i>
+                                                <span class="comercial-name">@comercial.UserName</span>
+                                                <span class="comercial-email">(@comercial.Email)</span>
+                                            </div>
+                                            <div class="comercial-actions">
+                                                <a class="btn btn-sm btn-info" asp-action="EditUser" asp-route-id="@comercial.Id">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                                <form class="delete-user-form" data-user-id="@comercial.Id" method="post" style="display:inline;">
+                                                    <button type="submit" class="btn btn-sm btn-danger">
+                                                        <i class="fas fa-trash"></i> Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<!-- Modal de transferência de dependências -->
+<div class="modal fade" id="transferModal" tabindex="-1" aria-labelledby="transferModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="transferModalLabel">Transferir dependências</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="transferModalMessage" class="mb-3"></div>
+        <div id="transferSelectContainer" style="display:none;">
+          <label for="transferSelect" class="form-label">Escolha o utilizador substituto:</label>
+          <select id="transferSelect" class="form-select"></select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="confirmTransferBtn">Transferir e Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Script de eliminação de utilizador carregado!');
+    // Atualizar lista de admins quando agência muda
+    document.getElementById('agencyId').addEventListener('change', function() {
+        const agencyId = this.value;
+        const adminSelect = document.getElementById('adminId');
+        
+        // Limpar opções de admin
+        adminSelect.innerHTML = '<option value="">All Admins</option>';
+        
+        if (agencyId) {
+            // Fazer AJAX para buscar admins da agência
+            fetch(`/Admin/GetAdminsByAgency?agencyId=${agencyId}`)
+                .then(response => response.json())
+                .then(admins => {
+                    admins.forEach(admin => {
+                        const option = document.createElement('option');
+                        option.value = admin.id;
+                        option.textContent = admin.userName;
+                        adminSelect.appendChild(option);
+                    });
+                });
+        }
+    });
+
+    // Interceptar clique em Delete
+    const deleteForms = document.querySelectorAll('.delete-user-form');
+    deleteForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const userId = form.getAttribute('data-user-id');
+            // AJAX para verificar dependências
+            fetch(`/Admin/CheckUserDependencies?id=${userId}`)
+                .then(r => {
+                    if (r.headers.get('content-type')?.includes('application/json')) {
+                        return r.json();
+                    } else {
+                        return r.text().then(text => { throw new Error('Resposta não é JSON: ' + text); });
+                    }
+                })
+                .then(data => {
+                    console.log('Resposta do backend (check):', data);
+                    if (data.needsTransfer) {
+                        // Mostrar modal
+                        const modal = new bootstrap.Modal(document.getElementById('transferModal'));
+                        document.getElementById('transferModalMessage').innerHTML = data.message;
+                        const select = document.getElementById('transferSelect');
+                        select.innerHTML = '';
+                        if (data.substitutes && data.substitutes.length > 0) {
+                            document.getElementById('transferSelectContainer').style.display = '';
+                            document.getElementById('confirmTransferBtn').style.display = '';
+                            data.substitutes.forEach(u => {
+                                const opt = document.createElement('option');
+                                opt.value = u.id;
+                                opt.textContent = u.name;
+                                select.appendChild(opt);
+                            });
+                            document.getElementById('confirmTransferBtn').onclick = function() {
+                                confirmTransfer(userId, select.value);
+                            };
+                        } else {
+                            document.getElementById('transferSelectContainer').style.display = 'none';
+                            document.getElementById('confirmTransferBtn').style.display = 'none';
+                            document.getElementById('confirmTransferBtn').onclick = null;
+                        }
+                        modal.show();
+                    } else if (data.canDelete) {
+                        // Eliminação direta
+                        fetch(`/Admin/TransferAndDeleteUser?id=${userId}&substituteId=`, { method: 'POST' })
+                            .then(r => {
+                                if (r.headers.get('content-type')?.includes('application/json')) {
+                                    return r.json();
+                                } else {
+                                    return r.text().then(text => { throw new Error('Resposta não é JSON: ' + text); });
+                                }
+                            })
+                            .then(data => {
+                                console.log('Resposta do backend (delete direto):', data);
+                                if (data.success) {
+                                    showSuccessPopup('Utilizador eliminado com sucesso!');
+                                    // Refresh da página após 1.5 segundos
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 1500);
+                                } else {
+                                    alert(data.message || 'Erro ao eliminar utilizador.');
+                                }
+                            })
+                            .catch(err => {
+                                alert('Erro de comunicação com o servidor ou resposta inesperada. ' + err.message);
+                                console.error(err);
+                            });
+                    } else if (data.message) {
+                        alert(data.message);
+                    }
+                })
+                .catch(err => {
+                    alert('Erro de comunicação com o servidor ou resposta inesperada. ' + err.message);
+                    console.error(err);
+                });
+        });
+    });
+
+    function confirmTransfer(userId, substituteId) {
+        fetch(`/Admin/TransferAndDeleteUser?id=${userId}&substituteId=${substituteId}`, { method: 'POST' })
+            .then(r => {
+                if (r.headers.get('content-type')?.includes('application/json')) {
+                    return r.json();
+                } else {
+                    return r.text().then(text => { throw new Error('Resposta não é JSON: ' + text); });
+                }
+            })
+            .then(data => {
+                console.log('Resposta do backend (transfer):', data);
+                if (data.success) {
+                    // Fechar o modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('transferModal'));
+                    if (modal) modal.hide();
+                    
+                    showSuccessPopup('Utilizador eliminado com sucesso!');
+                    // Refresh da página após 1.5 segundos
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    alert(data.message || 'Erro ao eliminar utilizador.');
+                }
+            })
+            .catch(err => {
+                alert('Erro de comunicação com o servidor ou resposta inesperada. ' + err.message);
+                console.error(err);
+            });
+    }
+
+    function removeUserRow(userId) {
+        const row = document.querySelector(`form[data-user-id='${userId}']`)?.closest('tr');
+        if (row) row.remove();
+    }
+
+    function showSuccessPopup(message) {
+        showImosPopup(message, 'success');
+    }
+    function showErrorPopup(message) {
+        showImosPopup(message, 'error');
+    }
+    function showImosPopup(message, type) {
+        const popup = document.createElement('div');
+        popup.className = 'imospopup' + (type === 'error' ? ' error' : '');
+        popup.innerHTML = `<button class='close-btn' onclick='this.parentNode.remove()'>&times;</button><i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> <span>${message}</span>`;
+        document.body.appendChild(popup);
+        setTimeout(() => { if (popup.parentNode) popup.remove(); }, 3500);
+    }
+});
+</script> 
