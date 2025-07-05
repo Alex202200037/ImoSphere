@@ -17,175 +17,235 @@
     }
 }
 @Html.AntiForgeryToken()
-<div class="chat-page-container">
-    <div class="chat-header d-flex align-items-center mb-3" style="gap:18px;">
-        <a href="/Properties/Details/@Model.PropertyId" title="Ver detalhes da propriedade">
-            <img src="@Model.PropertyImage" alt="Casa" class="chat-avatar" style="width:64px;height:64px;object-fit:cover;border-radius:12px;border:2px solid #333;box-shadow:0 2px 8px #0002;cursor:pointer;">
-        </a>
-        <div>
-            <div class="d-flex align-items-center" style="gap:10px;">
-                <h2 style="margin:0;font-size:1.4rem;font-weight:700;">@Model.PropertyName</h2>
-                @if (!string.IsNullOrEmpty(Model.AgencyLogo))
-                {
-                    <img src="@Model.AgencyLogo" alt="Agência" style="height:32px;width:auto;max-width:60px;object-fit:contain;vertical-align:middle;" />
-                }
-            </div>
-            <div style="font-size:1.05rem;color:#bbb;">
-                <span>@ViewBag.OtherParticipantName</span>
-            </div>
-        </div>
-    </div>
-    <div class="chat-main-container">
-        <div id="messagesList" class="messages-list" style="flex:1;overflow-y:auto;background:#181818;border-radius:10px;padding:18px 32px 12px 32px;margin-bottom:0;display:flex;flex-direction:column;justify-content:flex-end;min-height:200px;max-height:calc(100vh - 220px);width:100%;">
-            @{
-                string lastSenderId = null;
-            }
-            @for (int i = 0; i < Model.Messages.Count; i++)
-            {
-                var msg = Model.Messages[i];
-                var isMine = msg.SenderId == Model.CurrentUserId;
-                var role = Model.SenderRoles != null && Model.SenderRoles.ContainsKey(msg.SenderId) ? Model.SenderRoles[msg.SenderId] : null;
-                bool showName = !isMine && (i == 0 || Model.Messages[i - 1].SenderId != msg.SenderId);
-            <div style="display:flex;flex-direction:column;align-items:@(isMine ? "flex-end" : "flex-start");margin-bottom:2px;">
-                @if (showName)
-                {
-                    <span style="font-size:0.93em;font-weight:600;color:@GetRoleColor(role);margin-bottom:1px;">
-                        @msg.SenderName@((!string.IsNullOrEmpty(role) && role != "Cliente") ? $" ({role})" : (role == "Cliente" ? " (Cliente)" : ""))
-                    </span>
-                }
-                <div class="chat-bubble @(isMine ? "mine" : "theirs")">
-                    <div class="bubble-content">@msg.Text</div>
-                    <div class="bubble-meta">@msg.SentAt.ToLocalTime().ToString("HH:mm")</div>
+
+<link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
+
+<div class="chat-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+                <!-- Chat Header -->
+                <div class="card chat-header-card mb-4">
+                    <div class="card-body">
+                        <div class="chat-header">
+                            <div class="chat-avatar">
+                                @if (Model.Property?.Images != null && Model.Property.Images.Any())
+                                {
+                                    <img src="@Model.Property.Images.First().ImageUrl" alt="Property" />
+                                }
+                                else
+                                {
+                                    <i class="fas fa-home fa-2x"></i>
+                                }
+                            </div>
+                            <div class="chat-info">
+                                <h3 class="chat-title">@Model.Property?.Name</h3>
+                                <p class="chat-location">
+                                    <i class="fas fa-map-marker-alt me-1"></i>@Model.Property?.Location
+                                </p>
+                                <div class="chat-meta">
+                                    <span class="chat-price">€@Model.Property?.Price.ToString("N0")</span>
+                                    @if (Model.Property?.Agency != null)
+                                    {
+                                        <img src="@GetAgencyLogo(Model.Property.Agency.Name)" alt="@Model.Property.Agency.Name" class="agency-logo" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="chat-actions">
+                                <a href="@Url.Action("Details", "Properties", new { id = Model.Property?.Id })" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-eye me-1"></i>Ver Propriedade
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Messages -->
+                <div class="card chat-messages-card">
+                    <div class="card-header">
+                        <div class="chat-participants">
+                            <div class="participant">
+                                <div class="participant-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="participant-info">
+                                    <span class="participant-name">@Model.UserName</span>
+                                    <span class="participant-role">Cliente</span>
+                                </div>
+                            </div>
+                            <div class="chat-separator">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="participant">
+                                <div class="participant-avatar">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="participant-info">
+                                    <span class="participant-name">@Model.ComercialName</span>
+                                    <span class="participant-role">@(Model.IsAdmin ? "Admin" : "Comercial")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body chat-messages-body">
+                        <div id="messagesContainer" class="messages-container">
+                            @foreach (var message in Model.Messages)
+                            {
+                                var isOwnMessage = message.SenderId == Model.UserId;
+                                var role = GetRoleLabel(message.SenderId);
+                                var roleColor = GetRoleColor(role);
+                                
+                                <div class="message @(isOwnMessage ? "message-own" : "message-other")">
+                                    <div class="message-avatar">
+                                        @if (isOwnMessage)
+                                        {
+                                            <i class="fas fa-user"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fas fa-user-tie"></i>
+                                        }
+                                    </div>
+                                    <div class="message-content">
+                                        <div class="message-header">
+                                            <span class="message-sender" style="color:@roleColor">@message.SenderName</span>
+                                            <span class="message-role">@role</span>
+                                            <span class="message-time">@message.SentAt.ToLocalTime().ToString("HH:mm")</span>
+                                        </div>
+                                        <div class="message-text">@message.Text</div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    
+                    @if (Model.CanSend)
+                    {
+                        <div class="card-footer">
+                            <form id="messageForm" class="message-form">
+                                <div class="input-group">
+                                    <textarea id="messageInput" class="form-control message-input" 
+                                              placeholder="Escreva a sua mensagem..." rows="2"></textarea>
+                                    <button type="submit" class="btn btn-primary send-btn" disabled>
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-footer">
+                            <div class="chat-disabled">
+                                <i class="fas fa-lock me-2"></i>
+                                <span>Chat não disponível para este utilizador</span>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
-            }
         </div>
     </div>
-    @if (Model.CanSend)
-    {
-        <form id="chatForm" class="d-flex gap-2 chat-input-form" style="align-items:center;background:#181818;padding:12px 0 0 0;z-index:10;position:sticky;bottom:0;width:100%;margin:0 auto;">
-            <input type="hidden" id="conversationId" value="@Model.ConversationId" />
-            <input type="text" id="messageInput" class="form-control" placeholder="Escreva a sua mensagem..." autocomplete="off" style="flex:1;" />
-            <button type="submit" id="sendBtn" class="btn btn-primary">Enviar</button>
-        </form>
-    }
 </div>
+
+@functions {
+    private string GetAgencyLogo(string agencyName)
+    {
+        return agencyName?.ToLower() switch
+        {
+            "remax" => "/images/remax.png",
+            "era" => "/images/era.png",
+            "century 21" => "/images/century21.png",
+            "fine and country" => "/images/fine and country.png",
+            "kw" => "/images/kw.png",
+            _ => "/images/remax.png"
+        };
+    }
+}
+
 @section Scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script>
-        let signalRConnected = false;
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/chatHub")
             .build();
-        connection.on("ReceiveMessage", (user, senderName, senderRole, message, sentAt) => {
-            try {
-                const messagesList = document.getElementById("messagesList");
-                // Verifica se a última mensagem foi do mesmo sender
-                let lastSender = null;
-                if (messagesList.lastElementChild) {
-                    lastSender = messagesList.lastElementChild.getAttribute("data-sender-id");
-                }
-                // Só mostrar nome/role se NÃO for o utilizador atual
-                const showName = (user !== "@Model.CurrentUserId") && (!lastSender || lastSender !== user);
-                const msgDiv = document.createElement("div");
-                msgDiv.style.display = "flex";
-                msgDiv.style.flexDirection = "column";
-                msgDiv.style.alignItems = (user === "@Model.CurrentUserId") ? "flex-end" : "flex-start";
-                msgDiv.style.marginBottom = "2px";
-                msgDiv.setAttribute("data-sender-id", user);
-                if (showName) {
-                    const nameSpan = document.createElement("span");
-                    nameSpan.style.fontSize = "0.93em";
-                    nameSpan.style.fontWeight = "600";
-                    nameSpan.style.marginBottom = "1px";
-                    if (senderRole === "Admin") nameSpan.style.color = "#8be9fd";
-                    else if (senderRole === "Comercial") nameSpan.style.color = "#bbb";
-                    else nameSpan.style.color = "#fff";
-                    nameSpan.textContent = senderName + (senderRole && senderRole !== "Cliente" ? ` (${senderRole})` : (senderRole === "Cliente" ? " (Cliente)" : ""));
-                    msgDiv.appendChild(nameSpan);
-                }
-                const bubbleDiv = document.createElement("div");
-                bubbleDiv.className = "chat-bubble " + (user === "@Model.CurrentUserId" ? "mine" : "theirs");
-                bubbleDiv.innerHTML = `<div class='bubble-content'>${message}</div><div class='bubble-meta'>${sentAt}</div>`;
-                msgDiv.appendChild(bubbleDiv);
-                messagesList.appendChild(msgDiv);
-                messagesList.scrollTop = messagesList.scrollHeight;
-            } catch (e) {
-                console.error("Erro ao processar mensagem SignalR:", e, arguments);
-            }
+
+        const messagesContainer = document.getElementById('messagesContainer');
+        const messageForm = document.getElementById('messageForm');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.querySelector('.send-btn');
+
+        // Auto-resize textarea
+        messageInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            
+            // Enable/disable send button
+            sendBtn.disabled = this.value.trim().length === 0;
         });
-        connection.start().then(() => {
-            signalRConnected = true;
-            console.log("SignalR connected!");
-            // Entrar no grupo da conversa
-            const convId = document.getElementById("conversationId").value;
-            connection.invoke("JoinConversation", convId).catch(err => console.error(err.toString()));
-            // Ativar o botão de enviar
-            document.getElementById("sendBtn")?.removeAttribute("disabled");
-        }).catch(err => {
-            console.error("Erro ao ligar SignalR:", err);
-            signalRConnected = false;
+
+        // Send message
+        messageForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const message = messageInput.value.trim();
+            if (message.length === 0) return;
+
+            // Add message to UI immediately
+            addMessageToUI('@Model.UserName', message, true);
+            
+            // Clear input
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+            sendBtn.disabled = true;
+
+            // Send to server
+            connection.invoke("SendMessage", '@Model.ConversationId', message)
+                .catch(err => console.error(err));
         });
-        const form = document.getElementById("chatForm");
-        if (form) {
-            form.addEventListener("submit", function (e) {
-                e.preventDefault();
-                if (!signalRConnected) {
-                    alert("A ligação ao chat ainda não está pronta. Por favor, aguarde uns segundos e tente novamente.");
-                    return;
-                }
-                const msg = document.getElementById("messageInput").value;
-                const convId = document.getElementById("conversationId").value;
-                if (msg.trim()) {
-                    connection.invoke("SendMessage", convId, msg).catch(err => console.error(err.toString()));
-                    document.getElementById("messageInput").value = "";
-                }
-            });
+
+        // Receive message
+        connection.on("ReceiveMessage", function(senderName, message, isOwnMessage) {
+            addMessageToUI(senderName, message, isOwnMessage);
+        });
+
+        function addMessageToUI(senderName, message, isOwnMessage) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isOwnMessage ? 'message-own' : 'message-other'}`;
+            
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas fa-${isOwnMessage ? 'user' : 'user-tie'}"></i>
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-sender">${senderName}</span>
+                        <span class="message-time">${timeString}</span>
+                    </div>
+                    <div class="message-text">${message}</div>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            scrollToBottom();
         }
-        // Desativar o botão de enviar até o SignalR estar ligado
-        document.getElementById("sendBtn")?.setAttribute("disabled", "disabled");
-        // Scroll para o fim ao carregar
-        setTimeout(() => {
-            var list = document.getElementById("messagesList");
-            list.scrollTop = list.scrollHeight;
-        }, 200);
-        
-        // Marcar mensagens como lidas quando abrir a conversa
-        const convIdInput = document.getElementById("conversationId");
-        if (convIdInput) {
-            const convId = convIdInput.value;
-            fetch('/Chat/MarkAsRead', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                },
-                body: JSON.stringify({ conversationId: convId })
-            })
-            .then(() => {
-                // Esconde o badge do header
-                const badge = document.getElementById("unreadBadge");
-                if (badge) badge.style.display = "none";
-                // Esconde o badge da conversa na lista, se existir
-                const convBadge = document.querySelector(`.conversation-badge[data-conversation-id="${convId}"]`);
-                if (convBadge) convBadge.style.display = "none";
-            })
-            .catch(err => console.error(err.toString()));
+
+        function scrollToBottom() {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
+
+        // Start connection
+        connection.start().then(function() {
+            console.log("SignalR Connected");
+            scrollToBottom();
+        }).catch(function(err) {
+            console.error(err.toString());
+        });
+
+        // Scroll to bottom on page load
+        window.addEventListener('load', scrollToBottom);
     </script>
-    <style>
-        .chat-header { background: #181818; border-radius: 10px; padding: 18px 18px 10px 18px; margin-bottom: 18px; }
-        .chat-avatar { box-shadow: 0 2px 8px #0002; }
-        .chat-bubble { max-width: 70%; margin-bottom: 10px; padding: 10px 14px; border-radius: 16px; position: relative; font-size: 1.05rem; display: inline-block; }
-        .chat-bubble.mine { background: var(--secondary-color); color: #fff; margin-left: auto; text-align: right; }
-        .chat-bubble.theirs { background: #232323; color: #eee; margin-right: auto; text-align: left; }
-        .bubble-content { margin-bottom: 2px; }
-        .bubble-meta { font-size: 0.85em; color: #bbb; text-align: right; }
-        .chat-container { min-height: 400px; width: 100%; }
-        .chat-input-form { position: sticky; bottom: 0; background: #181818; width: 100%; }
-        @@media (max-width: 600px) {
-            .chat-header { padding: 10px 6px 6px 6px; }
-            #messagesList { padding: 8px 2px 2px 2px; }
-        }
-    </style>
 }

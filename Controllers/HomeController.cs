@@ -112,7 +112,7 @@ public class HomeController : Controller
                     .Include(au => au.Agency)
                     .FirstOrDefaultAsync();
 
-                userAgency = agencyUser?.Agency?.Name;
+                userAgency = agencyUser?.AgencyId.ToString();
                 var roles = await _userManager.GetRolesAsync(user);
                 userRole = roles.FirstOrDefault();
                 userId = user.Id;

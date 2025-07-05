@@ -2,37 +2,887 @@
     ViewData["Title"] = "Privacy Policy";
 }
 
-<section class="privacy">
-    <h1 class="text-center">@ViewData["Title"]</h1>
-    <p>Your privacy is important to us. This privacy policy explains how we collect, use, and protect your information.</p>
-
-    <h2>Information We Collect</h2>
-    <p>We may collect the following types of information:</p>
-    <ul>
-        <li>Personal information you provide to us, such as your name, email address, and contact details.</li>
-        <li>Information about your use of our website, including IP address, browser type, and pages visited.</li>
-    </ul>
-
-    <h2>How We Use Your Information</h2>
-    <p>We use the information we collect to:</p>
-    <ul>
-        <li>Provide and improve our services.</li>
-        <li>Respond to your inquiries and support requests.</li>
-        <li>Analyze website usage and improve user experience.</li>
-    </ul>
-
-    <h2>How We Protect Your Information</h2>
-    <p>We implement appropriate technical and organizational measures to protect your personal information from unauthorized access, disclosure, or misuse.</p>
-
-    <h2>Cookies</h2>
-    <p>Our website uses cookies to enhance your browsing experience. You can manage your cookie preferences through your browser settings.</p>
-
-    <h2>Third-Party Services</h2>
-    <p>We may share your information with trusted third-party services to help us operate our website and provide our services. These third parties are obligated to protect your information.</p>
-
-    <h2>Your Rights</h2>
-    <p>You have the right to access, update, or delete your personal information. To exercise these rights, please contact us.</p>
-
-    <h2>Contact Us</h2>
-    <p>If you have any questions about this privacy policy, please contact us; Alexandre Miguel: <a href="mailto:202200037@estudantes.ips.pt">202200037@estudantes.ips.pt</a> or Bruna Rossa: <a href="mailto:202200603@estudantes.ips.pt">202200603@estudantes.ips.pt.</p>
+<!-- Hero Section -->
+<section class="privacy-hero py-5">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="display-4 fw-bold mb-4">
+                <i class="fas fa-shield-alt text-primary me-2"></i>Privacy Policy
+            </h1>
+            <p class="lead mb-4">
+                Your privacy is important to us. This policy explains how we collect, use, and protect your personal information.
+            </p>
+            <div class="last-updated">
+                <small class="text-muted">
+                    <i class="fas fa-calendar-alt me-1"></i>Last updated: December 2024
+                </small>
+            </div>
+        </div>
+    </div>
 </section>
+
+<!-- Policy Content -->
+<section class="policy-content py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <!-- Table of Contents -->
+                <div class="policy-nav sticky-top" style="top: 20px;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <i class="fas fa-list me-2"></i>Contents
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <nav class="nav flex-column">
+                                <a class="nav-link" href="#introduction">
+                                    <i class="fas fa-info-circle me-2"></i>Introduction
+                                </a>
+                                <a class="nav-link" href="#information-collection">
+                                    <i class="fas fa-database me-2"></i>Information Collection
+                                </a>
+                                <a class="nav-link" href="#information-use">
+                                    <i class="fas fa-cogs me-2"></i>How We Use Information
+                                </a>
+                                <a class="nav-link" href="#information-sharing">
+                                    <i class="fas fa-share-alt me-2"></i>Information Sharing
+                                </a>
+                                <a class="nav-link" href="#data-security">
+                                    <i class="fas fa-lock me-2"></i>Data Security
+                                </a>
+                                <a class="nav-link" href="#your-rights">
+                                    <i class="fas fa-user-shield me-2"></i>Your Rights
+                                </a>
+                                <a class="nav-link" href="#cookies">
+                                    <i class="fas fa-cookie-bite me-2"></i>Cookies Policy
+                                </a>
+                                <a class="nav-link" href="#contact">
+                                    <i class="fas fa-envelope me-2"></i>Contact Us
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-9">
+                <div class="policy-sections">
+                    <!-- Introduction -->
+                    <section id="introduction" class="policy-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fas fa-info-circle text-primary me-2"></i>Introduction
+                            </h2>
+                        </div>
+                        <div class="section-content">
+                            <p>
+                                ImoSphere ("we," "our," or "us") is committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our real estate platform and services.
+                            </p>
+                            <p>
+                                By using our services, you agree to the collection and use of information in accordance with this policy. We are committed to complying with applicable data protection laws, including the General Data Protection Regulation (GDPR) and Portuguese data protection legislation.
+                            </p>
+                            <div class="info-box">
+                                <div class="info-icon">
+                                    <i class="fas fa-lightbulb text-warning"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h6>Key Points</h6>
+                                    <ul class="mb-0">
+                                        <li>We only collect information necessary for our services</li>
+                                        <li>Your data is protected with industry-standard security</li>
+                                        <li>You have full control over your personal information</li>
+                                        <li>We never sell your personal data to third parties</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Information Collection -->
+                    <section id="information-collection" class="policy-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fas fa-database text-primary me-2"></i>Information We Collect
+                            </h2>
+                        </div>
+                        <div class="section-content">
+                            <h5>Personal Information</h5>
+                            <p>We collect the following types of personal information:</p>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <div class="info-card">
+                                        <div class="info-card-icon">
+                                            <i class="fas fa-user text-primary"></i>
+                                        </div>
+                                        <h6>Account Information</h6>
+                                        <ul class="mb-0">
+                                            <li>Name and contact details</li>
+                                            <li>Email address and phone number</li>
+                                            <li>Profile information</li>
+                                            <li>User preferences</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-card">
+                                        <div class="info-card-icon">
+                                            <i class="fas fa-home text-success"></i>
+                                        </div>
+                                        <h6>Property Information</h6>
+                                        <ul class="mb-0">
+                                            <li>Property search criteria</li>
+                                            <li>Favorites and saved properties</li>
+                                            <li>Viewing history</li>
+                                            <li>Property inquiries</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5>Automatically Collected Information</h5>
+                            <p>When you use our platform, we automatically collect:</p>
+                            <div class="tech-info">
+                                <div class="tech-item">
+                                    <i class="fas fa-globe text-info"></i>
+                                    <span>IP address and location data</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-desktop text-info"></i>
+                                    <span>Device and browser information</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-clock text-info"></i>
+                                    <span>Usage patterns and analytics</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-cookie-bite text-info"></i>
+                                    <span>Cookie and tracking data</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Information Use -->
+                    <section id="information-use" class="policy-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fas fa-cogs text-primary me-2"></i>How We Use Your Information
+                            </h2>
+                        </div>
+                        <div class="section-content">
+                            <p>We use your information for the following purposes:</p>
+                            <div class="usage-grid">
+                                <div class="usage-item">
+                                    <div class="usage-icon">
+                                        <i class="fas fa-search text-primary"></i>
+                                    </div>
+                                    <h6>Service Provision</h6>
+                                    <p>To provide and maintain our real estate services, including property searches, listings, and user accounts.</p>
+                                </div>
+                                <div class="usage-item">
+                                    <div class="usage-icon">
+                                        <i class="fas fa-bell text-success"></i>
+                                    </div>
+                                    <h6>Communication</h6>
+                                    <p>To send you updates, notifications, and respond to your inquiries and support requests.</p>
+                                </div>
+                                <div class="usage-item">
+                                    <div class="usage-icon">
+                                        <i class="fas fa-chart-line text-warning"></i>
+                                    </div>
+                                    <h6>Analytics</h6>
+                                    <p>To analyze usage patterns, improve our services, and develop new features.</p>
+                                </div>
+                                <div class="usage-item">
+                                    <div class="usage-icon">
+                                        <i class="fas fa-shield-alt text-danger"></i>
+                                    </div>
+                                    <h6>Security</h6>
+                                    <p>To protect against fraud, abuse, and ensure the security of our platform and users.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Information Sharing -->
+                    <section id="information-sharing" class="policy-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fas fa-share-alt text-primary me-2"></i>Information Sharing
+                            </h2>
+                        </div>
+                        <div class="section-content">
+                            <p>We do not sell, trade, or rent your personal information to third parties. We may share your information in the following circumstances:</p>
+                            
+                            <div class="sharing-scenarios">
+                                <div class="scenario-item">
+                                    <div class="scenario-icon">
+                                        <i class="fas fa-handshake text-success"></i>
+                                    </div>
+                                    <div class="scenario-content">
+                                        <h6>With Your Consent</h6>
+                                        <p>When you explicitly authorize us to share your information with specific parties.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="scenario-item">
+                                    <div class="scenario-icon">
+                                        <i class="fas fa-building text-primary"></i>
+                                    </div>
+                                    <div class="scenario-content">
+                                        <h6>Real Estate Partners</h6>
+                                        <p>With trusted real estate agencies and professionals to facilitate property transactions.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="scenario-item">
+                                    <div class="scenario-icon">
+                                        <i class="fas fa-gavel text-warning"></i>
+                                    </div>
+                                    <div class="scenario-content">
+                                        <h6>Legal Requirements</h6>
+                                        <p>When required by law, court order, or government regulation.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="scenario-item">
+                                    <div class="scenario-icon">
+                                        <i class="fas fa-shield-alt text-danger"></i>
+                                    </div>
+                                    <div class="scenario-content">
+                                        <h6>Security & Protection</h6>
+                                        <p>To protect our rights, property, or safety, or that of our users or the public.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Data Security -->
+                    <section id="data-security" class="policy-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fas fa-lock text-primary me-2"></i>Data Security
+                            </h2>
+                        </div>
+                        <div class="section-content">
+                            <p>We implement comprehensive security measures to protect your personal information:</p>
+                            
+                            <div class="security-features">
+                                <div class="security-item">
+                                    <i class="fas fa-encryption text-success"></i>
+                                    <div>
+                                        <h6>Encryption</h6>
+                                        <p>All data is encrypted using industry-standard SSL/TLS protocols</p>
+                                    </div>
+                                </div>
+                                <div class="security-item">
+                                    <i class="fas fa-server text-primary"></i>
+                                    <div>
+                                        <h6>Secure Servers</h6>
+                                        <p>Data is stored on secure, monitored servers with regular backups</p>
+                                    </div>
+                                </div>
+                                <div class="security-item">
+                                    <i class="fas fa-user-lock text-warning"></i>
+                                    <div>
+                                        <h6>Access Control</h6>
+                                        <p>Strict access controls and authentication for all data access</p>
+                                    </div>
+                                </div>
+                                <div class="security-item">
+                                    <i class="fas fa-shield-virus text-danger"></i>
+                                    <div>
+                                        <h6>Regular Audits</h6>
+                                        <p>Regular security audits and vulnerability assessments</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Your Rights -->
+                    <section id="your-rights" class="policy-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fas fa-user-shield text-primary me-2"></i>Your Rights
+                            </h2>
+                        </div>
+                        <div class="section-content">
+                            <p>Under applicable data protection laws, you have the following rights:</p>
+                            
+                            <div class="rights-grid">
+                                <div class="right-item">
+                                    <div class="right-icon">
+                                        <i class="fas fa-eye text-primary"></i>
+                                    </div>
+                                    <h6>Right to Access</h6>
+                                    <p>Request a copy of your personal data and information about how we process it.</p>
+                                </div>
+                                <div class="right-item">
+                                    <div class="right-icon">
+                                        <i class="fas fa-edit text-success"></i>
+                                    </div>
+                                    <h6>Right to Rectification</h6>
+                                    <p>Request correction of inaccurate or incomplete personal data.</p>
+                                </div>
+                                <div class="right-item">
+                                    <div class="right-icon">
+                                        <i class="fas fa-trash text-danger"></i>
+                                    </div>
+                                    <h6>Right to Erasure</h6>
+                                    <p>Request deletion of your personal data in certain circumstances.</p>
+                                </div>
+                                <div class="right-item">
+                                    <div class="right-icon">
+                                        <i class="fas fa-pause text-warning"></i>
+                                    </div>
+                                    <h6>Right to Restriction</h6>
+                                    <p>Request limitation of processing in certain circumstances.</p>
+                                </div>
+                                <div class="right-item">
+                                    <div class="right-icon">
+                                        <i class="fas fa-download text-info"></i>
+                                    </div>
+                                    <h6>Right to Portability</h6>
+                                    <p>Receive your data in a structured, machine-readable format.</p>
+                                </div>
+                                <div class="right-item">
+                                    <div class="right-icon">
+                                        <i class="fas fa-ban text-secondary"></i>
+                                    </div>
+                                    <h6>Right to Object</h6>
+                                    <p>Object to processing of your data for certain purposes.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-info-box">
+                                <h6>Exercise Your Rights</h6>
+                                <p>To exercise any of these rights, please contact us at:</p>
+                                <div class="contact-methods">
+                                    <div class="contact-method">
+                                        <i class="fas fa-envelope text-primary"></i>
+                                        <span>privacy@imosphere.com</span>
+                                    </div>
+                                    <div class="contact-method">
+                                        <i class="fas fa-phone text-primary"></i>
+                                        <span>+351 213 456 789</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Cookies Policy -->
+                    <section id="cookies" class="policy-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fas fa-cookie-bite text-primary me-2"></i>Cookies Policy
+                            </h2>
+                        </div>
+                        <div class="section-content">
+                            <p>We use cookies and similar technologies to enhance your experience on our platform:</p>
+                            
+                            <div class="cookies-types">
+                                <div class="cookie-type">
+                                    <h6>Essential Cookies</h6>
+                                    <p>Required for basic functionality and security of the platform.</p>
+                                    <span class="cookie-badge essential">Cannot be disabled</span>
+                                </div>
+                                <div class="cookie-type">
+                                    <h6>Analytics Cookies</h6>
+                                    <p>Help us understand how visitors interact with our platform.</p>
+                                    <span class="cookie-badge analytics">Can be disabled</span>
+                                </div>
+                                <div class="cookie-type">
+                                    <h6>Marketing Cookies</h6>
+                                    <p>Used to deliver relevant advertisements and content.</p>
+                                    <span class="cookie-badge marketing">Can be disabled</span>
+                                </div>
+                            </div>
+                            
+                            <div class="cookie-controls">
+                                <h6>Cookie Preferences</h6>
+                                <p>You can manage your cookie preferences through your browser settings or our cookie consent tool.</p>
+                                <button class="btn btn-outline-primary" onclick="openCookieSettings()">
+                                    <i class="fas fa-cog me-2"></i>Manage Cookie Settings
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Contact -->
+                    <section id="contact" class="policy-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fas fa-envelope text-primary me-2"></i>Contact Us
+                            </h2>
+                        </div>
+                        <div class="section-content">
+                            <p>If you have any questions about this Privacy Policy or our data practices, please contact us:</p>
+                            
+                            <div class="contact-details">
+                                <div class="contact-card">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-envelope text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Email</h6>
+                                        <p>privacy@imosphere.com</p>
+                                    </div>
+                                </div>
+                                <div class="contact-card">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-phone text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Phone</h6>
+                                        <p>+351 213 456 789</p>
+                                    </div>
+                                </div>
+                                <div class="contact-card">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-map-marker-alt text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Address</h6>
+                                        <p>Rua das Flores, 123<br>1200-000 Lisboa, Portugal</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.privacy-hero {
+    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.privacy-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%238844ff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.last-updated {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.policy-content {
+    background: var(--card-bg);
+}
+
+.policy-nav .card {
+    border: 1px solid var(--border-accent);
+    background: var(--card-bg);
+}
+
+.policy-nav .card-header {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    color: white;
+    border-bottom: 1px solid var(--border-accent);
+}
+
+.policy-nav .nav-link {
+    color: var(--text-secondary);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.policy-nav .nav-link:hover,
+.policy-nav .nav-link.active {
+    color: var(--primary-color);
+    background: rgba(136, 68, 255, 0.1);
+}
+
+.policy-section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+}
+
+.section-header h2 {
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.info-box {
+    display: flex;
+    gap: 1rem;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.info-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.info-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    padding: 1.5rem;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.info-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.info-card-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.tech-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.tech-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(136, 68, 255, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-color);
+}
+
+.usage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.usage-item {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.usage-item:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.usage-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin: 0 auto 1rem;
+}
+
+.sharing-scenarios {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.scenario-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.scenario-item:hover {
+    border-color: var(--primary-color);
+}
+
+.scenario-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.security-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.security-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.security-item:hover {
+    border-color: var(--primary-color);
+}
+
+.security-item i {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+}
+
+.rights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.right-item {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.right-item:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.right-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin: 0 auto 1rem;
+}
+
+.contact-info-box {
+    background: linear-gradient(135deg, rgba(136, 68, 255, 0.1) 0%, rgba(136, 68, 255, 0.05) 100%);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.contact-methods {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.contact-method {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cookies-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.cookie-type {
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    position: relative;
+}
+
+.cookie-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.cookie-badge.essential {
+    background: #dc3545;
+    color: white;
+}
+
+.cookie-badge.analytics {
+    background: #28a745;
+    color: white;
+}
+
+.cookie-badge.marketing {
+    background: #ffc107;
+    color: #212529;
+}
+
+.cookie-controls {
+    background: var(--card-bg);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.contact-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.contact-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+    border-color: var(--primary-color);
+}
+
+.contact-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+@@media (max-width: 768px) {
+    .policy-nav {
+        margin-bottom: 2rem;
+    }
+    
+    .policy-section {
+        padding: 1.5rem;
+    }
+    
+    .usage-grid,
+    .rights-grid,
+    .cookies-types {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-methods {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scrolling for navigation links
+    const navLinks = document.querySelectorAll('.policy-nav .nav-link');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // Active navigation highlighting
+    const sections = document.querySelectorAll('.policy-section');
+    const navItems = document.querySelectorAll('.policy-nav .nav-link');
+    
+    window.addEventListener('scroll', function() {
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            
+            if (pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('href') === '#' + current) {
+                item.classList.add('active');
+            }
+        });
+    });
+});
+
+function openCookieSettings() {
+    // This would typically open a cookie consent modal
+    alert('Cookie settings modal would open here. In a real implementation, this would show detailed cookie preferences.');
+}
+</script>

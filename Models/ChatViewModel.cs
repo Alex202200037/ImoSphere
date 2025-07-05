@@ -22,6 +22,7 @@ namespace ImoSphere.Models
         public List<ChatMessage> Messages { get; set; }
         public string CurrentUserId { get; set; }
         public Dictionary<string, string> SenderRoles { get; set; }
+        public Property Property { get; set; }
     }
 
     public class ConversationListItemViewModel

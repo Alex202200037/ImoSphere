@@ -1,0 +1,210 @@
+/* Properties Page Styles */
+.properties-container {
+    padding: 40px 0;
+    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    min-height: calc(100vh - 200px);
+}
+
+.filter-sidebar {
+    border: 1px solid var(--border-accent);
+    box-shadow: 0 4px 16px var(--shadow-light);
+    background: var(--card-bg);
+}
+
+.filter-sidebar .card-header {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    border-bottom: 1px solid var(--border-accent);
+    color: white;
+}
+
+.btn-clear-filters {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    border: 1px solid #6c757d;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-clear-filters:hover {
+    background: linear-gradient(135deg, #5a6268 0%, #343a40 100%);
+    border-color: #5a6268;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+.agency-filters {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px;
+    background: var(--card-bg);
+}
+
+.property-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid var(--border-accent);
+    transition: all 0.3s ease;
+    background: var(--card-bg);
+    overflow: hidden;
+    position: relative;
+}
+
+.property-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px var(--shadow-medium);
+}
+
+.property-image-container {
+    flex-shrink: 0;
+    height: 220px;
+    overflow: hidden;
+    background: #222;
+    border-radius: 12px 12px 0 0;
+    position: relative;
+}
+
+.property-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 12px 12px 0 0;
+    transition: transform 0.3s;
+}
+
+.property-card:hover .property-image {
+    transform: scale(1.05);
+}
+
+.property-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.property-price-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 12;
+    background: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+.property-price-badge .badge {
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 12px;
+    padding: 6px 16px;
+}
+
+.property-card .agency-logo-badge {
+    height: 34px !important;
+    min-width: 30px !important;
+    padding: 2px 8px !important;
+    background: rgba(255,255,255,0.7) !important;
+    border-radius: 5px !important;
+    z-index: 11;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.property-card div.agency-logo-badge > img.agency-logo {
+    height: 30px !important;
+    width: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.property-features {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.feature-item i {
+    font-size: 1rem;
+}
+
+.map-card {
+    border: 1px solid var(--border-accent);
+    background: var(--card-bg);
+}
+
+.property-map {
+    height: 600px;
+    width: 100%;
+    background: #f8f9fa;
+    border-radius: 8px;
+    position: relative;
+}
+
+.property-map::before {
+    content: 'Mapa em desenvolvimento';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    z-index: 1;
+}
+
+.agency-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.card-footer {
+    border-radius: 0 0 12px 12px;
+}
+
+@media (max-width: 768px) {
+    .properties-container {
+        padding: 20px 0;
+    }
+    .filter-sidebar {
+        margin-bottom: 2rem;
+    }
+    .property-features {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .property-map {
+        height: 400px;
+    }
+} 

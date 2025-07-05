@@ -2,35 +2,304 @@
     ViewData["Title"] = "Services";
 }
 
-<body class="services">
-    <h1 class="text-center">Elevate Your Real Estate Experience</h1>
-    <p>Welcome to ImoSphere, where your real estate aspirations meet expert guidance. Explore our comprehensive range of
-        services, each designed to cater to your unique needs and dreams.</p>
+<link rel="stylesheet" href="~/css/services.css" asp-append-version="true" />
 
-       <section class="service-list">
-        <div class="service-item">
-            <img src="~/images/service1.png" alt="Home Icon" class="service-icon"/>
-            <h3>Find Your Dream Home</h3>
-            <p>We help you discover the perfect property that matches your lifestyle and preferences, ensuring a seamless
-                home-buying experience.</p>
+<div class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">Os Nossos Serviços</h1>
+        <p class="hero-subtitle">Oferecemos uma gama completa de serviços imobiliários para satisfazer todas as suas necessidades</p>
+    </div>
+</div>
+
+<div class="hero-stats py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number counter" data-target="1500">0</div>
+                    <div class="stat-label">Propriedades Vendidas</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number counter" data-target="500">0</div>
+                    <div class="stat-label">Clientes Satisfeitos</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number counter" data-target="25">0</div>
+                    <div class="stat-label">Anos de Experiência</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number counter" data-target="98">0</div>
+                    <div class="stat-label">% de Satisfação</div>
+                </div>
+            </div>
         </div>
-        <div class="service-item">
-            <img src="~/images/service2.png" alt="Value Icon" class="service-icon" />
-            <h3>Unlock Property Value</h3>
-            <p>Our team provides expert insights and analysis to help you understand the true value of your property,
-                empowering you to make informed decisions.</p>
+    </div>
+</div>
+
+<div class="services-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Serviços Principais</h2>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-home fa-2x"></i>
+                    </div>
+                    <h4>Compra e Venda</h4>
+                    <p>Assistência completa na compra e venda de propriedades residenciais e comerciais.</p>
+                    <a href="#" class="btn btn-primary">Saber Mais</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-key fa-2x"></i>
+                    </div>
+                    <h4>Arrendamento</h4>
+                    <p>Gestão de arrendamentos residenciais e comerciais com suporte completo.</p>
+                    <a href="#" class="btn btn-primary">Saber Mais</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                    </div>
+                    <h4>Avaliação</h4>
+                    <p>Avaliações profissionais e precisas de propriedades para diversos fins.</p>
+                    <a href="#" class="btn btn-primary">Saber Mais</a>
+                </div>
+            </div>
         </div>
-        <div class="service-item">
-            <img src="~/images/service3.png" alt="Management Icon" class="service-icon" />
-            <h3>Effortless Property Management</h3>
-            <p>We assist you in selling your property quickly and at the best possible price, leveraging our market
-                expertise and network.</p>
+    </div>
+</div>
+
+<div class="specialized-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Serviços Especializados</h2>
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="specialized-service-card">
+                    <div class="service-icon-small">
+                        <i class="fas fa-building fa-1x"></i>
+                    </div>
+                    <h4>Propriedades Comerciais</h4>
+                    <p>Especialistas em propriedades comerciais, escritórios e espaços de retalho.</p>
+                    <span class="service-tag">Especializado</span>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="specialized-service-card">
+                    <div class="service-icon-small">
+                        <i class="fas fa-umbrella-beach fa-1x"></i>
+                    </div>
+                    <h4>Propriedades de Luxo</h4>
+                    <p>Propriedades exclusivas e de luxo para clientes exigentes.</p>
+                    <span class="service-tag">Premium</span>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="specialized-service-card">
+                    <div class="service-icon-small">
+                        <i class="fas fa-hammer fa-1x"></i>
+                    </div>
+                    <h4>Investimento</h4>
+                    <p>Consultoria especializada em investimentos imobiliários.</p>
+                    <span class="service-tag">Investimento</span>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="specialized-service-card">
+                    <div class="service-icon-small">
+                        <i class="fas fa-file-contract fa-1x"></i>
+                    </div>
+                    <h4>Gestão Legal</h4>
+                    <p>Suporte legal completo em todas as transações imobiliárias.</p>
+                    <span class="service-tag">Legal</span>
+                </div>
+            </div>
         </div>
-        <div class="service-item">
-            <img src="~/images/service4.png" alt="Investment Icon" class="service-icon" />
-            <h3>Smart Investments, Informed Decisions</h3>
-            <p>Our investment strategies are tailored to your financial goals, ensuring you make the most of your real
-                estate investments.</p>
+    </div>
+</div>
+
+<div class="process-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Como Funcionamos</h2>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step text-center">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-search fa-2x"></i>
+                    </div>
+                    <h5 class="mt-3">Análise</h5>
+                    <p>Analisamos as suas necessidades e objetivos</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step text-center">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-list fa-2x"></i>
+                    </div>
+                    <h5 class="mt-3">Seleção</h5>
+                    <p>Selecionamos as melhores opções para si</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step text-center">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-handshake fa-2x"></i>
+                    </div>
+                    <h5 class="mt-3">Negociação</h5>
+                    <p>Negociamos os melhores termos possíveis</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step text-center">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-check-circle fa-2x"></i>
+                    </div>
+                    <h5 class="mt-3">Conclusão</h5>
+                    <p>Finalizamos a transação com sucesso</p>
+                </div>
+            </div>
         </div>
-    </section>
-</body>
+    </div>
+</div>
+
+<div class="testimonials-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">O Que Dizem os Nossos Clientes</h2>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Excelente serviço! A equipa da ImoSphere ajudou-me a encontrar a casa perfeita em tempo recorde."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user-circle fa-2x"></i>
+                        </div>
+                        <div class="author-info">
+                            <h6>Maria Silva</h6>
+                            <div class="rating">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Profissionais muito competentes. Venderam a minha propriedade acima do preço de mercado!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user-circle fa-2x"></i>
+                        </div>
+                        <div class="author-info">
+                            <h6>João Santos</h6>
+                            <div class="rating">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Atendimento personalizado e profissional. Recomendo vivamente os serviços da ImoSphere."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user-circle fa-2x"></i>
+                        </div>
+                        <div class="author-info">
+                            <h6>Ana Costa</h6>
+                            <div class="rating">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cta-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="cta-card text-center">
+                    <h2 class="mb-4">Pronto para Começar?</h2>
+                    <p class="mb-4">Contacte-nos hoje mesmo e descubra como podemos ajudá-lo a encontrar a propriedade perfeita.</p>
+                    <a href="/Home/ContactUs" class="btn btn-outline-primary btn-lg me-3">
+                        <i class="fas fa-phone me-2"></i>Contactar
+                    </a>
+                    <a href="/Home/Properties" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-search me-2"></i>Ver Propriedades
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Counter Animation
+function animateCounter(element) {
+    const target = parseInt(element.getAttribute('data-target'));
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+    
+    const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+        }
+        element.textContent = Math.floor(current).toLocaleString();
+    }, 16);
+}
+
+// Intersection Observer for counters
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const counter = entry.target;
+            animateCounter(counter);
+            observer.unobserve(counter);
+        }
+    });
+}, { threshold: 0.5 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => observer.observe(counter));
+});
+</script>

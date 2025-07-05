@@ -2,68 +2,234 @@
     ViewData["Title"] = "Contact Us";
 }
 
-<div class="contact-us">
-    <h1 class="text-center">Contact Us</h1>
-    <p>If you have any questions or need more information, feel free to reach out to us!</p>
-    <section class="service-list" style="margin: 10px 0">
-        <div class="service-item">
-            <img src="~/images/contact1.png" alt="Email" class="service-icon" />
-            <h5>info@ImoSphere.com</h5>
-        </div>
-        <div class="service-item">
-            <img src="~/images/contact2.png" alt="Phone" class="service-icon" />
-            <h5>+1 (123) 456-7890</h5>
-        </div>
-        <div class="service-item">
-            <img src="~/images/contact3.png" alt="Location" class="service-icon" />
-            <h5>Main Headquarters</h5>
-        </div>
-        <div class="service-item">
-            <img src="~/images/contact4.png" alt="Social" class="service-icon" />
-            <h5>Social Media</h5>
-        </div>
-    </section>
+<link rel="stylesheet" href="~/css/contact-us.css" asp-append-version="true" />
 
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-message">
-            <strong>Success! </strong>@TempData["SuccessMessage"]
-        </div>
-    }
-
-    <form asp-action="SubmitContactForm" method="post" class="contact-form">
-        <div class="form-group">
-            <label for="Name">Name</label>
-            <input type="text" id="Name" name="Name" class="form-control" required />
-        </div>
-
-        <div class="form-group">
-            <label for="Email">Email</label>
-            <input type="email" id="Email" name="Email" class="form-control" required />
-        </div>
-
-        <div class="form-group">
-            <label for="Message">Message</label>
-            <textarea id="Message" name="Message" class="form-control" rows="5" required></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Send Message</button>
-    </form>
+<div class="contact-hero">
+    <div class="container">
+        <h1>Contacte-nos</h1>
+        <p>Estamos aqui para ajudar. Entre em contacto connosco através dos nossos canais disponíveis.</p>
+    </div>
 </div>
 
-@section Scripts {
-    <script>
-        // Quando a página carregar
-        window.onload = function() {
-            var successMessage = document.getElementById('success-message'); // Seleciona a mensagem de sucesso
+<div class="contact-info-section py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="contact-info-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone fa-2x"></i>
+                    </div>
+                    <h4>Telefone</h4>
+                    <p>+351 123 456 789</p>
+                    <p>Segunda a Sexta: 9h-18h</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-info-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope fa-2x"></i>
+                    </div>
+                    <h4>Email</h4>
+                    <p>info@imosphere.pt</p>
+                    <p>Resposta em 24h</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-info-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt fa-2x"></i>
+                    </div>
+                    <h4>Escritório</h4>
+                    <p>Rua das Flores, 123</p>
+                    <p>Lisboa, Portugal</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-            if (successMessage) {
-                // Depois de 2500ms, a mensagem de sucesso desaparecerá
-                setTimeout(function() {
-                    successMessage.classList.remove('show'); // Remove a classe 'show' para esconder
-                    successMessage.classList.add('fade'); // Adiciona a classe 'fade' para ocultar gradualmente
-                }, 2500); // 2500ms = 2,5 segundos
+<div class="contact-form-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-form-card">
+                    <h2 class="text-center mb-4">Envie-nos uma mensagem</h2>
+                    <form class="contact-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Nome completo</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Telefone</label>
+                            <input type="tel" class="form-control" placeholder="+351 123 456 789">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Assunto</label>
+                            <select class="form-select">
+                                <option>Selecionar assunto</option>
+                                <option>Informação sobre propriedades</option>
+                                <option>Agendar visita</option>
+                                <option>Suporte técnico</option>
+                                <option>Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mensagem</label>
+                            <textarea class="form-control" rows="5" placeholder="Escreva a sua mensagem..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="privacy" required>
+                                <label class="form-check-label" for="privacy">
+                                    Aceito a <a href="/Home/Privacy" target="_blank">Política de Privacidade</a>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="fas fa-paper-plane me-2"></i>Enviar Mensagem
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="faq-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Perguntas Frequentes</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                Como posso agendar uma visita a uma propriedade?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Pode agendar uma visita através do nosso site, por telefone ou email. Um dos nossos comerciais entrará em contacto consigo para confirmar os detalhes.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                Quais são as comissões da agência?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                As comissões variam consoante o tipo de propriedade e valor. Contacte-nos para obter informações detalhadas sobre as nossas tarifas.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                Posso vender a minha propriedade através da ImoSphere?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Sim! Oferecemos serviços completos de venda de propriedades. Um dos nossos peritos avaliará a sua propriedade e apresentará um plano de marketing personalizado.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="social-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Siga-nos nas Redes Sociais</h2>
+        <div class="social-links">
+            <a href="#" class="social-link facebook">
+                <i class="fab fa-facebook-f"></i>
+                <span>Facebook</span>
+            </a>
+            <a href="#" class="social-link instagram">
+                <i class="fab fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+            <a href="#" class="social-link linkedin">
+                <i class="fab fa-linkedin-in"></i>
+                <span>LinkedIn</span>
+            </a>
+            <a href="#" class="social-link youtube">
+                <i class="fab fa-youtube"></i>
+                <span>YouTube</span>
+            </a>
+            <a href="#" class="social-link twitter">
+                <i class="fab fa-twitter"></i>
+                <span>Twitter</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Form validation and submission
+    const contactForm = document.querySelector('.contact-form');
+    
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(contactForm);
+        
+        // Show success message (in real app, this would submit to server)
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+        submitBtn.disabled = true;
+        
+        // Simulate form submission
+        setTimeout(() => {
+            submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Message Sent!';
+            submitBtn.classList.remove('btn-primary');
+            submitBtn.classList.add('btn-success');
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Reset button after 3 seconds
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.classList.remove('btn-success');
+                submitBtn.classList.add('btn-primary');
+                submitBtn.disabled = false;
+            }, 3000);
+        }, 2000);
+    });
+    
+    // Phone number formatting
+    const phoneInput = document.querySelector('input[type="tel"]');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                value = '+351 ' + value.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
             }
-        };
-    </script>
-}
+            e.target.value = value;
+        });
+    }
+});
+</script>

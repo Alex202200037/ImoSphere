@@ -1,7 +1,7 @@
 @model ImoSphere.Models.Property
 
 @{
-    ViewData["Title"] = "Add New Property";
+    ViewData["Title"] = "Adicionar Nova Propriedade";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var propertyModel = Model ?? new ImoSphere.Models.Property();
     var viewData = new ViewDataDictionary(ViewData);
@@ -11,101 +11,117 @@
     viewData["IsCreate"] = ViewBag.IsCreate;
 }
 
-<head>
-    <link rel="stylesheet" type="text/css" href="~/css/style.css" />
-</head>
+<link rel="stylesheet" href="~/css/property-form.css" asp-append-version="true" />
 
-<h1 class="text-center">Add New Property</h1>
-
-<form asp-action="Create" method="post" class="contact-form" id="propertyForm" enctype="multipart/form-data">
-    @await Html.PartialAsync("_PropertyForm", Model, viewData)
-    <div class="d-flex justify-content-between w-100">
-        <button type="submit" class="btn btn-secondary w-50 me-2">Add Property</button>
-        <a asp-controller="Home" asp-action="Properties" class="btn btn-secondary w-50">Cancel</a>
+<!-- Hero Section -->
+<section class="form-hero py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="form-header text-center">
+                    <div class="form-icon">
+                        <i class="fas fa-home fa-3x"></i>
+                    </div>
+                    <h1 class="form-title">Adicionar Nova Propriedade</h1>
+                    <p class="form-subtitle">Preencha os detalhes da propriedade para criar uma nova listagem</p>
+                </div>
+            </div>
+        </div>
     </div>
-</form>
+</section>
 
-<!-- Modal do mapa -->
+<!-- Form Section -->
+<section class="form-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="form-card">
+                    <form asp-action="Create" method="post" id="propertyForm" enctype="multipart/form-data">
+                        @await Html.PartialAsync("_PropertyForm", Model, viewData)
+                        
+                        <div class="form-actions">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                                        <i class="fas fa-plus me-2"></i>Adicionar Propriedade
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a asp-controller="Home" asp-action="Properties" class="btn btn-outline-secondary btn-lg w-100">
+                                        <i class="fas fa-times me-2"></i>Cancelar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Modal -->
 <div id="mapModal" class="map-modal">
     <div class="map-container">
-        <button type="button" id="closeMapBtn" class="map-close-btn">&times;</button>
+        <div class="map-header">
+            <h3><i class="fas fa-map-marker-alt me-2"></i>Selecionar Localização</h3>
+            <button type="button" id="closeMapBtn" class="map-close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
         <div id="map" class="map-content"></div>
+        <div class="map-instructions">
+            <p><i class="fas fa-info-circle me-2"></i>Clique no mapa para selecionar a localização ou arraste o marcador</p>
+        </div>
     </div>
 </div>
+
 @section Scripts {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
     <script>
-        // --- Autocomplete Nominatim ---
-        let acTimeout;
-        const locInput = document.getElementById('locationInput');
-        const latInput = document.getElementById('latitudeInput');
-        const lngInput = document.getElementById('longitudeInput');
-        let acList = document.createElement('div');
-        acList.className = 'autocomplete-list';
-        acList.style.width = locInput.offsetWidth + 'px';
-        locInput.parentNode.appendChild(acList);
-        locInput.addEventListener('input', function() {
-            clearTimeout(acTimeout);
-            if (this.value.length < 3) { acList.style.display = 'none'; return; }
-            acTimeout = setTimeout(() => {
-                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(this.value)}&addressdetails=1&limit=5`)
-                    .then(res => res.json())
-                    .then(data => {
-                        acList.innerHTML = '';
-                        data.forEach(item => {
-                            let opt = document.createElement('div');
-                            opt.className = 'autocomplete-item';
-                            opt.textContent = item.display_name;
-                            opt.onclick = () => {
-                                locInput.value = item.display_name;
-                                latInput.value = item.lat;
-                                lngInput.value = item.lon;
-                                acList.style.display = 'none';
-                            };
-                            acList.appendChild(opt);
-                        });
-                        acList.style.display = data.length ? 'block' : 'none';
-                    });
-            }, 300);
+        // Form validation and enhancement
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('propertyForm');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            // Add loading state to submit button
+            form.addEventListener('submit', function() {
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>A processar...';
+                submitBtn.disabled = true;
+            });
+            
+            // Auto-save draft functionality
+            let autoSaveTimeout;
+            const inputs = form.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    clearTimeout(autoSaveTimeout);
+                    autoSaveTimeout = setTimeout(() => {
+                        // Save to localStorage as draft
+                        const formData = new FormData(form);
+                        const draft = {};
+                        for (let [key, value] of formData.entries()) {
+                            draft[key] = value;
+                        }
+                        localStorage.setItem('propertyDraft', JSON.stringify(draft));
+                    }, 2000);
+                });
+            });
+            
+            // Load draft on page load
+            const savedDraft = localStorage.getItem('propertyDraft');
+            if (savedDraft) {
+                const draft = JSON.parse(savedDraft);
+                Object.keys(draft).forEach(key => {
+                    const input = form.querySelector(`[name="${key}"]`);
+                    if (input) {
+                        input.value = draft[key];
+                    }
+                });
+            }
         });
-        document.addEventListener('click', e => { if (!acList.contains(e.target) && e.target !== locInput) acList.style.display = 'none'; });
-        // --- Modal do mapa ---
-        const mapModal = document.getElementById('mapModal');
-        const openMapBtn = document.getElementById('openMapBtn');
-        const closeMapBtn = document.getElementById('closeMapBtn');
-        let map, marker;
-        openMapBtn.onclick = function() {
-            mapModal.classList.add('show');
-            setTimeout(() => { if (!map) initMap(); else map.invalidateSize(); }, 100);
-        };
-        closeMapBtn.onclick = function() { mapModal.classList.remove('show'); };
-        function initMap() {
-            let lat = parseFloat(latInput.value) || 38.7223;
-            let lng = parseFloat(lngInput.value) || -9.1393;
-            map = L.map('map').setView([lat, lng], 7);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                attribution: '© OpenStreetMap'
-            }).addTo(map);
-            marker = L.marker([lat, lng], {draggable:true}).addTo(map);
-            marker.on('dragend', function(e) {
-                let pos = marker.getLatLng();
-                latInput.value = pos.lat;
-                lngInput.value = pos.lng;
-                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.lat}&lon=${pos.lng}&format=json`)
-                    .then(res => res.json())
-                    .then(data => { locInput.value = data.display_name || `${pos.lat},${pos.lng}`; });
-            });
-            map.on('click', function(e) {
-                marker.setLatLng(e.latlng);
-                latInput.value = e.latlng.lat;
-                lngInput.value = e.latlng.lng;
-                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${e.latlng.lat}&lon=${e.latlng.lng}&format=json`)
-                    .then(res => res.json())
-                    .then(data => { locInput.value = data.display_name || `${e.latlng.lat},${e.latlng.lng}`; });
-            });
-        }
     </script>
 }
 
@@ -113,13 +129,15 @@
 {
     <div id="successPopup" class="popup-overlay success-popup">
         <div class="popup-content">
-            <div class="spinner"></div>
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
             <h2>@TempData["SuccessMessage"]</h2>
+            <p>Redirecionando para a lista de propriedades...</p>
         </div>
     </div>
 
     <script>
-        // Exibe o popup de sucesso com animação
         const popup = document.getElementById("successPopup");
         popup.classList.add("show");
 
