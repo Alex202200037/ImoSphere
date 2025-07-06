@@ -1,84 +1,252 @@
-# ImoSphere
+# 🏠 ImoSphere - Plataforma de Mediação Imobiliária Digital
 
-[Download the User Manual (PDF)](/UserManual_ImoSphere.pdf)
+[![.NET](https://img.shields.io/badge/.NET-8.0-blue.svg)](https://dotnet.microsoft.com/)
+[![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-MVC-green.svg)](https://docs.microsoft.com/en-us/aspnet/core/)
+[![SQLite](https://img.shields.io/badge/SQLite-Database-yellow.svg)](https://www.sqlite.org/)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple.svg)](https://getbootstrap.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## Tecnic Manual for ImoSphere
+> **Plataforma web completa para mediação imobiliária com gestão de propriedades, utilizadores e comunicação integrada.**
 
-### Introduction
-O projeto ImoSphere consiste numa plataforma web desenvolvida com o objetivo de facilitar a mediação imobiliária digital, permitindo a navegação, visualização e gestão de propriedades por diferentes tipos de utilizadores, de acordo com os respetivos níveis de acesso. A aplicação foi desenvolvida em ambiente ASP.NET MVC com integração de base de dados SQLite para autenticação e gestão de conteúdos.
+[📖 Manual do Utilizador (PDF)](/UserManual_ImoSphere.pdf) | [🔧 Manual Técnico](/MANUAL_TECNICO.md)
 
-A plataforma distingue-se por oferecer experiências adaptadas a quatro tipos de utilizadores:
+## 📋 Índice
 
-Utilizador Não Registado (Convidado): Pode explorar o site e aceder a páginas informativas como a página inicial, “Sobre Nós”, “Serviços”, “Contactos” e a listagem de propriedades. Contudo, não tem acesso aos detalhes completos das propriedades nem pode interagir com funcionalidades mais avançadas.
-Utilizador Registado (User): Após efetuar o registo e login, ganha acesso a funcionalidades adicionais, como o sistema de mensagens (simulado) com outros utilizadores, mantendo ainda acesso a todas as funcionalidades do convidado.
-Vendedor (Seller): Tem a possibilidade de criar, editar e gerir as suas propriedades, com validações e notificações de sucesso. Partilha com os utilizadores registados o acesso ao sistema de mensagens.
-Administrador (Admin): Possui acesso total à plataforma. Para além das funcionalidades dos Sellers, o Administrador pode gerir todos os utilizadores (criar, editar, eliminar) e controlar as mensagens enviadas através do formulário de contacto, incluindo marcar mensagens como lidas e eliminá-las. Tem ainda permissões para eliminar propriedades de qualquer utilizador.
-A interface foi concebida de forma intuitiva, com base em boas práticas de usabilidade, e com uma clara distinção entre as permissões de cada tipo de utilizador. A navegação é apoiada por menus consistentes, mensagens de validação e confirmação, bem como feedback visual sobre todas as ações realizadas.
+- [🏢 Sobre o Projeto](#-sobre-o-projeto)
+- [✨ Funcionalidades](#-funcionalidades)
+- [🛠️ Tecnologias](#️-tecnologias)
+- [🚀 Instalação](#-instalação)
+- [⚙️ Configuração](#️-configuração)
+- [👥 Tipos de Utilizador](#-tipos-de-utilizador)
+- [🔑 Contas de Teste](#-contas-de-teste)
+- [📱 Screenshots](#-screenshots)
+- [👨‍💻 Equipa](#-equipa)
 
-Este relatório detalha o comportamento da aplicação conforme o tipo de utilizador, suportado por capturas de ecrã das principais funcionalidades e páginas.
+## 🏢 Sobre o Projeto
 
-### Installation
-1. Clone the repository:
-    ```bash
-    git clone <repository-url>
-    ```
-2. Navigate to the project directory:
-    ```bash
-    cd <project-directory>
-    ```
-3. Restore dependencies:
-    ```bash
-    dotnet restore
-    ```
+O **ImoSphere** é uma plataforma web desenvolvida em **ASP.NET Core MVC** que facilita a mediação imobiliária digital. A aplicação oferece uma experiência completa para navegação, visualização e gestão de propriedades, com diferentes níveis de acesso baseados no tipo de utilizador.
 
-### Configuration
-1. Open the `appsettings.json` file.
-2. Ensure the `ConnectionStrings` section has the database connection details:
-    ```json
-    {
-        "ConnectionStrings": {
-            "DefaultConnection": "Data Source=ImoSphereDb.db"
-        }
-    }
-    ```
-3. Ensure the MS EFC is installed:
-    ```
-    dotnet add package Microsoft.EntityFrameworkCore
-    ```
+### 🎯 Objetivos
 
-### Running the Application
-1. Build the project:
-    ```bash
-    dotnet build
-    ```
-2. Run the application:
-    ```bash
-    dotnet run
-    ```
-or just:
-    ```
-    dotnet watch
-    ```
+- **Gestão de Propriedades**: Criação, edição e eliminação de listagens imobiliárias
+- **Sistema de Utilizadores**: Hierarquia de permissões (SuperAdmin, Admin, Comercial, User)
+- **Comunicação Integrada**: Sistema de mensagens e chat em tempo real
+- **Interface Responsiva**: Design moderno e adaptável a todos os dispositivos
+- **Gestão de Agências**: Suporte a múltiplas agências imobiliárias
 
-### Users:
-1. Admin user:
-    - **Email**: admin@imosphere.com
-    - **Password**: Admin@123
-    - ***Can manage users, properties and messages.***
-2. Seller:
-    - **Email**: seller@imosphere.com
-    - **Password**: Seller@123
-    - ***Can manage properties only.***
-2. Regular user:
-    - **Email**: user@imosphere.com
-    - **Password**: User@123
-    - ***Can only view properties.***
+## ✨ Funcionalidades
 
-## Team ImoSphere
-- Alexandre Miguel, 202200037
-    -
-    - Email: 202200037@estudante.ips.pt
+### 🔍 Exploração de Propriedades
+- **Listagem Completa**: Visualização de todas as propriedades disponíveis
+- **Filtros Avançados**: Por preço, localização, quartos, área, etc.
+- **Detalhes Completos**: Informações detalhadas com galeria de imagens
+- **Mapa Interativo**: Localização geográfica com OpenStreetMap
 
-- Bruna Rossa, 202200603
-    -
-    - Email: 202200603@estudante.ips.pt
+### 👤 Sistema de Utilizadores
+- **Registo e Login**: Sistema de autenticação seguro
+- **Perfis Personalizados**: Diferentes níveis de acesso
+- **Gestão de Utilizadores**: Criação, edição e eliminação (Admin)
+- **Hierarquia de Agências**: Gestão de comerciais por agência
+
+### 💬 Comunicação
+- **Chat em Tempo Real**: Sistema de mensagens com SignalR
+- **Formulário de Contacto**: Comunicação direta com a plataforma
+- **Gestão de Mensagens**: Marcação como lidas e eliminação
+
+### 🏗️ Gestão de Conteúdo
+- **Upload de Imagens**: Suporte a múltiplas imagens por propriedade
+- **Validação de Dados**: Verificação automática de formulários
+- **Notificações**: Feedback visual para todas as ações
+- **Auto-save**: Guarda automática de rascunhos
+
+## 🛠️ Tecnologias
+
+### Backend
+- **ASP.NET Core 8.0** - Framework web
+- **Entity Framework Core** - ORM para base de dados
+- **SQLite** - Base de dados relacional
+- **SignalR** - Comunicação em tempo real
+- **Identity Framework** - Autenticação e autorização
+
+### Frontend
+- **Bootstrap 5.3** - Framework CSS responsivo
+- **jQuery** - Manipulação do DOM
+- **Font Awesome** - Ícones
+- **Leaflet.js** - Mapas interativos
+- **OpenStreetMap** - Serviço de mapas
+
+### Ferramentas de Desenvolvimento
+- **Visual Studio 2022** / **VS Code**
+- **Git** - Controlo de versões
+- **Entity Framework Tools** - Migrações de base de dados
+
+## 🚀 Instalação
+
+### Pré-requisitos
+- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/) ou [VS Code](https://code.visualstudio.com/)
+- [Git](https://git-scm.com/)
+
+### Passos de Instalação
+
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/seu-usuario/ImoSphere.git
+   cd ImoSphere
+   ```
+
+2. **Restaurar dependências**
+   ```bash
+   dotnet restore
+   ```
+
+3. **Configurar a base de dados**
+   ```bash
+   dotnet ef database update
+   ```
+
+4. **Executar a aplicação**
+   ```bash
+   dotnet run
+   ```
+   
+   Ou para desenvolvimento com auto-reload:
+   ```bash
+   dotnet watch
+   ```
+
+5. **Aceder à aplicação**
+   ```
+   https://localhost:5001
+   ```
+
+## ⚙️ Configuração
+
+### Base de Dados
+A aplicação utiliza SQLite por padrão. O ficheiro `appsettings.json` contém a configuração:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=ImoSphereDb.db"
+  }
+}
+```
+
+### Variáveis de Ambiente
+Para produção, configure as seguintes variáveis:
+- `ASPNETCORE_ENVIRONMENT`: `Production`
+- `ConnectionStrings__DefaultConnection`: String de conexão da base de dados
+
+### Migrações
+Para atualizar o esquema da base de dados:
+```bash
+dotnet ef migrations add NomeDaMigracao
+dotnet ef database update
+```
+
+## 👥 Tipos de Utilizador
+
+### 🎯 Utilizador Não Registado (Convidado)
+- ✅ Explorar propriedades
+- ✅ Aceder a páginas informativas
+- ✅ Ver listagens básicas
+- ❌ Detalhes completos de propriedades
+- ❌ Sistema de mensagens
+
+### 👤 Utilizador Registado (User)
+- ✅ Todas as funcionalidades do convidado
+- ✅ Detalhes completos de propriedades
+- ✅ Sistema de mensagens
+- ✅ Chat em tempo real
+- ❌ Gestão de propriedades
+
+### 🏠 Comercial (Seller)
+- ✅ Todas as funcionalidades do User
+- ✅ Criar propriedades
+- ✅ Editar propriedades próprias
+- ✅ Upload de imagens
+- ✅ Gestão de listagens
+
+### 👨‍💼 Administrador (Admin)
+- ✅ Todas as funcionalidades do Comercial
+- ✅ Gestão de utilizadores
+- ✅ Gestão de todas as propriedades
+- ✅ Sistema de mensagens administrativo
+- ✅ Gestão de agências
+
+### 🔧 Super Administrador (SuperAdmin)
+- ✅ Todas as funcionalidades do Admin
+- ✅ Gestão de agências
+- ✅ Criação de administradores
+- ✅ Controlo total da plataforma
+
+## 🔑 Contas de Teste
+
+### 👑 Super Administrador
+| Email | Password |
+|-------|----------|
+| **imosphere.admin@imosphere.com** | Imosphere@123 |
+
+### 👨‍💼 Administradores por Agência
+| Agência | Email | Password |
+|---------|-------|----------|
+| **ERA** | jguilherme.era@imosphere.com | Admin@123 |
+| **REMAX** | candrade.remax@imosphere.com | Admin@123 |
+| **Century21** | mramos.century21@imosphere.com | Admin@123 |
+| **KW** | vnunes.kw@imosphere.com | Admin@123 |
+| **Fine and Country** | afaria.fac@imosphere.com | Admin@123 |
+
+### 🏠 Comerciais por Agência
+| Agência | Email | Password |
+|---------|-------|----------|
+| **ERA** | tsilva.era@imosphere.com | Comercial@123 |
+| **ERA** | mlopes.era@imosphere.com | Comercial@123 |
+| **ERA** | rcosta.era@imosphere.com | Comercial@123 |
+| **REMAX** | apereira.remax@imosphere.com | Comercial@123 |
+| **REMAX** | psousa.remax@imosphere.com | Comercial@123 |
+| **Century21** | smartins.century21@imosphere.com | Comercial@123 |
+| **Century21** | balves.century21@imosphere.com | Comercial@123 |
+| **KW** | rpinto.kw@imosphere.com | Comercial@123 |
+| **KW** | hcruz.kw@imosphere.com | Comercial@123 |
+| **Fine and Country** | pdias.fac@imosphere.com | Comercial@123 |
+| **Fine and Country** | lamaral.fac@imosphere.com | Comercial@123 |
+
+### 👤 Utilizador Regular
+| Email | Password |
+|-------|----------|
+| **user@imosphere.com** | User@123 |
+
+## 📱 Screenshots
+
+### Página Inicial
+![Página Inicial](screenshots/homepage.png)
+
+### Listagem de Propriedades
+![Propriedades](screenshots/properties.png)
+
+### Formulário de Criação
+![Criar Propriedade](screenshots/create-property.png)
+
+### Sistema de Chat
+![Chat](screenshots/chat.png)
+
+## 👨‍💻 Equipa
+
+### Desenvolvedores
+
+| Nome | Número | Email | Função |
+|------|--------|-------|--------|
+| **Alexandre Miguel** | 202200037 | 202200037@estudante.ips.pt | Desenvolvimento Backend |
+| **Bruna Rossa** | 202200603 | 202200603@estudante.ips.pt | Desenvolvimento Frontend |
+
+### Instituição
+- **Escola Superior de Tecnologia de Setúbal (ESTSetúbal)**
+- **Instituto Politécnico de Setúbal (IPS)**
+
+---
+
+<div align="center">
+  <p>Desenvolvido com ❤️ pela equipa ImoSphere</p>
+  <p>Projeto académico para a disciplina de Programação Web</p>
+</div>

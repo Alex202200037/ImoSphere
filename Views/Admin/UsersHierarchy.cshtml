@@ -248,7 +248,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Script de eliminação de utilizador carregado!');
+    
     // Atualizar lista de admins quando agência muda
     document.getElementById('agencyId').addEventListener('change', function() {
         const agencyId = this.value;
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 })
                 .then(data => {
-                    console.log('Resposta do backend (check):', data);
+
                     if (data.needsTransfer) {
                         // Mostrar modal
                         const modal = new bootstrap.Modal(document.getElementById('transferModal'));
@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 }
                             })
                             .then(data => {
-                                console.log('Resposta do backend (delete direto):', data);
+            
                                 if (data.success) {
                                     showSuccessPopup('Utilizador eliminado com sucesso!');
                                     // Refresh da página após 1.5 segundos
@@ -337,7 +337,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             })
                             .catch(err => {
                                 alert('Erro de comunicação com o servidor ou resposta inesperada. ' + err.message);
-                                console.error(err);
                             });
                     } else if (data.message) {
                         alert(data.message);
@@ -345,7 +344,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .catch(err => {
                     alert('Erro de comunicação com o servidor ou resposta inesperada. ' + err.message);
-                    console.error(err);
                 });
         });
     });
@@ -360,7 +358,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .then(data => {
-                console.log('Resposta do backend (transfer):', data);
                 if (data.success) {
                     // Fechar o modal
                     const modal = bootstrap.Modal.getInstance(document.getElementById('transferModal'));
@@ -377,7 +374,6 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(err => {
                 alert('Erro de comunicação com o servidor ou resposta inesperada. ' + err.message);
-                console.error(err);
             });
     }
 

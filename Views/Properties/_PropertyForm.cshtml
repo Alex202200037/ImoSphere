@@ -6,9 +6,7 @@
     var userRole = ViewBag.UserRole as string;
 }
 
-<div class="debug-info">
-    DEBUG: userRole=@userRole, isCreate=@isCreate
-</div>
+
 
 <!-- Agency and User Selection -->
 @if (userRole == "SuperAdmin" && isCreate)
@@ -295,5 +293,4 @@ else
             });
         }
     </script>
-} 
-} 
+}
