@@ -44,6 +44,8 @@ namespace ImoSphere.Controllers
                     .Include(c => c.Property).ThenInclude(p => p.Agency)
                     .Include(c => c.Property).ThenInclude(p => p.Images)
                     .Include(c => c.Messages)
+                    .Include(c => c.User)
+                    .Include(c => c.Comercial)
                     .FirstOrDefaultAsync(c => c.Id == conversationId.Value);
                 if (conv == null)
                 {
@@ -63,30 +65,20 @@ namespace ImoSphere.Controllers
                 }
                 if (prop.Images == null)
                     prop.Images = new List<PropertyImage>();
-                var com = await _context.Users.FindAsync(conv.ComercialId) as ApplicationUser;
-                if (com == null)
+                var com = conv.Comercial ?? await _context.Users.FindAsync(conv.ComercialId) as ApplicationUser;
+                var userParticipant = conv.User ?? await _context.Users.FindAsync(conv.UserId) as ApplicationUser;
+                // Buscar admin responsável pelo comercial
+                var comercialAgencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == com.Id && au.Role == "Comercial");
+                string comercialAdminName = null;
+                if (comercialAgencyUser?.AdminId != null)
                 {
-                    TempData["ChatError"] = "Comercial responsável não encontrado.";
-                    return RedirectToAction("Conversations");
+                    var adminUser = await _context.Users.FindAsync(comercialAgencyUser.AdminId);
+                    comercialAdminName = adminUser?.UserName;
                 }
                 // Permissões
                 bool isConvParticipant = (userId == conv.UserId) || (userId == conv.ComercialId);
                 bool isConvAgencyAdmin = isAdmin && agencyUser != null && prop.AgencyId == agencyUser.AgencyId;
                 if (!isConvParticipant && !isConvAgencyAdmin && !isSuperAdmin) return Forbid();
-                // Identificar "outro" participante
-                string convOtherParticipantName = null;
-                string convOtherParticipantId = null;
-                if (userId == conv.UserId)
-                {
-                    convOtherParticipantName = com?.UserName ?? "Comercial";
-                    convOtherParticipantId = com?.Id;
-                }
-                else
-                {
-                    var userParticipantObj = await _context.Users.FindAsync(conv.UserId) as ApplicationUser;
-                    convOtherParticipantName = userParticipantObj?.UserName ?? "Utilizador";
-                    convOtherParticipantId = userParticipantObj?.Id;
-                }
                 // Permissões de envio
                 var convCanSend = false;
                 if (!isSuperAdmin)
@@ -98,20 +90,16 @@ namespace ImoSphere.Controllers
                 }
                 // Construir dicionário de roles dos participantes
                 var senderRoles = new Dictionary<string, string>();
-                // Comercial
                 if (com != null)
                 {
                     var comRoles = await _userManager.GetRolesAsync(com);
                     senderRoles[com.Id] = comRoles.Contains("Admin") ? "Admin" : (comRoles.Contains("Comercial") ? "Comercial" : "Cliente");
                 }
-                // User (participante principal)
-                var userParticipantMainObj = await _context.Users.FindAsync(conv.UserId) as ApplicationUser;
-                if (userParticipantMainObj != null)
+                if (userParticipant != null)
                 {
-                    var userRoles = await _userManager.GetRolesAsync(userParticipantMainObj);
-                    senderRoles[userParticipantMainObj.Id] = userRoles.Contains("Admin") ? "Admin" : (userRoles.Contains("Comercial") ? "Comercial" : "Cliente");
+                    var userRoles = await _userManager.GetRolesAsync(userParticipant);
+                    senderRoles[userParticipant.Id] = userRoles.Contains("Admin") ? "Admin" : (userRoles.Contains("Comercial") ? "Comercial" : "Cliente");
                 }
-                // Garantir que todos os senders das mensagens têm role
                 foreach (var m in conv.Messages)
                 {
                     if (!senderRoles.ContainsKey(m.SenderId))
@@ -138,18 +126,18 @@ namespace ImoSphere.Controllers
                     ComercialName = com?.UserName ?? "Comercial",
                     ComercialId = com?.Id,
                     ComercialAvatar = null,
-                    UserName = user.UserName ?? "Utilizador",
-                    UserId = user.Id,
+                    ComercialAdminName = comercialAdminName,
+                    UserName = userParticipant?.UserName ?? "Utilizador",
+                    UserId = userParticipant?.Id ?? "",
                     UserAvatar = null,
                     CanSend = convCanSend,
                     IsAdmin = isAdmin,
                     IsSuperAdmin = isSuperAdmin,
                     Messages = conv.Messages?.OrderBy(m => m.SentAt).ToList() ?? new List<ChatMessage>(),
                     CurrentUserId = userId,
-                    SenderRoles = senderRoles
+                    SenderRoles = senderRoles,
+                    Property = prop
                 };
-                ViewBag.OtherParticipantName = convOtherParticipantName;
-                ViewBag.OtherParticipantId = convOtherParticipantId;
                 return View(convVm);
             }
 
@@ -183,15 +171,38 @@ namespace ImoSphere.Controllers
             // Se não existir conversa, mostrar view para iniciar contacto
             if (conversation == null)
             {
-                // Passar info da propriedade e comercial para a view
-                ViewBag.PropertyId = property.Id;
-                ViewBag.PropertyName = property.Name;
-                ViewBag.PropertyImage = property.Images.FirstOrDefault()?.ImageUrl ?? "/images/placeholder.png";
-                ViewBag.AgencyLogo = $"/images/{property.Agency?.Name?.ToLower()}.png";
-                ViewBag.ComercialName = comercial.UserName;
-                ViewBag.ComercialId = comercial.Id;
-                ViewBag.CanSend = !isSuperAdmin && !isAdmin; // Só user pode iniciar contacto
-                return View("StartContact");
+                // Buscar admin responsável pelo comercial
+                var comercialAgencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == comercial.Id && au.Role == "Comercial");
+                string comercialAdminName = null;
+                if (comercialAgencyUser?.AdminId != null)
+                {
+                    var adminUser = await _context.Users.FindAsync(comercialAgencyUser.AdminId);
+                    comercialAdminName = adminUser?.UserName;
+                }
+                // Buscar interessado
+                var userParticipant = await _context.Users.FindAsync(userId);
+                var chatViewModel = new ChatViewModel
+                {
+                    ConversationId = 0,
+                    PropertyId = property.Id,
+                    PropertyName = property.Name,
+                    PropertyImage = property.Images.FirstOrDefault()?.ImageUrl ?? "/images/placeholder.png",
+                    AgencyLogo = $"/images/{property.Agency?.Name?.ToLower()}.png",
+                    ComercialName = comercial.UserName,
+                    ComercialId = comercial.Id,
+                    ComercialAvatar = null,
+                    ComercialAdminName = comercialAdminName,
+                    UserName = userParticipant?.UserName ?? "Utilizador",
+                    UserId = userParticipant?.Id ?? "",
+                    UserAvatar = null,
+                    CanSend = !isSuperAdmin && !isAdmin,
+                    IsAdmin = isAdmin,
+                    IsSuperAdmin = isSuperAdmin,
+                    Messages = new List<ChatMessage>(),
+                    CurrentUserId = userId,
+                    Property = property
+                };
+                return View("Index", chatViewModel);
             }
             // Se a conversa existe, mas o utilizador não é participante nem admin da agência, não mostrar o chat
             bool isParticipant = (userId == conversation.UserId) || (userId == conversation.ComercialId);
@@ -229,6 +240,13 @@ namespace ImoSphere.Controllers
                 otherParticipantId = userParticipantObj?.Id;
             }
             // ViewModel
+            var comercialAgencyUser2 = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == comercial.Id && au.Role == "Comercial");
+            string comercialAdminName2 = null;
+            if (comercialAgencyUser2?.AdminId != null)
+            {
+                var adminUser2 = await _context.Users.FindAsync(comercialAgencyUser2.AdminId);
+                comercialAdminName2 = adminUser2?.UserName;
+            }
             var vm = new ChatViewModel
             {
                 ConversationId = conversation.Id,
@@ -238,15 +256,17 @@ namespace ImoSphere.Controllers
                 AgencyLogo = $"/images/{property.Agency?.Name?.ToLower()}.png",
                 ComercialName = comercial.UserName,
                 ComercialId = comercial.Id,
-                ComercialAvatar = null, // Adicionar se houver avatars
-                UserName = user.UserName,
-                UserId = user.Id,
-                UserAvatar = null, // Adicionar se houver avatars
+                ComercialAvatar = null,
+                ComercialAdminName = comercialAdminName2,
+                UserName = otherParticipantName,
+                UserId = otherParticipantId,
+                UserAvatar = null,
                 CanSend = canSend,
                 IsAdmin = isAdmin,
                 IsSuperAdmin = isSuperAdmin,
                 Messages = conversation.Messages.OrderBy(m => m.SentAt).ToList(),
-                CurrentUserId = userId
+                CurrentUserId = userId,
+                Property = property
             };
             ViewBag.OtherParticipantName = otherParticipantName;
             ViewBag.OtherParticipantId = otherParticipantId;

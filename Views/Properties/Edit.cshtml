@@ -1,7 +1,7 @@
 @model ImoSphere.Models.Property
 
 @{
-    ViewData["Title"] = "Edit Property";
+    ViewData["Title"] = "Editar Propriedade";
     var propertyModel = Model ?? new ImoSphere.Models.Property();
     var viewData = new ViewDataDictionary(ViewData);
     viewData.Remove("UserRole");
@@ -10,44 +10,78 @@
     viewData["IsCreate"] = ViewBag.IsCreate;
 }
 
-<h1 class="text-center">Edit Property</h1>
+<link rel="stylesheet" href="~/css/property-form.css" asp-append-version="true" />
 
-
-
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="alert alert-danger">
-        <ul>
-        @foreach (var entry in ViewData.ModelState)
-        {
-            foreach (var error in entry.Value.Errors)
-            {
-                <li>@entry.Key: @error.ErrorMessage</li>
-            }
-        }
-        </ul>
+<!-- Hero Section -->
+<section class="form-hero py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="form-header text-center">
+                    <div class="form-icon">
+                        <i class="fas fa-edit fa-3x"></i>
+                    </div>
+                    <h1 class="form-title">Editar Propriedade</h1>
+                    <p class="form-subtitle">Altere os detalhes da propriedade e guarde as alterações</p>
+                </div>
+            </div>
+        </div>
     </div>
-}
+</section>
 
-@if (ViewBag.Errors != null && ((List<string>)ViewBag.Errors).Any())
-{
-    <div class="alert alert-danger">
-        <ul>
-            @foreach (var error in (List<string>)ViewBag.Errors)
-            {
-                <li>@error</li>
-            }
-        </ul>
+<!-- Form Section -->
+<section class="form-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="form-card">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <ul>
+                            @foreach (var entry in ViewData.ModelState)
+                            {
+                                foreach (var error in entry.Value.Errors)
+                                {
+                                    <li>@entry.Key: @error.ErrorMessage</li>
+                                }
+                            }
+                            </ul>
+                        </div>
+                    }
+                    @if (ViewBag.Errors != null && ((List<string>)ViewBag.Errors).Any())
+                    {
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach (var error in (List<string>)ViewBag.Errors)
+                                {
+                                    <li>@error</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    <form asp-action="Edit" method="post" class="property-edit-form" id="propertyForm" enctype="multipart/form-data">
+                        @await Html.PartialAsync("_PropertyForm", Model, viewData)
+                        <div class="form-actions">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                                        <i class="fas fa-save me-2"></i>Guardar Alterações
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a asp-controller="Home" asp-action="Properties" class="btn btn-outline-secondary btn-lg w-100">
+                                        <i class="fas fa-times me-2"></i>Cancelar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-}
-
-<form asp-action="Edit" method="post" class="contact-form" id="propertyForm" enctype="multipart/form-data">
-    @await Html.PartialAsync("_PropertyForm", Model, viewData)
-    <div class="d-flex justify-content-between w-100">
-        <button type="submit" class="btn btn-secondary w-50 me-2">Save Changes</button>
-        <a asp-controller="Home" asp-action="Properties" class="btn btn-secondary w-50">Cancel</a>
-    </div>
-</form>
+</section>
 
 @if (TempData["SuccessMessage"] != null)
 {
@@ -76,8 +110,16 @@
 <!-- Modal do mapa -->
 <div id="mapModal" class="map-modal">
     <div class="map-container">
-        <button type="button" id="closeMapBtn" class="map-close-btn">&times;</button>
+        <div class="map-header">
+            <h3><i class="fas fa-map-marker-alt me-2"></i>Selecionar Localização</h3>
+            <button type="button" id="closeMapBtn" class="map-close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
         <div id="map" class="map-content"></div>
+        <div class="map-instructions">
+            <p><i class="fas fa-info-circle me-2"></i>Clique no mapa para selecionar a localização ou arraste o marcador</p>
+        </div>
     </div>
 </div>
 

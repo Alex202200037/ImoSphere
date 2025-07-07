@@ -26,31 +26,42 @@
     <div class="details-content row mt-4">
         <div class="col-md-7">
             <div class="details-image mb-4">
-                @if (Model.Images != null && Model.Images.Any())
+                <!-- Carrossel de imagens principal -->
+                <div class="property-carousel-main position-relative" id="propertyCarouselMain">
+                    @if (Model.Images != null && Model.Images.Any())
+                    {
+                        for (int i = 0; i < Model.Images.Count(); i++)
+                        {
+                            var img = Model.Images.ElementAt(i);
+                            <img src="@img.ImageUrl" alt="@Model.Name" class="carousel-img-main @(i == 0 ? "active" : "")" data-index="@i" style="display:@(i == 0 ? "block" : "none");cursor:pointer;" onclick="openImageModal(@i)" />
+                        }
+                    }
+                    else
+                    {
+                        <img src="/images/house-casas-1.png" alt="@Model.Name" class="carousel-img-main active" data-index="0" style="display:block;cursor:pointer;" onclick="openImageModal(0)" />
+                    }
+                    <button class="carousel-arrow-main left" type="button" aria-label="Anterior" onclick="carouselPrev()"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-arrow-main right" type="button" aria-label="Seguinte" onclick="carouselNext()"><i class="fas fa-chevron-right"></i></button>
+                    <div class="carousel-dots-main"></div>
+                </div>
+            </div>
+            <!-- Miniaturas logo por baixo do carrossel -->
+            <div class="property-thumbnails mt-3">
+                @if (Model.Images != null && Model.Images.Count() > 1)
                 {
-                    <div id="propertyCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            @for (int i = 0; i < Model.Images.Count; i++)
-                            {
-                                <div class="carousel-item @(i == 0 ? "active" : "")">
-                                    <img src="@Url.Content(Model.Images.ElementAt(i).ImageUrl)" alt="@Model.Name" class="d-block w-100 property-image" style="max-height: 400px; object-fit: cover; border-radius:12px;" />
-                                </div>
-                            }
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
+                    for (int i = 0; i < Model.Images.Count(); i++)
+                    {
+                        var img = Model.Images.ElementAt(i);
+                        <img src="@img.ImageUrl" alt="@Model.Name" class="property-thumb-img" data-index="@i" onclick="openImageModal(@i)" />
+                    }
                 }
-                else
-                {
-                    <p>No images available.</p>
-                }
+            </div>
+            <!-- Modal para imagem grande -->
+            <div id="imageModal" class="image-modal" style="display:none;">
+                <span class="close-modal" onclick="closeImageModal()">&times;</span>
+                <button class="modal-arrow left" onclick="modalPrev(event)"><i class="fas fa-chevron-left"></i></button>
+                <img class="image-modal-content" id="modalImage" src="" alt="Imagem grande" />
+                <button class="modal-arrow right" onclick="modalNext(event)"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
         <div class="col-md-5">
@@ -131,6 +142,42 @@
             
             document.body.appendChild(form);
             form.submit();
+        }
+    }
+
+    // Garantir que as imagens do carrossel e miniaturas estão disponíveis para o modal
+    function getAllImageUrls() {
+        return Array.from(document.querySelectorAll('.carousel-img-main')).map(img => img.src);
+    }
+    let modalIdx = 0;
+    function openImageModal(idx) {
+        const urls = getAllImageUrls();
+        modalIdx = idx;
+        document.getElementById('modalImage').src = urls[modalIdx];
+        document.getElementById('imageModal').style.display = 'flex';
+        document.getElementById('imageModal').style.alignItems = 'center';
+        document.getElementById('imageModal').style.justifyContent = 'center';
+    }
+    function closeImageModal() {
+        document.getElementById('imageModal').style.display = 'none';
+        document.getElementById('modalImage').src = '';
+    }
+    function modalPrev(e) {
+        e.stopPropagation();
+        const urls = getAllImageUrls();
+        modalIdx = (modalIdx - 1 + urls.length) % urls.length;
+        document.getElementById('modalImage').src = urls[modalIdx];
+    }
+    function modalNext(e) {
+        e.stopPropagation();
+        const urls = getAllImageUrls();
+        modalIdx = (modalIdx + 1) % urls.length;
+        document.getElementById('modalImage').src = urls[modalIdx];
+    }
+    window.onclick = function(event) {
+        const modal = document.getElementById('imageModal');
+        if (event.target === modal) {
+            closeImageModal();
         }
     }
 </script>

@@ -1,0 +1,24 @@
+@model List<ImoSphere.Models.ChatMessage>
+@{
+    var first = Model.First();
+    var isOwnMessage = first.SenderId == ViewBag.CurrentUserId;
+    var senderRole = ViewBag.SenderRoles != null && ViewBag.SenderRoles.ContainsKey(first.SenderId) ? ViewBag.SenderRoles[first.SenderId] : "";
+    var roleColor = ViewBag.GetRoleColor != null ? ViewBag.GetRoleColor(senderRole) : "#fff";
+    string avatarClass = senderRole == "Admin" ? "fa-user-shield" : (senderRole == "Comercial" ? "fa-user-tie" : "fa-user");
+}
+<div class="message @(isOwnMessage ? "message-own" : "message-other")" data-sender-id="@first.SenderId">
+    <div class="message-avatar">
+        <i class="fas @avatarClass"></i>
+    </div>
+    <div class="message-content">
+        <div class="message-header">
+            <span class="message-sender" style="color:@roleColor">@first.SenderName</span>
+            <span class="message-role">@senderRole</span>
+            <span class="message-time">@first.SentAt.ToLocalTime().ToString("HH:mm")</span>
+        </div>
+        @foreach (var msg in Model)
+        {
+            <div class="message-text">@msg.Text</div>
+        }
+    </div>
+</div>

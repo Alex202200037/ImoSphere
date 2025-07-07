@@ -81,4 +81,116 @@
 
 .textarea-no-resize {
     resize: none;
-} 
+}
+
+.property-image-hero, .carousel-img-main, .property-image, .carousel-item img {
+    width: 100%;
+    max-width: 900px;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    display: block;
+    margin: 0 auto;
+}
+
+.property-price-info, .property-price-hero, .meta-box-price {
+    color: var(--primary-color) !important;
+    font-size: 2rem;
+    font-weight: 800;
+    text-shadow: none;
+    background: none !important;
+    border-radius: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.carousel-arrow-main, .modal-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(30,30,30,0.55);
+    color: #fff;
+    border: none;
+    font-size: 2.5rem;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px #0004;
+    opacity: 0.85;
+}
+.carousel-arrow-main.left, .modal-arrow.left { left: 16px; }
+.carousel-arrow-main.right, .modal-arrow.right { right: 16px; }
+.carousel-arrow-main:hover, .modal-arrow:hover {
+    background: var(--primary-color);
+    color: #fff;
+    opacity: 1;
+}
+
+.property-thumbnails {
+    display: flex;
+    gap: 12px;
+    margin: 18px 0 0 0;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.property-thumb-img {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #0002;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.property-thumb-img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 16px #8844ff44;
+}
+
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.85);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.image-modal-content {
+    width: 700px;
+    height: 420px;
+    max-width: 95vw;
+    max-height: 80vh;
+    border-radius: 14px;
+    box-shadow: 0 8px 32px #000a;
+    background: #222;
+    object-fit: cover;
+    display: block;
+}
+.close-modal {
+    position: absolute;
+    top: 32px;
+    right: 48px;
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10001;
+    text-shadow: 0 2px 8px #000a;
+    transition: color 0.2s;
+}
+.close-modal:hover {
+    color: var(--primary-color);
+}

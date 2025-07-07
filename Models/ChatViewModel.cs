@@ -23,6 +23,7 @@ namespace ImoSphere.Models
         public string CurrentUserId { get; set; }
         public Dictionary<string, string> SenderRoles { get; set; }
         public Property Property { get; set; }
+        public string ComercialAdminName { get; set; }
     }
 
     public class ConversationListItemViewModel

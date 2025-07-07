@@ -45,7 +45,6 @@
 .remove-checkbox:checked + .remove-label {
     background: #fff;
     color: #dc3545;
-    border: 2px solid #dc3545;
     opacity: 1;
 }
 
@@ -73,4 +72,8 @@
         height: 20px;
         font-size: 14px;
     }
+}
+
+.existing-images input[type="checkbox"] {
+    display: none !important;
 } 

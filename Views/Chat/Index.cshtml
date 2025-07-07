@@ -12,9 +12,11 @@
     string GetRoleColor(string role)
     {
         if (role == "Admin") return "#8be9fd";
-        if (role == "Comercial") return "#bbb";
+        if (role == "Comercial") return "#8844ff";
+        if (role == "Cliente" || role == "User" || role == "Cliente/User") return "#4be37a";
         return "#fff";
     }
+    string lastSenderId = null;
 }
 @Html.AntiForgeryToken()
 
@@ -69,7 +71,9 @@
                                     <i class="fas fa-user"></i>
                                 </div>
                                 <div class="participant-info">
-                                    <span class="participant-name">@Model.UserName</span>
+                                    <span class="participant-name">
+                                        @Model.UserName
+                                    </span>
                                     <span class="participant-role">Cliente</span>
                                 </div>
                             </div>
@@ -81,10 +85,29 @@
                                     <i class="fas fa-user-tie"></i>
                                 </div>
                                 <div class="participant-info">
-                                    <span class="participant-name">@Model.ComercialName</span>
-                                    <span class="participant-role">@(Model.IsAdmin ? "Admin" : "Comercial")</span>
+                                    <span class="participant-name">
+                                        @Model.ComercialName
+                                    </span>
+                                    <span class="participant-role">Comercial</span>
                                 </div>
                             </div>
+                            @if (!string.IsNullOrEmpty(Model.ComercialAdminName))
+                            {
+                                <div class="chat-separator">
+                                    <i class="fas fa-link"></i>
+                                </div>
+                                <div class="participant">
+                                    <div class="participant-avatar">
+                                        <i class="fas fa-user-shield"></i>
+                                    </div>
+                                    <div class="participant-info">
+                                        <span class="participant-name">
+                                            @Model.ComercialAdminName
+                                        </span>
+                                        <span class="participant-role admin-role">Administrador</span>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                     
@@ -92,26 +115,28 @@
                         <div id="messagesContainer" class="messages-container">
                             @foreach (var message in Model.Messages)
                             {
-                                var isOwnMessage = message.SenderId == Model.UserId;
-                                var role = GetRoleLabel(message.SenderId);
-                                var roleColor = GetRoleColor(role);
+                                var isOwnMessage = message.SenderId == Model.CurrentUserId;
+                                var senderRole = Model.SenderRoles != null && Model.SenderRoles.ContainsKey(message.SenderId) ? Model.SenderRoles[message.SenderId] : "";
+                                var roleColor = GetRoleColor(senderRole);
+                                string avatarClass = senderRole == "Admin" ? "fa-user-shield" : (senderRole == "Comercial" ? "fa-user-tie" : "fa-user");
+                                bool showHeader = lastSenderId != message.SenderId;
+                                lastSenderId = message.SenderId;
                                 
                                 <div class="message @(isOwnMessage ? "message-own" : "message-other")">
-                                    <div class="message-avatar">
-                                        @if (isOwnMessage)
-                                        {
-                                            <i class="fas fa-user"></i>
-                                        }
-                                        else
-                                        {
-                                            <i class="fas fa-user-tie"></i>
-                                        }
-                                    </div>
+                                    @if (showHeader)
+                                    {
+                                        <div class="message-avatar">
+                                            <i class="fas @avatarClass"></i>
+                                        </div>
+                                    }
                                     <div class="message-content">
                                         <div class="message-header">
-                                            <span class="message-sender" style="color:@roleColor">@message.SenderName</span>
-                                            <span class="message-role">@role</span>
-                                            <span class="message-time">@message.SentAt.ToLocalTime().ToString("HH:mm")</span>
+                                            @if (showHeader)
+                                            {
+                                                <span class="message-sender" style="color:@roleColor">@message.SenderName</span>
+                                                <span class="message-role">@senderRole</span>
+                                                <span class="message-time">@message.SentAt.ToLocalTime().ToString("HH:mm")</span>
+                                            }
                                         </div>
                                         <div class="message-text">@message.Text</div>
                                     </div>
@@ -192,7 +217,7 @@
             if (message.length === 0) return;
 
             // Add message to UI immediately
-            addMessageToUI('@Model.UserName', message, true);
+            addMessageToUI(currentUserName, message, true);
             
             // Clear input
             messageInput.value = '';
@@ -209,26 +234,40 @@
             addMessageToUI(senderName, message, isOwnMessage);
         });
 
-        function addMessageToUI(senderName, message, isOwnMessage) {
+        const currentUserName = '@User.Identity.Name';
+        const currentUserRole = '@(Model.SenderRoles != null && Model.SenderRoles.ContainsKey(Model.CurrentUserId) ? Model.SenderRoles[Model.CurrentUserId] : "")';
+        function getRoleColor(role) {
+            if (role === "Admin") return "#8be9fd";
+            if (role === "Comercial") return "#8844ff";
+            if (role === "Cliente" || role === "User" || role === "Cliente/User") return "#4be37a";
+            return "#fff";
+        }
+        let lastSenderId = null;
+        function addMessageToUI(senderName, message, isOwnMessage, senderId = null, senderRole = null) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isOwnMessage ? 'message-own' : 'message-other'}`;
-            
             const now = new Date();
             const timeString = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
-            
+            if (!senderRole) {
+                senderRole = "User";
+                if (senderName === currentUserName) senderRole = currentUserRole;
+            }
+            let avatarClass = 'fa-user';
+            if (senderRole === 'Comercial') avatarClass = 'fa-user-tie';
+            if (senderRole === 'Admin') avatarClass = 'fa-user-shield';
+            const roleColor = getRoleColor(senderRole);
+            let showHeader = true;
+            if (senderId !== null && lastSenderId === senderId) showHeader = false;
+            lastSenderId = senderId;
             messageDiv.innerHTML = `
-                <div class="message-avatar">
-                    <i class="fas fa-${isOwnMessage ? 'user' : 'user-tie'}"></i>
-                </div>
-                <div class="message-content">
-                    <div class="message-header">
-                        <span class="message-sender">${senderName}</span>
-                        <span class="message-time">${timeString}</span>
+                ${showHeader ? `<div class=\"message-avatar\"><i class=\"fas ${avatarClass}\"></i></div>` : ''}
+                <div class=\"message-content\">
+                    <div class=\"message-header\">
+                        ${showHeader ? `<span class=\"message-sender\" style=\"color:${roleColor}\">${senderName}</span><span class=\"message-role\">${senderRole}</span><span class=\"message-time\">${timeString}</span>` : ''}
                     </div>
-                    <div class="message-text">${message}</div>
+                    <div class=\"message-text\">${message}</div>
                 </div>
             `;
-            
             messagesContainer.appendChild(messageDiv);
             scrollToBottom();
         }

@@ -123,6 +123,79 @@
             }
         });
     </script>
+
+    <script>
+        // --- Autocomplete Nominatim ---
+        let acTimeout;
+        const locInput = document.getElementById('locationInput');
+        const latInput = document.getElementById('latitudeInput');
+        const lngInput = document.getElementById('longitudeInput');
+        let acList = document.createElement('div');
+        acList.className = 'autocomplete-list';
+        acList.style.width = locInput.offsetWidth + 'px';
+        locInput.parentNode.appendChild(acList);
+        locInput.addEventListener('input', function() {
+            clearTimeout(acTimeout);
+            if (this.value.length < 3) { acList.style.display = 'none'; return; }
+            acTimeout = setTimeout(() => {
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(this.value)}&addressdetails=1&limit=5`)
+                    .then(res => res.json())
+                    .then(data => {
+                        acList.innerHTML = '';
+                        data.forEach(item => {
+                            let opt = document.createElement('div');
+                            opt.className = 'autocomplete-item';
+                            opt.textContent = item.display_name;
+                            opt.onclick = () => {
+                                locInput.value = item.display_name;
+                                latInput.value = item.lat;
+                                lngInput.value = item.lon;
+                                acList.style.display = 'none';
+                            };
+                            acList.appendChild(opt);
+                        });
+                        acList.style.display = data.length ? 'block' : 'none';
+                    });
+            }, 300);
+        });
+        document.addEventListener('click', e => { if (!acList.contains(e.target) && e.target !== locInput) acList.style.display = 'none'; });
+        // --- Modal do mapa ---
+        const mapModal = document.getElementById('mapModal');
+        const openMapBtn = document.getElementById('openMapBtn');
+        const closeMapBtn = document.getElementById('closeMapBtn');
+        let map, marker;
+        openMapBtn.onclick = function() {
+            mapModal.classList.add('show');
+            setTimeout(() => { if (!map) initMap(); else map.invalidateSize(); }, 100);
+        };
+        closeMapBtn.onclick = function() { mapModal.classList.remove('show'); };
+        function initMap() {
+            let lat = parseFloat(latInput.value) || 38.7223;
+            let lng = parseFloat(lngInput.value) || -9.1393;
+            map = L.map('map').setView([lat, lng], 7);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+            marker = L.marker([lat, lng], {draggable:true}).addTo(map);
+            marker.on('dragend', function(e) {
+                let pos = marker.getLatLng();
+                latInput.value = pos.lat;
+                lngInput.value = pos.lng;
+                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.lat}&lon=${pos.lng}&format=json`)
+                    .then(res => res.json())
+                    .then(data => { locInput.value = data.display_name || `${pos.lat},${pos.lng}`; });
+            });
+            map.on('click', function(e) {
+                marker.setLatLng(e.latlng);
+                latInput.value = e.latlng.lat;
+                lngInput.value = e.latlng.lng;
+                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${e.latlng.lat}&lon=${e.latlng.lng}&format=json`)
+                    .then(res => res.json())
+                    .then(data => { locInput.value = data.display_name || `${e.latlng.lat},${e.latlng.lng}`; });
+            });
+        }
+    </script>
 }
 
 @if (TempData["SuccessMessage"] != null)
