@@ -263,7 +263,10 @@ public class HomeController : Controller
         else
         {
             // Comercial: lista casas criadas por ele
-            var casas = await _context.Properties.Where(p => p.CreatedByUserId == user.Id).ToListAsync();
+            var casas = await _context.Properties
+                .Where(p => p.CreatedByUserId == user.Id)
+                .Include(p => p.Images)
+                .ToListAsync();
             ViewBag.Agency = agencyUser.Agency?.Name;
             ViewBag.Casas = casas;
             return View("PerfilComercial", user);
