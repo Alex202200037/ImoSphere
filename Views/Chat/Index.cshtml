@@ -121,39 +121,61 @@
                             </div>
                         }
                         <div id="messagesContainer" class="messages-container">
-                            @foreach (var message in Model.Messages)
+                            @{
+                                int lastIndex = Model.Messages.Count - 1;
+                                var groupedMessages = new List<(string SenderId, List<ImoSphere.Models.ChatMessage> Messages)>();
+                                if (Model.Messages.Any())
+                                {
+                                    string currentSender = Model.Messages[0].SenderId;
+                                    var currentGroup = new List<ImoSphere.Models.ChatMessage>();
+                                    foreach (var msg in Model.Messages)
+                                    {
+                                        if (msg.SenderId != currentSender)
+                                        {
+                                            groupedMessages.Add((currentSender, currentGroup));
+                                            currentSender = msg.SenderId;
+                                            currentGroup = new List<ImoSphere.Models.ChatMessage>();
+                                        }
+                                        currentGroup.Add(msg);
+                                    }
+                                    groupedMessages.Add((currentSender, currentGroup));
+                                }
+                            }
+                            @foreach (var group in groupedMessages)
                             {
-                                var isOwnMessage = message.SenderId == Model.CurrentUserId;
-                                var senderRole = Model.SenderRoles != null && Model.SenderRoles.ContainsKey(message.SenderId) ? Model.SenderRoles[message.SenderId] : "";
+                                var isOwnMessage = group.SenderId == Model.CurrentUserId;
+                                var senderRole = Model.SenderRoles != null && Model.SenderRoles.ContainsKey(group.SenderId) ? Model.SenderRoles[group.SenderId] : "";
                                 var roleColor = GetRoleColor(senderRole);
                                 string avatarClass = senderRole == "Admin" ? "fa-user-shield" : (senderRole == "Comercial" ? "fa-user-tie" : "fa-user");
-                                bool showHeader = lastSenderId != message.SenderId;
-                                lastSenderId = message.SenderId;
-                                var isUnread = !message.IsRead && !isOwnMessage;
-                                
-                                <div class="message @(isOwnMessage ? "message-own" : "message-other")@(isUnread ? " message-unread" : "")">
-                                    @if (showHeader)
+                                var firstMsg = group.Messages.First();
+                                var lastMsg = group.Messages.Last();
+                                bool showRead = isOwnMessage && Model.Messages.Last() == lastMsg && lastMsg.IsRead;
+                                <div class="message-group @(isOwnMessage ? "own-group" : "other-group")">
+                                    @if (!isOwnMessage)
                                     {
-                                        <div class="message-avatar">
-                                            <i class="fas @avatarClass"></i>
+                                        <div class="group-header">
+                                            <span class="message-avatar"><i class="fas @avatarClass"></i></span>
+                                            <span class="message-sender" style="color:@roleColor">@firstMsg.SenderName</span>
+                                            <span class="message-role">@senderRole</span>
                                         </div>
                                     }
-                                    <div class="message-content">
-                                        <div class="message-header">
-                                            @if (showHeader)
+                                    @for (int i = 0; i < group.Messages.Count; i++)
+                                    {
+                                        var msg = group.Messages[i];
+                                        bool isFirst = i == 0;
+                                        bool isLast = i == group.Messages.Count - 1;
+                                        <div class="message-bubble @(isOwnMessage ? "own-bubble" : "other-bubble")@(isFirst ? " bubble-first" : "")@(isLast ? " bubble-last" : "")">
+                                            <div class="bubble-text">@msg.Text</div>
+                                            @if (isLast)
                                             {
-                                                <span class="message-sender" style="color:@roleColor">@message.SenderName</span>
-                                                <span class="message-role">@senderRole</span>
-                                                <span class="message-time">@message.SentAt.ToLocalTime().ToString("HH:mm")</span>
+                                                <span class="bubble-time">@msg.SentAt.ToLocalTime().ToString("HH:mm")</span>
+                                                @if (showRead)
+                                                {
+                                                    <span class="message-read-check ms-2" title="Lida"><i class="fas fa-check-double"></i> Lida</span>
+                                                }
                                             }
                                         </div>
-                                        <div class="message-text">@message.Text
-                                            @if (isOwnMessage && message.IsRead)
-                                            {
-                                                <span class="message-read-check ms-2" title="Lida"><i class="fas fa-check-double"></i> Lida</span>
-                                            }
-                                        </div>
-                                    </div>
+                                    }
                                 </div>
                             }
                         </div>
@@ -319,5 +341,24 @@
                 });
             }
         });
+
+        // Reload automático após enviar/receber mensagem
+        function reloadChatAfterMessage() {
+            setTimeout(function() {
+                location.reload();
+            }, 200); // pequeno delay para garantir que backend já marcou como lida
+        }
+        // Hook no envio de mensagem
+        if (messageForm) {
+            messageForm.addEventListener('submit', function() {
+                reloadChatAfterMessage();
+            });
+        }
+        // Hook no SignalR para reload ao receber mensagem
+        if (window.connection) {
+            window.connection.on("ReceiveMessage", function() {
+                reloadChatAfterMessage();
+            });
+        }
     </script>
 }
