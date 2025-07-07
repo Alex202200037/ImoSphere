@@ -9,7 +9,7 @@
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    background: none;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -23,11 +23,11 @@
 }
 
 .contact-info-section {
-    background: var(--card-bg);
+    background: none;
 }
 
 .contact-info-card {
-    background: var(--card-bg);
+    background: none;
     border: 1px solid var(--border-accent);
     border-radius: 16px;
     padding: 2rem;
@@ -65,7 +65,7 @@
 }
 
 .contact-form-section {
-    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    background: none;
 }
 
 .contact-form-card {
@@ -106,7 +106,7 @@
 }
 
 .faq-section {
-    background: var(--card-bg);
+    background: none;
 }
 
 .accordion-item {
@@ -142,7 +142,7 @@
 }
 
 .social-section {
-    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    background: none;
 }
 
 .social-links {
@@ -212,4 +212,127 @@
         width: 100%;
         max-width: 200px;
     }
+}
+
+.premium-social .social-link {
+    background: rgba(40, 40, 60, 0.65);
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 18px #6c63ff22;
+    font-size: 2rem;
+    color: #fff;
+    border: 2px solid rgba(140,120,255,0.18);
+    margin: 0 0.5rem 1rem 0.5rem;
+    transition: all 0.22s;
+    position: relative;
+}
+.premium-social .social-link span {
+    display: none !important;
+}
+.premium-social .social-link:hover {
+    background: linear-gradient(90deg, #8f7cff 0%, #6c63ff 100%);
+    color: #fff;
+    border-color: #8f7cff;
+    transform: translateY(-6px) scale(1.08);
+    box-shadow: 0 8px 32px #6c63ff44;
+    z-index: 2;
+}
+@media (min-width: 768px) {
+    .premium-social .social-link {
+        width: 72px;
+        height: 72px;
+        font-size: 2.2rem;
+    }
+    .premium-social .social-link span {
+        display: inline;
+        font-size: 1rem;
+        margin-left: 0.7rem;
+        color: #bdbdf7;
+        font-weight: 500;
+    }
+}
+.premium-social .social-link {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.contact-form-card.glass-card {
+    background: rgba(40, 40, 60, 0.35) !important;
+    border-radius: 28px !important;
+    box-shadow: 0 8px 48px 0 #6c63ff44, 0 1.5px 8px 0 #0002 !important;
+    border: 1.5px solid rgba(255,255,255,0.18) !important;
+    position: relative;
+    overflow: hidden;
+}
+.contact-form-card.glass-card h2 {
+    color: #bdbdf7 !important;
+}
+.contact-form-card .btn[type="submit"] {
+    background: linear-gradient(90deg, #a259ff 0%, #5d26c1 100%) !important;
+    color: #fff !important;
+    border: none;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    box-shadow: 0 4px 18px #6c63ff22;
+    transition: all 0.22s;
+}
+.contact-form-card .btn[type="submit"]:hover {
+    background: linear-gradient(90deg, #8f7cff 0%, #6c63ff 100%) !important;
+    color: #fff !important;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 32px #6c63ff44;
+}
+.contact-form-card .form-control, .contact-form-card .form-select {
+    background: rgba(40, 40, 60, 0.18) !important;
+    border-radius: 12px !important;
+    border: 1.5px solid rgba(140,120,255,0.18) !important;
+    color: #fff !important;
+    font-weight: 500;
+    box-shadow: none;
+    transition: border 0.18s, box-shadow 0.18s;
+}
+.contact-form-card .form-control:focus, .contact-form-card .form-select:focus {
+    border-color: #8f7cff !important;
+    box-shadow: 0 0 0 2px #a259ff44 !important;
+}
+.contact-form-card .form-label {
+    color: #bdbdf7 !important;
+    font-weight: 600;
+}
+.contact-form-card .form-check-input:checked {
+    background-color: #8f7cff !important;
+    border-color: #8f7cff !important;
+}
+.accordion.glass-card {
+    background: rgba(40, 40, 60, 0.35) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 8px 32px #6c63ff44 !important;
+    border: 1.5px solid rgba(255,255,255,0.18) !important;
+    padding: 1.5rem 1rem;
+}
+.accordion.glass-card .accordion-item {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.accordion.glass-card .accordion-button {
+    background: rgba(140, 120, 255, 0.10) !important;
+    color: #bdbdf7 !important;
+    border-radius: 12px !important;
+    font-weight: 600;
+    transition: all 0.18s;
+}
+.accordion.glass-card .accordion-button:not(.collapsed) {
+    background: linear-gradient(90deg, #8f7cff 0%, #6c63ff 100%) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 15px rgba(140, 120, 255, 0.3);
+}
+.accordion.glass-card .accordion-body {
+    background: transparent !important;
+    color: #e0e0e0 !important;
 } 
