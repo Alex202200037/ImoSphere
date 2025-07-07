@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using ImoSphere.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using ImoSphere.Controllers;
 
 public class HomeController : Controller
 {
@@ -234,8 +235,68 @@ public class HomeController : Controller
             return RedirectToAction("Login", "Account");
         var roles = await _userManager.GetRolesAsync(user);
         var isAdmin = roles.Contains("Admin");
+        var isComercial = roles.Contains("Comercial");
+        var isSuperAdmin = roles.Contains("SuperAdmin");
+        var isUser = roles.Contains("User");
         var agencyUser = await _context.AgencyUsers.Include(au => au.Agency).FirstOrDefaultAsync(au => au.UserId == user.Id);
-        if (isAdmin)
+        if (isSuperAdmin)
+        {
+            // Hierarquia global
+            var hierarchy = await new AdminController(_userManager, _context).BuildUserHierarchy();
+            ViewBag.Hierarchy = hierarchy;
+            // Estatísticas globais
+            var totalUsers = await _userManager.Users.CountAsync();
+            var totalProperties = await _context.Properties.CountAsync();
+            var totalValue = await _context.Properties.SumAsync(p => (decimal?)p.Price) ?? 0;
+            var avgValue = totalProperties > 0 ? totalValue / totalProperties : 0;
+            ViewBag.TotalUsers = totalUsers;
+            ViewBag.TotalProperties = totalProperties;
+            ViewBag.TotalValue = totalValue;
+            ViewBag.AvgValue = avgValue;
+            // Utilizadores normais (clientes)
+            var allUsers = _userManager.Users.ToList();
+            var userClients = new List<ImoSphere.Models.ApplicationUser>();
+            foreach (var u in allUsers)
+            {
+                var rolesU = await _userManager.GetRolesAsync(u);
+                if (rolesU.Count == 1 && rolesU.Contains("User"))
+                    userClients.Add(u);
+            }
+            ViewBag.UserClients = userClients;
+            // Propriedades agrupadas por agência > admin > comercial
+            var agencies = await _context.Agencies.Include(a => a.AgencyUsers).ToListAsync();
+            var agencyUsers = await _context.AgencyUsers.Include(au => au.User).ToListAsync();
+            var propriedades = await _context.Properties.Include(p => p.Images).Include(p => p.Agency).ToListAsync();
+            var propriedadesPorAgencia = new List<(ImoSphere.Models.Agency Agency, List<(ImoSphere.Models.ApplicationUser Admin, List<(ImoSphere.Models.ApplicationUser Comercial, List<ImoSphere.Models.Property> Casas)>)> AdminsComerciaisCasas, List<(ImoSphere.Models.ApplicationUser Comercial, List<ImoSphere.Models.Property> Casas)> ComerciaisSemAdminCasas)>();
+            foreach (var agency in agencies)
+            {
+                var admins = agency.AgencyUsers.Where(au => au.Role == "Admin").Select(au => au.User).ToList();
+                var comerciais = agency.AgencyUsers.Where(au => au.Role == "Comercial").Select(au => au.User).ToList();
+                var comerciaisSemAdmin = agency.AgencyUsers.Where(au => au.Role == "Comercial" && au.AdminId == null).Select(au => au.User).ToList();
+                var adminsComerciaisCasas = new List<(ImoSphere.Models.ApplicationUser Admin, List<(ImoSphere.Models.ApplicationUser Comercial, List<ImoSphere.Models.Property> Casas)>)>();
+                foreach (var admin in admins)
+                {
+                    var comerciaisDoAdmin = agency.AgencyUsers.Where(au => au.Role == "Comercial" && au.AdminId == admin.Id).Select(au => au.User).ToList();
+                    var comerciaisComCasas = new List<(ImoSphere.Models.ApplicationUser Comercial, List<ImoSphere.Models.Property> Casas)>();
+                    foreach (var comercial in comerciaisDoAdmin)
+                    {
+                        var casas = propriedades.Where(p => p.CreatedByUserId == comercial.Id && p.AgencyId == agency.Id).ToList();
+                        comerciaisComCasas.Add((comercial, casas));
+                    }
+                    adminsComerciaisCasas.Add((admin, comerciaisComCasas));
+                }
+                var comerciaisSemAdminComCasas = new List<(ImoSphere.Models.ApplicationUser Comercial, List<ImoSphere.Models.Property> Casas)>();
+                foreach (var comercial in comerciaisSemAdmin)
+                {
+                    var casas = propriedades.Where(p => p.CreatedByUserId == comercial.Id && p.AgencyId == agency.Id).ToList();
+                    comerciaisSemAdminComCasas.Add((comercial, casas));
+                }
+                propriedadesPorAgencia.Add((agency, adminsComerciaisCasas, comerciaisSemAdminComCasas));
+            }
+            ViewBag.PropriedadesPorAgencia = propriedadesPorAgencia;
+            return View("PerfilSuperAdmin", user);
+        }
+        else if (isAdmin)
         {
             // Admin: lista apenas comerciais supervisionados por ele
             var comerciais = await _context.AgencyUsers
@@ -260,7 +321,7 @@ public class HomeController : Controller
             ViewBag.UserList = userRolesList;
             return View("PerfilAdmin", user);
         }
-        else
+        else if (isComercial)
         {
             // Comercial: lista casas criadas por ele
             var casas = await _context.Properties
@@ -270,6 +331,16 @@ public class HomeController : Controller
             ViewBag.Agency = agencyUser.Agency?.Name;
             ViewBag.Casas = casas;
             return View("PerfilComercial", user);
+        }
+        else if (isUser)
+        {
+            // User normal: mostrar view própria
+            return View("PerfilUser", user);
+        }
+        else
+        {
+            // Caso não tenha nenhum papel conhecido, redirecionar para Home
+            return RedirectToAction("Index", "Home");
         }
     }
 }

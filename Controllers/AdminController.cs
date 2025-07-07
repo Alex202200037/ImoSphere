@@ -37,9 +37,24 @@ namespace ImoSphere.Controllers
                     Agencies = await _context.Agencies.ToListAsync(),
                     Admins = await GetAdminsForFilter(agencyId)
                 };
-                
+                // Buscar users sem agência
+                var allUsers = _userManager.Users.ToList();
+                var usersSemAgencia = new List<ApplicationUser>();
+                foreach (var u in allUsers)
+                {
+                    var rolesU = await _userManager.GetRolesAsync(u);
+                    var temAgencia = await _context.AgencyUsers.AnyAsync(au => au.UserId == u.Id);
+                    if (rolesU.Count == 1 && rolesU.Contains("User") && !temAgencia)
+                        usersSemAgencia.Add(u);
+                }
+                ViewBag.UsersSemAgencia = usersSemAgencia;
                 ViewBag.FilterModel = filterModel;
                 ViewBag.IsSuperAdmin = true;
+                // Filtro especial para "sem agência"
+                if (agencyId == -1)
+                {
+                    return View("UsersHierarchy", new List<UserHierarchyViewModel>()); // Model vazio, só mostra card especial
+                }
                 return View("UsersHierarchy", hierarchy);
             }
             else
@@ -73,7 +88,7 @@ namespace ImoSphere.Controllers
             }
         }
 
-        private async Task<List<UserHierarchyViewModel>> BuildUserHierarchy(int? agencyId = null, string? adminId = null)
+        public async Task<List<UserHierarchyViewModel>> BuildUserHierarchy(int? agencyId = null, string? adminId = null)
         {
             var hierarchy = new List<UserHierarchyViewModel>();
             bool showImoSphere = false;

@@ -38,10 +38,9 @@
                         <option value="">All Agencies</option>
                         @foreach (var agency in filterModel.Agencies)
                         {
-                                                    <option value="@agency.Id" selected="@(filterModel.SelectedAgencyId == agency.Id)">
-                            @agency.Name
-                        </option>
+                            <option value="@agency.Id" selected="@(filterModel.SelectedAgencyId == agency.Id)">@agency.Name</option>
                         }
+                        <option value="-1" selected="@(filterModel.SelectedAgencyId == -1)">Sem Agência</option>
                     </select>
                 </div>
                 <div class="col-md-4">
@@ -67,7 +66,12 @@
 
     <!-- Hierarquia de Utilizadores -->
     <div class="hierarchy-container">
-        @if (!Model.Any())
+        @{
+            var usersSemAgencia = ViewBag.UsersSemAgencia as List<ImoSphere.Models.ApplicationUser>;
+            bool temAgencias = Model != null && Model.Any(a => a.Admins.Any() || a.Comerciais.Any());
+            bool temUsersSemAgencia = usersSemAgencia != null && usersSemAgencia.Any();
+        }
+        @if (!temAgencias && !temUsersSemAgencia)
         {
             <div class="no-data-message">
                 <i class="fas fa-users"></i>
@@ -217,6 +221,34 @@
                     </div>
                 </div>
             }
+        }
+        @if (temUsersSemAgencia)
+        {
+            <div class="agency-card" style="background: #23232b; border-radius: 18px; box-shadow: 0 2px 16px #0002; margin-bottom: 2rem;">
+                <div class="agency-header d-flex align-items-center gap-2" style="padding: 1.2rem 1.5rem; background: linear-gradient(90deg, #6c63ff 0%, #b9aaff 100%); border-radius: 18px 18px 0 0;">
+                    <i class="fas fa-globe fa-2x text-white"></i>
+                    <h3 class="agency-name mb-0 text-white">Utilizadores do Site</h3>
+                    <span class="agency-stats ms-3 text-white">@usersSemAgencia.Count utilizador(es)</span>
+                </div>
+                <div class="agency-content" style="padding: 1.2rem 1.5rem;">
+                    @foreach (var user in usersSemAgencia)
+                    {
+                        <div class="admin-group">
+                            <div class="admin-header" style="background: #6c63ff; color: #fff; border-radius: 12px 12px 0 0; padding: 0.8rem 1.2rem; display: flex; align-items: center; justify-content: space-between;">
+                                <h4 class="admin-name mb-0" style="font-weight: 700;">
+                                    <i class="fas fa-user-shield"></i> @user.UserName <span class="admin-email">(@user.Email)</span>
+                                </h4>
+                                <div class="admin-actions">
+                                    <a class="btn btn-sm btn-info" href="@Url.Action("EditUser", "Admin", new { id = user.Id })"><i class="fas fa-edit"></i> Edit</a>
+                                    <form class="delete-user-form" data-user-id="@user.Id" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         }
     </div>
 </div>
