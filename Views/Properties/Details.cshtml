@@ -123,6 +123,134 @@
 </section>
 
 <script>
+    // Variáveis globais para o carrossel principal
+    let currentCarouselIndex = 0;
+    let carouselImages = [];
+    let carouselInterval = null;
+    let isAutoPlaying = true;
+
+    // Inicializar o carrossel quando a página carrega
+    document.addEventListener('DOMContentLoaded', function() {
+        carouselImages = Array.from(document.querySelectorAll('.carousel-img-main'));
+        updateCarouselDots();
+        
+        // Iniciar auto-play se há mais de 1 imagem
+        if (carouselImages.length > 1) {
+            startAutoPlay();
+        }
+        
+        // Pausar auto-play ao fazer hover no carrossel
+        const carouselContainer = document.getElementById('propertyCarouselMain');
+        if (carouselContainer) {
+            carouselContainer.addEventListener('mouseenter', pauseAutoPlay);
+            carouselContainer.addEventListener('mouseleave', startAutoPlay);
+        }
+    });
+
+    // Função para iniciar auto-play
+    function startAutoPlay() {
+        if (carouselImages.length <= 1) return;
+        
+        isAutoPlaying = true;
+        if (carouselInterval) {
+            clearInterval(carouselInterval);
+        }
+        
+        carouselInterval = setInterval(() => {
+            if (isAutoPlaying) {
+                carouselNext();
+            }
+        }, 4000); // Passa a cada 4 segundos
+    }
+
+    // Função para pausar auto-play
+    function pauseAutoPlay() {
+        isAutoPlaying = false;
+        if (carouselInterval) {
+            clearInterval(carouselInterval);
+            carouselInterval = null;
+        }
+    }
+
+    // Função para avançar no carrossel principal
+    function carouselNext() {
+        if (carouselImages.length <= 1) return;
+        
+        // Esconder imagem atual
+        carouselImages[currentCarouselIndex].style.display = 'none';
+        carouselImages[currentCarouselIndex].classList.remove('active');
+        
+        // Avançar para próxima imagem
+        currentCarouselIndex = (currentCarouselIndex + 1) % carouselImages.length;
+        
+        // Mostrar nova imagem
+        carouselImages[currentCarouselIndex].style.display = 'block';
+        carouselImages[currentCarouselIndex].classList.add('active');
+        
+        updateCarouselDots();
+    }
+
+    // Função para recuar no carrossel principal
+    function carouselPrev() {
+        if (carouselImages.length <= 1) return;
+        
+        // Esconder imagem atual
+        carouselImages[currentCarouselIndex].style.display = 'none';
+        carouselImages[currentCarouselIndex].classList.remove('active');
+        
+        // Recuar para imagem anterior
+        currentCarouselIndex = (currentCarouselIndex - 1 + carouselImages.length) % carouselImages.length;
+        
+        // Mostrar nova imagem
+        carouselImages[currentCarouselIndex].style.display = 'block';
+        carouselImages[currentCarouselIndex].classList.add('active');
+        
+        updateCarouselDots();
+    }
+
+    // Função para atualizar os dots do carrossel
+    function updateCarouselDots() {
+        const dotsContainer = document.querySelector('.carousel-dots-main');
+        if (!dotsContainer) return;
+        
+        // Limpar dots existentes
+        dotsContainer.innerHTML = '';
+        
+        // Criar novos dots
+        for (let i = 0; i < carouselImages.length; i++) {
+            const dot = document.createElement('span');
+            dot.className = 'carousel-dot';
+            if (i === currentCarouselIndex) {
+                dot.classList.add('active');
+            }
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    // Função para ir para uma slide específica
+    function goToSlide(index) {
+        if (index === currentCarouselIndex || index < 0 || index >= carouselImages.length) return;
+        
+        // Esconder imagem atual
+        carouselImages[currentCarouselIndex].style.display = 'none';
+        carouselImages[currentCarouselIndex].classList.remove('active');
+        
+        // Ir para nova imagem
+        currentCarouselIndex = index;
+        
+        // Mostrar nova imagem
+        carouselImages[currentCarouselIndex].style.display = 'block';
+        carouselImages[currentCarouselIndex].classList.add('active');
+        
+        updateCarouselDots();
+        
+        // Reiniciar auto-play após navegação manual
+        if (carouselImages.length > 1) {
+            startAutoPlay();
+        }
+    }
+
     function confirmDelete(propertyId, propertyName) {
         if (confirm(`Tem a certeza que deseja eliminar a propriedade "${propertyName}"?\n\nEsta ação não pode ser desfeita.`)) {
             // Criar form para enviar o POST
