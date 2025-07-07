@@ -105,46 +105,40 @@
                 @foreach (var casa in casas)
                 {
                     <div class="col-lg-6 col-xl-4">
-                        <div class="property-card">
-                            <div class="property-image">
-                                @if (casa.Images != null && casa.Images.Any())
-                                {
-                                    <img src="@casa.Images.First().ImageUrl" alt="@casa.Name" class="property-img" />
-                                }
-                                else
-                                {
-                                    <div class="property-placeholder">
-                                        <i class="fas fa-home fa-3x"></i>
-                                    </div>
-                                }
-                                <div class="property-price-badge">
-                                    <span class="price">€@casa.Price.ToString("N0")</span>
+                        <div class="card property-card pro-list h-100 hover-lift" data-property-id="@casa.Id" style="position:relative;">
+                            @if (casa.Images != null && casa.Images.Any())
+                            {
+                                <img src="@casa.Images.First().ImageUrl" class="card-img-top property-image" alt="@casa.Name" />
+                            }
+                            else
+                            {
+                                <div class="property-image-placeholder">
+                                    <i class="fas fa-home fa-3x text-muted"></i>
+                                </div>
+                            }
+                            <div class="property-price-badge" style="position: absolute; top: 10px; right: 10px; z-index: 12;">
+                                €@casa.Price.ToString("N0")
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-title">@casa.Name</h6>
+                                <p class="card-text mb-1"><i class="fas fa-map-marker-alt me-1"></i>@casa.Location</p>
+                                <div class="property-features d-flex gap-3 mb-2">
+                                    <span class="feature"><i class="fas fa-bed text-primary"></i> @casa.Bedrooms</span>
+                                    <span class="feature"><i class="fas fa-bath text-primary"></i> @casa.Bathrooms</span>
+                                    <span class="feature"><i class="fas fa-ruler-combined text-primary"></i> @casa.Area m²</span>
+                                </div>
+                                <div class="agency-info mt-2">
+                                    <small class="text-muted">
+                                        <i class="fas fa-building me-1"></i>@casa.Agency?.Name
+                                    </small>
                                 </div>
                             </div>
-                            
-                            <div class="property-content">
-                                <h5 class="property-name">@casa.Name</h5>
-                                <p class="property-location">
-                                    <i class="fas fa-map-marker-alt me-1"></i>@casa.Location
-                                </p>
-                                
-                                <div class="property-features">
-                                    <span class="feature">
-                                        <i class="fas fa-bed me-1"></i>@casa.Bedrooms
-                                    </span>
-                                    <span class="feature">
-                                        <i class="fas fa-bath me-1"></i>@casa.Bathrooms
-                                    </span>
-                                    <span class="feature">
-                                        <i class="fas fa-ruler-combined me-1"></i>@casa.Area m²
-                                    </span>
-                                </div>
-                                
-                                <div class="property-actions">
-                                    <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-outline-primary btn-sm">
-                                        <i class="fas fa-edit me-1"></i>Editar
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-end align-items-center gap-2">
+                                    <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-outline-warning btn-sm" title="Editar">
+                                        <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-outline-info btn-sm">
+                                    <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-outline-primary btn-sm" title="Ver Detalhes">
                                         <i class="fas fa-eye me-1"></i>Ver
                                     </a>
                                 </div>
