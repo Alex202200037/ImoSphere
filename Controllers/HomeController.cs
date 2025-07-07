@@ -356,7 +356,18 @@ public class HomeController : Controller
         }
         else if (isUser)
         {
-            // User normal: mostrar view própria
+            // User normal: buscar favoritos e mostrar view própria
+            var favorites = await _context.Favorites
+                .Include(f => f.Property)
+                    .ThenInclude(p => p.Agency)
+                .Include(f => f.Property)
+                    .ThenInclude(p => p.Images)
+                .Where(f => f.UserId == user.Id)
+                .OrderByDescending(f => f.CreatedAt)
+                .ToListAsync();
+
+            ViewBag.Favorites = favorites;
+            ViewBag.FavoritesCount = favorites.Count;
             return View("PerfilUser", user);
         }
         else

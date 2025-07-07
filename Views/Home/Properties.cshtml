@@ -232,6 +232,14 @@
                                         <div class="property-price-badge" style="position: absolute; top: 10px; right: 10px; z-index: 12;">
                                             €@property.Price.ToString("N0")
                                         </div>
+                                        @if (isAuthenticated && userRole == "User")
+                                        {
+                                            <div class="favorite-button" style="position: absolute; bottom: 10px; right: 10px; z-index: 13;">
+                                                <button class="btn btn-sm favorite-btn" data-property-id="@property.Id" title="Adicionar aos favoritos">
+                                                    <i class="fas fa-heart"></i>
+                                                </button>
+                                            </div>
+                                        }
                                     </div>
                                     
                                     <div class="card-body">
@@ -344,6 +352,65 @@
     </div>
 }
 
+<style>
+    /* Estilo para botão de favorito */
+    .favorite-btn {
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .favorite-btn:hover {
+        background: rgba(255, 255, 255, 1);
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .favorite-btn.favorited {
+        background: #ff6b6b;
+        color: white;
+    }
+
+    .favorite-btn.favorited:hover {
+        background: #ff5252;
+    }
+
+    .favorite-btn i {
+        font-size: 1.1rem;
+    }
+
+    /* Animações para toast */
+    @@keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @@keyframes slideOutRight {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+</style>
+
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -361,6 +428,9 @@
                     setTimeout(() => popup.style.display = 'none', 500);
                 }, 1500);
             }
+
+            // Inicializar favoritos
+            initializeFavorites();
 
             // Melhorar UX dos filtros
             const filterForm = document.getElementById('filterForm');
@@ -588,6 +658,109 @@
                 const group = new L.featureGroup(validProperties.map(p => L.latLng(p.latitude, p.longitude)));
                 map.fitBounds(group.getBounds().pad(0.1));
             }
+        }
+
+        // Inicializar favoritos
+        function initializeFavorites() {
+            const favoriteButtons = document.querySelectorAll('.favorite-btn');
+            
+            favoriteButtons.forEach(button => {
+                const propertyId = button.getAttribute('data-property-id');
+                
+                // Verificar se já é favorito
+                checkFavoriteStatus(propertyId, button);
+                
+                // Adicionar evento de clique
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    toggleFavorite(propertyId, button);
+                });
+            });
+        }
+
+        // Verificar status do favorito
+        function checkFavoriteStatus(propertyId, button) {
+            fetch(`/Favorite/CheckFavorite?propertyId=${propertyId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.isFavorite) {
+                        button.classList.add('favorited');
+                        button.querySelector('i').classList.remove('far');
+                        button.querySelector('i').classList.add('fas');
+                    } else {
+                        button.classList.remove('favorited');
+                        button.querySelector('i').classList.remove('fas');
+                        button.querySelector('i').classList.add('far');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao verificar favorito:', error);
+                });
+        }
+
+        // Alternar favorito
+        function toggleFavorite(propertyId, button) {
+            const csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            
+            fetch('/Favorite/ToggleFavorite', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': csrfToken
+                },
+                body: JSON.stringify({ propertyId: propertyId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.isFavorite) {
+                        button.classList.add('favorited');
+                        button.querySelector('i').classList.remove('far');
+                        button.querySelector('i').classList.add('fas');
+                        showToast('Adicionado aos favoritos!', 'success');
+                    } else {
+                        button.classList.remove('favorited');
+                        button.querySelector('i').classList.remove('fas');
+                        button.querySelector('i').classList.add('far');
+                        showToast('Removido dos favoritos!', 'info');
+                    }
+                } else {
+                    showToast('Erro: ' + data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao alternar favorito:', error);
+                showToast('Erro ao processar favorito', 'error');
+            });
+        }
+
+        // Função para mostrar toast
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                font-weight: 500;
+                animation: slideInRight 0.3s ease-out;
+            `;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOutRight 0.3s ease-in';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
         }
 
         // Inicializar mapa quando a página carregar

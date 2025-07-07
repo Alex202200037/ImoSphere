@@ -19,6 +19,7 @@ namespace ImoSphere.Data
         public DbSet<ChatConversation> ChatConversations { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -70,6 +71,25 @@ namespace ImoSphere.Data
                 .WithMany()
                 .HasForeignKey(m => m.SenderId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Favorite -> ApplicationUser
+            builder.Entity<Favorite>()
+                .HasOne(f => f.User)
+                .WithMany()
+                .HasForeignKey(f => f.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Favorite -> Property
+            builder.Entity<Favorite>()
+                .HasOne(f => f.Property)
+                .WithMany()
+                .HasForeignKey(f => f.PropertyId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Índice único para evitar favoritos duplicados
+            builder.Entity<Favorite>()
+                .HasIndex(f => new { f.UserId, f.PropertyId })
+                .IsUnique();
         }
     }
 }
