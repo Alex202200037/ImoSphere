@@ -447,4 +447,30 @@
         transform: scale(1);
         opacity: 1;
     }
+}
+
+.message-unread {
+    background: linear-gradient(90deg, #ff3b3b22 0%, transparent 100%) !important;
+    position: relative;
+}
+.unread-messages-banner {
+    background: #ff3b3b;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px #ff3b3b33;
+}
+.message-read-check {
+    color: #4be37a;
+    font-size: 0.9em;
+    margin-left: 8px;
+    vertical-align: middle;
+    font-weight: 600;
+    opacity: 0.85;
 } 

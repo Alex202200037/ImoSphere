@@ -15,32 +15,33 @@
     
     @if (conversations != null && conversations.Any())
     {
-        <div class="conversations-list">
+        <div class="conversations-list premium-list">
             @foreach (var conv in conversations)
             {
-                <a href="/Chat/Index?conversationId=@conv.Id" class="conversation-item">
-                    <div class="conversation-avatar">
+                var isUnread = conv.UnreadCount > 0;
+                <a href="/Chat/Index?conversationId=@conv.Id" class="conversation-item premium-card@(isUnread ? " unread" : "")">
+                    <div class="conversation-avatar premium-avatar@(isUnread ? " unread-glow" : "")">
                         <img src="@conv.PropertyImage" alt="@conv.PropertyName" />
                     </div>
-                    <div class="conversation-content">
-                        <div class="conversation-header">
-                            <h3>@conv.PropertyName</h3>
+                    <div class="conversation-content premium-content">
+                        <div class="conversation-header premium-header">
+                            <h3 class="premium-title">@conv.PropertyName</h3>
                             @if (!string.IsNullOrEmpty(conv.AgencyLogo))
                             {
-                                <img src="@conv.AgencyLogo" alt="Agência" />
+                                <img src="@conv.AgencyLogo" alt="Agência" class="premium-agency-logo" />
                             }
                         </div>
-                        <div class="conversation-meta">
-                            <p>@conv.LastMessage</p>
+                        <div class="conversation-meta premium-meta">
+                            <p class="premium-last-message">@conv.LastMessage</p>
                             @if (conv.LastMessageTime != null)
                             {
-                                <span>@(((DateTime)conv.LastMessageTime).ToLocalTime().ToString("dd/MM HH:mm"))</span>
+                                <span class="premium-time">@(((DateTime)conv.LastMessageTime).ToLocalTime().ToString("dd/MM HH:mm"))</span>
                             }
                         </div>
                     </div>
-                    @if (conv.UnreadCount > 0)
+                    @if (isUnread)
                     {
-                        <div class="unread-badge">@conv.UnreadCount</div>
+                        <div class="unread-badge pulse premium-badge">@conv.UnreadCount</div>
                     }
                 </a>
             }

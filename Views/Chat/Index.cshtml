@@ -112,6 +112,14 @@
                     </div>
                     
                     <div class="card-body chat-messages-body">
+                        @if (Model.Messages.Any(m => m.SenderId != Model.CurrentUserId && !m.IsRead))
+                        {
+                            var unreadCount = Model.Messages.Count(m => m.SenderId != Model.CurrentUserId && !m.IsRead);
+                            <div class="unread-messages-banner">
+                                <i class="fas fa-envelope-open-text me-2"></i>
+                                <span>@unreadCount mensagem(ens) por ler nesta conversa</span>
+                            </div>
+                        }
                         <div id="messagesContainer" class="messages-container">
                             @foreach (var message in Model.Messages)
                             {
@@ -121,8 +129,9 @@
                                 string avatarClass = senderRole == "Admin" ? "fa-user-shield" : (senderRole == "Comercial" ? "fa-user-tie" : "fa-user");
                                 bool showHeader = lastSenderId != message.SenderId;
                                 lastSenderId = message.SenderId;
+                                var isUnread = !message.IsRead && !isOwnMessage;
                                 
-                                <div class="message @(isOwnMessage ? "message-own" : "message-other")">
+                                <div class="message @(isOwnMessage ? "message-own" : "message-other")@(isUnread ? " message-unread" : "")">
                                     @if (showHeader)
                                     {
                                         <div class="message-avatar">
@@ -138,7 +147,12 @@
                                                 <span class="message-time">@message.SentAt.ToLocalTime().ToString("HH:mm")</span>
                                             }
                                         </div>
-                                        <div class="message-text">@message.Text</div>
+                                        <div class="message-text">@message.Text
+                                            @if (isOwnMessage && message.IsRead)
+                                            {
+                                                <span class="message-read-check ms-2" title="Lida"><i class="fas fa-check-double"></i> Lida</span>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             }
@@ -286,5 +300,24 @@
 
         // Scroll to bottom on page load
         window.addEventListener('load', scrollToBottom);
+
+        // Marcar mensagens como lidas ao abrir a conversa
+        document.addEventListener('DOMContentLoaded', function() {
+            var unreadMessages = @Model.Messages.Count(m => m.SenderId != Model.CurrentUserId && !m.IsRead);
+            if (unreadMessages > 0) {
+                fetch('/Chat/MarkAsRead', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    },
+                    body: JSON.stringify({ conversationId: @Model.ConversationId })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    // Opcional: atualizar badge global, etc.
+                });
+            }
+        });
     </script>
 }
