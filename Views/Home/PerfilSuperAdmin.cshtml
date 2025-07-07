@@ -11,437 +11,438 @@
 
 <link rel="stylesheet" href="~/css/perfil-admin.css" asp-append-version="true" />
 
-<!-- Profile Hero Section -->
-<section class="profile-hero py-5">
-    <div class="container">
-        <div class="profile-header">
-            <div class="row align-items-center">
-                <div class="col-lg-3 text-center">
-                    <div class="profile-avatar">
-                        <i class="fas fa-crown fa-4x"></i>
-                    </div>
-                    <div class="profile-badge">
-                        <span class="badge bg-warning text-dark">SuperAdmin</span>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="profile-info">
-                        <h1 class="profile-name">@Model.UserName</h1>
-                        <p class="profile-email">@Model.Email</p>
-                        <div class="agency-info">
-                            <i class="fas fa-globe fa-2x"></i>
-                            <h4 class="agency-name">ImoSphere - Gestão Global</h4>
+<section class="glass-section py-5">
+    <!-- Profile Hero Section -->
+    <section class="profile-hero py-5 glass-section">
+        <div class="container">
+            <div class="profile-header">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 text-center">
+                        <div class="profile-avatar">
+                            <i class="fas fa-crown fa-4x"></i>
+                        </div>
+                        <div class="profile-badge">
+                            <span class="badge bg-warning text-dark">SuperAdmin</span>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <!-- Estatísticas globais do site -->
-        <div class="row mt-4 justify-content-center">
-            <div class="col-lg-10">
-                <div class="row g-4">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="stat-content">
-                                <h3 class="stat-number">@totalUsers</h3>
-                                <p class="stat-label">Utilizadores</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-home"></i>
-                            </div>
-                            <div class="stat-content">
-                                <h3 class="stat-number">@totalProperties</h3>
-                                <p class="stat-label">Propriedades</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-euro-sign"></i>
-                            </div>
-                            <div class="stat-content">
-                                <h3 class="stat-number">€@ImoSphere.Models.Property.ToShortCurrency(totalValue)</h3>
-                                <p class="stat-label">Valor Total</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div class="stat-content">
-                                <h3 class="stat-number">€@ImoSphere.Models.Property.ToShortCurrency(avgValue)</h3>
-                                <p class="stat-label">Valor Médio</p>
+                    <div class="col-lg-6">
+                        <div class="profile-info">
+                            <h1 class="profile-name">@Model.UserName</h1>
+                            <p class="profile-email">@Model.Email</p>
+                            <div class="agency-info">
+                                <i class="fas fa-globe fa-2x"></i>
+                                <h4 class="agency-name">ImoSphere - Gestão Global</h4>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Estatísticas globais do site -->
+            <div class="row mt-4 justify-content-center">
+                <div class="col-lg-10">
+                    <div class="row g-4">
+                        <div class="col-lg-3 col-md-6">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 class="stat-number">@totalUsers</h3>
+                                    <p class="stat-label">Utilizadores</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 class="stat-number">@totalProperties</h3>
+                                    <p class="stat-label">Propriedades</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-euro-sign"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 class="stat-number">€@ImoSphere.Models.Property.ToShortCurrency(totalValue)</h3>
+                                    <p class="stat-label">Valor Total</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 class="stat-number">€@ImoSphere.Models.Property.ToShortCurrency(avgValue)</h3>
+                                    <p class="stat-label">Valor Médio</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim estatísticas globais -->
         </div>
-        <!-- Fim estatísticas globais -->
-    </div>
-</section>
+    </section>
 
-<!-- Tabs para gestão global -->
-<div class="container mt-4">
-    <ul class="nav nav-tabs" id="superAdminTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="tab-hierarquia" data-bs-toggle="tab" data-bs-target="#tabHierarquia" type="button" role="tab">Hierarquia Global</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-users" data-bs-toggle="tab" data-bs-target="#tabUsers" type="button" role="tab">Gestão de Utilizadores</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-propriedades" data-bs-toggle="tab" data-bs-target="#tabPropriedades" type="button" role="tab">Gestão de Propriedades</button>
-        </li>
-    </ul>
-    <div class="tab-content" id="superAdminTabsContent">
-        <div class="tab-pane fade show active" id="tabHierarquia" role="tabpanel">
-            <!-- Hierarquia Global -->
-            <section class="team-management py-5">
-                <div class="container">
-                    <div class="section-header mb-5">
-                        <h2 class="section-title">
-                            <i class="fas fa-sitemap me-2"></i>Hierarquia de Agências, Admins e Comerciais
-                        </h2>
-                        <p class="section-subtitle">Visão global de todas as agências, admins e comerciais do sistema</p>
-                    </div>
-                    @if (hierarchy != null && hierarchy.Any())
-                    {
-                        @foreach (var agency in hierarchy)
+    <!-- Tabs para gestão global -->
+    <div class="container mt-4">
+        <ul class="nav nav-tabs" id="superAdminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab-hierarquia" data-bs-toggle="tab" data-bs-target="#tabHierarquia" type="button" role="tab">Hierarquia Global</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-users" data-bs-toggle="tab" data-bs-target="#tabUsers" type="button" role="tab">Gestão de Utilizadores</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-propriedades" data-bs-toggle="tab" data-bs-target="#tabPropriedades" type="button" role="tab">Gestão de Propriedades</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="superAdminTabsContent">
+            <div class="tab-pane fade show active" id="tabHierarquia" role="tabpanel">
+                <!-- Hierarquia Global -->
+                <section class="team-management py-5">
+                    <div class="container">
+                        <div class="section-header mb-5">
+                            <h2 class="section-title">
+                                <i class="fas fa-sitemap me-2"></i>Hierarquia de Agências, Admins e Comerciais
+                            </h2>
+                            <p class="section-subtitle">Visão global de todas as agências, admins e comerciais do sistema</p>
+                        </div>
+                        @if (hierarchy != null && hierarchy.Any())
                         {
-                            <div class="agency-card mb-4">
-                                <div class="agency-header d-flex align-items-center">
-                                    <i class="fas fa-building fa-2x me-2"></i>
-                                    <h4 class="mb-0">@agency.AgencyName</h4>
-                                    <span class="ms-3 text-muted">@agency.Admins.Count Admin(s), @agency.Admins.Sum(a => a.Comerciais.Count) Comercial(s)</span>
-                                </div>
-                                <div class="agency-content mt-3">
-                                    @if (agency.Admins.Any())
-                                    {
-                                        <div class="row g-4">
-                                            @foreach (var adminGroup in agency.Admins)
-                                            {
-                                                <div class="col-lg-6">
-                                                    <div class="team-member-card">
-                                                        <div class="member-header">
-                                                            <div class="member-avatar">
-                                                                <i class="fas fa-user-shield fa-2x"></i>
-                                                            </div>
-                                                            <div class="member-info">
-                                                                <h5 class="member-name">@adminGroup.Admin.UserName</h5>
-                                                                <p class="member-email">@adminGroup.Admin.Email</p>
-                                                                <span class="badge bg-primary">Admin</span>
-                                                            </div>
-                                                        </div>
-                                                        @if (adminGroup.Comerciais.Any())
-                                                        {
-                                                            <div class="comerciais-list mt-2">
-                                                                <strong>Comerciais:</strong>
-                                                                <ul class="list-unstyled ms-3">
-                                                                    @foreach (var comercial in adminGroup.Comerciais)
-                                                                    {
-                                                                        <li><i class="fas fa-user me-1"></i>@comercial.UserName <span class="text-muted">(@comercial.Email)</span></li>
-                                                                    }
-                                                                </ul>
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="text-muted ms-3">Sem comerciais atribuídos</div>
-                                                        }
-                                                    </div>
-                                                </div>
-                                            }
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="text-muted">Sem admins nesta agência.</div>
-                                    }
-                                    @if (agency.Comerciais.Any())
-                                    {
-                                        <div class="mt-3">
-                                            <strong>Comerciais sem admin:</strong>
-                                            <ul class="list-unstyled ms-3">
-                                                @foreach (var comercial in agency.Comerciais)
-                                                {
-                                                    <li><i class="fas fa-user me-1"></i>@comercial.UserName <span class="text-muted">(@comercial.Email)</span></li>
-                                                }
-                                            </ul>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        }
-                    }
-                    else
-                    {
-                        <div class="alert alert-info">Não existem agências ou utilizadores registados.</div>
-                    }
-                </div>
-            </section>
-        </div>
-        <div class="tab-pane fade" id="tabUsers" role="tabpanel">
-            <!-- Gestão de Utilizadores Global -->
-            <section class="team-management py-5">
-                <div class="container">
-                    <div class="section-header mb-5">
-                        <h2 class="section-title">
-                            <i class="fas fa-users-cog me-2"></i>Gestão de Utilizadores
-                        </h2>
-                        <p class="section-subtitle">Todos os clientes registados no sistema</p>
-                    </div>
-                    @{
-                        var userClients = ViewBag.UserClients as List<ImoSphere.Models.ApplicationUser>;
-                    }
-                    @if (userClients != null && userClients.Any())
-                    {
-                        <div class="row g-4">
-                            @foreach (var user in userClients)
+                            @foreach (var agency in hierarchy)
                             {
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="team-member-card">
-                                        <div class="member-header">
-                                            <div class="member-avatar">
-                                                <i class="fas fa-user fa-2x"></i>
+                                <div class="agency-card mb-4">
+                                    <div class="agency-header d-flex align-items-center">
+                                        <i class="fas fa-building fa-2x me-2"></i>
+                                        <h4 class="mb-0">@agency.AgencyName</h4>
+                                        <span class="ms-3 text-muted">@agency.Admins.Count Admin(s), @agency.Admins.Sum(a => a.Comerciais.Count) Comercial(s)</span>
+                                    </div>
+                                    <div class="agency-content mt-3">
+                                        @if (agency.Admins.Any())
+                                        {
+                                            <div class="row g-4">
+                                                @foreach (var adminGroup in agency.Admins)
+                                                {
+                                                    <div class="col-lg-6">
+                                                        <div class="team-member-card">
+                                                            <div class="member-header">
+                                                                <div class="member-avatar">
+                                                                    <i class="fas fa-user-shield fa-2x"></i>
+                                                                </div>
+                                                                <div class="member-info">
+                                                                    <h5 class="member-name">@adminGroup.Admin.UserName</h5>
+                                                                    <p class="member-email">@adminGroup.Admin.Email</p>
+                                                                    <span class="badge bg-primary">Admin</span>
+                                                                </div>
+                                                            </div>
+                                                            @if (adminGroup.Comerciais.Any())
+                                                            {
+                                                                <div class="comerciais-list mt-2">
+                                                                    <strong>Comerciais:</strong>
+                                                                    <ul class="list-unstyled ms-3">
+                                                                        @foreach (var comercial in adminGroup.Comerciais)
+                                                                        {
+                                                                            <li><i class="fas fa-user me-1"></i>@comercial.UserName <span class="text-muted">(@comercial.Email)</span></li>
+                                                                        }
+                                                                    </ul>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="text-muted ms-3">Sem comerciais atribuídos</div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
                                             </div>
-                                            <div class="member-info">
-                                                <h5 class="member-name">@user.UserName</h5>
-                                                <p class="member-email">@user.Email</p>
-                                                <span class="badge bg-secondary">Cliente</span>
+                                        }
+                                        else
+                                        {
+                                            <div class="text-muted">Sem admins nesta agência.</div>
+                                        }
+                                        @if (agency.Comerciais.Any())
+                                        {
+                                            <div class="mt-3">
+                                                <strong>Comerciais sem admin:</strong>
+                                                <ul class="list-unstyled ms-3">
+                                                    @foreach (var comercial in agency.Comerciais)
+                                                    {
+                                                        <li><i class="fas fa-user me-1"></i>@comercial.UserName <span class="text-muted">(@comercial.Email)</span></li>
+                                                    }
+                                                </ul>
                                             </div>
-                                        </div>
-                                        <div class="member-actions mt-2 d-flex gap-2">
-                                            <a href="@Url.Action("EditUser", "Admin", new { id = user.Id })" class="btn btn-sm btn-outline-primary" title="Editar"><i class="fas fa-edit"></i></a>
-                                            <form class="delete-user-form d-inline" data-user-id="@user.Id" method="post">
-                                                <button type="button" class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="confirmDeleteUser(this, '@user.UserName', '@user.Id')"><i class="fas fa-trash"></i></button>
-                                            </form>
-                                        </div>
+                                        }
                                     </div>
                                 </div>
                             }
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="alert alert-info">Não existem clientes registados.</div>
-                    }
-                </div>
-            </section>
-        </div>
-        <div class="tab-pane fade" id="tabPropriedades" role="tabpanel">
-            <!-- Gestão de Propriedades Global -->
-            <section class="team-properties py-5">
-                <div class="container">
-                    <div class="section-header mb-5">
-                        <h2 class="section-title">
-                            <i class="fas fa-home me-2"></i>Gestão de Propriedades
-                        </h2>
-                        <p class="section-subtitle">Todas as propriedades do sistema, agrupadas por agência, admin e comercial</p>
-                    </div>
-                    @{
-                        var propriedadesPorAgencia = ViewBag.PropriedadesPorAgencia as List<(ImoSphere.Models.Agency Agency, List<(ImoSphere.Models.ApplicationUser Admin, List<(ImoSphere.Models.ApplicationUser Comercial, List<ImoSphere.Models.Property> Casas)>)> AdminsComerciaisCasas, List<(ImoSphere.Models.ApplicationUser Comercial, List<ImoSphere.Models.Property> Casas)> ComerciaisSemAdminCasas)>;
-                    }
-                    <div class="accordion" id="agenciasAccordion">
-                        @if (propriedadesPorAgencia != null && propriedadesPorAgencia.Any())
+                        }
+                        else
                         {
-                            int idx = 0;
-                            foreach (var (agency, adminsComerciaisCasas, comerciaisSemAdminComCasas) in propriedadesPorAgencia)
-                            {
-                                if (agency.Name == "ImoSphere") { continue; }
-                                var logoFile = $"/images/{agency.Name.ToLower().Replace(" ", "")}.png";
-                                var valorAgencia = adminsComerciaisCasas.SelectMany(a => a.Item2).SelectMany(cc => cc.Casas).Sum(c => c.Price) + comerciaisSemAdminComCasas.SelectMany(cc => cc.Casas).Sum(c => c.Price);
-                                <div class="accordion-item mb-4" style="background: transparent; border: none;">
-                                    <h2 class="accordion-header" id="heading-@idx">
-                                        <button class="accordion-button d-flex align-items-center gap-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@idx" aria-expanded="false" aria-controls="collapse-@idx" style="border-radius: 18px; background: #2d2d39; color: #fff;">
-                                            <div class="agency-logo" style="width: 56px; height: 56px; background: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                                <img src="@logoFile" alt="@agency.Name Logo" style="max-width: 48px; max-height: 48px;" onerror="this.onerror=null;this.src='/images/fine and country.png';" />
+                            <div class="alert alert-info">Não existem agências ou utilizadores registados.</div>
+                        }
+                    </div>
+                </section>
+            </div>
+            <div class="tab-pane fade" id="tabUsers" role="tabpanel">
+                <!-- Gestão de Utilizadores Global -->
+                <section class="team-management py-5">
+                    <div class="container">
+                        <div class="section-header mb-5">
+                            <h2 class="section-title">
+                                <i class="fas fa-users-cog me-2"></i>Gestão de Utilizadores
+                            </h2>
+                            <p class="section-subtitle">Todos os clientes registados no sistema</p>
+                        </div>
+                        @{
+                            var userClients = ViewBag.UserClients as List<ImoSphere.Models.ApplicationUser>;
+                        }
+                        @if (userClients != null && userClients.Any())
+                        {
+                            <div class="row g-4">
+                                @foreach (var user in userClients)
+                                {
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="team-member-card">
+                                            <div class="member-header">
+                                                <div class="member-avatar">
+                                                    <i class="fas fa-user fa-2x"></i>
+                                                </div>
+                                                <div class="member-info">
+                                                    <h5 class="member-name">@user.UserName</h5>
+                                                    <p class="member-email">@user.Email</p>
+                                                    <span class="badge bg-secondary">Cliente</span>
+                                                </div>
                                             </div>
-                                            <span class="fs-5 text-uppercase flex-grow-1">@agency.Name</span>
-                                            <span class="badge bg-success fs-6">€@valorAgencia.ToString("N0")</span>
-                                        </button>
-                                    </h2>
-                                    <div id="collapse-@idx" class="accordion-collapse collapse" aria-labelledby="heading-@idx" data-bs-parent="#agenciasAccordion">
-                                        <div class="accordion-body" style="background: #23232b; border-radius: 0 0 18px 18px;">
-                                            <div class="row g-4">
-                                                @if (adminsComerciaisCasas.Any())
-                                                {
-                                                    @foreach (var (admin, comerciaisComCasas) in adminsComerciaisCasas)
+                                            <div class="member-actions mt-2 d-flex gap-2">
+                                                <a href="@Url.Action("EditUser", "Admin", new { id = user.Id })" class="btn btn-sm btn-outline-primary" title="Editar"><i class="fas fa-edit"></i></a>
+                                                <form class="delete-user-form d-inline" data-user-id="@user.Id" method="post">
+                                                    <button type="button" class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="confirmDeleteUser(this, '@user.UserName', '@user.Id')"><i class="fas fa-trash"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info">Não existem clientes registados.</div>
+                        }
+                    </div>
+                </section>
+            </div>
+            <div class="tab-pane fade" id="tabPropriedades" role="tabpanel">
+                <!-- Gestão de Propriedades Global -->
+                <section class="team-properties py-5">
+                    <div class="container">
+                        <div class="section-header mb-5">
+                            <h2 class="section-title">
+                                <i class="fas fa-home me-2"></i>Gestão de Propriedades
+                            </h2>
+                            <p class="section-subtitle">Todas as propriedades do sistema, agrupadas por agência, admin e comercial</p>
+                        </div>
+                        @{
+                            var propriedadesPorAgencia = ViewBag.PropriedadesPorAgencia as List<(ImoSphere.Models.Agency Agency, List<(ImoSphere.Models.ApplicationUser Admin, List<(ImoSphere.Models.ApplicationUser Comercial, List<ImoSphere.Models.Property> Casas)>)> AdminsComerciaisCasas, List<(ImoSphere.Models.ApplicationUser Comercial, List<ImoSphere.Models.Property> Casas)> ComerciaisSemAdminCasas)>;
+                        }
+                        <div class="accordion" id="agenciasAccordion">
+                            @if (propriedadesPorAgencia != null && propriedadesPorAgencia.Any())
+                            {
+                                int idx = 0;
+                                foreach (var (agency, adminsComerciaisCasas, comerciaisSemAdminComCasas) in propriedadesPorAgencia)
+                                {
+                                    if (agency.Name == "ImoSphere") { continue; }
+                                    var logoFile = $"/images/{agency.Name.ToLower().Replace(" ", "")}.png";
+                                    var valorAgencia = adminsComerciaisCasas.SelectMany(a => a.Item2).SelectMany(cc => cc.Casas).Sum(c => c.Price) + comerciaisSemAdminComCasas.SelectMany(cc => cc.Casas).Sum(c => c.Price);
+                                    <div class="accordion-item mb-4" style="background: transparent; border: none;">
+                                        <h2 class="accordion-header" id="heading-@idx">
+                                            <button class="accordion-button d-flex align-items-center gap-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@idx" aria-expanded="false" aria-controls="collapse-@idx" style="border-radius: 18px; background: #2d2d39; color: #fff;">
+                                                <div class="agency-logo" style="width: 56px; height: 56px; background: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                                    <img src="@logoFile" alt="@agency.Name Logo" style="max-width: 48px; max-height: 48px;" onerror="this.onerror=null;this.src='/images/fine and country.png';" />
+                                                </div>
+                                                <span class="fs-5 text-uppercase flex-grow-1">@agency.Name</span>
+                                                <span class="badge bg-success fs-6">€@valorAgencia.ToString("N0")</span>
+                                            </button>
+                                        </h2>
+                                        <div id="collapse-@idx" class="accordion-collapse collapse" aria-labelledby="heading-@idx" data-bs-parent="#agenciasAccordion">
+                                            <div class="accordion-body glass-card" style="border-radius: 0 0 18px 18px;">
+                                                <div class="row g-4">
+                                                    @if (adminsComerciaisCasas.Any())
                                                     {
-                                                        <div class="col-lg-6">
-                                                            <div class="team-member-card h-100" style="background: #292933; border-radius: 18px; box-shadow: 0 1px 8px #0001;">
-                                                                <div class="member-header d-flex align-items-center mb-2">
-                                                                    <div class="member-avatar me-3" style="background: #6c63ff; color: #fff; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem;">
-                                                                        <i class="fas fa-user-shield"></i>
+                                                        @foreach (var (admin, comerciaisComCasas) in adminsComerciaisCasas)
+                                                        {
+                                                            <div class="col-lg-6">
+                                                                <div class="team-member-card h-100" style="background: #292933; border-radius: 18px; box-shadow: 0 1px 8px #0001;">
+                                                                    <div class="member-header d-flex align-items-center mb-2">
+                                                                        <div class="member-avatar me-3" style="background: #6c63ff; color: #fff; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem;">
+                                                                            <i class="fas fa-user-shield"></i>
+                                                                        </div>
+                                                                        <div class="member-info">
+                                                                            <h5 class="member-name mb-0">@admin.UserName <span class="badge bg-success ms-2">€@comerciaisComCasas.SelectMany(cc => cc.Casas).Sum(c => c.Price).ToString("N0")</span></h5>
+                                                                            <small class="member-email">@admin.Email</small><br />
+                                                                            <span class="badge bg-primary mt-1">Admin</span>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="member-info">
-                                                                        <h5 class="member-name mb-0">@admin.UserName <span class="badge bg-success ms-2">€@comerciaisComCasas.SelectMany(cc => cc.Casas).Sum(c => c.Price).ToString("N0")</span></h5>
-                                                                        <small class="member-email">@admin.Email</small><br />
-                                                                        <span class="badge bg-primary mt-1">Admin</span>
+                                                                    <div class="comerciais-list mt-3">
+                                                                        <strong>Comerciais:</strong>
+                                                                        @if (comerciaisComCasas.Any())
+                                                                        {
+                                                                            <ul class="list-unstyled ms-2">
+                                                                                @foreach (var (comercial, casas) in comerciaisComCasas)
+                                                                                {
+                                                                                    <li class="mb-2">
+                                                                                        <span style="font-weight: 600;"><i class="fas fa-user me-1"></i>@comercial.UserName</span> <span class="text-muted">(@comercial.Email)</span>
+                                                                                        @if (casas.Any())
+                                                                                        {
+                                                                                            <ul class="list-unstyled ms-4 mt-1">
+                                                                                                @foreach (var casa in casas)
+                                                                                                {
+                                                                                                    <li class="property-item d-flex align-items-center justify-content-between rounded-3 px-2 py-1 mb-1" style="background: #23232b;">
+                                                                                                        <span><i class="fas fa-home me-1"></i>@casa.Name <span class="text-muted">(€@casa.Price.ToString("N0"))</span></span>
+                                                                                                        <span class="property-actions ms-2">
+                                                                                                            <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-warning ms-2" title="Editar"><i class="fas fa-edit"></i></a>
+                                                                                                            <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-primary ms-1" title="Ver Detalhes"><i class="fas fa-eye"></i></a>
+                                                                                                        </span>
+                                                                                                    </li>
+                                                                                                }
+                                                                                            </ul>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <span class="text-muted ms-2">Sem propriedades</span>
+                                                                                        }
+                                                                                    </li>
+                                                                                }
+                                                                            </ul>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="text-muted ms-2">Sem comerciais atribuídos</span>
+                                                                        }
                                                                     </div>
                                                                 </div>
-                                                                <div class="comerciais-list mt-3">
-                                                                    <strong>Comerciais:</strong>
-                                                                    @if (comerciaisComCasas.Any())
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-12 text-muted">Sem admins nesta agência.</div>
+                                                    }
+                                                </div>
+                                                @if (comerciaisSemAdminComCasas.Any())
+                                                {
+                                                    <div class="mt-4">
+                                                        <strong>Comerciais sem admin:</strong>
+                                                        <ul class="list-unstyled ms-2">
+                                                            @foreach (var (comercial, casas) in comerciaisSemAdminComCasas)
+                                                            {
+                                                                <li class="mb-2">
+                                                                    <span style="font-weight: 600;"><i class="fas fa-user me-1"></i>@comercial.UserName</span> <span class="text-muted">(@comercial.Email)</span>
+                                                                    @if (casas.Any())
                                                                     {
-                                                                        <ul class="list-unstyled ms-2">
-                                                                            @foreach (var (comercial, casas) in comerciaisComCasas)
+                                                                        <ul class="list-unstyled ms-4 mt-1">
+                                                                            @foreach (var casa in casas)
                                                                             {
-                                                                                <li class="mb-2">
-                                                                                    <span style="font-weight: 600;"><i class="fas fa-user me-1"></i>@comercial.UserName</span> <span class="text-muted">(@comercial.Email)</span>
-                                                                                    @if (casas.Any())
-                                                                                    {
-                                                                                        <ul class="list-unstyled ms-4 mt-1">
-                                                                                            @foreach (var casa in casas)
-                                                                                            {
-                                                                                                <li class="property-item d-flex align-items-center justify-content-between rounded-3 px-2 py-1 mb-1" style="background: #23232b;">
-                                                                                                    <span><i class="fas fa-home me-1"></i>@casa.Name <span class="text-muted">(€@casa.Price.ToString("N0"))</span></span>
-                                                                                                    <span class="property-actions ms-2">
-                                                                                                        <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-warning ms-2" title="Editar"><i class="fas fa-edit"></i></a>
-                                                                                                        <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-primary ms-1" title="Ver Detalhes"><i class="fas fa-eye"></i></a>
-                                                                                                    </span>
-                                                                                                </li>
-                                                                                            }
-                                                                                        </ul>
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        <span class="text-muted ms-2">Sem propriedades</span>
-                                                                                    }
+                                                                                <li class="property-item d-flex align-items-center justify-content-between rounded-3 px-2 py-1 mb-1" style="background: #23232b;">
+                                                                                    <span><i class="fas fa-home me-1"></i>@casa.Name <span class="text-muted">(€@casa.Price.ToString("N0"))</span></span>
+                                                                                    <span class="property-actions ms-2">
+                                                                                        <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-warning ms-2" title="Editar"><i class="fas fa-edit"></i></a>
+                                                                                        <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-primary ms-1" title="Ver Detalhes"><i class="fas fa-eye"></i></a>
+                                                                                    </span>
                                                                                 </li>
                                                                             }
                                                                         </ul>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <span class="text-muted ms-2">Sem comerciais atribuídos</span>
+                                                                        <span class="text-muted ms-2">Sem propriedades</span>
                                                                     }
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <div class="col-12 text-muted">Sem admins nesta agência.</div>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
                                                 }
                                             </div>
-                                            @if (comerciaisSemAdminComCasas.Any())
-                                            {
-                                                <div class="mt-4">
-                                                    <strong>Comerciais sem admin:</strong>
-                                                    <ul class="list-unstyled ms-2">
-                                                        @foreach (var (comercial, casas) in comerciaisSemAdminComCasas)
-                                                        {
-                                                            <li class="mb-2">
-                                                                <span style="font-weight: 600;"><i class="fas fa-user me-1"></i>@comercial.UserName</span> <span class="text-muted">(@comercial.Email)</span>
-                                                                @if (casas.Any())
-                                                                {
-                                                                    <ul class="list-unstyled ms-4 mt-1">
-                                                                        @foreach (var casa in casas)
-                                                                        {
-                                                                            <li class="property-item d-flex align-items-center justify-content-between rounded-3 px-2 py-1 mb-1" style="background: #23232b;">
-                                                                                <span><i class="fas fa-home me-1"></i>@casa.Name <span class="text-muted">(€@casa.Price.ToString("N0"))</span></span>
-                                                                                <span class="property-actions ms-2">
-                                                                                    <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-warning ms-2" title="Editar"><i class="fas fa-edit"></i></a>
-                                                                                    <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-primary ms-1" title="Ver Detalhes"><i class="fas fa-eye"></i></a>
-                                                                                </span>
-                                                                            </li>
-                                                                        }
-                                                                    </ul>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <span class="text-muted ms-2">Sem propriedades</span>
-                                                                }
-                                                            </li>
-                                                        }
-                                                    </ul>
-                                                </div>
-                                            }
                                         </div>
                                     </div>
-                                </div>
-                                idx++;
+                                    idx++;
+                                }
                             }
-                        }
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Quick Actions -->
-<section class="quick-actions py-5">
-    <div class="container">
-        <div class="section-header mb-5">
-            <h2 class="section-title">
-                <i class="fas fa-bolt me-2"></i>Ações Rápidas
-            </h2>
-            <p class="section-subtitle">Tarefas administrativas comuns</p>
+    <!-- Quick Actions -->
+    <section class="quick-actions py-5">
+        <div class="container">
+            <div class="section-header mb-5">
+                <h2 class="section-title">
+                    <i class="fas fa-bolt me-2"></i>Ações Rápidas
+                </h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-user-plus fa-2x"></i>
+                        </div>
+                        <h5>Adicionar Utilizador</h5>
+                        <p class="text-muted">Criar novos utilizadores</p>
+                        <a href="@Url.Action("CreateUser", "Admin")" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus me-1"></i>Adicionar
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-home fa-2x"></i>
+                        </div>
+                        <h5>Adicionar Propriedade</h5>
+                        <p class="text-muted">Criar nova listagem de propriedade</p>
+                        <a href="@Url.Action("Create", "Properties")" class="btn btn-success btn-sm">
+                            <i class="fas fa-plus me-1"></i>Adicionar
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-bar fa-2x"></i>
+                        </div>
+                        <h5>Ver Relatórios</h5>
+                        <p class="text-muted">Análises e insights globais</p>
+                        <a href="#" class="btn btn-info btn-sm">
+                            <i class="fas fa-chart-line me-1"></i>Ver
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-cog fa-2x"></i>
+                        </div>
+                        <h5>Definições</h5>
+                        <p class="text-muted">Gerir definições globais</p>
+                        <a href="#" class="btn btn-warning btn-sm">
+                            <i class="fas fa-cog me-1"></i>Definições
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6">
-                <div class="action-card">
-                    <div class="action-icon">
-                        <i class="fas fa-user-plus fa-2x"></i>
-                    </div>
-                    <h5>Adicionar Utilizador</h5>
-                    <p class="text-muted">Criar novos utilizadores</p>
-                    <a href="@Url.Action("CreateUser", "Admin")" class="btn btn-primary btn-sm">
-                        <i class="fas fa-plus me-1"></i>Adicionar
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="action-card">
-                    <div class="action-icon">
-                        <i class="fas fa-home fa-2x"></i>
-                    </div>
-                    <h5>Adicionar Propriedade</h5>
-                    <p class="text-muted">Criar nova listagem de propriedade</p>
-                    <a href="@Url.Action("Create", "Properties")" class="btn btn-success btn-sm">
-                        <i class="fas fa-plus me-1"></i>Adicionar
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="action-card">
-                    <div class="action-icon">
-                        <i class="fas fa-chart-bar fa-2x"></i>
-                    </div>
-                    <h5>Ver Relatórios</h5>
-                    <p class="text-muted">Análises e insights globais</p>
-                    <a href="#" class="btn btn-info btn-sm">
-                        <i class="fas fa-chart-line me-1"></i>Ver
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="action-card">
-                    <div class="action-icon">
-                        <i class="fas fa-cog fa-2x"></i>
-                    </div>
-                    <h5>Definições</h5>
-                    <p class="text-muted">Gerir definições globais</p>
-                    <a href="#" class="btn btn-warning btn-sm">
-                        <i class="fas fa-cog me-1"></i>Definições
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+    </section>
 </section>
 
 <script>

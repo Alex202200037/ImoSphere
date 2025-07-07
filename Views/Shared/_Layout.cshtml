@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="~/css/users-management.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/properties.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ImoSphere.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/glass.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Leaflet CSS para OpenStreetMap -->
@@ -21,13 +22,15 @@
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
           crossorigin="" />
     
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    
     <style>
     </style>
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark glass-navbar">
             <div class="container">
                 <a class="navbar-brand" href="@Url.Action("Index", "Home")">
                     <i class="fas fa-building me-2"></i>ImoSphere

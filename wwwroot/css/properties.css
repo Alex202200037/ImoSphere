@@ -1,14 +1,14 @@
 /* Properties Page Styles */
 .properties-container {
     padding: 40px 0;
-    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    background: none;
     min-height: calc(100vh - 200px);
 }
 
 .filter-sidebar {
     border: 1px solid var(--border-accent);
     box-shadow: 0 4px 16px var(--shadow-light);
-    background: var(--card-bg);
+    background: none;
 }
 
 .filter-sidebar .card-header {
@@ -56,6 +56,7 @@
     border-color: var(--primary-color);
     transform: translateY(-4px);
     box-shadow: 0 8px 25px var(--shadow-medium);
+    background: none;
 }
 
 .property-image-container {
@@ -199,10 +200,12 @@ div.property-card div.agency-logo-badge > img.agency-logo {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    background: none;
 }
 
 .card-footer {
     border-radius: 0 0 12px 12px;
+    background: none;
 }
 
 /* Botões de ação nos cards de propriedades */

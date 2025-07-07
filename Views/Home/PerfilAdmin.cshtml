@@ -8,377 +8,379 @@
 
 <link rel="stylesheet" href="~/css/perfil-admin.css" asp-append-version="true" />
 
-<!-- Profile Hero Section -->
-<section class="profile-hero py-5">
-    <div class="container">
-        <div class="profile-header">
-            <div class="row align-items-center">
-                <div class="col-lg-3 text-center">
-                    <div class="profile-avatar">
-                        <i class="fas fa-user-tie fa-4x"></i>
-                    </div>
-                    <div class="profile-badge">
-                        <span class="badge bg-primary">Administrador</span>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="profile-info">
-                        <h1 class="profile-name">@Model.UserName</h1>
-                        <p class="profile-email">@Model.Email</p>
-                        <div class="agency-info">
-                            <img src="@logoFile" alt="@agency Logo" class="agency-logo" />
-                            <h4 class="agency-name">@agency</h4>
+<section class="glass-section py-5">
+    <!-- Profile Hero Section -->
+    <section class="profile-hero py-5">
+        <div class="container">
+            <div class="profile-header">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 text-center">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user-tie fa-4x"></i>
+                        </div>
+                        <div class="profile-badge">
+                            <span class="badge bg-primary">Administrador</span>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 text-end">
-                    <div class="profile-actions">
-                        <button id="toggle-properties-btn" class="btn btn-primary">
-                            <i class="fas fa-home me-2"></i>Ver Propriedades
-                        </button>
-                        <button id="toggle-users-btn" class="btn btn-outline-primary mt-2" type="button">
-                            <i class="fas fa-users me-2"></i>Gerir Utilizadores
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Statistics Dashboard -->
-<section class="stats-dashboard py-5">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 class="stat-number">@(comerciaisComCasas?.Count ?? 0)</h3>
-                        <p class="stat-label">Membros da Equipa</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-md-6">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 class="stat-number">@(comerciaisComCasas?.Sum(x => x.Casas?.Count ?? 0) ?? 0)</h3>
-                        <p class="stat-label">Total de Propriedades</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-md-6">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-euro-sign"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 class="stat-number">€@ImoSphere.Models.Property.ToShortCurrency(comerciaisComCasas?.Sum(x => x.Casas?.Sum(c => c.Price) ?? 0) ?? 0)</h3>
-                        <p class="stat-label">Valor Total</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-md-6">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 class="stat-number">@(comerciaisComCasas?.Count(x => x.Casas?.Any() == true) ?? 0)</h3>
-                        <p class="stat-label">Agentes Ativos</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Team/User Management Tabs -->
-<div class="container mt-4">
-    <ul class="nav nav-tabs" id="adminTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="tab-equipa" data-bs-toggle="tab" data-bs-target="#tabEquipe" type="button" role="tab">Gestão de Equipa</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-users" data-bs-toggle="tab" data-bs-target="#tabUsers" type="button" role="tab">Gestão de Utilizadores</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-propriedades" data-bs-toggle="tab" data-bs-target="#tabPropriedades" type="button" role="tab">Gestão de Propriedades</button>
-        </li>
-    </ul>
-    <div class="tab-content" id="adminTabsContent">
-        <div class="tab-pane fade show active" id="tabEquipe" role="tabpanel">
-            <!-- Gestão de Equipa (original) -->
-            <section class="team-management py-5">
-                <div class="container">
-                    <div class="section-header mb-5">
-                        <h2 class="section-title">
-                            <i class="fas fa-users-cog me-2"></i>Gestão da Equipa
-                        </h2>
-                        <p class="section-subtitle">Gerir a sua equipa comercial e as suas propriedades</p>
-                    </div>
-                    @if (comerciaisComCasas != null && comerciaisComCasas.Any())
-                    {
-                        <div class="row g-4">
-                            @foreach (var (comercial, casas) in comerciaisComCasas)
-                            {
-                                var comercialId = comercial.Id;
-                                var showAll = false; // Por default, só mostra 3
-                                <div class="col-lg-6">
-                                    <div class="team-member-card">
-                                        <div class="member-header">
-                                            <div class="member-avatar">
-                                                <i class="fas fa-user fa-2x"></i>
-                                            </div>
-                                            <div class="member-info">
-                                                <h5 class="member-name">@comercial.UserName</h5>
-                                                <p class="member-email">@comercial.Email</p>
-                                                <div class="member-stats">
-                                                    <span class="stat-badge">
-                                                        <i class="fas fa-home me-1"></i>@(casas?.Count ?? 0) Propriedades
-                                                    </span>
-                                                    <span class="stat-badge">
-                                                        <i class="fas fa-euro-sign me-1"></i>@((casas?.Sum(c => c.Price) ?? 0).ToString("N0"))
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="member-status">
-                                                @if (casas?.Any() == true)
-                                                {
-                                                    <span class="status-badge active">Ativo</span>
-                                                }
-                                                else
-                                                {
-                                                    <span class="status-badge inactive">Sem Propriedades</span>
-                                                }
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="comercial-properties" data-comercial-id="@comercialId">
-                                            <div class="properties-list property-dropzone" id="propertiesList-@comercialId">
-                                                @for (int i = 0; i < casas.Count; i++)
-                                                {
-                                                    var casa = casas[i];
-                                                    var isExtra = i >= 3;
-                                                    <div class="property-item property-card team-property-card h-100 hover-lift @(isExtra ? "collapsed-property" : "")" data-property-id="@casa.Id">
-                                                        <div class="property-main">
-                                                            <div class="property-drag-handle" title="Arrastar para transferir">
-                                                                <i class="fas fa-grip-lines"></i>
-                                                            </div>
-                                                            <div class="property-info">
-                                                                <div class="property-name">@casa.Name</div>
-                                                                <div class="property-location">
-                                                                    <i class="fas fa-map-marker-alt me-1"></i>@casa.Location
-                                                                </div>
-                                                                <div class="property-value">€@casa.Price.ToString("N0")</div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="property-actions">
-                                                            <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-primary" title="Editar">
-                                                                <i class="fas fa-edit"></i>
-                                                            </a>
-                                                            <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-info" title="Ver Detalhes">
-                                                                <i class="fas fa-eye"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            </div>
-                                            @if (casas.Count > 3)
-                                            {
-                                                <button class="btn btn-sm btn-outline-secondary mt-2" type="button" onclick="toggleVerMaisPropriedades('@comercialId', this)">
-                                                    Ver mais @(casas.Count - 3) propriedades
-                                                </button>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="empty-team">
-                            <div class="empty-state text-center">
-                                <i class="fas fa-users fa-4x mb-3"></i>
-                                <h4>Sem Membros da Equipa</h4>
-                                <p class="text-muted">Ainda não existem utilizadores comerciais nesta agência.</p>
-                                <a href="@Url.Action("CreateUser", "Admin")" class="btn btn-primary">
-                                    <i class="fas fa-user-plus me-2"></i>Adicionar Membro
-                                </a>
+                    <div class="col-lg-6">
+                        <div class="profile-info">
+                            <h1 class="profile-name">@Model.UserName</h1>
+                            <p class="profile-email">@Model.Email</p>
+                            <div class="agency-info">
+                                <img src="@logoFile" alt="@agency Logo" class="agency-logo" />
+                                <h4 class="agency-name">@agency</h4>
                             </div>
                         </div>
-                    }
-                </div>
-            </section>
-        </div>
-        <div class="tab-pane fade" id="tabUsers" role="tabpanel">
-            <!-- Gestão de Utilizadores -->
-            @await Html.PartialAsync("~/Views/Admin/UsersSimple.cshtml", (List<ImoSphere.Models.UserWithRolesViewModel>)ViewBag.UserList)
-        </div>
-        <div class="tab-pane fade" id="tabPropriedades" role="tabpanel">
-            <!-- Gestão de Propriedades -->
-            <section class="team-properties py-5">
-                <div class="container">
-                    <div class="section-header mb-5">
-                        <h2 class="section-title">
-                            <i class="fas fa-home me-2"></i>Gestão de Propriedades
-                        </h2>
-                        <p class="section-subtitle">Todas as propriedades da sua equipa, agrupadas por comercial</p>
                     </div>
-                    @if (comerciaisComCasas != null && comerciaisComCasas.Any(x => x.Casas.Any()))
-                    {
-                        @foreach (var (comercial, casas) in comerciaisComCasas)
+                    <div class="col-lg-3 text-end">
+                        <div class="profile-actions">
+                            <button id="toggle-properties-btn" class="btn btn-primary">
+                                <i class="fas fa-home me-2"></i>Ver Propriedades
+                            </button>
+                            <button id="toggle-users-btn" class="btn btn-outline-primary mt-2" type="button">
+                                <i class="fas fa-users me-2"></i>Gerir Utilizadores
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Dashboard -->
+    <section class="stats-dashboard py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">@(comerciaisComCasas?.Count ?? 0)</h3>
+                            <p class="stat-label">Membros da Equipa</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">@(comerciaisComCasas?.Sum(x => x.Casas?.Count ?? 0) ?? 0)</h3>
+                            <p class="stat-label">Total de Propriedades</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-euro-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">€@ImoSphere.Models.Property.ToShortCurrency(comerciaisComCasas?.Sum(x => x.Casas?.Sum(c => c.Price) ?? 0) ?? 0)</h3>
+                            <p class="stat-label">Valor Total</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">@(comerciaisComCasas?.Count(x => x.Casas?.Any() == true) ?? 0)</h3>
+                            <p class="stat-label">Agentes Ativos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team/User Management Tabs -->
+    <div class="container mt-4">
+        <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab-equipa" data-bs-toggle="tab" data-bs-target="#tabEquipe" type="button" role="tab">Gestão de Equipa</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-users" data-bs-toggle="tab" data-bs-target="#tabUsers" type="button" role="tab">Gestão de Utilizadores</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-propriedades" data-bs-toggle="tab" data-bs-target="#tabPropriedades" type="button" role="tab">Gestão de Propriedades</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="adminTabsContent">
+            <div class="tab-pane fade show active" id="tabEquipe" role="tabpanel">
+                <!-- Gestão de Equipa (original) -->
+                <section class="team-management py-5">
+                    <div class="container">
+                        <div class="section-header mb-5">
+                            <h2 class="section-title">
+                                <i class="fas fa-users-cog me-2"></i>Gestão da Equipa
+                            </h2>
+                            <p class="section-subtitle">Gerir a sua equipa comercial e as suas propriedades</p>
+                        </div>
+                        @if (comerciaisComCasas != null && comerciaisComCasas.Any())
                         {
-                            var comercialId = comercial.Id;
-                            <div class="comercial-properties mb-5" data-comercial-id="@comercialId">
-                                <h5 class="mb-3"><i class="fas fa-user me-2"></i>@comercial.UserName <span class="text-muted" style="font-size:0.95em">(@comercial.Email)</span> — <span class="badge bg-secondary">@casas.Count propriedade(s)</span></h5>
-                                <div class="row g-4 property-dropzone">
-                                    @if (casas != null && casas.Any())
-                                    {
-                                        @foreach (var casa in casas)
-                                        {
-                                            <div class="col-lg-4 col-md-6">
-                                                <div class="card property-card pro-list h-100 hover-lift" data-property-id="@casa.Id" style="position:relative;">
-                                                    <div class="property-image-container position-relative">
-                                                        @if (casa.Images != null && casa.Images.Any())
-                                                        {
-                                                            <img src="@casa.Images.First().ImageUrl" class="card-img-top property-image" alt="@casa.Name" />
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="property-image-placeholder">
-                                                                <i class="fas fa-home fa-3x text-muted"></i>
-                                                            </div>
-                                                        }
-                                                        <div class="property-price-badge" style="position: absolute; top: 10px; right: 10px; z-index: 12;">
-                                                            <span class="badge bg-primary">€@casa.Price.ToString("N0")</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <h6 class="card-title">@casa.Name</h6>
-                                                        <p class="card-text mb-1"><i class="fas fa-map-marker-alt me-1"></i>@casa.Location</p>
-                                                        <div class="property-features d-flex gap-3 mb-2">
-                                                            <span class="feature"><i class="fas fa-bed text-primary"></i> @casa.Bedrooms</span>
-                                                            <span class="feature"><i class="fas fa-bath text-primary"></i> @casa.Bathrooms</span>
-                                                            <span class="feature"><i class="fas fa-ruler-combined text-primary"></i> @casa.Area m²</span>
-                                                        </div>
-                                                        <div class="agency-info mt-2">
-                                                            <small class="text-muted">
-                                                                <i class="fas fa-building me-1"></i>@casa.Agency?.Name
-                                                            </small>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-footer">
-                                                        <div class="d-flex justify-content-end align-items-center gap-2">
-                                                            <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-outline-warning btn-sm" title="Editar">
-                                                                <i class="fas fa-edit"></i>
-                                                            </a>
-                                                            <form method="post" action="@Url.Action("Delete", "Properties", new { id = casa.Id })" class="d-inline delete-property-form">
-                                                                @Html.AntiForgeryToken()
-                                                                <button type="button" class="btn btn-outline-danger btn-sm" title="Eliminar" onclick="confirmDeleteProperty(this, '@casa.Name')">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </button>
-                                                            </form>
-                                                            <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-outline-primary btn-sm" title="Ver Detalhes">
-                                                                <i class="fas fa-eye me-1"></i>Ver
-                                                            </a>
-                                                        </div>
+                            <div class="row g-4">
+                                @foreach (var (comercial, casas) in comerciaisComCasas)
+                                {
+                                    var comercialId = comercial.Id;
+                                    var showAll = false; // Por default, só mostra 3
+                                    <div class="col-lg-6">
+                                        <div class="team-member-card">
+                                            <div class="member-header">
+                                                <div class="member-avatar">
+                                                    <i class="fas fa-user fa-2x"></i>
+                                                </div>
+                                                <div class="member-info">
+                                                    <h5 class="member-name">@comercial.UserName</h5>
+                                                    <p class="member-email">@comercial.Email</p>
+                                                    <div class="member-stats">
+                                                        <span class="stat-badge">
+                                                            <i class="fas fa-home me-1"></i>@(casas?.Count ?? 0) Propriedades
+                                                        </span>
+                                                        <span class="stat-badge">
+                                                            <i class="fas fa-euro-sign me-1"></i>@((casas?.Sum(c => c.Price) ?? 0).ToString("N0"))
+                                                        </span>
                                                     </div>
                                                 </div>
+                                                <div class="member-status">
+                                                    @if (casas?.Any() == true)
+                                                    {
+                                                        <span class="status-badge active">Ativo</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="status-badge inactive">Sem Propriedades</span>
+                                                    }
+                                                </div>
                                             </div>
-                                        }
-                                    }
+                                            
+                                            <div class="comercial-properties" data-comercial-id="@comercialId">
+                                                <div class="properties-list property-dropzone" id="propertiesList-@comercialId">
+                                                    @for (int i = 0; i < casas.Count; i++)
+                                                    {
+                                                        var casa = casas[i];
+                                                        var isExtra = i >= 3;
+                                                        <div class="property-item property-card team-property-card h-100 hover-lift @(isExtra ? "collapsed-property" : "")" data-property-id="@casa.Id">
+                                                            <div class="property-main">
+                                                                <div class="property-drag-handle" title="Arrastar para transferir">
+                                                                    <i class="fas fa-grip-lines"></i>
+                                                                </div>
+                                                                <div class="property-info">
+                                                                    <div class="property-name">@casa.Name</div>
+                                                                    <div class="property-location">
+                                                                        <i class="fas fa-map-marker-alt me-1"></i>@casa.Location
+                                                                    </div>
+                                                                    <div class="property-value">€@casa.Price.ToString("N0")</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="property-actions">
+                                                                <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-primary" title="Editar">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </a>
+                                                                <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-info" title="Ver Detalhes">
+                                                                    <i class="fas fa-eye"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                @if (casas.Count > 3)
+                                                {
+                                                    <button class="btn btn-sm btn-outline-secondary mt-2" type="button" onclick="toggleVerMaisPropriedades('@comercialId', this)">
+                                                        Ver mais @(casas.Count - 3) propriedades
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="empty-team">
+                                <div class="empty-state text-center">
+                                    <i class="fas fa-users fa-4x mb-3"></i>
+                                    <h4>Sem Membros da Equipa</h4>
+                                    <p class="text-muted">Ainda não existem utilizadores comerciais nesta agência.</p>
+                                    <a href="@Url.Action("CreateUser", "Admin")" class="btn btn-primary">
+                                        <i class="fas fa-user-plus me-2"></i>Adicionar Membro
+                                    </a>
                                 </div>
                             </div>
                         }
-                    }
-                    else
-                    {
-                        <div class="empty-properties text-center">
-                            <i class="fas fa-home fa-4x mb-3"></i>
-                            <h4>Sem propriedades na equipa</h4>
-                            <p class="text-muted">Nenhum comercial da sua equipa tem propriedades registadas.</p>
+                    </div>
+                </section>
+            </div>
+            <div class="tab-pane fade" id="tabUsers" role="tabpanel">
+                <!-- Gestão de Utilizadores -->
+                @await Html.PartialAsync("~/Views/Admin/UsersSimple.cshtml", (List<ImoSphere.Models.UserWithRolesViewModel>)ViewBag.UserList)
+            </div>
+            <div class="tab-pane fade" id="tabPropriedades" role="tabpanel">
+                <!-- Gestão de Propriedades -->
+                <section class="team-properties py-5">
+                    <div class="container">
+                        <div class="section-header mb-5">
+                            <h2 class="section-title">
+                                <i class="fas fa-home me-2"></i>Gestão de Propriedades
+                            </h2>
+                            <p class="section-subtitle">Todas as propriedades da sua equipa, agrupadas por comercial</p>
                         </div>
-                    }
-                </div>
-            </section>
+                        @if (comerciaisComCasas != null && comerciaisComCasas.Any(x => x.Casas.Any()))
+                        {
+                            @foreach (var (comercial, casas) in comerciaisComCasas)
+                            {
+                                var comercialId = comercial.Id;
+                                <div class="comercial-properties mb-5" data-comercial-id="@comercialId">
+                                    <h5 class="mb-3"><i class="fas fa-user me-2"></i>@comercial.UserName <span class="text-muted" style="font-size:0.95em">(@comercial.Email)</span> — <span class="badge bg-secondary">@casas.Count propriedade(s)</span></h5>
+                                    <div class="row g-4 property-dropzone">
+                                        @if (casas != null && casas.Any())
+                                        {
+                                            @foreach (var casa in casas)
+                                            {
+                                                <div class="col-lg-4 col-md-6">
+                                                    <div class="card property-card pro-list h-100 hover-lift" data-property-id="@casa.Id" style="position:relative;">
+                                                        <div class="property-image-container position-relative">
+                                                            @if (casa.Images != null && casa.Images.Any())
+                                                            {
+                                                                <img src="@casa.Images.First().ImageUrl" class="card-img-top property-image" alt="@casa.Name" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="property-image-placeholder">
+                                                                    <i class="fas fa-home fa-3x text-muted"></i>
+                                                                </div>
+                                                            }
+                                                            <div class="property-price-badge" style="position: absolute; top: 10px; right: 10px; z-index: 12;">
+                                                                <span class="badge bg-primary">€@casa.Price.ToString("N0")</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <h6 class="card-title">@casa.Name</h6>
+                                                            <p class="card-text mb-1"><i class="fas fa-map-marker-alt me-1"></i>@casa.Location</p>
+                                                            <div class="property-features d-flex gap-3 mb-2">
+                                                                <span class="feature"><i class="fas fa-bed text-primary"></i> @casa.Bedrooms</span>
+                                                                <span class="feature"><i class="fas fa-bath text-primary"></i> @casa.Bathrooms</span>
+                                                                <span class="feature"><i class="fas fa-ruler-combined text-primary"></i> @casa.Area m²</span>
+                                                            </div>
+                                                            <div class="agency-info mt-2">
+                                                                <small class="text-muted">
+                                                                    <i class="fas fa-building me-1"></i>@casa.Agency?.Name
+                                                                </small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <div class="d-flex justify-content-end align-items-center gap-2">
+                                                                <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-outline-warning btn-sm" title="Editar">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </a>
+                                                                <form method="post" action="@Url.Action("Delete", "Properties", new { id = casa.Id })" class="d-inline delete-property-form">
+                                                                    @Html.AntiForgeryToken()
+                                                                    <button type="button" class="btn btn-outline-danger btn-sm" title="Eliminar" onclick="confirmDeleteProperty(this, '@casa.Name')">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
+                                                                </form>
+                                                                <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-outline-primary btn-sm" title="Ver Detalhes">
+                                                                    <i class="fas fa-eye me-1"></i>Ver
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="empty-properties text-center">
+                                <i class="fas fa-home fa-4x mb-3"></i>
+                                <h4>Sem propriedades na equipa</h4>
+                                <p class="text-muted">Nenhum comercial da sua equipa tem propriedades registadas.</p>
+                            </div>
+                        }
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Quick Actions -->
-<section class="quick-actions py-5">
-    <div class="container">
-        <div class="section-header mb-5">
-            <h2 class="section-title">
-                <i class="fas fa-bolt me-2"></i>Ações Rápidas
-            </h2>
-            <p class="section-subtitle">Tarefas administrativas comuns</p>
+    <!-- Quick Actions -->
+    <section class="quick-actions py-5">
+        <div class="container">
+            <div class="section-header mb-5">
+                <h2 class="section-title">
+                    <i class="fas fa-bolt me-2"></i>Ações Rápidas
+                </h2>
+                <p class="section-subtitle">Tarefas administrativas comuns</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-user-plus fa-2x"></i>
+                        </div>
+                        <h5>Adicionar Utilizador</h5>
+                        <p class="text-muted">Criar novos membros da equipa</p>
+                        <a href="@Url.Action("CreateUser", "Admin")" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus me-1"></i>Adicionar
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-home fa-2x"></i>
+                        </div>
+                        <h5>Adicionar Propriedade</h5>
+                        <p class="text-muted">Criar nova listagem de propriedade</p>
+                        <a href="@Url.Action("Create", "Properties")" class="btn btn-success btn-sm">
+                            <i class="fas fa-plus me-1"></i>Adicionar
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-bar fa-2x"></i>
+                        </div>
+                        <h5>Ver Relatórios</h5>
+                        <p class="text-muted">Análises e insights</p>
+                        <a href="#" class="btn btn-info btn-sm">
+                            <i class="fas fa-chart-line me-1"></i>Ver
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-cog fa-2x"></i>
+                        </div>
+                        <h5>Definições</h5>
+                        <p class="text-muted">Gerir definições da agência</p>
+                        <a href="#" class="btn btn-warning btn-sm">
+                            <i class="fas fa-cog me-1"></i>Definições
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6">
-                <div class="action-card">
-                    <div class="action-icon">
-                        <i class="fas fa-user-plus fa-2x"></i>
-                    </div>
-                    <h5>Adicionar Utilizador</h5>
-                    <p class="text-muted">Criar novos membros da equipa</p>
-                    <a href="@Url.Action("CreateUser", "Admin")" class="btn btn-primary btn-sm">
-                        <i class="fas fa-plus me-1"></i>Adicionar
-                    </a>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-md-6">
-                <div class="action-card">
-                    <div class="action-icon">
-                        <i class="fas fa-home fa-2x"></i>
-                    </div>
-                    <h5>Adicionar Propriedade</h5>
-                    <p class="text-muted">Criar nova listagem de propriedade</p>
-                    <a href="@Url.Action("Create", "Properties")" class="btn btn-success btn-sm">
-                        <i class="fas fa-plus me-1"></i>Adicionar
-                    </a>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-md-6">
-                <div class="action-card">
-                    <div class="action-icon">
-                        <i class="fas fa-chart-bar fa-2x"></i>
-                    </div>
-                    <h5>Ver Relatórios</h5>
-                    <p class="text-muted">Análises e insights</p>
-                    <a href="#" class="btn btn-info btn-sm">
-                        <i class="fas fa-chart-line me-1"></i>Ver
-                    </a>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-md-6">
-                <div class="action-card">
-                    <div class="action-icon">
-                        <i class="fas fa-cog fa-2x"></i>
-                    </div>
-                    <h5>Definições</h5>
-                    <p class="text-muted">Gerir definições da agência</p>
-                    <a href="#" class="btn btn-warning btn-sm">
-                        <i class="fas fa-cog me-1"></i>Definições
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+    </section>
 </section>
 
 <!-- Adicionar SortableJS -->

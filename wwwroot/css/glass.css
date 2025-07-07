@@ -1,0 +1,164 @@
+/* Glassmorphism Premium - CSS Base Global */
+
+/* Secções principais */
+.glass-section {
+  background: rgba(40, 40, 60, 0.65);
+  border-radius: 28px;
+  box-shadow: 0 8px 40px 0 #6c63ff33, 0 1.5px 8px 0 #0002;
+  backdrop-filter: blur(8px);
+  padding: 2rem;
+}
+
+/* Cards e blocos */
+.glass-card {
+  background: rgba(40, 40, 60, 0.65);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 #6c63ff22, 0 1.5px 8px 0 #0002;
+  backdrop-filter: blur(6px);
+  padding: 1.5rem;
+}
+
+/* Navbar premium */
+.glass-navbar {
+  background: linear-gradient(90deg, #181828cc 0%, #23233bcc 100%);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px #6c63ff22;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  position: relative;
+  z-index: 99999;
+}
+
+/* Popups, modais, tooltips */
+.glass-popup {
+  background: rgba(40, 40, 60, 0.85);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px #6c63ff44;
+  backdrop-filter: blur(12px);
+  padding: 2rem;
+}
+
+/* Exemplo de uso:
+<div class="glass-section"> ... </div>
+<div class="glass-card"> ... </div>
+<nav class="glass-navbar"> ... </nav>
+<div class="glass-popup"> ... </div>
+*/
+
+/* Glassmorphism Premium - Upgrade */
+
+.glass-section, .glass-card {
+  background: rgba(40, 40, 60, 0.35);
+  border-radius: 28px;
+  box-shadow: 0 8px 48px 0 #6c63ff44, 0 1.5px 8px 0 #0002;
+  backdrop-filter: blur(18px) saturate(1.2);
+  border: 1.5px solid rgba(255,255,255,0.18);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-section::before, .glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 60px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.02) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+  .glass-section, .glass-card, .glass-popup {
+    border-radius: 14px;
+    padding: 1rem;
+  }
+}
+@media (max-width: 600px) {
+  .glass-section, .glass-card, .glass-popup {
+    border-radius: 8px;
+    padding: 0.5rem;
+  }
+}
+
+/* Forçar bordas arredondadas premium nas imagens principais do About Us */
+img.rounded-4 {
+  border-radius: 1.5rem !important;
+  overflow: hidden;
+}
+.about-image-container, .story-image-container {
+  border-radius: 1.5rem !important;
+  overflow: hidden;
+  background: none !important;
+}
+
+/* Dropdown do perfil premium */
+.dropdown-menu {
+  background: rgba(40, 40, 60, 0.85) !important;
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px #6c63ff44;
+  color: #fff;
+  border: none;
+  z-index: 2147483647 !important;
+  position: fixed !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  min-width: 180px;
+  padding: 0.5rem 0;
+}
+.dropdown-menu .dropdown-item {
+  color: #fff !important;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: background 0.18s, color 0.18s;
+  padding: 0.75rem 1.2rem;
+}
+.dropdown-menu .dropdown-item:hover, 
+.dropdown-menu .dropdown-item:focus {
+  background: linear-gradient(90deg, #8f7cff 0%, #6c63ff 100%);
+  color: #fff !important;
+}
+
+/* Tabs premium */
+.nav-tabs {
+  border: none !important;
+  background: rgba(40, 40, 60, 0.65);
+  border-radius: 18px;
+  padding: 0.5rem;
+  margin-bottom: 2.5rem;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 18px #6c63ff22;
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+.nav-tabs .nav-link {
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+  color: #bdbdf7 !important;
+  background: rgba(140, 120, 255, 0.10);
+  transition: all 0.22s;
+  margin: 0 0.2rem;
+  box-shadow: none;
+}
+.nav-tabs .nav-link:hover {
+  background: rgba(140, 120, 255, 0.18);
+  color: #8f7cff !important;
+}
+.nav-tabs .nav-link.active {
+  background: linear-gradient(90deg, #8f7cff 0%, #6c63ff 100%);
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(140, 120, 255, 0.3);
+  font-weight: 700;
+}
+
+/* Garantir tabs responsivas */
+@media (max-width: 768px) {
+  .nav-tabs .nav-link {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.98rem;
+  }
+} 

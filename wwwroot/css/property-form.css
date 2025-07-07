@@ -2,7 +2,7 @@
 
 /* Hero Section */
 .form-hero {
-    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    background: none;
     position: relative;
     overflow: hidden;
 }
@@ -56,7 +56,7 @@
 
 /* Form Section */
 .form-section {
-    background: var(--card-bg);
+    background: none;
 }
 
 .form-card {

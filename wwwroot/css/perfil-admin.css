@@ -5,8 +5,7 @@
     background: linear-gradient(135deg, #181828 0%, #23233b 100%);
     position: relative;
     overflow: hidden;
-    border-bottom-left-radius: 36px;
-    border-bottom-right-radius: 36px;
+    border-radius: 36px;
     box-shadow: 0 8px 40px #6c63ff22;
 }
 
@@ -242,7 +241,7 @@
 
 /* Team Management */
 .team-management {
-    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    background: none;
 }
 
 .section-header {
@@ -268,7 +267,7 @@
 }
 
 .team-member-card {
-    background: var(--card-bg);
+    background: none;
     border: 1px solid var(--border-accent);
     border-radius: 20px;
     padding: 2rem;
@@ -547,7 +546,7 @@
 
 /* Quick Actions */
 .quick-actions {
-    background: var(--card-bg);
+    background: none;
 }
 
 .action-card {
@@ -688,7 +687,7 @@
 
 /* --- Gestão de Equipa: Card compacto --- */
 .team-property-card {
-    background: var(--card-bg);
+    background: none;
     border: 1px solid var(--border-accent);
     border-radius: 16px;
     margin-bottom: 0;

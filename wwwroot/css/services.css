@@ -1,6 +1,6 @@
 /* Services Page Styles */
 .hero-section {
-    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    background: none;
     padding: 4rem 0;
     text-align: center;
 }
@@ -237,7 +237,7 @@
 }
 
 .cta-section {
-    background: var(--card-bg);
+    background: none;
 }
 
 .cta-card {

@@ -4,184 +4,184 @@
 
 <link rel="stylesheet" href="~/css/contact-us.css" asp-append-version="true" />
 
-<div class="contact-hero">
+<section class="glass-section py-5">
     <div class="container">
         <h1>Contacte-nos</h1>
         <p>Estamos aqui para ajudar. Envie-nos a sua mensagem e responderemos o mais breve possível.</p>
     </div>
-</div>
 
-<div class="contact-info-section py-5">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="contact-info-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone fa-2x"></i>
+    <div class="contact-info-section py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone fa-2x"></i>
+                        </div>
+                        <h4>Telefone</h4>
+                        <p>+351 123 456 789</p>
+                        <p>Segunda a Sexta: 9h-18h</p>
                     </div>
-                    <h4>Telefone</h4>
-                    <p>+351 123 456 789</p>
-                    <p>Segunda a Sexta: 9h-18h</p>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="contact-info-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope fa-2x"></i>
+                <div class="col-md-4">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope fa-2x"></i>
+                        </div>
+                        <h4>Email</h4>
+                        <p>info@imosphere.pt</p>
+                        <p>Resposta em 24h</p>
                     </div>
-                    <h4>Email</h4>
-                    <p>info@imosphere.pt</p>
-                    <p>Resposta em 24h</p>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="contact-info-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt fa-2x"></i>
-                    </div>
-                    <h4>Escritório</h4>
-                    <p>Rua das Flores, 123</p>
-                    <p>Lisboa, Portugal</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="contact-form-section py-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-7">
-                <div class="contact-form-card p-4 shadow-lg rounded-4" style="background: #23202b;">
-                    <h2 class="text-center mb-4" style="color: #fff;">Envie-nos uma mensagem</h2>
-                    @if (TempData["SuccessMessage"] != null)
-                    {
-                        <div class="alert alert-success text-center">@TempData["SuccessMessage"]</div>
-                    }
-                    <form asp-action="SubmitContactForm" method="post" autocomplete="off">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label text-light">Nome completo</label>
-                                <input type="text" name="Name" class="form-control bg-dark text-light rounded-3 border-0" required placeholder="O seu nome" />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label text-light">Email</label>
-                                <input type="email" name="Email" class="form-control bg-dark text-light rounded-3 border-0" required placeholder="O seu email" />
-                            </div>
+                <div class="col-md-4">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt fa-2x"></i>
                         </div>
-                        <div class="row g-3 mt-1">
-                            <div class="col-md-6">
-                                <label class="form-label text-light">Assunto</label>
-                                <select name="Subject" class="form-select bg-dark text-light rounded-3 border-0" required>
-                                    <option value="">Selecionar assunto</option>
-                                    <option>Informação sobre propriedades</option>
-                                    <option>Agendar visita</option>
-                                    <option>Suporte técnico</option>
-                                    <option>Outro</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label text-light">Telefone <span style="color:#aaa;font-size:0.95em;">(opcional)</span></label>
-                                <input type="tel" name="Telefone" class="form-control bg-dark text-light rounded-3 border-0" placeholder="Ex: +351 912 345 678" autocomplete="off" />
-                            </div>
-                        </div>
-                        <div class="form-group mt-3">
-                            <label class="form-label text-light">Mensagem</label>
-                            <textarea name="Message" class="form-control bg-dark text-light rounded-3 border-0" rows="5" required placeholder="Escreva a sua mensagem..."></textarea>
-                        </div>
-                        <div class="form-group mt-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="privacy" required />
-                                <label class="form-check-label text-light" for="privacy">
-                                    Aceito a <a href="/Home/Privacy" target="_blank">Política de Privacidade</a>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="text-center mt-4">
-                            <button type="submit" class="btn w-50 fw-bold" style="background: linear-gradient(90deg, #a259ff 0%, #5d26c1 100%); color: #fff; border: none;">Enviar Mensagem</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="faq-section py-5">
-    <div class="container">
-        <h2 class="text-center mb-5">Perguntas Frequentes</h2>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="accordion" id="faqAccordion">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                Como posso agendar uma visita a uma propriedade?
-                            </button>
-                        </h2>
-                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Pode agendar uma visita através do nosso site, por telefone ou email. Um dos nossos comerciais entrará em contacto consigo para confirmar os detalhes.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                Quais são as comissões da agência?
-                            </button>
-                        </h2>
-                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                As comissões variam consoante o tipo de propriedade e valor. Contacte-nos para obter informações detalhadas sobre as nossas tarifas.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                                Posso vender a minha propriedade através da ImoSphere?
-                            </button>
-                        </h2>
-                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Sim! Oferecemos serviços completos de venda de propriedades. Um dos nossos peritos avaliará a sua propriedade e apresentará um plano de marketing personalizado.
-                            </div>
-                        </div>
+                        <h4>Escritório</h4>
+                        <p>Rua das Flores, 123</p>
+                        <p>Lisboa, Portugal</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="social-section py-5">
-    <div class="container">
-        <h2 class="text-center mb-5">Siga-nos nas Redes Sociais</h2>
-        <div class="social-links">
-            <a href="#" class="social-link facebook">
-                <i class="fab fa-facebook-f"></i>
-                <span>Facebook</span>
-            </a>
-            <a href="#" class="social-link instagram">
-                <i class="fab fa-instagram"></i>
-                <span>Instagram</span>
-            </a>
-            <a href="#" class="social-link linkedin">
-                <i class="fab fa-linkedin-in"></i>
-                <span>LinkedIn</span>
-            </a>
-            <a href="#" class="social-link youtube">
-                <i class="fab fa-youtube"></i>
-                <span>YouTube</span>
-            </a>
-            <a href="#" class="social-link twitter">
-                <i class="fab fa-twitter"></i>
-                <span>Twitter</span>
-            </a>
+    <div class="contact-form-section py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="contact-form-card p-4 shadow-lg rounded-4" style="background: #23202b;">
+                        <h2 class="text-center mb-4" style="color: #fff;">Envie-nos uma mensagem</h2>
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success text-center">@TempData["SuccessMessage"]</div>
+                        }
+                        <form asp-action="SubmitContactForm" method="post" autocomplete="off">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Nome completo</label>
+                                    <input type="text" name="Name" class="form-control bg-dark text-light rounded-3 border-0" required placeholder="O seu nome" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Email</label>
+                                    <input type="email" name="Email" class="form-control bg-dark text-light rounded-3 border-0" required placeholder="O seu email" />
+                                </div>
+                            </div>
+                            <div class="row g-3 mt-1">
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Assunto</label>
+                                    <select name="Subject" class="form-select bg-dark text-light rounded-3 border-0" required>
+                                        <option value="">Selecionar assunto</option>
+                                        <option>Informação sobre propriedades</option>
+                                        <option>Agendar visita</option>
+                                        <option>Suporte técnico</option>
+                                        <option>Outro</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Telefone <span style="color:#aaa;font-size:0.95em;">(opcional)</span></label>
+                                    <input type="tel" name="Telefone" class="form-control bg-dark text-light rounded-3 border-0" placeholder="Ex: +351 912 345 678" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label class="form-label text-light">Mensagem</label>
+                                <textarea name="Message" class="form-control bg-dark text-light rounded-3 border-0" rows="5" required placeholder="Escreva a sua mensagem..."></textarea>
+                            </div>
+                            <div class="form-group mt-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="privacy" required />
+                                    <label class="form-check-label text-light" for="privacy">
+                                        Aceito a <a href="/Home/Privacy" target="_blank">Política de Privacidade</a>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn w-50 fw-bold" style="background: linear-gradient(90deg, #a259ff 0%, #5d26c1 100%); color: #fff; border: none;">Enviar Mensagem</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="faq-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Perguntas Frequentes</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    Como posso agendar uma visita a uma propriedade?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Pode agendar uma visita através do nosso site, por telefone ou email. Um dos nossos comerciais entrará em contacto consigo para confirmar os detalhes.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    Quais são as comissões da agência?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    As comissões variam consoante o tipo de propriedade e valor. Contacte-nos para obter informações detalhadas sobre as nossas tarifas.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Posso vender a minha propriedade através da ImoSphere?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Sim! Oferecemos serviços completos de venda de propriedades. Um dos nossos peritos avaliará a sua propriedade e apresentará um plano de marketing personalizado.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="social-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Siga-nos nas Redes Sociais</h2>
+            <div class="social-links">
+                <a href="#" class="social-link facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" class="social-link instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="#" class="social-link linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="#" class="social-link youtube">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                </a>
+                <a href="#" class="social-link twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
 <style>
 .contact-form-card {
