@@ -161,24 +161,19 @@ namespace ImoSphere.Data
                 new { Nome = "Funchal", Lat = 32.6669, Lng = -16.9241 }
             };
             
-            // Lista de imagens disponíveis (apenas .jpg e .png para melhor compatibilidade)
+            // Lista de imagens disponíveis (novas imagens da pasta Houses)
             var imagens = new[] {
-                "house-casas-1.png", "casa_de_luxo.jpg", "feature.jpg", "AAFComporta05.jpg", "180403355.jpg", 
-                "Imagem-de-Destaque-Casas-de-Arroz.jpg", "0151b87c-49b2-4117-9c79-264f2633a6ec.jpg", "ar6.jpg", 
-                "images.jpeg", "n7_copiar.jpg", "images-2.jpeg", 
-                "casa-de-campo-paisagismo-inspirado-jardins-italianos-renata-guastelli-credito-miro-martins-8.jpg", 
-                "17ecf3bc3e5cd42c747108943682cf09_12.jpg", "01HMRYZCWGNCVNJ3E3V6B3R9B6.jpg", 
-                "a95b817470363d6ec74e72531f039257fe83b8af_600x435.jpg", "casa-pre-fabricada-150-1.jpg", 
-                "images-3.jpeg", "3197765d4430d0a57076bbcabc28904d_10335872.jpg", "images-4.jpeg", 
-                "P466-FOTOS_11-Foto-1024x576.jpg", "images-5.jpeg", "preco-casa-modular-38-01.jpg", 
-                "af728a9c-b5a6-4510-9618-29d6fb4cd94e.jpg", "353cd957-94e4-4216-a234-282da200b005-1-1024x696.jpg", 
-                "o-charme-e-requinte-das-casas-da-madeira3.jpg", "images-6.jpeg", 
-                "01_HCG_blog_INTRO_850x450-1-1.jpg", "casa-pre-fabricada-158-1.jpg", "images-7.jpeg", 
-                "Passion-House-M1-by-Architect-11-qdy3pf27lthjzd3r90ytfkna07hbawykiemiut4imk.jpg", "1-6-1.jpg", 
-                "BIG-20-EXT-1.jpg", "11-e1725896785207-768x384.jpg", "preco-casa-modular-25-01.jpg", 
-                "avantecture-0vdrg5pr7ny-unsplash.jpg", "spain-4789793_960_720.jpg", "images-8.jpeg", 
-                "galivon-casas-modulares-t3-imocasapronta-2.jpg", "casa_de_madeira_pre-fabricada_de_design_moderno.jpg", 
-                "01HMRVW9KQZY4HNH91G9SC97EM.jpg", "moradia1.jpg", "moradia2.jpg", "moradia3.jpg"
+                "1Fotos-Projeto.jpg", "2Fotos-Projeto.jpg", "3Fotos-Projeto.jpg", "4Fotos-Projeto.jpeg", 
+                "5Fotos-Projeto.jpg", "6Fotos-Projeto.jpg", "7Fotos-Projeto.jpg", "8Fotos-Projeto.jpg", 
+                "9Fotos-Projeto.jpg", "10Fotos-Projeto.jpg", "11Fotos-Projeto.jpg", "12Fotos-Projeto.jpeg", 
+                "13Fotos-Projeto.jpg", "14Fotos-Projeto.jpg", "15Fotos-Projeto.jpeg", "16Fotos-Projeto.jpg", 
+                "17Fotos-Projeto.jpg", "18Fotos-Projeto.jpg", "19Fotos-Projeto.jpg", "20Fotos-Projeto.jpeg", 
+                "21Fotos-Projeto.jpg", "22Fotos-Projeto.jpeg", "23Fotos-Projeto.jpg", "24Fotos-Projeto.jpeg", 
+                "25Fotos-Projeto.jpg", "26Fotos-Projeto.jpg", "27Fotos-Projeto.jpg", "28Fotos-Projeto.jpg", 
+                "29Fotos-Projeto.jpg", "30Fotos-Projeto.jpg", "31Fotos-Projeto.jpeg", "32Fotos-Projeto.jpg", 
+                "33Fotos-Projeto.jpg", "34Fotos-Projeto.jpg", "35Fotos-Projeto.jpg", "36Fotos-Projeto.jpg", 
+                "37Fotos-Projeto.jpg", "38Fotos-Projeto.jpg", "39Fotos-Projeto.png", "40Fotos-Projeto.png", 
+                "41Fotos-Projeto.jpeg", "moradia1.jpg", "moradia2.jpg", "moradia3.jpg"
             };
             
             var imgIdx = 0;
@@ -314,10 +309,11 @@ namespace ImoSphere.Data
                                 Images = new List<PropertyImage>()
                             };
                             
-                            // 2 imagens por casa, sem repetir na mesma casa
-                            for (int img = 0; img < 2; img++)
+                            // 6-7 imagens por casa, sem repetir na mesma casa
+                            int numImagens = rnd.Next(6, 8); // 6 ou 7 imagens
+                            for (int img = 0; img < numImagens; img++)
                             {
-                                casa.Images.Add(new PropertyImage { ImageUrl = "/images/" + imagens[imgIdx % imagens.Length] });
+                                casa.Images.Add(new PropertyImage { ImageUrl = "/images/Houses/" + imagens[imgIdx % imagens.Length] });
                                 imgIdx++;
                             }
                             

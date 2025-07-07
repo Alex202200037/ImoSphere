@@ -46,9 +46,17 @@
                 else
                 {
                     <select id="Role" name="Role" class="form-control bg-dark text-light rounded-3 border-0">
-                        <option value="Admin" @(Model.Role == "Admin" ? "selected" : "")>Admin</option>
-                        <option value="Seller" @(Model.Role == "Seller" ? "selected" : "")>Seller</option>
-                        <option value="User" @(Model.Role == "User" ? "selected" : "")>User</option>
+                        @foreach (var role in new[] { "Admin", "Seller", "User" })
+                        {
+                            if (Model.Role == role)
+                            {
+                                <option value="@role" selected="selected">@role</option>
+                            }
+                            else
+                            {
+                                <option value="@role">@role</option>
+                            }
+                        }
                     </select>
                 }
             </div>

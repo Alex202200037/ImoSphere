@@ -71,15 +71,19 @@
                                 }
                             </li>
                         }
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("SuperAdmin"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("ViewMessages", "Home")">
-                                    <i class="fas fa-envelope me-1"></i>Messages
+                            <li class="nav-item position-relative">
+                                <a class="nav-link" href="@Url.Action("ContactUsMessages", "Home")">
+                                    <i class="fas fa-envelope me-1"></i>Mensagens
+                                    @if (ViewBag.UnreadContactUsCount != null && (int)ViewBag.UnreadContactUsCount > 0)
+                                    {
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.8em;">@ViewBag.UnreadContactUsCount</span>
+                                    }
                                 </a>
                             </li>
                         }
-                        else
+                        else if (!User.Identity.IsAuthenticated || User.IsInRole("User") || User.IsInRole("Comercial"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("ContactUs", "Home")">

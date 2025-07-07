@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ImoSphere.Controllers
 {
@@ -20,6 +21,15 @@ namespace ImoSphere.Controllers
         {
             _context = context;
             _userManager = userManager;
+        }
+
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            base.OnActionExecuting(context);
+            if (User.Identity.IsAuthenticated && User.IsInRole("SuperAdmin"))
+            {
+                ViewBag.UnreadContactUsCount = _context.Messages.Count(m => !m.IsRead);
+            }
         }
 
         public async Task<IActionResult> Index(int? propertyId = null, string comercialId = null, int? conversationId = null)

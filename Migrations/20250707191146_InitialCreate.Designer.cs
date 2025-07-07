@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ImoSphere.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250705175323_InitialCreate")]
+    [Migration("20250707191146_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -195,6 +195,32 @@ namespace ImoSphere.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("ChatMessages");
+                });
+
+            modelBuilder.Entity("ImoSphere.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("ImoSphere.Models.Property", b =>

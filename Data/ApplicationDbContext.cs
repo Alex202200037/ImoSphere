@@ -18,6 +18,7 @@ namespace ImoSphere.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<ChatConversation> ChatConversations { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

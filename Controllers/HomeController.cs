@@ -7,6 +7,7 @@ using ImoSphere.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using ImoSphere.Controllers;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 public class HomeController : Controller
 {
@@ -19,6 +20,15 @@ public class HomeController : Controller
     {
         _context = context;
         _userManager = userManager;
+    }
+
+    public override void OnActionExecuting(ActionExecutingContext context)
+    {
+        base.OnActionExecuting(context);
+        if (User.Identity.IsAuthenticated && User.IsInRole("SuperAdmin"))
+        {
+            ViewBag.UnreadContactUsCount = _context.Messages.Count(m => !m.IsRead);
+        }
     }
 
     public IActionResult Index()
@@ -179,47 +189,49 @@ public class HomeController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult SubmitContactForm(string Name, string Email, string Message)
     {
-        _messages.Add(new Message
+        var msg = new Message
         {
-            Id = _messageIdCounter++, 
             Name = Name,
             Email = Email,
             Content = Message,
             IsRead = false
-        });
-
-        TempData["SuccessMessage"] = "Your message has been sent successfully!";
+        };
+        _context.Messages.Add(msg);
+        _context.SaveChanges();
+        TempData["SuccessMessage"] = "A sua mensagem foi enviada com sucesso!";
         return RedirectToAction("ContactUs");
     }
 
-    [Authorize(Roles = "Admin")]
-    public IActionResult ViewMessages()
+    [Authorize(Roles = "SuperAdmin")]
+    public IActionResult ContactUsMessages()
     {
-        return View(_messages);
+        var messages = _context.Messages.OrderByDescending(m => m.Id).ToList();
+        ViewBag.ContactUsMessages = messages;
+        return View("ContactUsMessages", messages);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "SuperAdmin")]
     public IActionResult MarkAsRead(int id)
     {
-        var message = _messages.FirstOrDefault(m => m.Id == id);
-        if (message != null)
+        var message = _context.Messages.FirstOrDefault(m => m.Id == id);
+        if (message != null && !message.IsRead)
         {
             message.IsRead = true;
+            _context.SaveChanges();
         }
-
-        return RedirectToAction("ViewMessages");
+        return RedirectToAction("ContactUsMessages");
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "SuperAdmin")]
     public IActionResult DeleteMessage(int id)
     {
-        var message = _messages.FirstOrDefault(m => m.Id == id);
+        var message = _context.Messages.FirstOrDefault(m => m.Id == id);
         if (message != null)
         {
-            _messages.Remove(message);
+            _context.Messages.Remove(message);
+            _context.SaveChanges();
         }
-
-        return RedirectToAction("ViewMessages");
+        return RedirectToAction("ContactUsMessages");
     }
     [Authorize(Roles = "Admin")]
     public IActionResult AdminUser()

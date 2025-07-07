@@ -6,6 +6,7 @@
     var totalProperties = (int)ViewBag.TotalProperties;
     var totalValue = (decimal)ViewBag.TotalValue;
     var avgValue = (decimal)ViewBag.AvgValue;
+    var unreadCount = ViewBag.ContactUsMessages != null ? ((IEnumerable<ImoSphere.Models.Message>)ViewBag.ContactUsMessages).Count(m => !m.IsRead) : 0;
 }
 
 <link rel="stylesheet" href="~/css/perfil-admin.css" asp-append-version="true" />

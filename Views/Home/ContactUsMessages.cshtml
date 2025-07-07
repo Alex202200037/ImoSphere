@@ -1,12 +1,11 @@
 @model IEnumerable<ImoSphere.Models.Message>
-
 @{
     ViewData["Title"] = "Mensagens de Contacto";
+    var messages = Model ?? Enumerable.Empty<ImoSphere.Models.Message>();
 }
-
 <div class="container py-5">
     <h1 class="text-center mb-4" style="color:#fff;">Mensagens de Contacto</h1>
-    @if (!Model.Any())
+    @if (!messages.Any())
     {
         <div class="alert alert-info text-center">Ainda não foram recebidas mensagens.</div>
     }
@@ -24,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var message in Model)
+                    @foreach (var message in messages)
                     {
                         <tr>
                             <td>@message.Name</td>
@@ -55,8 +54,7 @@
         </div>
     }
 </div>
-
 <style>
 .table-dark th, .table-dark td { color: #fff; }
 .table-dark { background: #23202b; }
-</style>
+</style> 

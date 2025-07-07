@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ImoSphere.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ImoSphere.Controllers
 {
@@ -17,6 +18,15 @@ namespace ImoSphere.Controllers
         {
             _userManager = userManager;
             _context = context;
+        }
+
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            base.OnActionExecuting(context);
+            if (User.Identity.IsAuthenticated && User.IsInRole("SuperAdmin"))
+            {
+                ViewBag.UnreadContactUsCount = _context.Messages.Count(m => !m.IsRead);
+            }
         }
 
         // Manage Users
