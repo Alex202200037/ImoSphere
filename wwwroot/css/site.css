@@ -783,3 +783,168 @@ footer a:hover {
 .pb-3 { padding-bottom: 1rem !important; }
 .pb-4 { padding-bottom: 1.5rem !important; }
 .pb-5 { padding-bottom: 3rem !important; }
+
+/* Badge premium destacado nas propriedades em destaque */
+.featured-badge-premium {
+    position: absolute;
+    top: 14px;
+    left: 18px;
+    z-index: 12;
+    background: linear-gradient(90deg, #8f7cff 0%, #6c63ff 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 0.45rem 1.2rem 0.45rem 1.1rem;
+    border-radius: 18px 8px 18px 8px;
+    box-shadow: 0 2px 16px #8f7cff33, 0 1.5px 8px #0002;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-shadow: 0 2px 8px #6c63ff44;
+    border: 2px solid #fff2;
+    min-width: 120px;
+    min-height: 36px;
+    line-height: 1.1;
+    animation: pulse-badge 1.5s infinite alternate;
+}
+
+.featured-badge-premium i {
+    font-size: 1.1em;
+    margin-right: 0.4em;
+    vertical-align: middle;
+}
+
+.agency-logo-badge {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    z-index: 12;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 12px #8f7cff22;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #eee;
+}
+
+.agency-logo-badge img {
+    max-width: 32px;
+    max-height: 32px;
+    border-radius: 50%;
+    object-fit: contain;
+    background: #fff;
+}
+
+.agency-logo-badge-bottom {
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+    z-index: 12;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 12px #8f7cff22;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #eee;
+}
+
+.agency-logo-badge-bottom img {
+    max-width: 32px;
+    max-height: 32px;
+    border-radius: 50%;
+    object-fit: contain;
+    background: #fff;
+}
+
+.testimonials-slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 340px;
+}
+
+.testimonials-slider {
+    position: relative;
+    width: 100%;
+    min-height: 340px;
+    overflow: hidden;
+}
+
+.testimonials-slide {
+    position: absolute;
+    top: 0; left: 0; width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s cubic-bezier(0.77,0,0.18,1);
+    z-index: 1;
+}
+
+.testimonials-slide.active {
+    opacity: 1;
+    pointer-events: all;
+    z-index: 2;
+}
+
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    z-index: 10;
+    box-shadow: 0 4px 12px var(--shadow-medium);
+}
+
+.slider-arrow:hover {
+    background: var(--accent-color);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px var(--shadow-heavy);
+}
+
+.slider-arrow:active {
+    /* Remover qualquer efeito de scale extra no active */
+    transform: translateY(-50%) scale(1.1);
+}
+
+.slider-arrow-left {
+    left: -56px;
+}
+
+.slider-arrow-right {
+    right: -56px;
+}
+
+@media (max-width: 1200px) {
+    .slider-arrow-left { left: -24px; }
+    .slider-arrow-right { right: -24px; }
+}
+
+@media (max-width: 768px) {
+    .testimonials-slider-wrapper { min-height: 420px; }
+    .slider-arrow.slider-arrow-left, .slider-arrow.slider-arrow-right {
+        left: 0;
+        right: 0;
+        top: unset;
+        bottom: -32px;
+        transform: none;
+        margin: 0 8px;
+    }
+}

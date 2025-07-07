@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using ImoSphere.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Linq;
+using System;
 
 public class HomeController : Controller
 {
@@ -31,8 +33,16 @@ public class HomeController : Controller
         }
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
+        // Buscar 3 propriedades aleatórias
+        var allProps = await _context.Properties
+            .Include(p => p.Images)
+            .Include(p => p.Agency)
+            .ToListAsync();
+        var rnd = new Random();
+        var featuredProperties = allProps.OrderBy(x => rnd.Next()).Take(3).ToList();
+        ViewBag.FeaturedProperties = featuredProperties;
         return View();
     }
 

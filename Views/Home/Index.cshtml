@@ -1,5 +1,17 @@
 ﻿@{
     ViewData["Title"] = "Home";
+    var badges = new[] { "<i class='fas fa-gem me-1'></i>Exclusiva", "<i class='fas fa-crown me-1'></i>Portugal Deluxe", "<i class='fas fa-eye me-1'></i>Vista Única", "<i class='fas fa-star me-1'></i>Premium", "<i class='fas fa-bolt me-1'></i>Oportunidade", "<i class='fas fa-diamond me-1'></i>Coleção Luxo", "<i class='fas fa-fire me-1'></i>Destaque" };
+    var badgeRnd = new System.Random();
+    Func<string, string> getAgencyLogo = (agencyName) => {
+        if (string.IsNullOrWhiteSpace(agencyName)) return "/images/placeholder.png";
+        var name = agencyName.ToLower().Replace(" ", "");
+        if (name.Contains("era")) return "/images/era.png";
+        if (name.Contains("remax")) return "/images/remax.png";
+        if (name.Contains("kw")) return "/images/kw.png";
+        if (name.Contains("century21")) return "/images/century21.png";
+        if (name.Contains("fine")) return "/images/fine and country.png";
+        return "/images/placeholder.png";
+    };
 }
 
 <!-- HERO SECTION PREMIUM -->
@@ -65,81 +77,42 @@
             <p class="lead text-muted">Descobre as nossas listagens mais populares e premium</p>
         </div>
         <div class="row g-4 justify-content-center">
-            <div class="col-lg-4 col-md-6">
-                <div class="card featured-card h-100 hover-lift">
-                    <div class="featured-badge animated-badge">Premium</div>
-                    <div class="property-image-container">
-                        <img src="~/images/Houses/moradia1.jpg" alt="Moradia de Luxo Lisboa" class="card-img-top property-image" />
-                        <div class="property-price-badge">
-                            <span class="badge bg-primary">€1,200,000</span>
+            @if (ViewBag.FeaturedProperties != null)
+            {
+                foreach (var prop in (IEnumerable<ImoSphere.Models.Property>)ViewBag.FeaturedProperties)
+                {
+                    var badge = badges[badgeRnd.Next(badges.Length)];
+                    var agencyLogo = getAgencyLogo(prop.Agency?.Name);
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card featured-card h-100 hover-lift position-relative">
+                            <div class="featured-badge-premium animated-badge">@Html.Raw(badge)</div>
+                            <div class="property-image-container position-relative">
+                                <img src="@(prop.Images?.FirstOrDefault()?.ImageUrl ?? "/images/placeholder.png")" alt="@prop.Name" class="card-img-top property-image" />
+                                <div class="property-price-badge">
+                                    <span class="badge bg-primary">@prop.Price.ToString("N0")€</span>
+                                </div>
+                                <div class="agency-logo-badge-bottom">
+                                    <img src="@agencyLogo" alt="@prop.Agency?.Name" title="@prop.Agency?.Name" />
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">@prop.Name</h5>
+                                <p class="card-text text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>@prop.Location
+                                </p>
+                                <div class="property-features">
+                                    <div class="feature-item"><i class="fas fa-bed text-primary"></i><span>@prop.Bedrooms</span></div>
+                                    <div class="feature-item"><i class="fas fa-bath text-primary"></i><span>@prop.Bathrooms</span></div>
+                                    <div class="feature-item"><i class="fas fa-ruler-combined text-primary"></i><span>@prop.Area m²</span></div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="/Properties/Details/@prop.Id" class="btn btn-primary w-100"><i class="fas fa-eye me-2"></i>Ver Detalhes</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Moradia de Luxo em Lisboa</h5>
-                        <p class="card-text text-muted">
-                            <i class="fas fa-map-marker-alt me-1"></i>Lisboa, Portugal
-                        </p>
-                        <div class="property-features">
-                            <div class="feature-item"><i class="fas fa-bed text-primary"></i><span>5</span></div>
-                            <div class="feature-item"><i class="fas fa-bath text-primary"></i><span>4</span></div>
-                            <div class="feature-item"><i class="fas fa-ruler-combined text-primary"></i><span>350 m²</span></div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/Properties/Details/1" class="btn btn-primary w-100"><i class="fas fa-eye me-2"></i>Ver Detalhes</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card featured-card h-100 hover-lift">
-                    <div class="featured-badge animated-badge">Vista Mar</div>
-                    <div class="property-image-container">
-                        <img src="~/images/Houses/moradia2.jpg" alt="Apartamento Vista Mar Porto" class="card-img-top property-image" />
-                        <div class="property-price-badge">
-                            <span class="badge bg-success">€850,000</span>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Apartamento Vista Mar no Porto</h5>
-                        <p class="card-text text-muted">
-                            <i class="fas fa-map-marker-alt me-1"></i>Porto, Portugal
-                        </p>
-                        <div class="property-features">
-                            <div class="feature-item"><i class="fas fa-bed text-primary"></i><span>3</span></div>
-                            <div class="feature-item"><i class="fas fa-bath text-primary"></i><span>2</span></div>
-                            <div class="feature-item"><i class="fas fa-ruler-combined text-primary"></i><span>140 m²</span></div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/Properties/Details/2" class="btn btn-primary w-100"><i class="fas fa-eye me-2"></i>Ver Detalhes</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card featured-card h-100 hover-lift">
-                    <div class="featured-badge animated-badge">Oportunidade</div>
-                    <div class="property-image-container">
-                        <img src="~/images/Houses/moradia3.jpg" alt="Quinta no Alentejo" class="card-img-top property-image" />
-                        <div class="property-price-badge">
-                            <span class="badge bg-danger">€650,000</span>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Quinta Moderna no Alentejo</h5>
-                        <p class="card-text text-muted">
-                            <i class="fas fa-map-marker-alt me-1"></i>Évora, Alentejo
-                        </p>
-                        <div class="property-features">
-                            <div class="feature-item"><i class="fas fa-bed text-primary"></i><span>6</span></div>
-                            <div class="feature-item"><i class="fas fa-bath text-primary"></i><span>5</span></div>
-                            <div class="feature-item"><i class="fas fa-ruler-combined text-primary"></i><span>420 m²</span></div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/Properties/Details/3" class="btn btn-primary w-100"><i class="fas fa-eye me-2"></i>Ver Detalhes</a>
-                    </div>
-                </div>
-            </div>
+                }
+            }
         </div>
         <div class="text-center mt-5">
             <a href="@Url.Action("Properties", "Home")" class="btn btn-outline-primary btn-lg">
@@ -199,18 +172,18 @@
 
 <!-- TESTIMONIALS SLIDER -->
 <section class="testimonials-section py-5">
-    <div class="container">
+    <div class="container position-relative">
         <div class="text-center mb-5">
             <h2 class="display-5 fw-bold mb-3">
                 <i class="fas fa-heart text-danger me-2"></i>O que dizem os nossos clientes
             </h2>
             <p class="lead text-muted">Histórias reais de clientes felizes</p>
         </div>
-        <div class="position-relative">
+        <div class="testimonials-slider-wrapper">
             <button id="testimonials-prev" class="btn btn-outline-primary slider-arrow slider-arrow-left"><i class="fas fa-chevron-left"></i></button>
-            <div class="row testimonials-slider">
+            <div class="testimonials-slider">
                 <!-- Grupo 1 -->
-                <div class="col-12">
+                <div class="testimonials-slide">
                     <div class="row g-4">
                         <div class="col-lg-4">
                             <div class="card testimonial-card h-100 fade-in">
@@ -266,7 +239,7 @@
                     </div>
                 </div>
                 <!-- Grupo 2 -->
-                <div class="col-12">
+                <div class="testimonials-slide">
                     <div class="row g-4">
                         <div class="col-lg-4">
                             <div class="card testimonial-card h-100 fade-in">
@@ -399,40 +372,48 @@ const observer = new IntersectionObserver((entries) => {
 // Testimonials Slider
 function initTestimonialsSlider() {
     const slider = document.querySelector('.testimonials-slider');
-    const slides = slider.querySelectorAll('.col-12');
+    const slides = slider.querySelectorAll('.testimonials-slide');
     const prevBtn = document.getElementById('testimonials-prev');
     const nextBtn = document.getElementById('testimonials-next');
     let currentSlide = 0;
-    
+    let isAnimating = false;
+
     function showSlide(index) {
+        if (isAnimating) return;
+        isAnimating = true;
         slides.forEach((slide, i) => {
-            slide.style.display = i === index ? 'block' : 'none';
+            if (i === index) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
         });
-        
-        // Update button states
+        currentSlide = index;
+        setTimeout(() => { isAnimating = false; }, 600);
         prevBtn.style.opacity = index === 0 ? '0.5' : '1';
         nextBtn.style.opacity = index === slides.length - 1 ? '0.5' : '1';
     }
-    
+
     function nextSlide() {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
+        if (currentSlide < slides.length - 1) {
+            showSlide(currentSlide + 1);
+        } else {
+            showSlide(0);
+        }
     }
-    
+
     function prevSlide() {
-        currentSlide = currentSlide === 0 ? slides.length - 1 : currentSlide - 1;
-        showSlide(currentSlide);
+        if (currentSlide > 0) {
+            showSlide(currentSlide - 1);
+        } else {
+            showSlide(slides.length - 1);
+        }
     }
-    
-    // Event listeners
+
     if (prevBtn) prevBtn.addEventListener('click', prevSlide);
     if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-    
-    // Initialize
     showSlide(0);
-    
-    // Auto-advance every 5 seconds
-    setInterval(nextSlide, 5000);
+    setInterval(nextSlide, 6000);
 }
 
 // Featured Properties Hover Effects
