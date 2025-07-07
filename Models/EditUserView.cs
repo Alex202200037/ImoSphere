@@ -5,6 +5,7 @@ public class EditUserViewModel
     public string UserName { get; set; }
     public string Role { get; set; }
 
+    // Passwords são opcionais
     public string NewPassword { get; set; }
     public string ConfirmPassword { get; set; }
 }

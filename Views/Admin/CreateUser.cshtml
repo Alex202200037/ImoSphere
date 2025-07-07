@@ -82,7 +82,7 @@
                 </div>
             }
 
-            <div class="mb-3">
+            <div class="mb-3" id="emailPrefixGroup">
                 <label class="form-label"><i class="fas fa-envelope"></i> Email</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-at"></i></span>
@@ -90,6 +90,13 @@
                     <span class="input-group-text" id="emailDomain">
                         @(ViewBag.EmailDomain)
                     </span>
+                </div>
+            </div>
+            <div class="mb-3" id="emailFullGroup" style="display:none;">
+                <label class="form-label"><i class="fas fa-envelope"></i> Email</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-at"></i></span>
+                    <input type="email" id="emailFull" name="email" class="form-control" placeholder="Email completo" autocomplete="off" />
                 </div>
             </div>
 
@@ -129,23 +136,45 @@
         const adminField = document.getElementById('adminField');
         const adminSelect = document.getElementById('adminId');
         const emailDomain = document.getElementById('emailDomain');
+        const emailPrefixGroup = document.getElementById('emailPrefixGroup');
+        const emailFullGroup = document.getElementById('emailFullGroup');
+        const emailPrefix = document.getElementById('emailPrefix');
+        const emailFull = document.getElementById('emailFull');
 
         function updateAgencyAndDomain() {
             const role = roleSelect.value;
-            if (role === 'SuperAdmin') {
+            if (role === 'SuperAdmin' || role === 'User') {
                 agencyField.style.display = 'none';
+                agencySelect.removeAttribute('required');
                 adminField.style.display = 'none';
-                emailDomain.innerHTML = '.imosphere&#64;imosphere.com';
+                agencySelect.value = '';
+                // Email: campo completo
+                emailPrefixGroup.style.display = 'none';
+                emailFullGroup.style.display = '';
+                emailPrefix.removeAttribute('required');
+                emailFull.setAttribute('required', 'required');
+                if (role === 'SuperAdmin') {
+                    emailFull.value = '';
+                    emailFull.placeholder = 'exemplo.imosphere@imosphere.com';
+                } else {
+                    emailFull.value = '';
+                    emailFull.placeholder = 'exemplo@email.com';
+                }
             } else {
                 agencyField.style.display = '';
+                agencySelect.setAttribute('required', 'required');
                 // Mostrar adminField só se for Comercial
                 if (role === 'Comercial') {
                     adminField.style.display = '';
-                    // Carregar admins da agência
                     loadAdmins();
                 } else {
                     adminField.style.display = 'none';
                 }
+                // Email: prefix + domínio
+                emailPrefixGroup.style.display = '';
+                emailFullGroup.style.display = 'none';
+                emailPrefix.setAttribute('required', 'required');
+                emailFull.removeAttribute('required');
                 // Atualiza domínio conforme agência
                 const selected = agencySelect.options[agencySelect.selectedIndex];
                 let domain = selected.getAttribute('data-domain');

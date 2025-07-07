@@ -91,40 +91,7 @@ namespace ImoSphere.Controllers
         public async Task<List<UserHierarchyViewModel>> BuildUserHierarchy(int? agencyId = null, string? adminId = null)
         {
             var hierarchy = new List<UserHierarchyViewModel>();
-            bool showImoSphere = false;
-            // Mostrar ImoSphere apenas se não houver filtro de agência OU se o filtro for para a agência especial ImoSphere (id 0 ou nome "ImoSphere")
-            if (!agencyId.HasValue || agencyId == 0)
-            {
-                showImoSphere = true;
-            }
-            else
-            {
-                var agency = await _context.Agencies.FindAsync(agencyId);
-                if (agency != null && agency.Name == "ImoSphere")
-                {
-                    showImoSphere = true;
-                }
-            }
-            // Adicionar SuperAdmins no topo (só se não há filtro por admin específico)
-            if (showImoSphere && string.IsNullOrEmpty(adminId))
-            {
-                var superAdmins = await _userManager.GetUsersInRoleAsync("SuperAdmin");
-                if (superAdmins.Any())
-                {
-                    var superAdminHierarchy = new UserHierarchyViewModel
-                    {
-                        AgencyId = 0, // ID especial para ImoSphere
-                        AgencyName = "ImoSphere"
-                    };
-                    foreach (var superAdmin in superAdmins)
-                    {
-                        var adminGroup = new AdminGroup { Admin = superAdmin };
-                        adminGroup.Comerciais = new List<ApplicationUser>(); // SuperAdmins não têm comerciais
-                        superAdminHierarchy.Admins.Add(adminGroup);
-                    }
-                    hierarchy.Add(superAdminHierarchy);
-                }
-            }
+            // Não mostrar ImoSphere na hierarquia
             // Se há filtro por admin específico, buscar a agência desse admin
             if (!string.IsNullOrEmpty(adminId))
             {
@@ -265,44 +232,60 @@ namespace ImoSphere.Controllers
             var roles = await _userManager.GetRolesAsync(currentUser);
             var isSuperAdmin = roles.Contains("SuperAdmin");
 
-            // Montar email corretamente
-            if (string.IsNullOrEmpty(emailPrefix))
+            // Lógica de email e agência
+            if (role == "User")
             {
-                ModelState.AddModelError(string.Empty, "Email prefix is required.");
-                if (isSuperAdmin) ViewBag.Agencies = _context.Agencies.ToList();
-                return View();
-            }
-
-            if (role == "SuperAdmin")
-            {
-                email = emailPrefix + ".imosphere@imosphere.com";
-                agencyId = null; // Não associar agência
+                // Para User, usar só o campo email completo e ignorar agencyId/emailPrefix
+                if (string.IsNullOrEmpty(email))
+                {
+                    ModelState.AddModelError(string.Empty, "The email field is required.");
+                    if (isSuperAdmin) ViewBag.Agencies = _context.Agencies.ToList();
+                    return View();
+                }
+                // Limpar agencyId e emailPrefix para garantir que não são usados
+                agencyId = null;
+                emailPrefix = null;
             }
             else
             {
-                string domain = "";
-                if (isSuperAdmin)
+                // Para outros papéis, montar email a partir do prefixo + domínio e exigir agência
+                if (string.IsNullOrEmpty(emailPrefix))
                 {
-                    // Buscar agência pelo id
-                    var agency = await _context.Agencies.FirstOrDefaultAsync(a => a.Id == agencyId);
-                    if (agency == null)
-                    {
-                        ModelState.AddModelError(string.Empty, "Agency is required.");
-                        ViewBag.Agencies = _context.Agencies.ToList();
-                        return View();
-                    }
-                    domain = $".{agency.Name.ToLower().Replace(" ", "")}@imosphere.com";
+                    ModelState.AddModelError(string.Empty, "Email prefix is required.");
+                    if (isSuperAdmin) ViewBag.Agencies = _context.Agencies.ToList();
+                    return View();
+                }
+                if (role == "SuperAdmin")
+                {
+                    email = emailPrefix + ".imosphere@imosphere.com";
+                    agencyId = null; // Não associar agência
                 }
                 else
                 {
-                    // Buscar agência do admin
-                    var agencyUser = await _context.AgencyUsers.Include(au => au.Agency).FirstOrDefaultAsync(au => au.UserId == currentUser.Id);
-                    if (agencyUser?.Agency == null)
-                        return Forbid();
-                    domain = $".{agencyUser.Agency.Name.ToLower().Replace(" ", "")}@imosphere.com";
-                    agencyId = agencyUser.AgencyId;
+                    string domain = "";
+                    if (isSuperAdmin)
+                    {
+                        // Buscar agência pelo id
+                        var agency = await _context.Agencies.FirstOrDefaultAsync(a => a.Id == agencyId);
+                        if (agency == null)
+                        {
+                            ModelState.AddModelError(string.Empty, "Agency is required.");
+                            ViewBag.Agencies = _context.Agencies.ToList();
+                            return View();
+                        }
+                        domain = $".{agency.Name.ToLower().Replace(" ", "")}@imosphere.com";
+                    }
+                    else
+                    {
+                        // Buscar agência do admin
+                        var agencyUser = await _context.AgencyUsers.Include(au => au.Agency).FirstOrDefaultAsync(au => au.UserId == currentUser.Id);
+                        if (agencyUser?.Agency == null)
+                            return Forbid();
+                        domain = $".{agencyUser.Agency.Name.ToLower().Replace(" ", "")}@imosphere.com";
+                        agencyId = agencyUser.AgencyId;
+                    }
+                    email = emailPrefix + domain;
                 }
-                email = emailPrefix + domain;
             }
 
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(role) || string.IsNullOrEmpty(password))
@@ -333,7 +316,7 @@ namespace ImoSphere.Controllers
                 if (roleResult.Succeeded)
                 {
                     // Associação à agência
-                    if (role == "Admin" || role == "Comercial" || role == "User")
+                    if (role == "Admin" || role == "Comercial")
                     {
                         int? agencyToAssign = null;
                         if (isSuperAdmin)
@@ -377,12 +360,6 @@ namespace ImoSphere.Controllers
                             ModelState.AddModelError(string.Empty, "Admins só podem criar utilizadores para a sua agência.");
                             return View();
                         }
-                    }
-                    else if (!isSuperAdmin)
-                    {
-                        // Admin não pode criar user sem agência
-                        ModelState.AddModelError(string.Empty, "Admins só podem criar utilizadores para a sua agência.");
-                        return View();
                     }
                     TempData["SuccessMessage"] = $"{role} created successfully.";
                     return RedirectToAction("Users");
@@ -443,6 +420,10 @@ namespace ImoSphere.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUser(EditUserViewModel model)
         {
+            // Remover erros de password para garantir que nunca são obrigatórios
+            ModelState.Remove("NewPassword");
+            ModelState.Remove("ConfirmPassword");
+
             if (!ModelState.IsValid)
             {
                 return View(model);

@@ -1,7 +1,11 @@
 @model EditUserViewModel
-
+@using ImoSphere.Data;
+@inject ApplicationDbContext _context
 @{
     ViewData["Title"] = "Edit User";
+    // Verificar se o utilizador está associado a alguma agência
+    var temAgencia = _context.AgencyUsers.Any(au => au.UserId == Model.Id);
+    var isUserPuro = Model.Role == "User" && !temAgencia;
 }
 
 @if (!ViewData.ModelState.IsValid)
@@ -16,51 +20,80 @@
     </div>
 }
 
-<h2 class="text-center">Edit User</h2>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="edit-user-card p-4 shadow-lg rounded-4" style="background: #23202b; min-width: 420px; max-width: 480px; width: 100%;">
+        <h2 class="text-center mb-4" style="color: #fff;">Edit User</h2>
+        <form asp-action="EditUser" method="post" class="contact-form">
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="form-label" style="color: #bbb;">Email</label>
+                <input asp-for="Email" class="form-control bg-dark text-light rounded-3 border-0" placeholder="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
 
-<div class="edit-user">
-    <form asp-action="EditUser" method="post" class="contact-form">
-        <div class="form-group">
-            <label asp-for="Email" class="control-label">Email</label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
+            <div class="form-group mb-3">
+                <label asp-for="UserName" class="form-label" style="color: #bbb;">Username</label>
+                <input asp-for="UserName" class="form-control bg-dark text-light rounded-3 border-0" placeholder="Username" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
 
-        <div class="form-group">
-            <label asp-for="UserName" class="control-label">Username</label>
-            <input asp-for="UserName" class="form-control" />
-            <span asp-validation-for="UserName" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label for="Role">Role</label>
-            <select id="Role" name="Role" class="form-control">
-                <option value="Admin">Admin</option>
-                <option value="Seller">Seller</option>
-                <option value="User">User</option>
-            </select>
-        </div>
+            <div class="form-group mb-3">
+                <label class="form-label" style="color: #bbb;">Role</label>
+                @if (isUserPuro)
+                {
+                    <input type="text" class="form-control bg-dark text-light rounded-3 border-0" value="User" readonly />
+                    <input type="hidden" name="Role" value="User" />
+                }
+                else
+                {
+                    <select id="Role" name="Role" class="form-control bg-dark text-light rounded-3 border-0">
+                        <option value="Admin" @(Model.Role == "Admin" ? "selected" : "")>Admin</option>
+                        <option value="Seller" @(Model.Role == "Seller" ? "selected" : "")>Seller</option>
+                        <option value="User" @(Model.Role == "User" ? "selected" : "")>User</option>
+                    </select>
+                }
+            </div>
 
-<div class="form-group">
-    <label for="NewPassword">New Password</label>
-    <input type="password" id="NewPassword" name="NewPassword" class="form-control" />
-    <span class="text-danger"></span>
-</div>
+            <div class="form-group mb-3">
+                <label for="NewPassword" class="form-label" style="color: #bbb;">New Password <span class="fw-normal" style="color: #888; font-size: 0.95em;">(opcional)</span></label>
+                <input type="password" id="NewPassword" name="NewPassword" class="form-control bg-dark text-light rounded-3 border-0" placeholder="Só preencher se quiser alterar" autocomplete="new-password" />
+                <span class="text-danger"></span>
+            </div>
 
-<div class="form-group">
-    <label for="ConfirmPassword">Confirm New Password</label>
-    <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" />
-    <span class="text-danger"></span>
-</div>
+            <div class="form-group mb-4">
+                <label for="ConfirmPassword" class="form-label" style="color: #bbb;">Confirm New Password</label>
+                <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control bg-dark text-light rounded-3 border-0" placeholder="Confirmar nova password" autocomplete="new-password" />
+                <span class="text-danger"></span>
+            </div>
 
-        <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Id" />
 
-        <div class="d-flex justify-content-between w-100">
-            <button type="submit" class="btn btn-primary w-50 me-2">Save</button>
-            <a asp-action="Users" class="btn btn-secondary w-50">Cancel</a>
-        </div>
-    </form>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn w-50 fw-bold" style="background: linear-gradient(90deg, #a259ff 0%, #5d26c1 100%); color: #fff; border: none;">Save</button>
+                <a asp-action="Users" class="btn btn-secondary w-50">Cancel</a>
+            </div>
+        </form>
+    </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<style>
+.edit-user-card {
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.form-control:focus {
+    box-shadow: 0 0 0 2px #a259ff44;
+    border-color: #a259ff;
+}
+.btn-secondary {
+    background: #333;
+    color: #fff;
+    border: none;
+}
+.btn-secondary:hover {
+    background: #444;
+}
+</style>
