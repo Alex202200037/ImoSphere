@@ -106,3 +106,33 @@ document.querySelectorAll('.btn').forEach(btn => {
     setTimeout(() => ripple.remove(), 600);
   });
 });
+
+function toggleTheme() {
+    const body = document.body;
+    const icon = document.getElementById('themeIcon');
+    const isWhite = body.classList.toggle('white-theme');
+    if (icon) {
+        icon.classList.toggle('fa-moon', !isWhite);
+        icon.classList.toggle('fa-sun', isWhite);
+    }
+    localStorage.setItem('theme', isWhite ? 'white' : 'dark');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme');
+    const body = document.body;
+    const icon = document.getElementById('themeIcon');
+    if (savedTheme === 'white') {
+        body.classList.add('white-theme');
+        if (icon) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+    } else {
+        body.classList.remove('white-theme');
+        if (icon) {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+    }
+});

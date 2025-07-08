@@ -27,6 +27,31 @@
     --focus-shadow: 0 0 0 0.1rem #bb86fc, 0 0 0 0.25rem #8f68bf;
 }
 
+/* White Theme */
+.white-theme {
+    --background-dark: #f8f9fa;
+    --background-navbar: #fff;
+    --primary-color: #7c3aed;
+    --secondary-color: #e0e7ef;
+    --accent-color: #7c3aed;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --dark-bg: #fff;
+    --darker-bg: #f5f5f5;
+    --card-bg: #fff;
+    --text-primary: #222;
+    --text-secondary: #444;
+    --text-muted: #888;
+    --border-color: #e0e0e0;
+    --border-accent: rgba(124, 58, 237, 0.15);
+    --shadow-light: rgba(124, 58, 237, 0.08);
+    --shadow-medium: rgba(124, 58, 237, 0.15);
+    --shadow-heavy: rgba(124, 58, 237, 0.22);
+    --focus-shadow: 0 0 0 0.1rem #e0e7ef, 0 0 0 0.25rem #7c3aed44;
+}
+
 /* ===== RESET E BASE ===== */
 * {
     margin: 0;
