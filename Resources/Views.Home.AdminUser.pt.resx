@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="ManageUsersTitle" xml:space="preserve"><value>Gerir Utilizadores</value></data>
+  <data name="ManageUsersDescription" xml:space="preserve"><value>Aqui pode gerir todos os utilizadores do sistema.</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Actions" xml:space="preserve"><value>Ações</value></data>
+  <data name="Edit" xml:space="preserve"><value>Editar</value></data>
+</root> 

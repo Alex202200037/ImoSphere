@@ -1,16 +1,17 @@
 @model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Manage Users";
+    ViewData["Title"] = Localizer["ManageUsersTitle"];
 }
 
-<h2>Manage Users</h2>
-<p>Here you can manage all users in the system.</p>
+<h2>@Localizer["ManageUsersTitle"]</h2>
+<p>@Localizer["ManageUsersDescription"]</p>
 
 <table class="table">
     <thead>
         <tr>
-            <th>Email</th>
-            <th>Actions</th>
+            <th>@Localizer["Email"]</th>
+            <th>@Localizer["Actions"]</th>
         </tr>
     </thead>
     <tbody>
@@ -19,7 +20,7 @@
             <tr>
                 <td>@user.Email</td>
                 <td>
-                    <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary">@Localizer["Edit"]</a>
                 </td>
             </tr>
         }

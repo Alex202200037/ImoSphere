@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="HomeTitle" xml:space="preserve"><value>Home</value></data>
+  <data name="Exclusive" xml:space="preserve"><value>Exclusiva</value></data>
+  <data name="PortugalDeluxe" xml:space="preserve"><value>Portugal Deluxe</value></data>
+  <data name="UniqueView" xml:space="preserve"><value>Vista Única</value></data>
+  <data name="Premium" xml:space="preserve"><value>Premium</value></data>
+  <data name="Opportunity" xml:space="preserve"><value>Oportunidade</value></data>
+  <data name="LuxuryCollection" xml:space="preserve"><value>Coleção Luxo</value></data>
+  <data name="Featured" xml:space="preserve"><value>Destaque</value></data>
+  <data name="DiscoverYourDreamHome" xml:space="preserve"><value>Descobre a tua</value></data>
+  <data name="DreamHome" xml:space="preserve"><value>Casa de Sonho</value></data>
+  <data name="WithImoSphere" xml:space="preserve"><value>com a</value></data>
+  <data name="ImoSphere" xml:space="preserve"><value>ImoSphere</value></data>
+  <data name="YourJourneyDescription" xml:space="preserve"><value>A tua jornada para encontrar o imóvel perfeito começa aqui. Explora listagens premium e vive uma experiência única.</value></data>
+  <data name="LearnMore" xml:space="preserve"><value>Saber Mais</value></data>
+  <data name="ViewProperties" xml:space="preserve"><value>Ver Propriedades</value></data>
+  <data name="HappyClients" xml:space="preserve"><value>Clientes Felizes</value></data>
+  <data name="Properties" xml:space="preserve"><value>Propriedades</value></data>
+  <data name="YearsOfExperience" xml:space="preserve"><value>Anos de Experiência</value></data>
+  <data name="PremiumRealEstate" xml:space="preserve"><value>Premium Real Estate</value></data>
+  <data name="PremiumBadge" xml:space="preserve"><value>Premium Badge</value></data>
+  <data name="FeaturedProperties" xml:space="preserve"><value>Propriedades em Destaque</value></data>
+  <data name="FeaturedPropertiesDescription" xml:space="preserve"><value>Descobre as nossas listagens mais populares e premium</value></data>
+  <data name="ViewDetails" xml:space="preserve"><value>Ver Detalhes</value></data>
+  <data name="ViewAllProperties" xml:space="preserve"><value>Ver Todas as Propriedades</value></data>
+  <data name="WhyChooseImoSphere" xml:space="preserve"><value>Porquê escolher a ImoSphere?</value></data>
+  <data name="BestPremiumExperience" xml:space="preserve"><value>A melhor experiência imobiliária premium</value></data>
+  <data name="FindDreamHome" xml:space="preserve"><value>Encontra a Casa dos Sonhos</value></data>
+  <data name="AdvancedSearchDescription" xml:space="preserve"><value>Pesquisa avançada para encontrar imóveis à tua medida.</value></data>
+  <data name="ValueYourProperty" xml:space="preserve"><value>Valoriza o teu Imóvel</value></data>
+  <data name="MarketAnalysisDescription" xml:space="preserve"><value>Análise de mercado e avaliações detalhadas.</value></data>
+  <data name="EfficientManagement" xml:space="preserve"><value>Gestão Eficiente</value></data>
+  <data name="ToolsForOwnersDescription" xml:space="preserve"><value>Ferramentas para proprietários e profissionais.</value></data>
+  <data name="SmartInvestment" xml:space="preserve"><value>Investimento Inteligente</value></data>
+  <data name="InsightsAndTrendsDescription" xml:space="preserve"><value>Insights e tendências para decisões seguras.</value></data>
+  <data name="WhatOurClientsSay" xml:space="preserve"><value>O que dizem os nossos clientes</value></data>
+  <data name="RealStoriesDescription" xml:space="preserve"><value>Histórias reais de clientes felizes</value></data>
+  <data name="Testimonial1" xml:space="preserve"><value>"ImoSphere ajudou-me a encontrar a casa dos meus sonhos em 2 semanas! Profissionalismo e simpatia."</value></data>
+  <data name="MariaSilva" xml:space="preserve"><value>Maria Silva</value></data>
+  <data name="HappyOwner" xml:space="preserve"><value>Proprietária Feliz</value></data>
+  <data name="Testimonial2" xml:space="preserve"><value>"Como investidor, valorizo a análise de mercado detalhada e o serviço profissional. Recomendo!"</value></data>
+  <data name="JoaoSantos" xml:space="preserve"><value>João Santos</value></data>
+  <data name="Investor" xml:space="preserve"><value>Investidor</value></data>
+  <data name="Testimonial3" xml:space="preserve"><value>"A plataforma online é incrível! Pude agendar visitas sem sair de casa."</value></data>
+  <data name="AnaCosta" xml:space="preserve"><value>Ana Costa</value></data>
+  <data name="FirstTimeBuyer" xml:space="preserve"><value>Primeira Compra</value></data>
+  <data name="Testimonial4" xml:space="preserve"><value>"O acompanhamento personalizado fez toda a diferença. Senti-me seguro em todas as etapas!"</value></data>
+  <data name="CarlosPereira" xml:space="preserve"><value>Carlos Pereira</value></data>
+  <data name="SatisfiedSeller" xml:space="preserve"><value>Vendedor Satisfeito</value></data>
+  <data name="Testimonial5" xml:space="preserve"><value>"Encontrei o imóvel ideal para o meu negócio graças à ImoSphere. Equipa muito dedicada!"</value></data>
+  <data name="SofiaAlmeida" xml:space="preserve"><value>Sofia Almeida</value></data>
+  <data name="Businesswoman" xml:space="preserve"><value>Empresária</value></data>
+  <data name="Testimonial6" xml:space="preserve"><value>"A rapidez e transparência do processo superaram as minhas expectativas. Recomendo a 100%!"</value></data>
+  <data name="RicardoLopes" xml:space="preserve"><value>Ricardo Lopes</value></data>
+  <data name="Buyer" xml:space="preserve"><value>Comprador</value></data>
+  <data name="TrustedPartners" xml:space="preserve"><value>Parceiros de Confiança</value></data>
+  <data name="WorkWithBestAgencies" xml:space="preserve"><value>Trabalhamos com as melhores agências do mercado</value></data>
+  <data name="ReadyForNextStep" xml:space="preserve"><value>Pronto para dar o próximo passo?</value></data>
+  <data name="ContactOurTeamDescription" xml:space="preserve"><value>Contacta a nossa equipa e começa já a tua jornada imobiliária premium.</value></data>
+  <data name="ContactTeam" xml:space="preserve"><value>Contactar Equipa</value></data>
+  <data name="Exclusivo" xml:space="preserve"><value>Exclusivo</value></data>
+  <data name="VistaIncrível" xml:space="preserve"><value>Vista Incrível</value></data>
+  <data name="ImóvelDeLuxo" xml:space="preserve"><value>Imóvel de Luxo</value></data>
+</root> 

@@ -1,7 +1,8 @@
+@inject IViewLocalizer Localizer
 @model ImoSphere.Models.PropertyFilterViewModel
 @using System.Linq
 @{
-    ViewData["Title"] = "Properties";
+    ViewData["Title"] = Localizer["PropertiesTitle"];
     var isAuthenticated = User.Identity.IsAuthenticated;
     var userRole = ViewBag.UserRole as string;
     var userAgency = ViewBag.UserAgency as string;
@@ -18,7 +19,7 @@
                     <div class="card filter-sidebar sticky-top" style="top: 20px;">
                         <div class="card-header">
                             <h5 class="mb-0">
-                                <i class="fas fa-filter me-2"></i>Filtros Avançados
+                                <i class="fas fa-filter me-2"></i>@Localizer["AdvancedFilters"]
                             </h5>
                         </div>
                         <div class="card-body">
@@ -31,14 +32,14 @@
                                 <!-- Preço -->
                                 <div class="mb-3">
                                     <label class="form-label">
-                                        <i class="fas fa-euro-sign me-1"></i>Preço (€)
+                                        <i class="fas fa-euro-sign me-1"></i>@Localizer["Price"] (€)
                                     </label>
                                     <div class="row g-2">
                                         <div class="col-6">
-                                            <input type="number" class="form-control" name="minPrice" placeholder="Min" value="@Model.MinPrice" />
+                                            <input type="number" class="form-control" name="minPrice" placeholder="@Localizer["Min"]" value="@Model.MinPrice" />
                                         </div>
                                         <div class="col-6">
-                                            <input type="number" class="form-control" name="maxPrice" placeholder="Max" value="@Model.MaxPrice" />
+                                            <input type="number" class="form-control" name="maxPrice" placeholder="@Localizer["Max"]" value="@Model.MaxPrice" />
                                         </div>
                                     </div>
                                 </div>
@@ -46,14 +47,14 @@
                                 <!-- WC's -->
                                 <div class="mb-3">
                                     <label class="form-label">
-                                        <i class="fas fa-bath me-1"></i>Nº de WC's
+                                        <i class="fas fa-bath me-1"></i>@Localizer["NumberOfBathrooms"]
                                     </label>
                                     <div class="row g-2">
                                         <div class="col-6">
-                                            <input type="number" class="form-control" name="minBathrooms" placeholder="Min" value="@Model.MinBathrooms" />
+                                            <input type="number" class="form-control" name="minBathrooms" placeholder="@Localizer["Min"]" value="@Model.MinBathrooms" />
                                         </div>
                                         <div class="col-6">
-                                            <input type="number" class="form-control" name="maxBathrooms" placeholder="Max" value="@Model.MaxBathrooms" />
+                                            <input type="number" class="form-control" name="maxBathrooms" placeholder="@Localizer["Max"]" value="@Model.MaxBathrooms" />
                                         </div>
                                     </div>
                                 </div>
@@ -61,14 +62,14 @@
                                 <!-- Quartos -->
                                 <div class="mb-3">
                                     <label class="form-label">
-                                        <i class="fas fa-bed me-1"></i>Nº de Quartos
+                                        <i class="fas fa-bed me-1"></i>@Localizer["NumberOfBedrooms"]
                                     </label>
                                     <div class="row g-2">
                                         <div class="col-6">
-                                            <input type="number" class="form-control" name="minBedrooms" placeholder="Min" value="@Model.MinBedrooms" />
+                                            <input type="number" class="form-control" name="minBedrooms" placeholder="@Localizer["Min"]" value="@Model.MinBedrooms" />
                                         </div>
                                         <div class="col-6">
-                                            <input type="number" class="form-control" name="maxBedrooms" placeholder="Max" value="@Model.MaxBedrooms" />
+                                            <input type="number" class="form-control" name="maxBedrooms" placeholder="@Localizer["Max"]" value="@Model.MaxBedrooms" />
                                         </div>
                                     </div>
                                 </div>
@@ -76,14 +77,14 @@
                                 <!-- Área -->
                                 <div class="mb-3">
                                     <label class="form-label">
-                                        <i class="fas fa-ruler-combined me-1"></i>Área (m²)
+                                        <i class="fas fa-ruler-combined me-1"></i>@Localizer["Area"] (m²)
                                     </label>
                                     <div class="row g-2">
                                         <div class="col-6">
-                                            <input type="number" class="form-control" name="minArea" placeholder="Min" value="@Model.MinArea" />
+                                            <input type="number" class="form-control" name="minArea" placeholder="@Localizer["Min"]" value="@Model.MinArea" />
                                         </div>
                                         <div class="col-6">
-                                            <input type="number" class="form-control" name="maxArea" placeholder="Max" value="@Model.MaxArea" />
+                                            <input type="number" class="form-control" name="maxArea" placeholder="@Localizer["Max"]" value="@Model.MaxArea" />
                                         </div>
                                     </div>
                                 </div>
@@ -91,14 +92,14 @@
                                 <!-- Ano de Construção -->
                                 <div class="mb-3">
                                     <label class="form-label">
-                                        <i class="fas fa-calendar-alt me-1"></i>Ano de Construção
+                                        <i class="fas fa-calendar-alt me-1"></i>@Localizer["ConstructionYear"]
                                     </label>
                                     <div class="row g-2">
                                         <div class="col-6">
-                                            <input type="number" class="form-control" name="minYearBuilt" placeholder="Min" value="@Model.MinYearBuilt" />
+                                            <input type="number" class="form-control" name="minYearBuilt" placeholder="@Localizer["Min"]" value="@Model.MinYearBuilt" />
                                         </div>
                                         <div class="col-6">
-                                            <input type="number" class="form-control" name="maxYearBuilt" placeholder="Max" value="@Model.MaxYearBuilt" />
+                                            <input type="number" class="form-control" name="maxYearBuilt" placeholder="@Localizer["Max"]" value="@Model.MaxYearBuilt" />
                                         </div>
                                     </div>
                                 </div>
@@ -106,15 +107,15 @@
                                 <!-- Localização -->
                                 <div class="mb-3">
                                     <label class="form-label">
-                                        <i class="fas fa-map-marker-alt me-1"></i>Localização
+                                        <i class="fas fa-map-marker-alt me-1"></i>@Localizer["Location"]
                                     </label>
-                                    <input type="text" class="form-control" name="location" placeholder="Ex: Lisboa, Porto..." value="@Model.Location" />
+                                    <input type="text" class="form-control" name="location" placeholder="@Localizer["LocationPlaceholder"]" value="@Model.Location" />
                                 </div>
 
                                 <!-- Agências -->
                                 <div class="mb-3">
                                     <label class="form-label">
-                                        <i class="fas fa-building me-1"></i>Agências
+                                        <i class="fas fa-building me-1"></i>@Localizer["Agencies"]
                                     </label>
                                     <div class="agency-filters">
                                         @foreach (var agency in Model.AvailableAgencies)
@@ -131,34 +132,34 @@
                                 <!-- Ordenação -->
                                 <div class="mb-3">
                                     <label class="form-label">
-                                        <i class="fas fa-sort me-1"></i>Ordenar por
+                                        <i class="fas fa-sort me-1"></i>@Localizer["SortBy"]
                                     </label>
                                     <select class="form-select" name="sortBy">
-                                        <option value="Name" selected="@(Model.SortBy == "Name")">Nome</option>
-                                        <option value="Price" selected="@(Model.SortBy == "Price")">Preço</option>
-                                        <option value="Area" selected="@(Model.SortBy == "Area")">Área</option>
-                                        <option value="Bedrooms" selected="@(Model.SortBy == "Bedrooms")">Quartos</option>
-                                        <option value="Bathrooms" selected="@(Model.SortBy == "Bathrooms")">WC's</option>
-                                        <option value="YearBuilt" selected="@(Model.SortBy == "YearBuilt")">Ano</option>
+                                        <option value="Name" selected="@(Model.SortBy == "Name")">@Localizer["Name"]</option>
+                                        <option value="Price" selected="@(Model.SortBy == "Price")">@Localizer["Price"]</option>
+                                        <option value="Area" selected="@(Model.SortBy == "Area")">@Localizer["Area"]</option>
+                                        <option value="Bedrooms" selected="@(Model.SortBy == "Bedrooms")">@Localizer["Bedrooms"]</option>
+                                        <option value="Bathrooms" selected="@(Model.SortBy == "Bathrooms")">@Localizer["Bathrooms"]</option>
+                                        <option value="YearBuilt" selected="@(Model.SortBy == "YearBuilt")">@Localizer["Year"]</option>
                                     </select>
                                 </div>
 
                                 <div class="mb-4">
                                     <label class="form-label">
-                                        <i class="fas fa-sort-amount-down me-1"></i>Ordem
+                                        <i class="fas fa-sort-amount-down me-1"></i>@Localizer["Order"]
                                     </label>
                                     <select class="form-select" name="sortOrder">
-                                        <option value="asc" selected="@(Model.SortOrder == "asc")">Crescente</option>
-                                        <option value="desc" selected="@(Model.SortOrder == "desc")">Decrescente</option>
+                                        <option value="asc" selected="@(Model.SortOrder == "asc")">@Localizer["Ascending"]</option>
+                                        <option value="desc" selected="@(Model.SortOrder == "desc")">@Localizer["Descending"]</option>
                                     </select>
                                 </div>
 
                                 <div class="d-grid gap-2">
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-search me-2"></i>Aplicar Filtros
+                                        <i class="fas fa-search me-2"></i>@Localizer["ApplyFilters"]
                                     </button>
                                     <a href="@Url.Action("Properties", "Home")" class="btn btn-clear-filters">
-                                        <i class="fas fa-undo me-2"></i>Limpar Filtros
+                                        <i class="fas fa-undo me-2"></i>@Localizer["ClearFilters"]
                                     </a>
                                 </div>
                             </form>
@@ -171,15 +172,15 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div>
                             <h1 class="mb-1">
-                                <i class="fas fa-home me-2"></i>Nossas Propriedades
+                                <i class="fas fa-home me-2"></i>@Localizer["OurProperties"]
                             </h1>
-                            <p class="text-muted mb-0">Encontre a propriedade dos seus sonhos</p>
+                            <p class="text-muted mb-0">@Localizer["FindYourDreamProperty"]</p>
                         </div>
                         <div>
                             @if (userRole == "Admin" || userRole == "Comercial" || userRole == "SuperAdmin")
                             {
                                 <a href="@Url.Action("Create", "Properties")" class="btn btn-success">
-                                    <i class="fas fa-plus me-2"></i>Adicionar Propriedade
+                                    <i class="fas fa-plus me-2"></i>@Localizer["AddProperty"]
                                 </a>
                             }
                         </div>
@@ -190,11 +191,11 @@
                         <div class="btn-group" role="group">
                             <a href="@Url.Action("Properties", "Home", new { showMap = false })" 
                                class="btn @(!Model.ShowMap ? "btn-primary" : "btn-outline-primary")">
-                                <i class="fas fa-th-large me-2"></i>Lista
+                                <i class="fas fa-th-large me-2"></i>@Localizer["List"]
                             </a>
                             <a href="@Url.Action("Properties", "Home", new { showMap = true })" 
                                class="btn @(Model.ShowMap ? "btn-primary" : "btn-outline-primary")">
-                                <i class="fas fa-map me-2"></i>Mapa
+                                <i class="fas fa-map me-2"></i>@Localizer["Map"]
                             </a>
                         </div>
                     </div>
@@ -236,7 +237,7 @@
                                             @if (isAuthenticated && userRole == "User")
                                             {
                                                 <div class="favorite-button" style="position: absolute; bottom: 10px; right: 10px; z-index: 13;">
-                                                    <button class="btn btn-sm favorite-btn" data-property-id="@property.Id" title="Adicionar aos favoritos">
+                                                    <button class="btn btn-sm favorite-btn" data-property-id="@property.Id" title="@Localizer["AddToFavorites"]">
                                                         <i class="fas fa-heart"></i>
                                                     </button>
                                                 </div>
@@ -275,16 +276,16 @@
                                                 <div class="d-flex gap-2">
                                                     @if (CanEditProperty(property, userRole, userId, userAgency))
                                                     {
-                                                        <a href="@Url.Action("Edit", "Properties", new { id = property.Id })" class="btn btn-outline-warning btn-sm" title="Editar">
+                                                        <a href="@Url.Action("Edit", "Properties", new { id = property.Id })" class="btn btn-outline-warning btn-sm" title="@Localizer["Edit"]">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <button type="button" class="btn btn-outline-danger btn-sm" title="Eliminar" 
+                                                        <button type="button" class="btn btn-outline-danger btn-sm" title="@Localizer["Delete"]" 
                                                                 onclick="confirmDelete(@property.Id, '@property.Name')">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     }
                                                     <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-outline-primary btn-sm">
-                                                        <i class="fas fa-eye me-1"></i>Ver Detalhes
+                                                        <i class="fas fa-eye me-1"></i>@Localizer["ViewDetails"]
                                                     </a>
                                                 </div>
                                             </div>
@@ -477,14 +478,14 @@
             // Mostrar loading ao submeter filtros
             filterForm.addEventListener('submit', () => {
                 const submitBtn = filterForm.querySelector('button[type="submit"]');
-                submitBtn.innerHTML = '⏳ Aplicando...';
+                submitBtn.innerHTML = '⏳ @Localizer["Applying"]...';
                 submitBtn.disabled = true;
             });
         });
 
         // Função para confirmar eliminação de propriedade
         function confirmDelete(propertyId, propertyName) {
-            if (confirm(`Tem a certeza que deseja eliminar a propriedade "${propertyName}"?\n\nEsta ação não pode ser desfeita.`)) {
+            if (confirm(Localizer["ConfirmDeleteProperty", propertyName])) {
                 // Criar form para enviar o POST
                 const form = document.createElement('form');
                 form.method = 'POST';
@@ -526,14 +527,14 @@
             })));
 
             if (properties.length === 0) {
-                mapContainer.innerHTML = '<div class="text-center p-4"><p class="text-muted">Nenhuma propriedade encontrada para mostrar no mapa.</p></div>';
+                mapContainer.innerHTML = '<div class="text-center p-4"><p class="text-muted">@Localizer["NoPropertiesFoundForMap"]</p></div>';
                 return;
             }
 
             // Calcular centro do mapa baseado nas propriedades
             const validProperties = properties.filter(p => p.latitude && p.longitude);
             if (validProperties.length === 0) {
-                mapContainer.innerHTML = '<div class="text-center p-4"><p class="text-muted">Nenhuma propriedade com coordenadas válidas encontrada.</p></div>';
+                mapContainer.innerHTML = '<div class="text-center p-4"><p class="text-muted">@Localizer["NoPropertiesWithValidCoordinates"]</p></div>';
                 return;
             }
 
@@ -641,7 +642,7 @@
                             <span>${property.agencyName}</span>
                         </div>
                         <a href="/Properties/Details/${property.id}" class="btn btn-primary btn-sm">
-                            Ver Detalhes
+                            @Localizer["ViewDetails"]
                         </a>
                     </div>
                 `;
@@ -719,20 +720,20 @@
                         button.classList.add('favorited');
                         button.querySelector('i').classList.remove('far');
                         button.querySelector('i').classList.add('fas');
-                        showToast('Adicionado aos favoritos!', 'success');
+                        showToast('@Localizer["AddedToFavorites"]', 'success');
                     } else {
                         button.classList.remove('favorited');
                         button.querySelector('i').classList.remove('fas');
                         button.querySelector('i').classList.add('far');
-                        showToast('Removido dos favoritos!', 'info');
+                        showToast('@Localizer["RemovedFromFavorites"]', 'info');
                     }
                 } else {
-                    showToast('Erro: ' + data.message, 'error');
+                    showToast('@Localizer["Error"]: ' + data.message, 'error');
                 }
             })
             .catch(error => {
                 console.error('Erro ao alternar favorito:', error);
-                showToast('Erro ao processar favorito', 'error');
+                showToast('@Localizer["ErrorProcessingFavorite"]', 'error');
             });
         }
 

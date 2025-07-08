@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="CommercialProfileTitle" xml:space="preserve">
+    <value>Perfil Comercial</value>
+  </data>
+  <data name="CommercialBadge" xml:space="preserve">
+    <value>Comercial</value>
+  </data>
+  <data name="ViewProperties" xml:space="preserve">
+    <value>Ver Propiedades</value>
+  </data>
+  <data name="AddProperty" xml:space="preserve">
+    <value>Agregar Propiedad</value>
+  </data>
+  <data name="MyProperties" xml:space="preserve">
+    <value>Mis Propiedades</value>
+  </data>
+  <data name="TotalValue" xml:space="preserve">
+    <value>Valor Total</value>
+  </data>
+  <data name="AveragePrice" xml:space="preserve">
+    <value>Precio Promedio</value>
+  </data>
+  <data name="MyPropertiesTitle" xml:space="preserve">
+    <value>Mis Propiedades</value>
+  </data>
+  <data name="MyPropertiesSubtitle" xml:space="preserve">
+    <value>Gestionar tus listas de propiedades</value>
+  </data>
+  <data name="NoProperties" xml:space="preserve">
+    <value>Sin Propiedades</value>
+  </data>
+  <data name="NoPropertiesCreated" xml:space="preserve">
+    <value>Aún no has creado ninguna propiedad.</value>
+  </data>
+  <data name="CreateFirstProperty" xml:space="preserve">
+    <value>Crear Primera Propiedad</value>
+  </data>
+  <data name="QuickActionsTitle" xml:space="preserve">
+    <value>Acciones Rápidas</value>
+  </data>
+  <data name="QuickActionsSubtitle" xml:space="preserve">
+    <value>Tareas comunes del día a día</value>
+  </data>
+  <data name="AddPropertyDesc" xml:space="preserve">
+    <value>Crear nueva lista de propiedad</value>
+  </data>
+  <data name="ViewAllProperties" xml:space="preserve">
+    <value>Ver Todas las Propiedades</value>
+  </data>
+  <data name="ViewAllPropertiesDesc" xml:space="preserve">
+    <value>Explorar todas las propiedades de la agencia</value>
+  </data>
+  <data name="ViewStatistics" xml:space="preserve">
+    <value>Ver Estadísticas</value>
+  </data>
+  <data name="ViewStatisticsDesc" xml:space="preserve">
+    <value>Analizar el rendimiento de tus propiedades</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Agregar</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Ver</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>Ver Detalles</value>
+  </data>
+</root> 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="UserProfileTitle" xml:space="preserve"><value>Perfil Utilizador</value></data>
+  <data name="ActiveUser" xml:space="preserve"><value>Utilizador Ativo</value></data>
+  <data name="Profile" xml:space="preserve"><value>Perfil</value></data>
+  <data name="Favorites" xml:space="preserve"><value>Favoritos</value></data>
+  <data name="ViewingHistory" xml:space="preserve"><value>Histórico de Visualizações</value></data>
+  <data name="Settings" xml:space="preserve"><value>Definições</value></data>
+  <data name="ProfileInformation" xml:space="preserve"><value>Informação do Perfil</value></data>
+  <data name="FullName" xml:space="preserve"><value>Nome Completo</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Phone" xml:space="preserve"><value>Telefone</value></data>
+  <data name="EnterPhoneNumber" xml:space="preserve"><value>Introduza o número de telefone</value></data>
+  <data name="PreferredLanguage" xml:space="preserve"><value>Idioma Preferido</value></data>
+  <data name="Portuguese" xml:space="preserve"><value>Português</value></data>
+  <data name="English" xml:space="preserve"><value>Inglês</value></data>
+  <data name="Spanish" xml:space="preserve"><value>Espanhol</value></data>
+  <data name="Address" xml:space="preserve"><value>Endereço</value></data>
+  <data name="EnterYourAddress" xml:space="preserve"><value>Introduza o seu endereço</value></data>
+  <data name="SaveChanges" xml:space="preserve"><value>Guardar Alterações</value></data>
+  <data name="MyFavorites" xml:space="preserve"><value>Os Meus Favoritos</value></data>
+  <data name="PropertyImage" xml:space="preserve"><value>Imagem da Propriedade</value></data>
+  <data name="LuxuryApartment" xml:space="preserve"><value>Apartamento de Luxo</value></data>
+  <data name="LisbonDowntown" xml:space="preserve"><value>Centro de Lisboa</value></data>
+  <data name="ModernHouse" xml:space="preserve"><value>Casa Moderna</value></data>
+  <data name="PortoSuburbs" xml:space="preserve"><value>Subúrbios do Porto</value></data>
+  <data name="Property" xml:space="preserve"><value>Propriedade</value></data>
+  <data name="Location" xml:space="preserve"><value>Localização</value></data>
+  <data name="DateViewed" xml:space="preserve"><value>Data Visualizada</value></data>
+  <data name="Actions" xml:space="preserve"><value>Ações</value></data>
+  <data name="Today" xml:space="preserve"><value>Hoje</value></data>
+  <data name="Yesterday" xml:space="preserve"><value>Ontem</value></data>
+  <data name="AccountSettings" xml:space="preserve"><value>Definições da Conta</value></data>
+  <data name="Notifications" xml:space="preserve"><value>Notificações</value></data>
+  <data name="EmailNotifications" xml:space="preserve"><value>Notificações por Email</value></data>
+  <data name="PriceAlerts" xml:space="preserve"><value>Alertas de Preço</value></data>
+  <data name="NewPropertiesAlerts" xml:space="preserve"><value>Alertas de Novas Propriedades</value></data>
+  <data name="Privacy" xml:space="preserve"><value>Privacidade</value></data>
+  <data name="PublicProfile" xml:space="preserve"><value>Perfil Público</value></data>
+  <data name="SaveSearchHistory" xml:space="preserve"><value>Guardar Histórico de Pesquisa</value></data>
+  <data name="SaveSettings" xml:space="preserve"><value>Guardar Definições</value></data>
+  <data name="DeleteAccount" xml:space="preserve"><value>Eliminar Conta</value></data>
+</root> 

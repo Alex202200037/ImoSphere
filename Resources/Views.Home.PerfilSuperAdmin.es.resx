@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="SuperAdminProfileTitle" xml:space="preserve">
+    <value>Perfil SuperAdmin</value>
+  </data>
+  <data name="SuperAdminBadge" xml:space="preserve">
+    <value>SuperAdmin</value>
+  </data>
+  <data name="GlobalManagement" xml:space="preserve">
+    <value>ImoSphere - Gestión Global</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Usuarios</value>
+  </data>
+  <data name="Properties" xml:space="preserve">
+    <value>Propiedades</value>
+  </data>
+  <data name="TotalValue" xml:space="preserve">
+    <value>Valor Total</value>
+  </data>
+  <data name="AverageValue" xml:space="preserve">
+    <value>Valor Promedio</value>
+  </data>
+  <data name="GlobalHierarchy" xml:space="preserve">
+    <value>Jerarquía Global</value>
+  </data>
+  <data name="UserManagementTab" xml:space="preserve">
+    <value>Gestión de Usuarios</value>
+  </data>
+  <data name="PropertyManagementTab" xml:space="preserve">
+    <value>Gestión de Propiedades</value>
+  </data>
+  <data name="AgencyHierarchyTitle" xml:space="preserve">
+    <value>Jerarquía de Agencias, Admins y Comerciales</value>
+  </data>
+  <data name="AgencyHierarchySubtitle" xml:space="preserve">
+    <value>Vista global de todas las agencias, admins y comerciales del sistema</value>
+  </data>
+  <data name="AdminCount" xml:space="preserve">
+    <value>Admin(s)</value>
+  </data>
+  <data name="CommercialCount" xml:space="preserve">
+    <value>Comercial(es)</value>
+  </data>
+  <data name="AdminBadge" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="Commercials" xml:space="preserve">
+    <value>Comerciales</value>
+  </data>
+  <data name="NoCommercialsAssigned" xml:space="preserve">
+    <value>Sin comerciales asignados</value>
+  </data>
+  <data name="NoAdminsInAgency" xml:space="preserve">
+    <value>Sin admins en esta agencia.</value>
+  </data>
+  <data name="CommercialsWithoutAdmin" xml:space="preserve">
+    <value>Comerciales sin admin</value>
+  </data>
+  <data name="NoAgenciesOrUsers" xml:space="preserve">
+    <value>No existen agencias o usuarios registrados.</value>
+  </data>
+  <data name="UserManagementTitle" xml:space="preserve">
+    <value>Gestión de Usuarios</value>
+  </data>
+  <data name="AllRegisteredClients" xml:space="preserve">
+    <value>Todos los clientes registrados en el sistema</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="NoRegisteredClients" xml:space="preserve">
+    <value>No existen clientes registrados.</value>
+  </data>
+  <data name="PropertyManagementTitle" xml:space="preserve">
+    <value>Gestión de Propiedades</value>
+  </data>
+  <data name="AllSystemProperties" xml:space="preserve">
+    <value>Todas las propiedades del sistema, agrupadas por agencia, admin y comercial</value>
+  </data>
+  <data name="NoProperties" xml:space="preserve">
+    <value>Sin propiedades</value>
+  </data>
+  <data name="QuickActionsTitle" xml:space="preserve">
+    <value>Acciones Rápidas</value>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>Agregar Usuario</value>
+  </data>
+  <data name="CreateNewUsers" xml:space="preserve">
+    <value>Crear nuevos usuarios</value>
+  </data>
+  <data name="AddProperty" xml:space="preserve">
+    <value>Agregar Propiedad</value>
+  </data>
+  <data name="AddPropertyDesc" xml:space="preserve">
+    <value>Crear nueva lista de propiedad</value>
+  </data>
+  <data name="ViewReports" xml:space="preserve">
+    <value>Ver Reportes</value>
+  </data>
+  <data name="GlobalAnalytics" xml:space="preserve">
+    <value>Análisis e insights globales</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="GlobalSettings" xml:space="preserve">
+    <value>Gestionar configuración global</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Agregar</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Ver</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>Ver Detalles</value>
+  </data>
+  <data name="ConfirmDeleteUser" xml:space="preserve">
+    <value>¿Estás seguro de que quieres eliminar al usuario '{0}'?</value>
+  </data>
+  <data name="UserHasDependencies" xml:space="preserve">
+    <value>Este usuario tiene dependencias y no puede ser eliminado directamente. (Gestión avanzada solo en panel de admin)</value>
+  </data>
+  <data name="UserDeletedSuccessfully" xml:space="preserve">
+    <value>¡Usuario eliminado con éxito!</value>
+  </data>
+  <data name="ErrorDeletingUser" xml:space="preserve">
+    <value>Error al eliminar usuario.</value>
+  </data>
+  <data name="ServerCommunicationError" xml:space="preserve">
+    <value>Error de comunicación con el servidor.</value>
+  </data>
+</root> 

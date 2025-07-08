@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="AdminProfileTitle" xml:space="preserve">
+    <value>Admin Profile</value>
+  </data>
+  <data name="AdminBadge" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="ViewProperties" xml:space="preserve">
+    <value>View Properties</value>
+  </data>
+  <data name="ManageUsers" xml:space="preserve">
+    <value>Manage Users</value>
+  </data>
+  <data name="TeamMembers" xml:space="preserve">
+    <value>Team Members</value>
+  </data>
+  <data name="TotalProperties" xml:space="preserve">
+    <value>Total Properties</value>
+  </data>
+  <data name="TotalValue" xml:space="preserve">
+    <value>Total Value</value>
+  </data>
+  <data name="ActiveAgents" xml:space="preserve">
+    <value>Active Agents</value>
+  </data>
+  <data name="TeamManagement" xml:space="preserve">
+    <value>Team Management</value>
+  </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>User Management</value>
+  </data>
+  <data name="PropertyManagement" xml:space="preserve">
+    <value>Property Management</value>
+  </data>
+  <data name="TeamManagementDesc" xml:space="preserve">
+    <value>Manage your commercial team and their properties</value>
+  </data>
+  <data name="NoTeamMembers" xml:space="preserve">
+    <value>No Team Members</value>
+  </data>
+  <data name="NoCommercialUsers" xml:space="preserve">
+    <value>No commercial users exist in this agency yet.</value>
+  </data>
+  <data name="AddMember" xml:space="preserve">
+    <value>Add Member</value>
+  </data>
+  <data name="AllAgencyProperties" xml:space="preserve">
+    <value>All properties in your agency</value>
+  </data>
+  <data name="QuickActionsTitle" xml:space="preserve">
+    <value>Quick Actions</value>
+  </data>
+  <data name="QuickActionsSubtitle" xml:space="preserve">
+    <value>Common daily tasks</value>
+  </data>
+  <data name="AddProperty" xml:space="preserve">
+    <value>Add Property</value>
+  </data>
+  <data name="AddPropertyDesc" xml:space="preserve">
+    <value>Create new property listing</value>
+  </data>
+  <data name="ViewAllProperties" xml:space="preserve">
+    <value>View All Properties</value>
+  </data>
+  <data name="ViewAllPropertiesDesc" xml:space="preserve">
+    <value>Explore all agency properties</value>
+  </data>
+  <data name="ViewStatistics" xml:space="preserve">
+    <value>View Statistics</value>
+  </data>
+  <data name="ViewStatisticsDesc" xml:space="preserve">
+    <value>Analyze your properties performance</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>View Details</value>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>Add User</value>
+  </data>
+  <data name="AddUserDesc" xml:space="preserve">
+    <value>Create a new user account for your team.</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsDesc" xml:space="preserve">
+    <value>Configure your account or agency preferences and options.</value>
+  </data>
+  <data name="ReportsDesc" xml:space="preserve">
+    <value>Access detailed reports about agency and user activity.</value>
+  </data>
+  <data name="TeamManagementTitle" xml:space="preserve">
+    <value>Team Management</value>
+  </data>
+  <data name="TeamManagementSubtitle" xml:space="preserve">
+    <value>Add, edit, and organize your team members.</value>
+  </data>
+  <data name="TeamManagementTab" xml:space="preserve">
+    <value>Team</value>
+  </data>
+  <data name="UserManagementTab" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="PropertyManagementTab" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="PropertyManagementTitle" xml:space="preserve">
+    <value>Property Management</value>
+  </data>
+  <data name="PropertyManagementSubtitle" xml:space="preserve">
+    <value>Add, edit, and organize the agency's properties.</value>
+  </data>
+</root> 

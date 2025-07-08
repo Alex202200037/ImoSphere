@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="ContactUsTitle" xml:space="preserve"><value>Contacte-nos</value></data>
+  <data name="ContactUsDescription" xml:space="preserve"><value>Estamos aqui para ajudar. Envie-nos a sua mensagem e responderemos o mais breve possível.</value></data>
+  <data name="Phone" xml:space="preserve"><value>Telefone</value></data>
+  <data name="PhoneHours" xml:space="preserve"><value>Segunda a Sexta: 9h-18h</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="EmailResponse" xml:space="preserve"><value>Resposta em 24h</value></data>
+  <data name="Office" xml:space="preserve"><value>Escritório</value></data>
+  <data name="OfficeAddress" xml:space="preserve"><value>Rua das Flores, 123</value></data>
+  <data name="OfficeCity" xml:space="preserve"><value>Lisboa, Portugal</value></data>
+  <data name="SendMessageTitle" xml:space="preserve"><value>Envie-nos uma mensagem</value></data>
+  <data name="FullName" xml:space="preserve"><value>Nome completo</value></data>
+  <data name="FullNamePlaceholder" xml:space="preserve"><value>O seu nome</value></data>
+  <data name="EmailPlaceholder" xml:space="preserve"><value>O seu email</value></data>
+  <data name="Subject" xml:space="preserve"><value>Assunto</value></data>
+  <data name="SelectSubject" xml:space="preserve"><value>Selecionar assunto</value></data>
+  <data name="PropertyInfo" xml:space="preserve"><value>Informação sobre propriedades</value></data>
+  <data name="ScheduleVisit" xml:space="preserve"><value>Agendar visita</value></data>
+  <data name="TechnicalSupport" xml:space="preserve"><value>Suporte técnico</value></data>
+  <data name="Other" xml:space="preserve"><value>Outro</value></data>
+  <data name="Optional" xml:space="preserve"><value>opcional</value></data>
+  <data name="PhonePlaceholder" xml:space="preserve"><value>Ex: +351 912 345 678</value></data>
+  <data name="Message" xml:space="preserve"><value>Mensagem</value></data>
+  <data name="MessagePlaceholder" xml:space="preserve"><value>Escreva a sua mensagem...</value></data>
+  <data name="PrivacyAccept" xml:space="preserve"><value>Aceito a</value></data>
+  <data name="PrivacyPolicy" xml:space="preserve"><value>Política de Privacidade</value></data>
+  <data name="SendMessage" xml:space="preserve"><value>Enviar Mensagem</value></data>
+  <data name="FrequentlyAskedQuestions" xml:space="preserve"><value>Perguntas Frequentes</value></data>
+  <data name="FAQ1Question" xml:space="preserve"><value>Como posso agendar uma visita a uma propriedade?</value></data>
+  <data name="FAQ1Answer" xml:space="preserve"><value>Pode agendar uma visita através do nosso site, por telefone ou email. Um dos nossos comerciais entrará em contacto consigo para confirmar os detalhes.</value></data>
+  <data name="FAQ2Question" xml:space="preserve"><value>Quais são as comissões da agência?</value></data>
+  <data name="FAQ2Answer" xml:space="preserve"><value>As comissões variam consoante o tipo de propriedade e valor. Contacte-nos para obter informações detalhadas sobre as nossas tarifas.</value></data>
+  <data name="FAQ3Question" xml:space="preserve"><value>Posso vender a minha propriedade através da ImoSphere?</value></data>
+  <data name="FAQ3Answer" xml:space="preserve"><value>Sim! Oferecemos serviços completos de venda de propriedades. Um dos nossos peritos avaliará a sua propriedade e apresentará um plano de marketing personalizado.</value></data>
+  <data name="FollowUsOnSocialMedia" xml:space="preserve"><value>Siga-nos nas Redes Sociais</value></data>
+</root> 

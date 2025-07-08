@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using ImoSphere.Data;
 using ImoSphere.Models;
 using ImoSphere.Hubs;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,10 +22,29 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-// Configurar os controladores com views
-builder.Services.AddControllersWithViews();
-builder.Services.AddSignalR();
+// Configurar localização
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization();
+
+// Configurar culturas suportadas
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[]
+    {
+        new CultureInfo("pt"),
+        new CultureInfo("en"),
+        new CultureInfo("es")
+    };
+
+    options.DefaultRequestCulture = new RequestCulture("pt");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -38,6 +59,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Adicionar middleware de localização
+app.UseRequestLocalization();
 
 app.UseAuthentication();  // Certifique-se de que está usando autenticação
 app.UseAuthorization();   // E também autorização

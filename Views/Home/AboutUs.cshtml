@@ -1,5 +1,7 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "About Us";
+    ViewData["Title"] = Localizer["AboutUsTitle"];
 }
 
 <section class="glass-section py-5">
@@ -9,20 +11,20 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 fade-in-up">
                     <h1 class="display-4 fw-bold mb-4">
-                        About <span class="text-primary">ImoSphere</span>
+                        @Localizer["AboutImoSphere"]
                     </h1>
                     <p class="lead mb-4">
-                        We are a leading real estate platform dedicated to transforming the way people discover, buy, and manage properties. With over 16 years of experience, we've helped thousands of families find their dream homes.
+                        @Localizer["AboutUsHeroText"]
                     </p>
                     <div class="d-flex gap-3">
                         @if (!User.Identity.IsAuthenticated || User.IsInRole("User"))
                         {
                             <a href="@Url.Action("ContactUs", "Home")" class="btn btn-primary btn-lg">
-                                <i class="fas fa-phone me-2"></i>Get in Touch
+                                <i class="fas fa-phone me-2"></i>@Localizer["GetInTouch"]
                             </a>
                         }
                         <a href="@Url.Action("Properties", "Home")" class="btn btn-outline-primary btn-lg">
-                            <i class="fas fa-home me-2"></i>Browse Properties
+                            <i class="fas fa-home me-2"></i>@Localizer["BrowseProperties"]
                         </a>
                     </div>
                 </div>
@@ -40,9 +42,9 @@
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="display-5 fw-bold mb-3">
-                    <i class="fas fa-chart-line text-success me-2"></i>Our Impact in Numbers
+                    <i class="fas fa-chart-line text-success me-2"></i>@Localizer["OurImpactInNumbers"]
                 </h2>
-                <p class="lead text-muted">Real results that speak for themselves</p>
+                <p class="lead text-muted">@Localizer["RealResults"]</p>
             </div>
             
             <div class="row g-4">
@@ -52,7 +54,7 @@
                             <i class="fas fa-home fa-2x text-primary"></i>
                         </div>
                         <h3 class="stat-number counter" data-target="10000">0</h3>
-                        <p class="stat-label">Properties Listed</p>
+                        <p class="stat-label">@Localizer["PropertiesListed"]</p>
                         <div class="stat-progress">
                             <div class="progress-bar" style="width: 100%"></div>
                         </div>
@@ -65,7 +67,7 @@
                             <i class="fas fa-users fa-2x text-success"></i>
                         </div>
                         <h3 class="stat-number counter" data-target="2500">0</h3>
-                        <p class="stat-label">Happy Customers</p>
+                        <p class="stat-label">@Localizer["HappyCustomers"]</p>
                         <div class="stat-progress">
                             <div class="progress-bar" style="width: 95%"></div>
                         </div>
@@ -78,7 +80,7 @@
                             <i class="fas fa-building fa-2x text-warning"></i>
                         </div>
                         <h3 class="stat-number counter" data-target="150">0</h3>
-                        <p class="stat-label">Partner Agencies</p>
+                        <p class="stat-label">@Localizer["PartnerAgencies"]</p>
                         <div class="stat-progress">
                             <div class="progress-bar" style="width: 85%"></div>
                         </div>
@@ -91,7 +93,7 @@
                             <i class="fas fa-award fa-2x text-danger"></i>
                         </div>
                         <h3 class="stat-number counter" data-target="16">0</h3>
-                        <p class="stat-label">Years of Excellence</p>
+                        <p class="stat-label">@Localizer["YearsOfExcellence"]</p>
                         <div class="stat-progress">
                             <div class="progress-bar" style="width: 100%"></div>
                         </div>
@@ -113,26 +115,26 @@
                 <div class="col-lg-6">
                     <div class="story-content rounded-4">
                         <h2 class="display-5 fw-bold mb-4">
-                            <i class="fas fa-history text-primary me-2"></i>Our Story
+                            <i class="fas fa-history text-primary me-2"></i>@Localizer["OurStory"]
                         </h2>
                         <p class="lead mb-4">
-                            Founded in 2008, ImoSphere began with a simple mission: to make real estate accessible, transparent, and enjoyable for everyone.
+                            @Localizer["FoundedText"]
                         </p>
                         <p class="mb-4">
-                            What started as a small local agency has grown into one of Portugal's most trusted real estate platforms. We've witnessed the evolution of the market and adapted our services to meet the changing needs of buyers, sellers, and investors.
+                            @Localizer["StartedText"]
                         </p>
                         <p class="mb-4">
-                            Today, we're proud to serve thousands of satisfied customers across the country, helping them navigate the complex world of real estate with confidence and ease.
+                            @Localizer["TodayText"]
                         </p>
                         <div class="achievement-badges">
                             <span class="badge bg-primary me-2 mb-2 rounded-pill">
-                                <i class="fas fa-star me-1"></i>Best Real Estate Platform 2023
+                                <i class="fas fa-star me-1"></i>@Localizer["BestRealEstatePlatform"]
                             </span>
                             <span class="badge bg-success me-2 mb-2 rounded-pill">
-                                <i class="fas fa-certificate me-1"></i>ISO 9001 Certified
+                                <i class="fas fa-certificate me-1"></i>@Localizer["ISO9001Certified"]
                             </span>
                             <span class="badge bg-warning me-2 mb-2 rounded-pill">
-                                <i class="fas fa-trophy me-1"></i>Customer Choice Award
+                                <i class="fas fa-trophy me-1"></i>@Localizer["CustomerChoiceAward"]
                             </span>
                         </div>
                     </div>
@@ -146,9 +148,9 @@
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="display-5 fw-bold mb-3">
-                    <i class="fas fa-heart text-danger me-2"></i>Our Values
+                    <i class="fas fa-heart text-danger me-2"></i>@Localizer["OurValues"]
                 </h2>
-                <p class="lead text-muted">The principles that guide everything we do</p>
+                <p class="lead text-muted">@Localizer["PrinciplesText"]</p>
             </div>
             
             <div class="row g-4">
@@ -157,9 +159,9 @@
                         <div class="value-icon mb-3">
                             <i class="fas fa-handshake fa-2x text-primary"></i>
                         </div>
-                        <h4>Trust & Transparency</h4>
+                        <h4>@Localizer["TrustTransparency"]</h4>
                         <p class="text-muted">
-                            We believe in building lasting relationships through honesty, transparency, and open communication with our clients.
+                            @Localizer["TrustTransparencyText"]
                         </p>
                     </div>
                 </div>
@@ -169,9 +171,9 @@
                         <div class="value-icon mb-3">
                             <i class="fas fa-lightbulb fa-2x text-warning"></i>
                         </div>
-                        <h4>Innovation</h4>
+                        <h4>@Localizer["Innovation"]</h4>
                         <p class="text-muted">
-                            We continuously innovate our platform and services to provide the best possible experience for our users.
+                            @Localizer["InnovationText"]
                         </p>
                     </div>
                 </div>
@@ -181,9 +183,9 @@
                         <div class="value-icon mb-3">
                             <i class="fas fa-users fa-2x text-success"></i>
                         </div>
-                        <h4>Customer First</h4>
+                        <h4>@Localizer["CustomerFirst"]</h4>
                         <p class="text-muted">
-                            Every decision we make is centered around providing exceptional value and service to our customers.
+                            @Localizer["CustomerFirstText"]
                         </p>
                     </div>
                 </div>
@@ -196,9 +198,9 @@
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="display-5 fw-bold mb-3">
-                    <i class="fas fa-user-tie text-primary me-2"></i>Meet Our Leadership
+                    <i class="fas fa-user-tie text-primary me-2"></i>@Localizer["MeetOurLeadership"]
                 </h2>
-                <p class="lead text-muted">The experts behind ImoSphere's success</p>
+                <p class="lead text-muted">@Localizer["ExpertsBehindSuccess"]</p>
             </div>
             
             <div class="row g-4">
@@ -239,17 +241,17 @@
         <div class="container">
             <div class="cta-card glass-card text-center rounded-4">
                 <h2 class="display-5 fw-bold mb-4">
-                    Ready to Find Your Dream Property?
+                    @Localizer["ReadyToFind"]
                 </h2>
                 <p class="lead mb-4">
-                    Join thousands of happy customers who have found their perfect home with ImoSphere.
+                    @Localizer["JoinThousands"]
                 </p>
                 <div class="d-flex gap-3 justify-content-center">
                     <a href="@Url.Action("Properties", "Home")" class="btn btn-primary btn-lg">
-                        <i class="fas fa-search me-2"></i>Start Searching
+                        <i class="fas fa-search me-2"></i>@Localizer["StartSearching"]
                     </a>
                     <a href="@Url.Action("ContactUs", "Home")" class="btn btn-outline-primary btn-lg">
-                        <i class="fas fa-phone me-2"></i>Contact Us
+                        <i class="fas fa-phone me-2"></i>@Localizer["ContactUs"]
                     </a>
                 </div>
             </div>

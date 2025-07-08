@@ -1,6 +1,7 @@
-﻿@{
-    ViewData["Title"] = "Home";
-    var badges = new[] { "<i class='fas fa-gem me-1'></i>Exclusiva", "<i class='fas fa-crown me-1'></i>Portugal Deluxe", "<i class='fas fa-eye me-1'></i>Vista Única", "<i class='fas fa-star me-1'></i>Premium", "<i class='fas fa-bolt me-1'></i>Oportunidade", "<i class='fas fa-diamond me-1'></i>Coleção Luxo", "<i class='fas fa-fire me-1'></i>Destaque" };
+﻿@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["HomeTitle"];
+    var badges = new[] { "<i class='fas fa-gem me-1'></i>" + Localizer["Exclusive"].Value, "<i class='fas fa-crown me-1'></i>" + Localizer["PortugalDeluxe"].Value, "<i class='fas fa-eye me-1'></i>" + Localizer["UniqueView"].Value, "<i class='fas fa-star me-1'></i>" + Localizer["Premium"].Value, "<i class='fas fa-bolt me-1'></i>" + Localizer["Opportunity"].Value, "<i class='fas fa-diamond me-1'></i>" + Localizer["LuxuryCollection"].Value, "<i class='fas fa-fire me-1'></i>" + Localizer["Featured"].Value };
     var badgeRnd = new System.Random();
     Func<string, string> getAgencyLogo = (agencyName) => {
         if (string.IsNullOrWhiteSpace(agencyName)) return "/images/placeholder.png";
@@ -21,45 +22,45 @@
             <div class="row align-items-center min-vh-75">
                 <div class="col-lg-6 fade-in-up">
                     <h1 class="display-4 fw-bold mb-4 gradient-text">
-                        Descobre a tua <span class="text-primary">Casa de Sonho</span> com a <span class="gradient-text">ImoSphere</span>!
+                        @Localizer["DiscoverYourDreamHome"] <span class="text-primary">@Localizer["DreamHome"]</span> @Localizer["WithImoSphere"] <span class="gradient-text">@Localizer["ImoSphere"]</span>!
                     </h1>
                     <p class="lead mb-4">
-                        A tua jornada para encontrar o imóvel perfeito começa aqui. Explora listagens premium e vive uma experiência única.
+                        @Localizer["YourJourneyDescription"]
                     </p>
                     <div class="d-flex gap-3 mb-5">
                         <a href="#features" class="btn btn-outline-primary btn-lg smooth-scroll">
-                            <i class="fas fa-info-circle me-2"></i>Saber Mais
+                            <i class="fas fa-info-circle me-2"></i>@Localizer["LearnMore"]
                         </a>
                         <a href="@Url.Action("Properties", "Home")" class="btn btn-primary btn-lg">
-                            <i class="fas fa-home me-2"></i>Ver Propriedades
+                            <i class="fas fa-home me-2"></i>@Localizer["ViewProperties"]
                         </a>
                     </div>
                     <div class="row text-center">
                         <div class="col-4">
                             <div class="stat-item">
                                 <h3 class="text-primary fw-bold counter" data-target="200">0</h3>
-                                <p class="text-muted mb-0">Clientes Felizes</p>
+                                <p class="text-muted mb-0">@Localizer["HappyClients"]</p>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="stat-item">
                                 <h3 class="text-primary fw-bold counter" data-target="10000">0</h3>
-                                <p class="text-muted mb-0">Propriedades</p>
+                                <p class="text-muted mb-0">@Localizer["Properties"]</p>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="stat-item">
                                 <h3 class="text-primary fw-bold counter" data-target="16">0</h3>
-                                <p class="text-muted mb-0">Anos de Experiência</p>
+                                <p class="text-muted mb-0">@Localizer["YearsOfExperience"]</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 slide-in-right">
                     <div class="hero-image-container premium-float">
-                        <img src="~/images/Image.png" alt="Premium Real Estate" class="img-fluid rounded-3 shadow-heavy" />
+                        <img src="~/images/Image.png" alt="@Localizer["PremiumRealEstate"]" class="img-fluid rounded-3 shadow-heavy" />
                         <div class="floating-badge">
-                            <img src="~/images/Selo.png" alt="Premium Badge" class="img-fluid" />
+                            <img src="~/images/Selo.png" alt="@Localizer["PremiumBadge"]" class="img-fluid" />
                         </div>
                     </div>
                 </div>
@@ -73,9 +74,9 @@
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="display-5 fw-bold mb-3">
-                    <i class="fas fa-star text-warning me-2"></i>Propriedades em Destaque
+                    <i class="fas fa-star text-warning me-2"></i>@Localizer["FeaturedProperties"]
                 </h2>
-                <p class="lead text-muted">Descobre as nossas listagens mais populares e premium</p>
+                <p class="lead text-muted">@Localizer["FeaturedPropertiesDescription"]</p>
             </div>
             <div class="row g-4 justify-content-center">
                 @if (ViewBag.FeaturedProperties != null)
@@ -108,7 +109,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <a href="/Properties/Details/@prop.Id" class="btn btn-primary w-100"><i class="fas fa-eye me-2"></i>Ver Detalhes</a>
+                                    <a href="/Properties/Details/@prop.Id" class="btn btn-primary w-100"><i class="fas fa-eye me-2"></i>@Localizer["ViewDetails"]</a>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +118,7 @@
             </div>
             <div class="text-center mt-5">
                 <a href="@Url.Action("Properties", "Home")" class="btn btn-outline-primary btn-lg">
-                    <i class="fas fa-search me-2"></i>Ver Todas as Propriedades
+                    <i class="fas fa-search me-2"></i>@Localizer["ViewAllProperties"]
                 </a>
             </div>
         </div>
@@ -127,16 +128,16 @@
     <section id="features" class="features-section py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="display-5 fw-bold mb-3">Porquê escolher a ImoSphere?</h2>
-                <p class="lead text-muted">A melhor experiência imobiliária premium</p>
+                <h2 class="display-5 fw-bold mb-3">@Localizer["WhyChooseImoSphere"]</h2>
+                <p class="lead text-muted">@Localizer["BestPremiumExperience"]</p>
             </div>
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6">
                     <div class="card feature-card h-100 hover-lift glass-card">
                         <div class="card-body text-center">
                             <div class="feature-icon mb-3 animated-icon"><i class="fas fa-home fa-2x text-primary"></i></div>
-                            <h5 class="card-title">Encontra a Casa dos Sonhos</h5>
-                            <p class="card-text text-muted">Pesquisa avançada para encontrar imóveis à tua medida.</p>
+                            <h5 class="card-title">@Localizer["FindDreamHome"]</h5>
+                            <p class="card-text text-muted">@Localizer["AdvancedSearchDescription"]</p>
                         </div>
                     </div>
                 </div>
@@ -144,8 +145,8 @@
                     <div class="card feature-card h-100 hover-lift glass-card">
                         <div class="card-body text-center">
                             <div class="feature-icon mb-3 animated-icon"><i class="fas fa-chart-line fa-2x text-primary"></i></div>
-                            <h5 class="card-title">Valoriza o teu Imóvel</h5>
-                            <p class="card-text text-muted">Análise de mercado e avaliações detalhadas.</p>
+                            <h5 class="card-title">@Localizer["ValueYourProperty"]</h5>
+                            <p class="card-text text-muted">@Localizer["MarketAnalysisDescription"]</p>
                         </div>
                     </div>
                 </div>
@@ -153,8 +154,8 @@
                     <div class="card feature-card h-100 hover-lift glass-card">
                         <div class="card-body text-center">
                             <div class="feature-icon mb-3 animated-icon"><i class="fas fa-building fa-2x text-primary"></i></div>
-                            <h5 class="card-title">Gestão Eficiente</h5>
-                            <p class="card-text text-muted">Ferramentas para proprietários e profissionais.</p>
+                            <h5 class="card-title">@Localizer["EfficientManagement"]</h5>
+                            <p class="card-text text-muted">@Localizer["ToolsForOwnersDescription"]</p>
                         </div>
                     </div>
                 </div>
@@ -162,8 +163,8 @@
                     <div class="card feature-card h-100 hover-lift glass-card">
                         <div class="card-body text-center">
                             <div class="feature-icon mb-3 animated-icon"><i class="fas fa-lightbulb fa-2x text-primary"></i></div>
-                            <h5 class="card-title">Investimento Inteligente</h5>
-                            <p class="card-text text-muted">Insights e tendências para decisões seguras.</p>
+                            <h5 class="card-title">@Localizer["SmartInvestment"]</h5>
+                            <p class="card-text text-muted">@Localizer["InsightsAndTrendsDescription"]</p>
                         </div>
                     </div>
                 </div>
@@ -176,9 +177,9 @@
         <div class="container position-relative">
             <div class="text-center mb-5">
                 <h2 class="display-5 fw-bold mb-3">
-                    <i class="fas fa-heart text-danger me-2"></i>O que dizem os nossos clientes
+                    <i class="fas fa-heart text-danger me-2"></i>@Localizer["WhatOurClientsSay"]
                 </h2>
-                <p class="lead text-muted">Histórias reais de clientes felizes</p>
+                <p class="lead text-muted">@Localizer["RealStoriesDescription"]</p>
             </div>
             <div class="testimonials-slider-wrapper">
                 <button id="testimonials-prev" class="btn btn-outline-primary slider-arrow slider-arrow-left"><i class="fas fa-chevron-left"></i></button>
@@ -190,9 +191,9 @@
                                 <div class="card testimonial-card h-100 fade-in glass-card">
                                     <div class="card-body text-center">
                                         <div class="testimonial-avatar mb-3"><i class="fas fa-user-circle fa-3x text-primary"></i></div>
-                                        <p class="card-text">"ImoSphere ajudou-me a encontrar a casa dos meus sonhos em 2 semanas! Profissionalismo e simpatia."</p>
-                                        <h6 class="card-title mb-1">Maria Silva</h6>
-                                        <small class="text-muted">Proprietária Feliz</small>
+                                        <p class="card-text">@Localizer["Testimonial1"]</p>
+                                        <h6 class="card-title mb-1">@Localizer["MariaSilva"]</h6>
+                                        <small class="text-muted">@Localizer["HappyOwner"]</small>
                                         <div class="rating mt-2">
                                             <i class="fas fa-star text-warning"></i>
                                             <i class="fas fa-star text-warning"></i>
@@ -207,9 +208,9 @@
                                 <div class="card testimonial-card h-100 fade-in glass-card">
                                     <div class="card-body text-center">
                                         <div class="testimonial-avatar mb-3"><i class="fas fa-user-circle fa-3x text-primary"></i></div>
-                                        <p class="card-text">"Como investidor, valorizo a análise de mercado detalhada e o serviço profissional. Recomendo!"</p>
-                                        <h6 class="card-title mb-1">João Santos</h6>
-                                        <small class="text-muted">Investidor</small>
+                                        <p class="card-text">@Localizer["Testimonial2"]</p>
+                                        <h6 class="card-title mb-1">@Localizer["JoaoSantos"]</h6>
+                                        <small class="text-muted">@Localizer["Investor"]</small>
                                         <div class="rating mt-2">
                                             <i class="fas fa-star text-warning"></i>
                                             <i class="fas fa-star text-warning"></i>
@@ -224,9 +225,9 @@
                                 <div class="card testimonial-card h-100 fade-in glass-card">
                                     <div class="card-body text-center">
                                         <div class="testimonial-avatar mb-3"><i class="fas fa-user-circle fa-3x text-primary"></i></div>
-                                        <p class="card-text">"A plataforma online é incrível! Pude agendar visitas sem sair de casa."</p>
-                                        <h6 class="card-title mb-1">Ana Costa</h6>
-                                        <small class="text-muted">Primeira Compra</small>
+                                        <p class="card-text">@Localizer["Testimonial3"]</p>
+                                        <h6 class="card-title mb-1">@Localizer["AnaCosta"]</h6>
+                                        <small class="text-muted">@Localizer["FirstTimeBuyer"]</small>
                                         <div class="rating mt-2">
                                             <i class="fas fa-star text-warning"></i>
                                             <i class="fas fa-star text-warning"></i>
@@ -246,9 +247,9 @@
                                 <div class="card testimonial-card h-100 fade-in glass-card">
                                     <div class="card-body text-center">
                                         <div class="testimonial-avatar mb-3"><i class="fas fa-user-circle fa-3x text-primary"></i></div>
-                                        <p class="card-text">"O acompanhamento personalizado fez toda a diferença. Senti-me seguro em todas as etapas!"</p>
-                                        <h6 class="card-title mb-1">Carlos Pereira</h6>
-                                        <small class="text-muted">Vendedor Satisfeito</small>
+                                        <p class="card-text">@Localizer["Testimonial4"]</p>
+                                        <h6 class="card-title mb-1">@Localizer["CarlosPereira"]</h6>
+                                        <small class="text-muted">@Localizer["SatisfiedSeller"]</small>
                                         <div class="rating mt-2">
                                             <i class="fas fa-star text-warning"></i>
                                             <i class="fas fa-star text-warning"></i>
@@ -263,9 +264,9 @@
                                 <div class="card testimonial-card h-100 fade-in glass-card">
                                     <div class="card-body text-center">
                                         <div class="testimonial-avatar mb-3"><i class="fas fa-user-circle fa-3x text-primary"></i></div>
-                                        <p class="card-text">"Encontrei o imóvel ideal para o meu negócio graças à ImoSphere. Equipa muito dedicada!"</p>
-                                        <h6 class="card-title mb-1">Sofia Almeida</h6>
-                                        <small class="text-muted">Empresária</small>
+                                        <p class="card-text">@Localizer["Testimonial5"]</p>
+                                        <h6 class="card-title mb-1">@Localizer["SofiaAlmeida"]</h6>
+                                        <small class="text-muted">@Localizer["Businesswoman"]</small>
                                         <div class="rating mt-2">
                                             <i class="fas fa-star text-warning"></i>
                                             <i class="fas fa-star text-warning"></i>
@@ -280,9 +281,9 @@
                                 <div class="card testimonial-card h-100 fade-in glass-card">
                                     <div class="card-body text-center">
                                         <div class="testimonial-avatar mb-3"><i class="fas fa-user-circle fa-3x text-primary"></i></div>
-                                        <p class="card-text">"A rapidez e transparência do processo superaram as minhas expectativas. Recomendo a 100%!"</p>
-                                        <h6 class="card-title mb-1">Ricardo Lopes</h6>
-                                        <small class="text-muted">Comprador</small>
+                                        <p class="card-text">@Localizer["Testimonial6"]</p>
+                                        <h6 class="card-title mb-1">@Localizer["RicardoLopes"]</h6>
+                                        <small class="text-muted">@Localizer["Buyer"]</small>
                                         <div class="rating mt-2">
                                             <i class="fas fa-star text-warning"></i>
                                             <i class="fas fa-star text-warning"></i>
@@ -305,8 +306,8 @@
     <section class="partners-section py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="display-5 fw-bold mb-3">Parceiros de Confiança</h2>
-                <p class="lead text-muted">Trabalhamos com as melhores agências do mercado</p>
+                <h2 class="display-5 fw-bold mb-3">@Localizer["TrustedPartners"]</h2>
+                <p class="lead text-muted">@Localizer["WorkWithBestAgencies"]</p>
             </div>
             <div class="row justify-content-center align-items-center g-4">
                 <div class="col-auto">
@@ -332,10 +333,10 @@
     <section class="cta-section py-5">
         <div class="container text-center">
             <div class="cta-card glass-card p-5 mx-auto">
-                <h2 class="display-5 fw-bold mb-3 gradient-text">Pronto para dar o próximo passo?</h2>
-                <p class="lead text-muted mb-4">Contacta a nossa equipa e começa já a tua jornada imobiliária premium.</p>
+                <h2 class="display-5 fw-bold mb-3 gradient-text">@Localizer["ReadyForNextStep"]</h2>
+                <p class="lead text-muted mb-4">@Localizer["ContactOurTeamDescription"]</p>
                 <a href="@Url.Action("ContactUs", "Home")" class="btn btn-lg btn-primary gradient-btn px-5 py-3">
-                    <i class="fas fa-paper-plane me-2"></i>Contactar Equipa
+                    <i class="fas fa-paper-plane me-2"></i>@Localizer["ContactTeam"]
                 </a>
             </div>
         </div>

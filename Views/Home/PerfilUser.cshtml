@@ -1,6 +1,7 @@
 @model ImoSphere.Models.ApplicationUser
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Perfil Utilizador";
+    ViewData["Title"] = Localizer["UserProfileTitle"];
     var favorites = ViewBag.Favorites as List<ImoSphere.Models.Favorite> ?? new List<ImoSphere.Models.Favorite>();
     var favoritesCount = ViewBag.FavoritesCount ?? 0;
 }

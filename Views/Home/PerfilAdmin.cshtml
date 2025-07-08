@@ -1,6 +1,7 @@
+@inject IViewLocalizer Localizer
 @model ImoSphere.Models.ApplicationUser
 @{
-    ViewData["Title"] = "Perfil de Administrador";
+    ViewData["Title"] = Localizer["AdminProfileTitle"];
     var agency = ViewBag.Agency as string;
     var comerciaisComCasas = ViewBag.ComerciaisComCasas as List<(ImoSphere.Models.ApplicationUser Comercial, List<ImoSphere.Models.Property> Casas)>;
     var logoFile = $"/images/{agency?.ToLower()}.png";
@@ -19,7 +20,7 @@
                             <i class="fas fa-user-tie fa-4x"></i>
                         </div>
                         <div class="profile-badge">
-                            <span class="badge bg-primary">Administrador</span>
+                            <span class="badge bg-primary">@Localizer["AdminBadge"]</span>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -35,10 +36,10 @@
                     <div class="col-lg-3 text-end">
                         <div class="profile-actions">
                             <button id="toggle-properties-btn" class="btn btn-primary">
-                                <i class="fas fa-home me-2"></i>Ver Propriedades
+                                <i class="fas fa-home me-2"></i>@Localizer["ViewProperties"]
                             </button>
                             <button id="toggle-users-btn" class="btn btn-outline-primary mt-2" type="button">
-                                <i class="fas fa-users me-2"></i>Gerir Utilizadores
+                                <i class="fas fa-users me-2"></i>@Localizer["ManageUsers"]
                             </button>
                         </div>
                     </div>
@@ -58,7 +59,7 @@
                         </div>
                         <div class="stat-content">
                             <h3 class="stat-number">@(comerciaisComCasas?.Count ?? 0)</h3>
-                            <p class="stat-label">Membros da Equipa</p>
+                            <p class="stat-label">@Localizer["TeamMembers"]</p>
                         </div>
                     </div>
                 </div>
@@ -70,7 +71,7 @@
                         </div>
                         <div class="stat-content">
                             <h3 class="stat-number">@(comerciaisComCasas?.Sum(x => x.Casas?.Count ?? 0) ?? 0)</h3>
-                            <p class="stat-label">Total de Propriedades</p>
+                            <p class="stat-label">@Localizer["TotalProperties"]</p>
                         </div>
                     </div>
                 </div>
@@ -82,7 +83,7 @@
                         </div>
                         <div class="stat-content">
                             <h3 class="stat-number">€@ImoSphere.Models.Property.ToShortCurrency(comerciaisComCasas?.Sum(x => x.Casas?.Sum(c => c.Price) ?? 0) ?? 0)</h3>
-                            <p class="stat-label">Valor Total</p>
+                            <p class="stat-label">@Localizer["TotalValue"]</p>
                         </div>
                     </div>
                 </div>
@@ -94,7 +95,7 @@
                         </div>
                         <div class="stat-content">
                             <h3 class="stat-number">@(comerciaisComCasas?.Count(x => x.Casas?.Any() == true) ?? 0)</h3>
-                            <p class="stat-label">Agentes Ativos</p>
+                            <p class="stat-label">@Localizer["ActiveAgents"]</p>
                         </div>
                     </div>
                 </div>
@@ -106,13 +107,13 @@
     <div class="container mt-4">
         <ul class="nav nav-tabs" id="adminTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="tab-equipa" data-bs-toggle="tab" data-bs-target="#tabEquipe" type="button" role="tab">Gestão de Equipa</button>
+                <button class="nav-link active" id="tab-equipa" data-bs-toggle="tab" data-bs-target="#tabEquipe" type="button" role="tab">@Localizer["TeamManagementTab"]</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="tab-users" data-bs-toggle="tab" data-bs-target="#tabUsers" type="button" role="tab">Gestão de Utilizadores</button>
+                <button class="nav-link" id="tab-users" data-bs-toggle="tab" data-bs-target="#tabUsers" type="button" role="tab">@Localizer["UserManagementTab"]</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="tab-propriedades" data-bs-toggle="tab" data-bs-target="#tabPropriedades" type="button" role="tab">Gestão de Propriedades</button>
+                <button class="nav-link" id="tab-propriedades" data-bs-toggle="tab" data-bs-target="#tabPropriedades" type="button" role="tab">@Localizer["PropertyManagementTab"]</button>
             </li>
         </ul>
         <div class="tab-content" id="adminTabsContent">
@@ -122,9 +123,9 @@
                     <div class="container">
                         <div class="section-header mb-5">
                             <h2 class="section-title">
-                                <i class="fas fa-users-cog me-2"></i>Gestão da Equipa
+                                <i class="fas fa-users-cog me-2"></i>@Localizer["TeamManagementTitle"]
                             </h2>
-                            <p class="section-subtitle">Gerir a sua equipa comercial e as suas propriedades</p>
+                            <p class="section-subtitle">@Localizer["TeamManagementSubtitle"]</p>
                         </div>
                         @if (comerciaisComCasas != null && comerciaisComCasas.Any())
                         {
@@ -144,7 +145,7 @@
                                                     <p class="member-email">@comercial.Email</p>
                                                     <div class="member-stats">
                                                         <span class="stat-badge">
-                                                            <i class="fas fa-home me-1"></i>@(casas?.Count ?? 0) Propriedades
+                                                            <i class="fas fa-home me-1"></i>@(casas?.Count ?? 0) @Localizer["Properties"]
                                                         </span>
                                                         <span class="stat-badge">
                                                             <i class="fas fa-euro-sign me-1"></i>@((casas?.Sum(c => c.Price) ?? 0).ToString("N0"))
@@ -154,11 +155,11 @@
                                                 <div class="member-status">
                                                     @if (casas?.Any() == true)
                                                     {
-                                                        <span class="status-badge active">Ativo</span>
+                                                        <span class="status-badge active">@Localizer["Active"]</span>
                                                     }
                                                     else
                                                     {
-                                                        <span class="status-badge inactive">Sem Propriedades</span>
+                                                        <span class="status-badge inactive">@Localizer["NoProperties"]</span>
                                                     }
                                                 </div>
                                             </div>
@@ -171,7 +172,7 @@
                                                         var isExtra = i >= 3;
                                                         <div class="property-item property-card team-property-card h-100 hover-lift @(isExtra ? "collapsed-property" : "")" data-property-id="@casa.Id">
                                                             <div class="property-main">
-                                                                <div class="property-drag-handle" title="Arrastar para transferir">
+                                                                <div class="property-drag-handle" title="@Localizer["DragToTransfer"]">
                                                                     <i class="fas fa-grip-lines"></i>
                                                                 </div>
                                                                 <div class="property-info">
@@ -183,10 +184,10 @@
                                                                 </div>
                                                             </div>
                                                             <div class="property-actions">
-                                                                <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-primary" title="Editar">
+                                                                <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-primary" title="@Localizer["Edit"]">
                                                                     <i class="fas fa-edit"></i>
                                                                 </a>
-                                                                <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-info" title="Ver Detalhes">
+                                                                <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-sm btn-outline-info" title="@Localizer["ViewDetails"]">
                                                                     <i class="fas fa-eye"></i>
                                                                 </a>
                                                             </div>
@@ -196,7 +197,7 @@
                                                 @if (casas.Count > 3)
                                                 {
                                                     <button class="btn btn-sm btn-outline-secondary mt-2" type="button" onclick="toggleVerMaisPropriedades('@comercialId', this)">
-                                                        Ver mais @(casas.Count - 3) propriedades
+                                                        @Localizer["ViewMoreProperties", casas.Count - 3]
                                                     </button>
                                                 }
                                             </div>
@@ -210,10 +211,10 @@
                             <div class="empty-team">
                                 <div class="empty-state text-center">
                                     <i class="fas fa-users fa-4x mb-3"></i>
-                                    <h4>Sem Membros da Equipa</h4>
-                                    <p class="text-muted">Ainda não existem utilizadores comerciais nesta agência.</p>
+                                    <h4>@Localizer["NoTeamMembers"]</h4>
+                                    <p class="text-muted">@Localizer["NoCommercialUsers"]</p>
                                     <a href="@Url.Action("CreateUser", "Admin")" class="btn btn-primary">
-                                        <i class="fas fa-user-plus me-2"></i>Adicionar Membro
+                                        <i class="fas fa-user-plus me-2"></i>@Localizer["AddMember"]
                                     </a>
                                 </div>
                             </div>
@@ -231,9 +232,9 @@
                     <div class="container">
                         <div class="section-header mb-5">
                             <h2 class="section-title">
-                                <i class="fas fa-home me-2"></i>Gestão de Propriedades
+                                <i class="fas fa-home me-2"></i>@Localizer["PropertyManagementTitle"]
                             </h2>
-                            <p class="section-subtitle">Todas as propriedades da sua equipa, agrupadas por comercial</p>
+                            <p class="section-subtitle">@Localizer["PropertyManagementSubtitle"]</p>
                         </div>
                         @if (comerciaisComCasas != null && comerciaisComCasas.Any(x => x.Casas.Any()))
                         {
@@ -241,7 +242,7 @@
                             {
                                 var comercialId = comercial.Id;
                                 <div class="comercial-properties mb-5" data-comercial-id="@comercialId">
-                                    <h5 class="mb-3"><i class="fas fa-user me-2"></i>@comercial.UserName <span class="text-muted" style="font-size:0.95em">(@comercial.Email)</span> — <span class="badge bg-secondary">@casas.Count propriedade(s)</span></h5>
+                                    <h5 class="mb-3"><i class="fas fa-user me-2"></i>@comercial.UserName <span class="text-muted" style="font-size:0.95em">(@comercial.Email)</span> — <span class="badge bg-secondary">@casas.Count @Localizer["PropertyCount"]</span></h5>
                                     <div class="row g-4 property-dropzone">
                                         @if (casas != null && casas.Any())
                                         {
@@ -280,17 +281,17 @@
                                                         </div>
                                                         <div class="card-footer">
                                                             <div class="d-flex justify-content-end align-items-center gap-2">
-                                                                <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-outline-warning btn-sm" title="Editar">
+                                                                <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-outline-warning btn-sm" title="@Localizer["Edit"]">
                                                                     <i class="fas fa-edit"></i>
                                                                 </a>
                                                                 <form method="post" action="@Url.Action("Delete", "Properties", new { id = casa.Id })" class="d-inline delete-property-form">
                                                                     @Html.AntiForgeryToken()
-                                                                    <button type="button" class="btn btn-outline-danger btn-sm" title="Eliminar" onclick="confirmDeleteProperty(this, '@casa.Name')">
+                                                                    <button type="button" class="btn btn-outline-danger btn-sm" title="@Localizer["Delete"]" onclick="confirmDeleteProperty(this, '@casa.Name')">
                                                                         <i class="fas fa-trash"></i>
                                                                     </button>
                                                                 </form>
-                                                                <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-outline-primary btn-sm" title="Ver Detalhes">
-                                                                    <i class="fas fa-eye me-1"></i>Ver
+                                                                <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-outline-primary btn-sm" title="@Localizer["ViewDetails"]">
+                                                                    <i class="fas fa-eye me-1"></i>@Localizer["View"]
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -306,8 +307,8 @@
                         {
                             <div class="empty-properties text-center">
                                 <i class="fas fa-home fa-4x mb-3"></i>
-                                <h4>Sem propriedades na equipa</h4>
-                                <p class="text-muted">Nenhum comercial da sua equipa tem propriedades registadas.</p>
+                                <h4>@Localizer["NoTeamProperties"]</h4>
+                                <p class="text-muted">@Localizer["NoTeamPropertiesDesc"]</p>
                             </div>
                         }
                     </div>
@@ -321,9 +322,8 @@
         <div class="container">
             <div class="section-header mb-5">
                 <h2 class="section-title">
-                    <i class="fas fa-bolt me-2"></i>Ações Rápidas
+                    <i class="fas fa-bolt me-2"></i>@Localizer["QuickActionsTitle"]
                 </h2>
-                <p class="section-subtitle">Tarefas administrativas comuns</p>
             </div>
             
             <div class="row g-4">
@@ -332,10 +332,10 @@
                         <div class="action-icon">
                             <i class="fas fa-user-plus fa-2x"></i>
                         </div>
-                        <h5>Adicionar Utilizador</h5>
-                        <p class="text-muted">Criar novos membros da equipa</p>
+                        <h5>@Localizer["AddUser"]</h5>
+                        <p class="text-muted">@Localizer["AddUserDesc"]</p>
                         <a href="@Url.Action("CreateUser", "Admin")" class="btn btn-primary btn-sm">
-                            <i class="fas fa-plus me-1"></i>Adicionar
+                            <i class="fas fa-plus me-1"></i>@Localizer["Add"]
                         </a>
                     </div>
                 </div>
@@ -345,10 +345,10 @@
                         <div class="action-icon">
                             <i class="fas fa-home fa-2x"></i>
                         </div>
-                        <h5>Adicionar Propriedade</h5>
-                        <p class="text-muted">Criar nova listagem de propriedade</p>
+                        <h5>@Localizer["AddProperty"]</h5>
+                        <p class="text-muted">@Localizer["AddPropertyDesc"]</p>
                         <a href="@Url.Action("Create", "Properties")" class="btn btn-success btn-sm">
-                            <i class="fas fa-plus me-1"></i>Adicionar
+                            <i class="fas fa-plus me-1"></i>@Localizer["Add"]
                         </a>
                     </div>
                 </div>
@@ -358,10 +358,10 @@
                         <div class="action-icon">
                             <i class="fas fa-chart-bar fa-2x"></i>
                         </div>
-                        <h5>Ver Relatórios</h5>
-                        <p class="text-muted">Análises e insights</p>
+                        <h5>@Localizer["ViewReports"]</h5>
+                        <p class="text-muted">@Localizer["ReportsDesc"]</p>
                         <a href="#" class="btn btn-info btn-sm">
-                            <i class="fas fa-chart-line me-1"></i>Ver
+                            <i class="fas fa-chart-line me-1"></i>@Localizer["View"]
                         </a>
                     </div>
                 </div>
@@ -371,10 +371,10 @@
                         <div class="action-icon">
                             <i class="fas fa-cog fa-2x"></i>
                         </div>
-                        <h5>Definições</h5>
-                        <p class="text-muted">Gerir definições da agência</p>
+                        <h5>@Localizer["Settings"]</h5>
+                        <p class="text-muted">@Localizer["SettingsDesc"]</p>
                         <a href="#" class="btn btn-warning btn-sm">
-                            <i class="fas fa-cog me-1"></i>Definições
+                            <i class="fas fa-cog me-1"></i>@Localizer["Settings"]
                         </a>
                     </div>
                 </div>
@@ -397,10 +397,10 @@
         var extras = list.querySelectorAll('.collapsed-property');
         if (!isOpen) {
             list.classList.add('show-all');
-            btn.textContent = 'Ver menos propriedades';
+            btn.textContent = Localizer["ViewLessProperties"];
         } else {
             list.classList.remove('show-all');
-            btn.textContent = 'Ver mais ' + extras.length + ' propriedades';
+            btn.textContent = Localizer["ViewMoreProperties", extras.length];
         }
     }
     document.addEventListener('DOMContentLoaded', function() {

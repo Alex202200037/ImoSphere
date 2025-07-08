@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="AboutUsTitle" xml:space="preserve"><value>Sobre Nosotros</value></data>
+  <data name="AboutImoSphere" xml:space="preserve"><value>Sobre <span class='text-primary'>ImoSphere</span></value></data>
+  <data name="AboutUsHeroText" xml:space="preserve"><value>Somos una plataforma inmobiliaria líder dedicada a transformar la forma en que las personas descubren, compran y gestionan propiedades. Con más de 16 años de experiencia, hemos ayudado a miles de familias a encontrar la casa de sus sueños.</value></data>
+  <data name="GetInTouch" xml:space="preserve"><value>Contactar</value></data>
+  <data name="BrowseProperties" xml:space="preserve"><value>Ver Propiedades</value></data>
+  <data name="OurImpactInNumbers" xml:space="preserve"><value>Nuestro Impacto en Números</value></data>
+  <data name="RealResults" xml:space="preserve"><value>Resultados reales que hablan por sí mismos</value></data>
+  <data name="PropertiesListed" xml:space="preserve"><value>Propiedades Listadas</value></data>
+  <data name="HappyCustomers" xml:space="preserve"><value>Clientes Satisfechos</value></data>
+  <data name="PartnerAgencies" xml:space="preserve"><value>Agencias Socias</value></data>
+  <data name="YearsOfExcellence" xml:space="preserve"><value>Años de Excelencia</value></data>
+  <data name="OurStory" xml:space="preserve"><value>Nuestra Historia</value></data>
+  <data name="FoundedText" xml:space="preserve"><value>Fundada en 2008, ImoSphere comenzó con una misión simple: hacer que el sector inmobiliario sea accesible, transparente y agradable para todos.</value></data>
+  <data name="StartedText" xml:space="preserve"><value>Lo que comenzó como una pequeña agencia local se ha convertido en una de las plataformas inmobiliarias más confiables de Portugal. Hemos sido testigos de la evolución del mercado y adaptado nuestros servicios a las necesidades cambiantes de compradores, vendedores e inversores.</value></data>
+  <data name="TodayText" xml:space="preserve"><value>Hoy, estamos orgullosos de servir a miles de clientes satisfechos en todo el país, ayudándoles a navegar por el mundo inmobiliario con confianza y facilidad.</value></data>
+  <data name="BestRealEstatePlatform" xml:space="preserve"><value>Mejor Plataforma Inmobiliaria 2023</value></data>
+  <data name="ISO9001Certified" xml:space="preserve"><value>Certificación ISO 9001</value></data>
+  <data name="CustomerChoiceAward" xml:space="preserve"><value>Premio Elección del Cliente</value></data>
+  <data name="OurValues" xml:space="preserve"><value>Nuestros Valores</value></data>
+  <data name="PrinciplesText" xml:space="preserve"><value>Los principios que guían todo lo que hacemos</value></data>
+  <data name="TrustTransparency" xml:space="preserve"><value>Confianza y Transparencia</value></data>
+  <data name="TrustTransparencyText" xml:space="preserve"><value>Creemos en construir relaciones duraderas a través de la honestidad, la transparencia y la comunicación abierta con nuestros clientes.</value></data>
+  <data name="Innovation" xml:space="preserve"><value>Innovación</value></data>
+  <data name="InnovationText" xml:space="preserve"><value>Innovamos continuamente nuestra plataforma y servicios para brindar la mejor experiencia posible.</value></data>
+  <data name="CustomerFirst" xml:space="preserve"><value>El Cliente Primero</value></data>
+  <data name="CustomerFirstText" xml:space="preserve"><value>Cada decisión que tomamos se centra en brindar un valor y servicio excepcionales a nuestros clientes.</value></data>
+  <data name="MeetOurLeadership" xml:space="preserve"><value>Conozca a la Dirección</value></data>
+  <data name="ExpertsBehindSuccess" xml:space="preserve"><value>Los expertos detrás del éxito de ImoSphere</value></data>
+  <data name="ReadyToFind" xml:space="preserve"><value>¿Listo para Encontrar la Casa de sus Sueños?</value></data>
+  <data name="JoinThousands" xml:space="preserve"><value>Únase a miles de clientes felices que han encontrado la casa perfecta con ImoSphere.</value></data>
+  <data name="StartSearching" xml:space="preserve"><value>Comenzar a Buscar</value></data>
+  <data name="ContactUs" xml:space="preserve"><value>Contáctanos</value></data>
+</root> 

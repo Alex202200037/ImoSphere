@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="ContactMessagesTitle" xml:space="preserve"><value>Contact Messages</value></data>
+  <data name="NoMessagesYet" xml:space="preserve"><value>No messages have been received yet.</value></data>
+  <data name="Name" xml:space="preserve"><value>Name</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Message" xml:space="preserve"><value>Message</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="Read" xml:space="preserve"><value>Read</value></data>
+  <data name="Unread" xml:space="preserve"><value>Unread</value></data>
+  <data name="MarkAsRead" xml:space="preserve"><value>Mark as read</value></data>
+  <data name="ConfirmDeleteMessage" xml:space="preserve"><value>Are you sure you want to delete this message?</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+</root> 

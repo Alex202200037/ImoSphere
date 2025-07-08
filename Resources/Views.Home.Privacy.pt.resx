@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="PrivacyPolicy" xml:space="preserve"><value>Política de Privacidade</value></data>
+  <data name="PrivacyPolicyDescription" xml:space="preserve"><value>A sua privacidade é importante para nós. Esta política explica como recolhemos, utilizamos e protegemos a sua informação pessoal.</value></data>
+  <data name="LastUpdated" xml:space="preserve"><value>Última atualização: 2025</value></data>
+  <data name="LastUpdatedDate" xml:space="preserve"><value>Dezembro 2024</value></data>
+  <data name="Contents" xml:space="preserve"><value>Conteúdo</value></data>
+  <data name="Introduction" xml:space="preserve"><value>Introdução</value></data>
+  <data name="InformationCollection" xml:space="preserve"><value>Recolha de Informação</value></data>
+  <data name="HowWeUseInformation" xml:space="preserve"><value>Como Utilizamos a Informação</value></data>
+  <data name="InformationSharing" xml:space="preserve"><value>Partilha de Informação</value></data>
+  <data name="DataSecurity" xml:space="preserve"><value>Segurança de Dados</value></data>
+  <data name="YourRights" xml:space="preserve"><value>Os Seus Direitos</value></data>
+  <data name="CookiesPolicy" xml:space="preserve"><value>Política de Cookies</value></data>
+  <data name="ContactUs" xml:space="preserve"><value>Contacte-nos</value></data>
+  <data name="IntroductionDescription" xml:space="preserve"><value>A ImoSphere está comprometida em proteger a sua privacidade e garantir a segurança dos seus dados pessoais. Esta Política de Privacidade explica como recolhemos, utilizamos e protegemos a sua informação.</value></data>
+  <data name="KeyPoints" xml:space="preserve"><value>Pontos Principais</value></data>
+  <data name="KeyPoint1" xml:space="preserve"><value>Só recolhemos informação necessária para os nossos serviços</value></data>
+  <data name="KeyPoint2" xml:space="preserve"><value>Os seus dados são protegidos com segurança de padrão da indústria</value></data>
+  <data name="KeyPoint3" xml:space="preserve"><value>Tem controlo total sobre a sua informação pessoal</value></data>
+  <data name="KeyPoint4" xml:space="preserve"><value>Nunca vendemos os seus dados pessoais a terceiros</value></data>
+  <data name="InformationWeCollect" xml:space="preserve"><value>Informação que Recolhemos</value></data>
+  <data name="PersonalInformation" xml:space="preserve"><value>Informação Pessoal</value></data>
+  <data name="PersonalInformationDescription" xml:space="preserve"><value>Recolhemos os seguintes tipos de informação pessoal:</value></data>
+  <data name="AccountInformation" xml:space="preserve"><value>Informação da Conta</value></data>
+  <data name="AccountInformationItem1" xml:space="preserve"><value>Nome e dados de contacto</value></data>
+  <data name="AccountInformationItem2" xml:space="preserve"><value>Endereço de email e número de telefone</value></data>
+  <data name="AccountInformationItem3" xml:space="preserve"><value>Informação do perfil</value></data>
+  <data name="AccountInformationItem4" xml:space="preserve"><value>Preferências do utilizador</value></data>
+  <data name="PropertyInformation" xml:space="preserve"><value>Informação de Propriedades</value></data>
+  <data name="PropertyInformationItem1" xml:space="preserve"><value>Critérios de pesquisa de propriedades</value></data>
+  <data name="PropertyInformationItem2" xml:space="preserve"><value>Favoritos e propriedades guardadas</value></data>
+  <data name="PropertyInformationItem3" xml:space="preserve"><value>Histórico de visualizações</value></data>
+  <data name="PropertyInformationItem4" xml:space="preserve"><value>Consultas sobre propriedades</value></data>
+  <data name="AutomaticallyCollectedInformation" xml:space="preserve"><value>Informação Recolhida Automaticamente</value></data>
+  <data name="AutomaticallyCollectedInformationDescription" xml:space="preserve"><value>Quando utiliza a nossa plataforma, recolhemos automaticamente:</value></data>
+  <data name="IPAddressAndLocationData" xml:space="preserve"><value>Endereço IP e dados de localização</value></data>
+  <data name="DeviceAndBrowserInformation" xml:space="preserve"><value>Informação do dispositivo e navegador</value></data>
+  <data name="UsagePatternsAndAnalytics" xml:space="preserve"><value>Padrões de utilização e análises</value></data>
+  <data name="CookieAndTrackingData" xml:space="preserve"><value>Dados de cookies e rastreamento</value></data>
+  <data name="HowWeUseYourInformation" xml:space="preserve"><value>Como Utilizamos a Sua Informação</value></data>
+  <data name="HowWeUseYourInformationDescription" xml:space="preserve"><value>Utilizamos a sua informação para os seguintes fins:</value></data>
+  <data name="ServiceProvision" xml:space="preserve"><value>Prestação de Serviços</value></data>
+  <data name="ServiceProvisionDescription" xml:space="preserve"><value>Para fornecer e manter os nossos serviços imobiliários, incluindo pesquisas de propriedades, listagens e contas de utilizador.</value></data>
+  <data name="Communication" xml:space="preserve"><value>Comunicação</value></data>
+  <data name="CommunicationDescription" xml:space="preserve"><value>Para enviar atualizações, notificações e responder às suas consultas e pedidos de suporte.</value></data>
+  <data name="Analytics" xml:space="preserve"><value>Análises</value></data>
+  <data name="AnalyticsDescription" xml:space="preserve"><value>Para analisar padrões de utilização, melhorar os nossos serviços e desenvolver novas funcionalidades.</value></data>
+  <data name="Security" xml:space="preserve"><value>Segurança</value></data>
+  <data name="SecurityDescription" xml:space="preserve"><value>Para proteger contra fraude, abuso e garantir a segurança da nossa plataforma e utilizadores.</value></data>
+  <data name="InformationSharingDescription" xml:space="preserve"><value>Não vendemos, negociamos ou alugamos a sua informação pessoal a terceiros. Podemos partilhar a sua informação nas seguintes circunstâncias:</value></data>
+  <data name="WithYourConsent" xml:space="preserve"><value>Com o Seu Consentimento</value></data>
+  <data name="WithYourConsentDescription" xml:space="preserve"><value>Quando autoriza explicitamente a partilha da sua informação com partes específicas.</value></data>
+  <data name="RealEstatePartners" xml:space="preserve"><value>Parceiros Imobiliários</value></data>
+  <data name="RealEstatePartnersDescription" xml:space="preserve"><value>Com agências imobiliárias e profissionais de confiança para facilitar transações de propriedades.</value></data>
+  <data name="LegalRequirements" xml:space="preserve"><value>Requisitos Legais</value></data>
+  <data name="LegalRequirementsDescription" xml:space="preserve"><value>Quando exigido por lei, ordem judicial ou regulamentação governamental.</value></data>
+  <data name="SecurityProtection" xml:space="preserve"><value>Segurança e Proteção</value></data>
+  <data name="SecurityProtectionDescription" xml:space="preserve"><value>Para proteger os nossos direitos, propriedade ou segurança, ou dos nossos utilizadores ou do público.</value></data>
+  <data name="DataSecurityDescription" xml:space="preserve"><value>Implementamos medidas de segurança abrangentes para proteger a sua informação pessoal:</value></data>
+  <data name="Encryption" xml:space="preserve"><value>Criptografia</value></data>
+  <data name="EncryptionDescription" xml:space="preserve"><value>Todos os dados são criptografados usando protocolos SSL/TLS de padrão da indústria</value></data>
+  <data name="SecureServers" xml:space="preserve"><value>Servidores Seguros</value></data>
+  <data name="SecureServersDescription" xml:space="preserve"><value>Os dados são armazenados em servidores seguros e monitorizados com backups regulares</value></data>
+  <data name="AccessControl" xml:space="preserve"><value>Controlo de Acesso</value></data>
+  <data name="AccessControlDescription" xml:space="preserve"><value>Controlos de acesso rigorosos e autenticação para todo o acesso a dados</value></data>
+  <data name="RegularAudits" xml:space="preserve"><value>Auditorias Regulares</value></data>
+  <data name="RegularAuditsDescription" xml:space="preserve"><value>Auditorias de segurança regulares e avaliações de vulnerabilidades</value></data>
+  <data name="YourRightsDescription" xml:space="preserve"><value>Nos termos das leis de proteção de dados aplicáveis, tem os seguintes direitos:</value></data>
+  <data name="RightToAccess" xml:space="preserve"><value>Direito de Acesso</value></data>
+  <data name="RightToAccessDescription" xml:space="preserve"><value>Solicitar uma cópia dos seus dados pessoais e informação sobre como os processamos.</value></data>
+  <data name="RightToRectification" xml:space="preserve"><value>Direito de Retificação</value></data>
+  <data name="RightToRectificationDescription" xml:space="preserve"><value>Solicitar correção de dados pessoais inexatos ou incompletos.</value></data>
+  <data name="RightToErasure" xml:space="preserve"><value>Direito de Apagamento</value></data>
+  <data name="RightToErasureDescription" xml:space="preserve"><value>Solicitar eliminação dos seus dados pessoais em determinadas circunstâncias.</value></data>
+  <data name="RightToRestriction" xml:space="preserve"><value>Direito de Limitação</value></data>
+  <data name="RightToRestrictionDescription" xml:space="preserve"><value>Solicitar limitação do processamento em determinadas circunstâncias.</value></data>
+  <data name="RightToPortability" xml:space="preserve"><value>Direito de Portabilidade</value></data>
+  <data name="RightToPortabilityDescription" xml:space="preserve"><value>Receber os seus dados num formato estruturado e legível por máquina.</value></data>
+  <data name="RightToObject" xml:space="preserve"><value>Direito de Oposição</value></data>
+  <data name="RightToObjectDescription" xml:space="preserve"><value>Opor-se ao processamento dos seus dados para determinados fins.</value></data>
+  <data name="ExerciseYourRights" xml:space="preserve"><value>Exercer os Seus Direitos</value></data>
+  <data name="ExerciseYourRightsDescription" xml:space="preserve"><value>Para exercer qualquer destes direitos, contacte-nos em:</value></data>
+  <data name="CookiesPolicyDescription" xml:space="preserve"><value>Utilizamos cookies e tecnologias similares para melhorar a sua experiência na nossa plataforma:</value></data>
+  <data name="EssentialCookies" xml:space="preserve"><value>Cookies Essenciais</value></data>
+  <data name="EssentialCookiesDescription" xml:space="preserve"><value>Necessários para a funcionalidade básica e segurança da plataforma.</value></data>
+  <data name="CannotBeDisabled" xml:space="preserve"><value>Não podem ser desativados</value></data>
+  <data name="AnalyticsCookies" xml:space="preserve"><value>Cookies de Análise</value></data>
+  <data name="AnalyticsCookiesDescription" xml:space="preserve"><value>Ajudam-nos a entender como os visitantes interagem com a nossa plataforma.</value></data>
+  <data name="CanBeDisabled" xml:space="preserve"><value>Podem ser desativados</value></data>
+  <data name="MarketingCookies" xml:space="preserve"><value>Cookies de Marketing</value></data>
+  <data name="MarketingCookiesDescription" xml:space="preserve"><value>Utilizados para entregar anúncios e conteúdo relevantes.</value></data>
+  <data name="CookiePreferences" xml:space="preserve"><value>Preferências de Cookies</value></data>
+  <data name="CookiePreferencesDescription" xml:space="preserve"><value>Pode gerir as suas preferências de cookies através das definições do seu navegador ou da nossa ferramenta de consentimento de cookies.</value></data>
+  <data name="ManageCookieSettings" xml:space="preserve"><value>Gerir Definições de Cookies</value></data>
+  <data name="ContactUsDescription" xml:space="preserve"><value>Se tiver alguma questão sobre esta Política de Privacidade ou as nossas práticas de dados, contacte-nos:</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Phone" xml:space="preserve"><value>Telefone</value></data>
+  <data name="Address" xml:space="preserve"><value>Endereço</value></data>
+  <data name="FullAddress" xml:space="preserve"><value>Rua das Flores, 123&lt;br&gt;1200-000 Lisboa, Portugal</value></data>
+  <data name="EmailAddress" xml:space="preserve"><value>privacy@imosphere.com</value></data>
+  <data name="PhoneNumber" xml:space="preserve"><value>+351 123 456 789</value></data>
+  <data name="AddressDescription" xml:space="preserve"><value>Rua das Flores, 123&lt;br&gt;1200-000 Lisboa, Portugal</value></data>
+  <data name="IntroductionCompliance" xml:space="preserve"><value>Ao utilizar os nossos serviços, concorda com a recolha e utilização de informação de acordo com esta política. Estamos comprometidos em cumprir as leis de proteção de dados aplicáveis, incluindo o Regulamento Geral de Proteção de Dados (RGPD) e a legislação portuguesa de proteção de dados.</value></data>
+</root> 

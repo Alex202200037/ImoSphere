@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="AboutUsTitle" xml:space="preserve"><value>About Us</value></data>
+  <data name="AboutImoSphere" xml:space="preserve"><value>About <span class='text-primary'>ImoSphere</span></value></data>
+  <data name="AboutUsHeroText" xml:space="preserve"><value>We are a leading real estate platform dedicated to transforming the way people discover, buy, and manage properties. With over 16 years of experience, we've helped thousands of families find their dream homes.</value></data>
+  <data name="GetInTouch" xml:space="preserve"><value>Get in Touch</value></data>
+  <data name="BrowseProperties" xml:space="preserve"><value>Browse Properties</value></data>
+  <data name="OurImpactInNumbers" xml:space="preserve"><value>Our Impact in Numbers</value></data>
+  <data name="RealResults" xml:space="preserve"><value>Real results that speak for themselves</value></data>
+  <data name="PropertiesListed" xml:space="preserve"><value>Properties Listed</value></data>
+  <data name="HappyCustomers" xml:space="preserve"><value>Happy Customers</value></data>
+  <data name="PartnerAgencies" xml:space="preserve"><value>Partner Agencies</value></data>
+  <data name="YearsOfExcellence" xml:space="preserve"><value>Years of Excellence</value></data>
+  <data name="OurStory" xml:space="preserve"><value>Our Story</value></data>
+  <data name="FoundedText" xml:space="preserve"><value>Founded in 2008, ImoSphere began with a simple mission: to make real estate accessible, transparent, and enjoyable for everyone.</value></data>
+  <data name="StartedText" xml:space="preserve"><value>What started as a small local agency has grown into one of Portugal's most trusted real estate platforms. We've witnessed the evolution of the market and adapted our services to meet the changing needs of buyers, sellers, and investors.</value></data>
+  <data name="TodayText" xml:space="preserve"><value>Today, we're proud to serve thousands of satisfied customers across the country, helping them navigate the complex world of real estate with confidence and ease.</value></data>
+  <data name="BestRealEstatePlatform" xml:space="preserve"><value>Best Real Estate Platform 2023</value></data>
+  <data name="ISO9001Certified" xml:space="preserve"><value>ISO 9001 Certified</value></data>
+  <data name="CustomerChoiceAward" xml:space="preserve"><value>Customer Choice Award</value></data>
+  <data name="OurValues" xml:space="preserve"><value>Our Values</value></data>
+  <data name="PrinciplesText" xml:space="preserve"><value>The principles that guide everything we do</value></data>
+  <data name="TrustTransparency" xml:space="preserve"><value>Trust &amp; Transparency</value></data>
+  <data name="TrustTransparencyText" xml:space="preserve"><value>We believe in building lasting relationships through honesty, transparency, and open communication with our clients.</value></data>
+  <data name="Innovation" xml:space="preserve"><value>Innovation</value></data>
+  <data name="InnovationText" xml:space="preserve"><value>We continuously innovate our platform and services to provide the best possible experience for our users.</value></data>
+  <data name="CustomerFirst" xml:space="preserve"><value>Customer First</value></data>
+  <data name="CustomerFirstText" xml:space="preserve"><value>Every decision we make is centered around providing exceptional value and service to our customers.</value></data>
+  <data name="MeetOurLeadership" xml:space="preserve"><value>Meet Our Leadership</value></data>
+  <data name="ExpertsBehindSuccess" xml:space="preserve"><value>The experts behind ImoSphere's success</value></data>
+  <data name="ReadyToFind" xml:space="preserve"><value>Ready to Find Your Dream Property?</value></data>
+  <data name="JoinThousands" xml:space="preserve"><value>Join thousands of happy customers who have found their perfect home with ImoSphere.</value></data>
+  <data name="StartSearching" xml:space="preserve"><value>Start Searching</value></data>
+  <data name="ContactUs" xml:space="preserve"><value>Contact Us</value></data>
+</root> 

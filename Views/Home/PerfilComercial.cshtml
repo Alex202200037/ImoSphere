@@ -1,6 +1,7 @@
+@inject IViewLocalizer Localizer
 @model ImoSphere.Models.ApplicationUser
 @{
-    ViewData["Title"] = "Perfil Comercial";
+    ViewData["Title"] = Localizer["CommercialProfileTitle"];
     var casas = ViewBag.Casas as List<ImoSphere.Models.Property>;
     var agency = ViewBag.Agency as string;
     var logoFile = $"/images/{agency?.ToLower()}.png";
@@ -19,7 +20,7 @@
                             <i class="fas fa-user fa-4x"></i>
                         </div>
                         <div class="profile-badge">
-                            <span class="badge bg-success">Comercial</span>
+                            <span class="badge bg-success">@Localizer["CommercialBadge"]</span>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -35,10 +36,10 @@
                     <div class="col-lg-3 text-end">
                         <div class="profile-actions">
                             <a href="@Url.Action("Properties", "Home", new { agency = agency })" class="btn btn-primary">
-                                <i class="fas fa-home me-2"></i>Ver Propriedades
+                                <i class="fas fa-home me-2"></i>@Localizer["ViewProperties"]
                             </a>
                             <a href="@Url.Action("Create", "Properties")" class="btn btn-success mt-2">
-                                <i class="fas fa-plus me-2"></i>Adicionar Propriedade
+                                <i class="fas fa-plus me-2"></i>@Localizer["AddProperty"]
                             </a>
                         </div>
                     </div>
@@ -58,7 +59,7 @@
                         </div>
                         <div class="stat-content">
                             <h3 class="stat-number">@(casas?.Count ?? 0)</h3>
-                            <p class="stat-label">Minhas Propriedades</p>
+                            <p class="stat-label">@Localizer["MyProperties"]</p>
                         </div>
                     </div>
                 </div>
@@ -70,7 +71,7 @@
                         </div>
                         <div class="stat-content">
                             <h3 class="stat-number">€@(casas?.Sum(c => c.Price).ToString("N0") ?? "0")</h3>
-                            <p class="stat-label">Valor Total</p>
+                            <p class="stat-label">@Localizer["TotalValue"]</p>
                         </div>
                     </div>
                 </div>
@@ -82,7 +83,7 @@
                         </div>
                         <div class="stat-content">
                             <h3 class="stat-number">@(casas != null && casas.Any() ? casas.Average(c => c.Price).ToString("N0") : "0")</h3>
-                            <p class="stat-label">Preço Médio</p>
+                            <p class="stat-label">@Localizer["AveragePrice"]</p>
                         </div>
                     </div>
                 </div>
@@ -95,9 +96,9 @@
         <div class="container">
             <div class="section-header mb-5">
                 <h2 class="section-title">
-                    <i class="fas fa-home me-2"></i>As Minhas Propriedades
+                    <i class="fas fa-home me-2"></i>@Localizer["MyPropertiesTitle"]
                 </h2>
-                <p class="section-subtitle">Gerir as suas listagens de propriedades</p>
+                <p class="section-subtitle">@Localizer["MyPropertiesSubtitle"]</p>
             </div>
             
             @if (casas != null && casas.Any())
@@ -136,11 +137,11 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-flex justify-content-end align-items-center gap-2">
-                                        <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-outline-warning btn-sm" title="Editar">
+                                        <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-outline-warning btn-sm" title="@Localizer["Edit"]">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-outline-primary btn-sm" title="Ver Detalhes">
-                                            <i class="fas fa-eye me-1"></i>Ver
+                                        <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-outline-primary btn-sm" title="@Localizer["ViewDetails"]">
+                                            <i class="fas fa-eye me-1"></i>@Localizer["View"]
                                         </a>
                                     </div>
                                 </div>
@@ -154,10 +155,10 @@
                 <div class="empty-properties">
                     <div class="empty-state text-center">
                         <i class="fas fa-home fa-4x mb-3"></i>
-                        <h4>Sem Propriedades</h4>
-                        <p class="text-muted">Ainda não criou nenhuma propriedade.</p>
+                        <h4>@Localizer["NoProperties"]</h4>
+                        <p class="text-muted">@Localizer["NoPropertiesCreated"]</p>
                         <a href="@Url.Action("Create", "Properties")" class="btn btn-primary">
-                            <i class="fas fa-plus me-2"></i>Criar Primeira Propriedade
+                            <i class="fas fa-plus me-2"></i>@Localizer["CreateFirstProperty"]
                         </a>
                     </div>
                 </div>
@@ -170,9 +171,9 @@
         <div class="container">
             <div class="section-header mb-5">
                 <h2 class="section-title">
-                    <i class="fas fa-bolt me-2"></i>Ações Rápidas
+                    <i class="fas fa-bolt me-2"></i>@Localizer["QuickActionsTitle"]
                 </h2>
-                <p class="section-subtitle">Tarefas comuns do seu dia a dia</p>
+                <p class="section-subtitle">@Localizer["QuickActionsSubtitle"]</p>
             </div>
             
             <div class="row g-4">
@@ -181,10 +182,10 @@
                         <div class="action-icon">
                             <i class="fas fa-plus"></i>
                         </div>
-                        <h5>Adicionar Propriedade</h5>
-                        <p class="text-muted">Criar nova listagem de propriedade</p>
+                        <h5>@Localizer["AddProperty"]</h5>
+                        <p class="text-muted">@Localizer["AddPropertyDesc"]</p>
                         <a href="@Url.Action("Create", "Properties")" class="btn btn-success btn-sm">
-                            <i class="fas fa-plus me-1"></i>Adicionar
+                            <i class="fas fa-plus me-1"></i>@Localizer["Add"]
                         </a>
                     </div>
                 </div>
@@ -194,10 +195,10 @@
                         <div class="action-icon">
                             <i class="fas fa-list"></i>
                         </div>
-                        <h5>Ver Todas as Propriedades</h5>
-                        <p class="text-muted">Explorar todas as propriedades da agência</p>
+                        <h5>@Localizer["ViewAllProperties"]</h5>
+                        <p class="text-muted">@Localizer["ViewAllPropertiesDesc"]</p>
                         <a href="@Url.Action("Properties", "Home", new { agency = agency })" class="btn btn-primary btn-sm">
-                            <i class="fas fa-eye me-1"></i>Ver
+                            <i class="fas fa-eye me-1"></i>@Localizer["View"]
                         </a>
                     </div>
                 </div>
@@ -207,10 +208,10 @@
                         <div class="action-icon">
                             <i class="fas fa-chart-bar fa-2x"></i>
                         </div>
-                        <h5>Ver Estatísticas</h5>
-                        <p class="text-muted">Analisar o desempenho das suas propriedades</p>
+                        <h5>@Localizer["ViewStatistics"]</h5>
+                        <p class="text-muted">@Localizer["ViewStatisticsDesc"]</p>
                         <a href="#" class="btn btn-info btn-sm">
-                            <i class="fas fa-chart-line me-1"></i>Ver
+                            <i class="fas fa-chart-line me-1"></i>@Localizer["View"]
                         </a>
                     </div>
                 </div>

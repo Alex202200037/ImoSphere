@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="ServicesTitle" xml:space="preserve"><value>Serviços</value></data>
+  <data name="ServicesDescription" xml:space="preserve"><value>Descubra a nossa gama completa de serviços imobiliários premium</value></data>
+  <data name="PropertySearchServices" xml:space="preserve"><value>Serviços de Pesquisa de Propriedades</value></data>
+  <data name="AdvancedPropertySearch" xml:space="preserve"><value>Pesquisa Avançada de Propriedades</value></data>
+  <data name="AdvancedPropertySearchDescription" xml:space="preserve"><value>Ferramentas avançadas para encontrar a propriedade perfeita</value></data>
+  <data name="SearchFeature1" xml:space="preserve"><value>Filtros personalizados</value></data>
+  <data name="SearchFeature2" xml:space="preserve"><value>Notificações em tempo real</value></data>
+  <data name="SearchFeature3" xml:space="preserve"><value>Comparação de propriedades</value></data>
+  <data name="LocationBasedSearch" xml:space="preserve"><value>Pesquisa por Localização</value></data>
+  <data name="LocationBasedSearchDescription" xml:space="preserve"><value>Encontre propriedades em áreas específicas</value></data>
+  <data name="LocationFeature1" xml:space="preserve"><value>Mapas interativos</value></data>
+  <data name="LocationFeature2" xml:space="preserve"><value>Análise de bairros</value></data>
+  <data name="LocationFeature3" xml:space="preserve"><value>Informações de transporte</value></data>
+  <data name="FavoritesAndAlerts" xml:space="preserve"><value>Favoritos e Alertas</value></data>
+  <data name="FavoritesAndAlertsDescription" xml:space="preserve"><value>Guarde e acompanhe as suas propriedades favoritas</value></data>
+  <data name="FavoritesFeature1" xml:space="preserve"><value>Lista de favoritos</value></data>
+  <data name="FavoritesFeature2" xml:space="preserve"><value>Alertas de preço</value></data>
+  <data name="FavoritesFeature3" xml:space="preserve"><value>Atualizações automáticas</value></data>
+  <data name="PropertyManagementServices" xml:space="preserve"><value>Serviços de Gestão de Propriedades</value></data>
+  <data name="PropertyValuation" xml:space="preserve"><value>Avaliação de Propriedades</value></data>
+  <data name="PropertyValuationDescription" xml:space="preserve"><value>Avaliações precisas e detalhadas</value></data>
+  <data name="ValuationFeature1" xml:space="preserve"><value>Análise de mercado</value></data>
+  <data name="ValuationFeature2" xml:space="preserve"><value>Relatórios detalhados</value></data>
+  <data name="ValuationFeature3" xml:space="preserve"><value>Comparação de preços</value></data>
+  <data name="ProfessionalPhotography" xml:space="preserve"><value>Fotografia Profissional</value></data>
+  <data name="ProfessionalPhotographyDescription" xml:space="preserve"><value>Fotografia de alta qualidade para destacar propriedades</value></data>
+  <data name="PhotographyFeature1" xml:space="preserve"><value>Fotos profissionais</value></data>
+  <data name="PhotographyFeature2" xml:space="preserve"><value>Vídeos 360°</value></data>
+  <data name="PhotographyFeature3" xml:space="preserve"><value>Drones para exteriores</value></data>
+  <data name="LegalSupport" xml:space="preserve"><value>Apoio Jurídico</value></data>
+  <data name="LegalSupportDescription" xml:space="preserve"><value>Apoio legal completo para transações imobiliárias</value></data>
+  <data name="LegalFeature1" xml:space="preserve"><value>Revisão de contratos</value></data>
+  <data name="LegalFeature2" xml:space="preserve"><value>Aconselhamento legal</value></data>
+  <data name="LegalFeature3" xml:space="preserve"><value>Documentação completa</value></data>
+  <data name="InvestmentServices" xml:space="preserve"><value>Serviços de Investimento</value></data>
+  <data name="MarketAnalysis" xml:space="preserve"><value>Análise de Mercado</value></data>
+  <data name="MarketAnalysisDescription" xml:space="preserve"><value>Análises detalhadas do mercado imobiliário</value></data>
+  <data name="AnalysisFeature1" xml:space="preserve"><value>Tendências de mercado</value></data>
+  <data name="AnalysisFeature2" xml:space="preserve"><value>Previsões de preços</value></data>
+  <data name="AnalysisFeature3" xml:space="preserve"><value>Relatórios de investimento</value></data>
+  <data name="ROICalculator" xml:space="preserve"><value>Calculadora de ROI</value></data>
+  <data name="ROICalculatorDescription" xml:space="preserve"><value>Calcule o retorno do seu investimento</value></data>
+  <data name="ROIFeature1" xml:space="preserve"><value>Cálculos automáticos</value></data>
+  <data name="ROIFeature2" xml:space="preserve"><value>Análise de custos</value></data>
+  <data name="ROIFeature3" xml:space="preserve"><value>Projeções de lucro</value></data>
+  <data name="InvestmentConsulting" xml:space="preserve"><value>Consultoria de Investimento</value></data>
+  <data name="InvestmentConsultingDescription" xml:space="preserve"><value>Aconselhamento especializado para investidores</value></data>
+  <data name="ConsultingFeature1" xml:space="preserve"><value>Estratégias de investimento</value></data>
+  <data name="ConsultingFeature2" xml:space="preserve"><value>Análise de risco</value></data>
+  <data name="ConsultingFeature3" xml:space="preserve"><value>Planeamento financeiro</value></data>
+  <data name="PremiumServices" xml:space="preserve"><value>Serviços Premium</value></data>
+  <data name="Premium" xml:space="preserve"><value>Premium</value></data>
+  <data name="PersonalConsultant" xml:space="preserve"><value>Consultor Pessoal</value></data>
+  <data name="PersonalConsultantDescription" xml:space="preserve"><value>Um consultor dedicado para acompanhar todo o processo</value></data>
+  <data name="ConsultantFeature1" xml:space="preserve"><value>Acompanhamento personalizado</value></data>
+  <data name="ConsultantFeature2" xml:space="preserve"><value>Visitas guiadas</value></data>
+  <data name="ConsultantFeature3" xml:space="preserve"><value>Negociação assistida</value></data>
+  <data name="VirtualTours" xml:space="preserve"><value>Visitas Virtuais</value></data>
+  <data name="VirtualToursDescription" xml:space="preserve"><value>Visite propriedades sem sair de casa</value></data>
+  <data name="VirtualToursFeature1" xml:space="preserve"><value>Visitas 360°</value></data>
+  <data name="VirtualToursFeature2" xml:space="preserve"><value>Guias virtuais</value></data>
+  <data name="VirtualToursFeature3" xml:space="preserve"><value>Agendamento online</value></data>
+  <data name="ReadyToStart" xml:space="preserve"><value>Pronto para começar?</value></data>
+  <data name="ContactUsForServices" xml:space="preserve"><value>Contacte-nos para saber mais sobre os nossos serviços</value></data>
+  <data name="ContactUs" xml:space="preserve"><value>Contacte-nos</value></data>
+</root> 

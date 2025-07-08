@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="CommercialProfileTitle" xml:space="preserve">
+    <value>Commercial Profile</value>
+  </data>
+  <data name="CommercialBadge" xml:space="preserve">
+    <value>Commercial</value>
+  </data>
+  <data name="ViewProperties" xml:space="preserve">
+    <value>View Properties</value>
+  </data>
+  <data name="AddProperty" xml:space="preserve">
+    <value>Add Property</value>
+  </data>
+  <data name="MyProperties" xml:space="preserve">
+    <value>My Properties</value>
+  </data>
+  <data name="TotalValue" xml:space="preserve">
+    <value>Total Value</value>
+  </data>
+  <data name="AveragePrice" xml:space="preserve">
+    <value>Average Price</value>
+  </data>
+  <data name="MyPropertiesTitle" xml:space="preserve">
+    <value>My Properties</value>
+  </data>
+  <data name="MyPropertiesSubtitle" xml:space="preserve">
+    <value>Manage your property listings</value>
+  </data>
+  <data name="NoProperties" xml:space="preserve">
+    <value>No Properties</value>
+  </data>
+  <data name="NoPropertiesCreated" xml:space="preserve">
+    <value>You haven't created any properties yet.</value>
+  </data>
+  <data name="CreateFirstProperty" xml:space="preserve">
+    <value>Create First Property</value>
+  </data>
+  <data name="QuickActionsTitle" xml:space="preserve">
+    <value>Quick Actions</value>
+  </data>
+  <data name="QuickActionsSubtitle" xml:space="preserve">
+    <value>Common daily tasks</value>
+  </data>
+  <data name="AddPropertyDesc" xml:space="preserve">
+    <value>Create new property listing</value>
+  </data>
+  <data name="ViewAllProperties" xml:space="preserve">
+    <value>View All Properties</value>
+  </data>
+  <data name="ViewAllPropertiesDesc" xml:space="preserve">
+    <value>Explore all agency properties</value>
+  </data>
+  <data name="ViewStatistics" xml:space="preserve">
+    <value>View Statistics</value>
+  </data>
+  <data name="ViewStatisticsDesc" xml:space="preserve">
+    <value>Analyze your properties performance</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>View Details</value>
+  </data>
+</root> 

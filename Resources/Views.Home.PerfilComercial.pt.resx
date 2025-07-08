@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="CommercialProfileTitle" xml:space="preserve">
+    <value>Perfil Comercial</value>
+  </data>
+  <data name="CommercialBadge" xml:space="preserve">
+    <value>Comercial</value>
+  </data>
+  <data name="ViewProperties" xml:space="preserve">
+    <value>Ver Propriedades</value>
+  </data>
+  <data name="AddProperty" xml:space="preserve">
+    <value>Adicionar Propriedade</value>
+  </data>
+  <data name="MyProperties" xml:space="preserve">
+    <value>Minhas Propriedades</value>
+  </data>
+  <data name="TotalValue" xml:space="preserve">
+    <value>Valor Total</value>
+  </data>
+  <data name="AveragePrice" xml:space="preserve">
+    <value>Preço Médio</value>
+  </data>
+  <data name="MyPropertiesTitle" xml:space="preserve">
+    <value>As Minhas Propriedades</value>
+  </data>
+  <data name="MyPropertiesSubtitle" xml:space="preserve">
+    <value>Gerir as suas listagens de propriedades</value>
+  </data>
+  <data name="NoProperties" xml:space="preserve">
+    <value>Sem Propriedades</value>
+  </data>
+  <data name="NoPropertiesCreated" xml:space="preserve">
+    <value>Ainda não criou nenhuma propriedade.</value>
+  </data>
+  <data name="CreateFirstProperty" xml:space="preserve">
+    <value>Criar Primeira Propriedade</value>
+  </data>
+  <data name="QuickActionsTitle" xml:space="preserve">
+    <value>Ações Rápidas</value>
+  </data>
+  <data name="QuickActionsSubtitle" xml:space="preserve">
+    <value>Tarefas comuns do seu dia a dia</value>
+  </data>
+  <data name="AddPropertyDesc" xml:space="preserve">
+    <value>Criar nova listagem de propriedade</value>
+  </data>
+  <data name="ViewAllProperties" xml:space="preserve">
+    <value>Ver Todas as Propriedades</value>
+  </data>
+  <data name="ViewAllPropertiesDesc" xml:space="preserve">
+    <value>Explorar todas as propriedades da agência</value>
+  </data>
+  <data name="ViewStatistics" xml:space="preserve">
+    <value>Ver Estatísticas</value>
+  </data>
+  <data name="ViewStatisticsDesc" xml:space="preserve">
+    <value>Analisar o desempenho das suas propriedades</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Adicionar</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Ver</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>Ver Detalhes</value>
+  </data>
+</root> 

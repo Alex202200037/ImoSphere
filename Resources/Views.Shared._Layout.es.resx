@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="AboutUs" xml:space="preserve"><value>Sobre Nosotros</value></data>
+  <data name="Properties" xml:space="preserve"><value>Propiedades</value></data>
+  <data name="Services" xml:space="preserve"><value>Servicios</value></data>
+  <data name="ContactUs" xml:space="preserve"><value>Contáctanos</value></data>
+  <data name="ManageUsers" xml:space="preserve"><value>Gestionar Usuarios</value></data>
+  <data name="Messages" xml:space="preserve"><value>Mensajes</value></data>
+  <data name="Chat" xml:space="preserve"><value>Chat</value></data>
+  <data name="Profile" xml:space="preserve"><value>Perfil</value></data>
+  <data name="MyProfile" xml:space="preserve"><value>Mi Perfil</value></data>
+  <data name="Logout" xml:space="preserve"><value>Cerrar Sesión</value></data>
+  <data name="Login" xml:space="preserve"><value>Iniciar Sesión</value></data>
+  <data name="PrivacyPolicy" xml:space="preserve"><value>Política de Privacidad</value></data>
+</root> 

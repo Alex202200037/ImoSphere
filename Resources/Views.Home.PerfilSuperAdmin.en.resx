@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="SuperAdminProfileTitle" xml:space="preserve">
+    <value>SuperAdmin Profile</value>
+  </data>
+  <data name="SuperAdminBadge" xml:space="preserve">
+    <value>SuperAdmin</value>
+  </data>
+  <data name="GlobalManagement" xml:space="preserve">
+    <value>ImoSphere - Global Management</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Properties" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="TotalValue" xml:space="preserve">
+    <value>Total Value</value>
+  </data>
+  <data name="AverageValue" xml:space="preserve">
+    <value>Average Value</value>
+  </data>
+  <data name="GlobalHierarchy" xml:space="preserve">
+    <value>Global Hierarchy</value>
+  </data>
+  <data name="UserManagementTab" xml:space="preserve">
+    <value>User Management</value>
+  </data>
+  <data name="PropertyManagementTab" xml:space="preserve">
+    <value>Property Management</value>
+  </data>
+  <data name="AgencyHierarchyTitle" xml:space="preserve">
+    <value>Agency, Admin and Commercial Hierarchy</value>
+  </data>
+  <data name="AgencyHierarchySubtitle" xml:space="preserve">
+    <value>Global view of all agencies, admins and commercials in the system</value>
+  </data>
+  <data name="AdminCount" xml:space="preserve">
+    <value>Admin(s)</value>
+  </data>
+  <data name="CommercialCount" xml:space="preserve">
+    <value>Commercial(s)</value>
+  </data>
+  <data name="AdminBadge" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="Commercials" xml:space="preserve">
+    <value>Commercials</value>
+  </data>
+  <data name="NoCommercialsAssigned" xml:space="preserve">
+    <value>No commercials assigned</value>
+  </data>
+  <data name="NoAdminsInAgency" xml:space="preserve">
+    <value>No admins in this agency.</value>
+  </data>
+  <data name="CommercialsWithoutAdmin" xml:space="preserve">
+    <value>Commercials without admin</value>
+  </data>
+  <data name="NoAgenciesOrUsers" xml:space="preserve">
+    <value>No agencies or users registered.</value>
+  </data>
+  <data name="UserManagementTitle" xml:space="preserve">
+    <value>User Management</value>
+  </data>
+  <data name="AllRegisteredClients" xml:space="preserve">
+    <value>All registered clients in the system</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="NoRegisteredClients" xml:space="preserve">
+    <value>No registered clients.</value>
+  </data>
+  <data name="PropertyManagementTitle" xml:space="preserve">
+    <value>Property Management</value>
+  </data>
+  <data name="AllSystemProperties" xml:space="preserve">
+    <value>All system properties, grouped by agency, admin and commercial</value>
+  </data>
+  <data name="NoProperties" xml:space="preserve">
+    <value>No properties</value>
+  </data>
+  <data name="QuickActionsTitle" xml:space="preserve">
+    <value>Quick Actions</value>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>Add User</value>
+  </data>
+  <data name="CreateNewUsers" xml:space="preserve">
+    <value>Create new users</value>
+  </data>
+  <data name="AddProperty" xml:space="preserve">
+    <value>Add Property</value>
+  </data>
+  <data name="AddPropertyDesc" xml:space="preserve">
+    <value>Create new property listing</value>
+  </data>
+  <data name="ViewReports" xml:space="preserve">
+    <value>View Reports</value>
+  </data>
+  <data name="GlobalAnalytics" xml:space="preserve">
+    <value>Global analytics and insights</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="GlobalSettings" xml:space="preserve">
+    <value>Manage global settings</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>View Details</value>
+  </data>
+  <data name="ConfirmDeleteUser" xml:space="preserve">
+    <value>Are you sure you want to delete user '{0}'?</value>
+  </data>
+  <data name="UserHasDependencies" xml:space="preserve">
+    <value>This user has dependencies and cannot be deleted directly. (Advanced management only in admin panel)</value>
+  </data>
+  <data name="UserDeletedSuccessfully" xml:space="preserve">
+    <value>User deleted successfully!</value>
+  </data>
+  <data name="ErrorDeletingUser" xml:space="preserve">
+    <value>Error deleting user.</value>
+  </data>
+  <data name="ServerCommunicationError" xml:space="preserve">
+    <value>Server communication error.</value>
+  </data>
+</root> 

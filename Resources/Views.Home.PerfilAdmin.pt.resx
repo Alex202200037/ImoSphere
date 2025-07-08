@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="AdminProfileTitle" xml:space="preserve">
+    <value>Perfil de Administrador</value>
+  </data>
+  <data name="AdminBadge" xml:space="preserve">
+    <value>Administrador</value>
+  </data>
+  <data name="ViewProperties" xml:space="preserve">
+    <value>Ver Propriedades</value>
+  </data>
+  <data name="ManageUsers" xml:space="preserve">
+    <value>Gerir Utilizadores</value>
+  </data>
+  <data name="TeamMembers" xml:space="preserve">
+    <value>Membros da Equipa</value>
+  </data>
+  <data name="TotalProperties" xml:space="preserve">
+    <value>Total de Propriedades</value>
+  </data>
+  <data name="TotalValue" xml:space="preserve">
+    <value>Valor Total</value>
+  </data>
+  <data name="ActiveAgents" xml:space="preserve">
+    <value>Agentes Ativos</value>
+  </data>
+  <data name="TeamManagement" xml:space="preserve">
+    <value>Gestão de Equipa</value>
+  </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>Gestão de Utilizadores</value>
+  </data>
+  <data name="PropertyManagement" xml:space="preserve">
+    <value>Gestão de Propriedades</value>
+  </data>
+  <data name="TeamManagementDesc" xml:space="preserve">
+    <value>Gerir a sua equipa comercial e as suas propriedades</value>
+  </data>
+  <data name="NoTeamMembers" xml:space="preserve">
+    <value>Sem Membros da Equipa</value>
+  </data>
+  <data name="NoCommercialUsers" xml:space="preserve">
+    <value>Ainda não existem utilizadores comerciais nesta agência.</value>
+  </data>
+  <data name="AddMember" xml:space="preserve">
+    <value>Adicionar Membro</value>
+  </data>
+  <data name="AllAgencyProperties" xml:space="preserve">
+    <value>Todas as propriedades da sua agência</value>
+  </data>
+  <data name="QuickActionsTitle" xml:space="preserve">
+    <value>Ações Rápidas</value>
+  </data>
+  <data name="QuickActionsSubtitle" xml:space="preserve">
+    <value>Tarefas comuns do seu dia a dia</value>
+  </data>
+  <data name="AddProperty" xml:space="preserve">
+    <value>Adicionar Propriedade</value>
+  </data>
+  <data name="AddPropertyDesc" xml:space="preserve">
+    <value>Criar nova listagem de propriedade</value>
+  </data>
+  <data name="ViewAllProperties" xml:space="preserve">
+    <value>Ver Todas as Propriedades</value>
+  </data>
+  <data name="ViewAllPropertiesDesc" xml:space="preserve">
+    <value>Explorar todas as propriedades da agência</value>
+  </data>
+  <data name="ViewStatistics" xml:space="preserve">
+    <value>Ver Estatísticas</value>
+  </data>
+  <data name="ViewStatisticsDesc" xml:space="preserve">
+    <value>Analisar o desempenho das suas propriedades</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Adicionar</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Ver</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>Ver Detalhes</value>
+  </data>
+  <data name="TeamManagementTitle" xml:space="preserve">
+    <value>Gestão de Equipa</value>
+  </data>
+  <data name="TeamManagementSubtitle" xml:space="preserve">
+    <value>Adicione, edite e organize os membros da sua equipa.</value>
+  </data>
+  <data name="TeamManagementTab" xml:space="preserve">
+    <value>Equipa</value>
+  </data>
+  <data name="UserManagementTab" xml:space="preserve">
+    <value>Utilizadores</value>
+  </data>
+  <data name="PropertyManagementTab" xml:space="preserve">
+    <value>Propriedades</value>
+  </data>
+  <data name="PropertyManagementTitle" xml:space="preserve">
+    <value>Gestão de Propriedades</value>
+  </data>
+  <data name="PropertyManagementSubtitle" xml:space="preserve">
+    <value>Adicione, edite e organize as propriedades da agência.</value>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>Adicionar Utilizador</value>
+  </data>
+  <data name="AddUserDesc" xml:space="preserve">
+    <value>Crie uma nova conta de utilizador para a sua equipa.</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Definições</value>
+  </data>
+  <data name="SettingsDesc" xml:space="preserve">
+    <value>Configure as preferências e opções da sua conta ou agência.</value>
+  </data>
+  <data name="ReportsDesc" xml:space="preserve">
+    <value>Aceda a relatórios detalhados sobre a atividade da agência e dos utilizadores.</value>
+  </data>
+</root> 

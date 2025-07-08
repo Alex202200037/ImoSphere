@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="PropertiesTitle" xml:space="preserve">
+    <value>Propriedades</value>
+  </data>
+  <data name="AdvancedFilters" xml:space="preserve">
+    <value>Filtros Avançados</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Preço</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="NumberOfBathrooms" xml:space="preserve">
+    <value>Nº de WC's</value>
+  </data>
+  <data name="NumberOfBedrooms" xml:space="preserve">
+    <value>Nº de Quartos</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Área</value>
+  </data>
+  <data name="ConstructionYear" xml:space="preserve">
+    <value>Ano de Construção</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Localização</value>
+  </data>
+  <data name="LocationPlaceholder" xml:space="preserve">
+    <value>Ex: Lisboa, Porto...</value>
+  </data>
+  <data name="Agencies" xml:space="preserve">
+    <value>Agências</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Ordenar por</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Bedrooms" xml:space="preserve">
+    <value>Quartos</value>
+  </data>
+  <data name="Bathrooms" xml:space="preserve">
+    <value>WC's</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Ano</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Ordem</value>
+  </data>
+  <data name="Ascending" xml:space="preserve">
+    <value>Crescente</value>
+  </data>
+  <data name="Descending" xml:space="preserve">
+    <value>Decrescente</value>
+  </data>
+  <data name="ApplyFilters" xml:space="preserve">
+    <value>Aplicar Filtros</value>
+  </data>
+  <data name="ClearFilters" xml:space="preserve">
+    <value>Limpar Filtros</value>
+  </data>
+  <data name="OurProperties" xml:space="preserve">
+    <value>Nossas Propriedades</value>
+  </data>
+  <data name="FindYourDreamProperty" xml:space="preserve">
+    <value>Encontre a propriedade dos seus sonhos</value>
+  </data>
+  <data name="AddProperty" xml:space="preserve">
+    <value>Adicionar Propriedade</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>Lista</value>
+  </data>
+  <data name="Map" xml:space="preserve">
+    <value>Mapa</value>
+  </data>
+  <data name="AddToFavorites" xml:space="preserve">
+    <value>Adicionar aos favoritos</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>Ver Detalhes</value>
+  </data>
+  <data name="Applying" xml:space="preserve">
+    <value>Aplicando</value>
+  </data>
+  <data name="ConfirmDeleteProperty" xml:space="preserve">
+    <value>Tem a certeza que deseja eliminar a propriedade "{0}"?\n\nEsta ação não pode ser desfeita.</value>
+  </data>
+  <data name="NoPropertiesFoundForMap" xml:space="preserve">
+    <value>Nenhuma propriedade encontrada para mostrar no mapa.</value>
+  </data>
+  <data name="NoPropertiesWithValidCoordinates" xml:space="preserve">
+    <value>Nenhuma propriedade com coordenadas válidas encontrada.</value>
+  </data>
+  <data name="AddedToFavorites" xml:space="preserve">
+    <value>Adicionado aos favoritos!</value>
+  </data>
+  <data name="RemovedFromFavorites" xml:space="preserve">
+    <value>Removido dos favoritos!</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Erro</value>
+  </data>
+  <data name="ErrorProcessingFavorite" xml:space="preserve">
+    <value>Erro ao processar favorito</value>
+  </data>
+</root> 
