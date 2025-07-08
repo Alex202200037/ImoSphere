@@ -63,14 +63,25 @@ Messages             -- Sistema de mensagens
 - **PropertyImages**: N:1 com Properties
 - **Messages**: N:1 com Users (Sender/Receiver)
 
-### Índices Recomendados
-```sql
--- Performance para consultas frequentes
-CREATE INDEX IX_Properties_AgencyId ON Properties(AgencyId);
-CREATE INDEX IX_Properties_CreatedByUserId ON Properties(CreatedByUserId);
-CREATE INDEX IX_Properties_Location ON Properties(Location);
-CREATE INDEX IX_PropertyImages_PropertyId ON PropertyImages(PropertyId);
-```
+### DER e MER do Sistema
+
+O diagrama seguinte representa as principais entidades do sistema e os seus relacionamentos:
+![Diagrama Entidade-Relacionamento ImoSphere](./Images/DER.png)
+
+**Entidades e Relações:**
+- **ApplicationUser**: Utilizador do sistema (herda de IdentityUser)
+- **Agency**: Agência imobiliária
+- **Property**: Imóvel
+- **PropertyImage**: Imagem de imóvel
+- **Favorite**: Favorito (ligação entre utilizador e imóvel)
+- **AgencyUser**: Relação N:N entre utilizador e agência
+
+**Relações principais:**
+- Uma agência tem vários imóveis e vários utilizadores (AgencyUser)
+- Um imóvel pertence a uma agência e pode ter várias imagens
+- Um imóvel é criado por um utilizador
+- Um utilizador pode ter vários favoritos (imóveis)
+- Um favorito liga um utilizador a um imóvel
 
 ## 📁 Estrutura do Projeto
 
@@ -405,29 +416,6 @@ Access denied for user
 3. **Definir variáveis de ambiente** de produção
 4. **Configurar logging** para ficheiro ou serviço externo
 5. **Otimizar performance** (caching, CDN, etc.)
-
-### Docker (Opcional)
-```dockerfile
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
-COPY ["ImoSphere.csproj", "./"]
-RUN dotnet restore
-COPY . .
-RUN dotnet build -c Release -o /app/build
-
-FROM build AS publish
-RUN dotnet publish -c Release -o /app/publish
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ImoSphere.dll"]
-```
 
 ### Comandos de Deploy
 ```bash

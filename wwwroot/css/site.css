@@ -29,27 +29,50 @@
 
 /* White Theme */
 .white-theme {
-    --background-dark: #f8f9fa;
-    --background-navbar: #fff;
-    --primary-color: #7c3aed;
-    --secondary-color: #e0e7ef;
-    --accent-color: #7c3aed;
+    --background-dark: #fff;
+    --primary-color: #b39ddb;
+    --secondary-color: #ede7f6;
+    --accent-color: #a259ff;
     --success-color: #28a745;
     --danger-color: #dc3545;
     --warning-color: #ffc107;
-    --info-color: #17a2b8;
+    --info-color: #7c3aed;
     --dark-bg: #fff;
-    --darker-bg: #f5f5f5;
+    --darker-bg: #fff;
     --card-bg: #fff;
-    --text-primary: #222;
-    --text-secondary: #444;
+    --text-primary: #111;
+    --text-secondary: #333;
     --text-muted: #888;
     --border-color: #e0e0e0;
-    --border-accent: rgba(124, 58, 237, 0.15);
-    --shadow-light: rgba(124, 58, 237, 0.08);
-    --shadow-medium: rgba(124, 58, 237, 0.15);
-    --shadow-heavy: rgba(124, 58, 237, 0.22);
-    --focus-shadow: 0 0 0 0.1rem #e0e7ef, 0 0 0 0.25rem #7c3aed44;
+    --border-accent: rgba(179, 157, 219, 0.15);
+    --shadow-light: rgba(179, 157, 219, 0.08);
+    --shadow-medium: rgba(179, 157, 219, 0.15);
+    --shadow-heavy: rgba(179, 157, 219, 0.22);
+    --focus-shadow: 0 0 0 0.1rem #ede7f6, 0 0 0 0.25rem #b39ddb44;
+}
+
+.white-theme .navbar, .white-theme header, .white-theme footer {
+    background: linear-gradient(135deg, #1e1e1e 0%, #121212 100%) !important;
+    color: #fff !important;
+}
+
+.white-theme .navbar .navbar-brand, .white-theme .navbar .nav-link, .white-theme footer, .white-theme footer a {
+    color: #fff !important;
+}
+
+.white-theme .card, .white-theme .policy-section, .white-theme .glass-card, .white-theme .info-box, .white-theme .info-card, .white-theme .usage-item, .white-theme .scenario-item, .white-theme .security-item, .white-theme .right-item, .white-theme .contact-card {
+    background: linear-gradient(135deg, #fff 0%, #ede7f6 100%) !important;
+    color: #111 !important;
+    border-color: #e0e0e0 !important;
+    box-shadow: 0 8px 32px rgba(179, 157, 219, 0.08);
+}
+
+.white-theme h1, .white-theme h2, .white-theme h3, .white-theme h4, .white-theme h5, .white-theme h6 {
+    color: #111 !important;
+}
+.white-theme .info-card-icon, .white-theme .usage-icon, .white-theme .scenario-icon, .white-theme .security-item i, .white-theme .right-icon, .white-theme .contact-icon {
+    background: linear-gradient(135deg, #b39ddb 0%, #ede7f6 100%) !important;
+    color: #7c3aed !important;
 }
 
 /* ===== RESET E BASE ===== */
