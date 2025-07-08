@@ -62,7 +62,49 @@
   <data name="VirtualToursFeature1" xml:space="preserve"><value>Visitas 360°</value></data>
   <data name="VirtualToursFeature2" xml:space="preserve"><value>Guias virtuais</value></data>
   <data name="VirtualToursFeature3" xml:space="preserve"><value>Agendamento online</value></data>
-  <data name="ReadyToStart" xml:space="preserve"><value>Pronto para começar?</value></data>
+  <data name="ReadyToStartTitle" xml:space="preserve"><value>Pronto para Começar?</value></data>
+  <data name="ReadyToStartSubtitle" xml:space="preserve"><value>Contacte-nos hoje mesmo e descubra como podemos ajudá-lo a encontrar a propriedade perfeita.</value></data>
+  <data name="Contact" xml:space="preserve"><value>Contactar</value></data>
+  <data name="ViewProperties" xml:space="preserve"><value>Ver Propriedades</value></data>
   <data name="ContactUsForServices" xml:space="preserve"><value>Contacte-nos para saber mais sobre os nossos serviços</value></data>
   <data name="ContactUs" xml:space="preserve"><value>Contacte-nos</value></data>
+  <data name="OurServicesTitle" xml:space="preserve"><value>Os Nossos Serviços</value></data>
+  <data name="OurServicesSubtitle" xml:space="preserve"><value>Oferecemos uma gama completa de serviços imobiliários para satisfazer todas as suas necessidades</value></data>
+  <data name="StatSoldProperties" xml:space="preserve"><value>Propriedades Vendidas</value></data>
+  <data name="StatHappyClients" xml:space="preserve"><value>Clientes Satisfeitos</value></data>
+  <data name="StatYearsExperience" xml:space="preserve"><value>Anos de Experiência</value></data>
+  <data name="StatSatisfaction" xml:space="preserve"><value>% de Satisfação</value></data>
+  <data name="MainServicesTitle" xml:space="preserve"><value>Serviços Principais</value></data>
+  <data name="ServiceBuySellTitle" xml:space="preserve"><value>Compra e Venda</value></data>
+  <data name="ServiceBuySellDesc" xml:space="preserve"><value>Assistência completa na compra e venda de propriedades residenciais e comerciais.</value></data>
+  <data name="ServiceRentTitle" xml:space="preserve"><value>Arrendamento</value></data>
+  <data name="ServiceRentDesc" xml:space="preserve"><value>Gestão de arrendamentos residenciais e comerciais com suporte completo.</value></data>
+  <data name="ServiceAppraisalTitle" xml:space="preserve"><value>Avaliação</value></data>
+  <data name="ServiceAppraisalDesc" xml:space="preserve"><value>Avaliações profissionais e precisas de propriedades para diversos fins.</value></data>
+  <data name="LearnMore" xml:space="preserve"><value>Saber Mais</value></data>
+  <data name="SpecializedServicesTitle" xml:space="preserve"><value>Serviços Especializados</value></data>
+  <data name="ServiceCommercialTitle" xml:space="preserve"><value>Propriedades Comerciais</value></data>
+  <data name="ServiceCommercialDesc" xml:space="preserve"><value>Especialistas em propriedades comerciais, escritórios e espaços de retalho.</value></data>
+  <data name="Specialized" xml:space="preserve"><value>Especializado</value></data>
+  <data name="ServiceLuxuryTitle" xml:space="preserve"><value>Propriedades de Luxo</value></data>
+  <data name="ServiceLuxuryDesc" xml:space="preserve"><value>Propriedades exclusivas e de luxo para clientes exigentes.</value></data>
+  <data name="ServiceInvestmentTitle" xml:space="preserve"><value>Investimento</value></data>
+  <data name="ServiceInvestmentDesc" xml:space="preserve"><value>Consultoria especializada em investimentos imobiliários.</value></data>
+  <data name="Investment" xml:space="preserve"><value>Investimento</value></data>
+  <data name="ServiceLegalTitle" xml:space="preserve"><value>Gestão Legal</value></data>
+  <data name="ServiceLegalDesc" xml:space="preserve"><value>Suporte legal completo em todas as transações imobiliárias.</value></data>
+  <data name="Legal" xml:space="preserve"><value>Legal</value></data>
+  <data name="HowWeWorkTitle" xml:space="preserve"><value>Como Funcionamos</value></data>
+  <data name="StepAnalysisTitle" xml:space="preserve"><value>Análise</value></data>
+  <data name="StepAnalysisDesc" xml:space="preserve"><value>Analisamos as suas necessidades e objetivos</value></data>
+  <data name="StepSelectionTitle" xml:space="preserve"><value>Seleção</value></data>
+  <data name="StepSelectionDesc" xml:space="preserve"><value>Selecionamos as melhores opções para si</value></data>
+  <data name="StepNegotiationTitle" xml:space="preserve"><value>Negociação</value></data>
+  <data name="StepNegotiationDesc" xml:space="preserve"><value>Negociamos os melhores termos possíveis</value></data>
+  <data name="StepConclusionTitle" xml:space="preserve"><value>Conclusão</value></data>
+  <data name="StepConclusionDesc" xml:space="preserve"><value>Finalizamos a transação com sucesso</value></data>
+  <data name="TestimonialsTitle" xml:space="preserve"><value>O Que Dizem os Nossos Clientes</value></data>
+  <data name="Testimonial1" xml:space="preserve"><value>"Excelente serviço! A equipa da ImoSphere ajudou-me a encontrar a casa perfeita em tempo recorde."</value></data>
+  <data name="Testimonial2" xml:space="preserve"><value>"Profissionais muito competentes. Venderam a minha propriedade acima do preço de mercado!"</value></data>
+  <data name="Testimonial3" xml:space="preserve"><value>"Atendimento personalizado e profissional. Recomendo vivamente os serviços da ImoSphere."</value></data>
 </root> 
