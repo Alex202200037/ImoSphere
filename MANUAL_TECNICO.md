@@ -13,7 +13,6 @@
 - [🔐 Autenticação e Autorização](#-autenticação-e-autorização)
 - [📊 Migrações](#-migrações)
 - [🐛 Troubleshooting](#-troubleshooting)
-- [📦 Deploy](#-deploy)
 
 ## 🏗️ Arquitetura
 
@@ -24,6 +23,7 @@
 - **Autenticação**: ASP.NET Core Identity
 - **Comunicação Real-time**: SignalR
 - **Frontend**: Bootstrap 5.3, jQuery, Font Awesome
+- **Design Responsivo**: Interface moderna, com modo claro (fundo branco, texto preto, cartões brancos, roxo claro, header/footer escuros) e modo escuro (fundo escuro, texto claro, cartões escuros). O utilizador pode alternar facilmente entre os modos, garantindo sempre excelente contraste, acessibilidade e conforto visual.
 - **Mapas**: Leaflet.js + OpenStreetMap
 
 ### Padrões Arquiteturais
@@ -66,7 +66,7 @@ Messages             -- Sistema de mensagens
 ### DER e MER do Sistema
 
 O diagrama seguinte representa as principais entidades do sistema e os seus relacionamentos:
-![Diagrama Entidade-Relacionamento ImoSphere](./Images/DER.png)
+![Diagrama Entidade-Relacionamento ImoSphere](./wwwroot/images/Manuals/DER.png)
 
 **Entidades e Relações:**
 - **ApplicationUser**: Utilizador do sistema (herda de IdentityUser)
@@ -87,37 +87,64 @@ O diagrama seguinte representa as principais entidades do sistema e os seus rela
 
 ```
 ImoSphere/
-├── Controllers/           # Controladores MVC
+├── bin/                     # Ficheiros de build/output
+├── Controllers/             # Controladores MVC
 │   ├── AccountController.cs
 │   ├── AdminController.cs
 │   ├── ChatController.cs
+│   ├── FavoriteController.cs
 │   ├── HomeController.cs
-│   └── PropertyController.cs
-├── Data/                  # Camada de dados
+│   ├── LanguageController.cs
+│   ├── PropertyController.cs
+├── Data/                    # Camada de dados
 │   ├── ApplicationDbContext.cs
 │   └── SeedData.cs
-├── Models/                # Modelos de dados
+├── Migrations/              # Migrações EF Core
+├── Models/                  # Modelos de domínio e ViewModels
 │   ├── Agency.cs
 │   ├── AgencyUser.cs
 │   ├── ApplicationUser.cs
+│   ├── ChatConversation.cs
+│   ├── ChatMessage.cs
+│   ├── ChatViewModel.cs
+│   ├── EditUserView.cs
+│   ├── ErrorViewModel.cs
+│   ├── Favorite.cs
+│   ├── LoginViewModel.cs
+│   ├── MarkAsReadRequest.cs
+│   ├── Message.cs
 │   ├── Property.cs
+│   ├── PropertyFilterViewModel.cs
 │   ├── PropertyImage.cs
-│   └── ViewModels/
-├── Views/                 # Vistas Razor
+│   ├── RegisterViewModel.cs
+│   ├── UserHierarchyViewModel.cs
+│   ├── UserWithRolesViewModel.cs
+├── obj/                     # Ficheiros temporários de build
+├── Properties/              # Configurações do projeto (ex: launchSettings)
+├── Resources/               # Ficheiros de localização (resx)
+├── Views/                   # Vistas Razor
 │   ├── Account/
 │   ├── Admin/
 │   ├── Chat/
 │   ├── Home/
 │   ├── Properties/
 │   └── Shared/
-├── wwwroot/              # Ficheiros estáticos
+├── wwwroot/                 # Ficheiros estáticos
 │   ├── css/
-│   ├── js/
 │   ├── images/
+│   ├── js/
 │   └── lib/
-├── Migrations/           # Migrações EF Core
-├── Program.cs           # Ponto de entrada
-└── appsettings.json     # Configuração
+├── .gitignore
+├── appsettings.json
+├── appsettings.Development.json
+├── ImoSphere.csproj
+├── ImoSphere.sln
+├── MANUAL_TECNICO.md
+├── MANUAL_UTILIZADOR.md
+├── Program.cs
+├── README.md
+├── UserManual_ImoSphere.pdf
+└── ImoSphereDb.db
 ```
 
 ## 🔧 Configuração
@@ -153,17 +180,6 @@ ImoSphere/
 }
 ```
 
-### Variáveis de Ambiente
-```bash
-# Desenvolvimento
-ASPNETCORE_ENVIRONMENT=Development
-ConnectionStrings__DefaultConnection=Data Source=ImoSphereDb.db
-
-# Produção
-ASPNETCORE_ENVIRONMENT=Production
-ConnectionStrings__DefaultConnection=Server=...;Database=...;User Id=...;Password=...
-```
-
 ## 🚀 Desenvolvimento
 
 ### Pré-requisitos
@@ -184,59 +200,6 @@ dotnet run
 
 # Executar com auto-reload
 dotnet watch
-
-# Executar testes
-dotnet test
-```
-
-### Adicionar Novas Funcionalidades
-
-#### 1. Criar Modelo
-```csharp
-// Models/NovoModelo.cs
-public class NovoModelo
-{
-    public int Id { get; set; }
-    public string Nome { get; set; }
-    public DateTime DataCriacao { get; set; }
-}
-```
-
-#### 2. Adicionar ao Contexto
-```csharp
-// Data/ApplicationDbContext.cs
-public DbSet<NovoModelo> NovoModelos { get; set; }
-```
-
-#### 3. Criar Migração
-```bash
-dotnet ef migrations add AddNovoModelo
-dotnet ef database update
-```
-
-#### 4. Criar Controller
-```csharp
-// Controllers/NovoModeloController.cs
-public class NovoModeloController : Controller
-{
-    private readonly ApplicationDbContext _context;
-    
-    public NovoModeloController(ApplicationDbContext context)
-    {
-        _context = context;
-    }
-    
-    public async Task<IActionResult> Index()
-    {
-        return View(await _context.NovoModelos.ToListAsync());
-    }
-}
-```
-
-#### 5. Criar Views
-```bash
-# Scaffold automático (se aplicável)
-dotnet aspnet-codegenerator controller -name NovoModeloController -m NovoModelo -dc ApplicationDbContext --relativeFolderPath Controllers
 ```
 
 ## 🔌 APIs e Endpoints
@@ -407,25 +370,6 @@ Access denied for user
   }
 }
 ```
-
-## 📦 Deploy
-
-### Preparação para Produção
-1. **Alterar base de dados** para SQL Server ou PostgreSQL
-2. **Configurar HTTPS** e certificados SSL
-3. **Definir variáveis de ambiente** de produção
-4. **Configurar logging** para ficheiro ou serviço externo
-5. **Otimizar performance** (caching, CDN, etc.)
-
-### Comandos de Deploy
-```bash
-# Publicar para produção
-dotnet publish -c Release -o ./publish
-
-# Executar em produção
-dotnet ImoSphere.dll --environment Production
-```
-
 ---
 
 ## 📞 Suporte

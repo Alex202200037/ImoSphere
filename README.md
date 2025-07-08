@@ -8,7 +8,7 @@
 
 > **Plataforma web completa para mediação imobiliária com gestão de propriedades, utilizadores e comunicação integrada.**
 
-[📖 Manual do Utilizador (PDF)](/UserManual_ImoSphere.pdf) | [🔧 Manual Técnico](/MANUAL_TECNICO.md)
+[📖 Manual do Utilizador](/MANUAL_UTILIZADOR.md) | [📖 Manual do Utilizador (PDF)](/UserManual_ImoSphere.pdf) | [🔧 Manual Técnico](/MANUAL_TECNICO.md)
 
 ## 📋 Índice
 
@@ -117,7 +117,7 @@ O **ImoSphere** é uma plataforma web desenvolvida em **ASP.NET Core MVC** que f
 
 5. **Aceder à aplicação**
    ```
-   https://localhost:5001
+   https://localhost:5151
    ```
 
 ## ⚙️ Configuração
@@ -181,55 +181,55 @@ dotnet ef database update
 - ✅ Criação de administradores
 - ✅ Controlo total da plataforma
 
-## 🔑 Contas de Teste
+### 🔑 Contas de Teste
 
-### 👑 Super Administrador
-| Email | Password |
-|-------|----------|
+#### 👑 Super Administrador
+| Email                             | Password      |
+|-----------------------------------|---------------|
 | **imosphere.admin@imosphere.com** | Imosphere@123 |
 
-### 👨‍💼 Administradores por Agência
-| Agência | Email | Password |
-|---------|-------|----------|
-| **ERA** | jguilherme.era@imosphere.com | Admin@123 |
-| **REMAX** | candrade.remax@imosphere.com | Admin@123 |
-| **Century21** | mramos.century21@imosphere.com | Admin@123 |
-| **KW** | vnunes.kw@imosphere.com | Admin@123 |
-| **Fine and Country** | afaria.fac@imosphere.com | Admin@123 |
+#### 👨‍💼 Administradores por Agência
+| Agência           | Email                          | Password   |
+|-------------------|------------------------------- |----------- |
+| **ERA**           | jguilherme.era@imosphere.com   | Admin@123  |
+| **REMAX**         | candrade.remax@imosphere.com   | Admin@123  |
+| **Century21**     | mramos.century21@imosphere.com | Admin@123  |
+| **KW**            | vnunes.kw@imosphere.com        | Admin@123  |
+| **Fine and Country** | afaria.fac@imosphere.com    | Admin@123  |
 
-### 🏠 Comerciais por Agência
-| Agência | Email | Password |
-|---------|-------|----------|
-| **ERA** | tsilva.era@imosphere.com | Comercial@123 |
-| **ERA** | mlopes.era@imosphere.com | Comercial@123 |
-| **ERA** | rcosta.era@imosphere.com | Comercial@123 |
-| **REMAX** | apereira.remax@imosphere.com | Comercial@123 |
-| **REMAX** | psousa.remax@imosphere.com | Comercial@123 |
-| **Century21** | smartins.century21@imosphere.com | Comercial@123 |
-| **Century21** | balves.century21@imosphere.com | Comercial@123 |
-| **KW** | rpinto.kw@imosphere.com | Comercial@123 |
-| **KW** | hcruz.kw@imosphere.com | Comercial@123 |
-| **Fine and Country** | pdias.fac@imosphere.com | Comercial@123 |
-| **Fine and Country** | lamaral.fac@imosphere.com | Comercial@123 |
+#### 🏠 Comerciais por Agência
+| Agência           | Email                            | Password      |
+|-------------------|--------------------------------- |-------------- |
+| **ERA**           | tsilva.era@imosphere.com         | Comercial@123 |
+| **ERA**           | mlopes.era@imosphere.com         | Comercial@123 |
+| **ERA**           | rcosta.era@imosphere.com         | Comercial@123 |
+| **REMAX**         | apereira.remax@imosphere.com     | Comercial@123 |
+| **REMAX**         | psousa.remax@imosphere.com       | Comercial@123 |
+| **Century21**     | smartins.century21@imosphere.com | Comercial@123 |
+| **Century21**     | balves.century21@imosphere.com   | Comercial@123 |
+| **KW**            | rpinto.kw@imosphere.com          | Comercial@123 |
+| **KW**            | hcruz.kw@imosphere.com           | Comercial@123 |
+| **Fine and Country** | pdias.fac@imosphere.com       | Comercial@123 |
+| **Fine and Country** | lamaral.fac@imosphere.com     | Comercial@123 |
 
-### 👤 Utilizador Regular
-| Email | Password |
-|-------|----------|
-| **user@imosphere.com** | User@123 |
+#### 👤 Utilizador Regular
+| Email                  | Password   |
+|------------------------|----------- |
+| **user@imosphere.com** | User@123   |
 
 ## 📱 Screenshots
 
 ### Página Inicial
-![Página Inicial](screenshots/homepage.png)
+![Página Inicial](wwwroot/images/Manuals/screenshots/homepage.png)
 
 ### Listagem de Propriedades
-![Propriedades](screenshots/properties.png)
+![Propriedades](wwwroot/images/Manuals/screenshots/properties.png)
 
 ### Formulário de Criação
-![Criar Propriedade](screenshots/create-property.png)
+![Criar Propriedade](wwwroot/images/Manuals/screenshots/create-property.png)
 
 ### Sistema de Chat
-![Chat](screenshots/chat.png)
+![Chat](wwwroot/images/Manuals/screenshots/chat.png)
 
 ## 👨‍💻 Equipa
 

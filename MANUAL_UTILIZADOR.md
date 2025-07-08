@@ -38,7 +38,7 @@ cd ImoSphere
 dotnet run
 
 # Abrir no browser
-https://localhost:5001
+https://localhost:5151
 ```
 
 ### 2. Primeiro Login
@@ -237,8 +237,8 @@ https://localhost:5001
 - **Chat**: Alertas de mensagens
 
 ### Preferências de Visualização
-- **Tema**: Claro/escuro
-- **Idioma**: Português (padrão)
+- **Tema**: Claro (fundo branco, texto preto, cartões brancos, roxo claro, header/footer escuros) ou Escuro (fundo escuro, texto claro, cartões escuros). O utilizador pode alternar facilmente entre os modos no topo do site, garantindo sempre excelente contraste e conforto visual.
+- **Idiomas**: Português (padrão), inglês e espanhol
 - **Densidade**: Compacto/normal
 
 ## ❓ FAQ

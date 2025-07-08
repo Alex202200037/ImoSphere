@@ -1,6 +1,5 @@
 /* ===== IMPOSPHERE - DESIGN PREMIUM GLOBAL ===== */
 
-/* Variáveis CSS para tema coeso */
 :root {
     --font-size: 14px;
     --font-family: Arial, sans-serif;
@@ -27,7 +26,6 @@
     --focus-shadow: 0 0 0 0.1rem #bb86fc, 0 0 0 0.25rem #8f68bf;
 }
 
-/* White Theme */
 .white-theme {
     --background-dark: #fff;
     --primary-color: #b39ddb;
