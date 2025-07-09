@@ -24,7 +24,7 @@
 
 ## 🏢 Sobre o Projeto
 
-O **ImoSphere** é uma plataforma web desenvolvida em **ASP.NET Core MVC** que facilita a mediação imobiliária digital. A aplicação oferece uma experiência completa para navegação, visualização e gestão de propriedades, com diferentes níveis de acesso baseados no tipo de utilizador.
+A **ImoSphere** é uma plataforma web desenvolvida em **ASP.NET Core MVC** que facilita a mediação imobiliária digital. A aplicação oferece uma experiência completa para navegação, visualização e gestão de propriedades, com diferentes níveis de acesso baseados no tipo de utilizador.
 
 ### 🎯 Objetivos
 
@@ -91,7 +91,7 @@ O **ImoSphere** é uma plataforma web desenvolvida em **ASP.NET Core MVC** que f
 
 1. **Clone o repositório**
    ```bash
-   git clone https://github.com/seu-usuario/ImoSphere.git
+   git clone https://github.com/Alex202200037/ImoSphere.git
    cd ImoSphere
    ```
 
@@ -235,18 +235,19 @@ dotnet ef database update
 
 ### Desenvolvedores
 
-| Nome | Número | Email | Função |
-|------|--------|-------|--------|
-| **Alexandre Miguel** | 202200037 | 202200037@estudante.ips.pt | Desenvolvimento Backend |
-| **Bruna Rossa** | 202200603 | 202200603@estudante.ips.pt | Desenvolvimento Frontend |
+| Nome | Número | Email |
+|------|--------|-------|
+| **Alexandre Miguel** | 202200037 | 202200037@estudantes.ips.pt |
+| **Bruna Rossa** | 202200603 | 202200603@estudantes.ips.pt |
 
 ### Instituição
-- **Escola Superior de Tecnologia de Setúbal (ESTSetúbal)**
-- **Instituto Politécnico de Setúbal (IPS)**
+- **Instituto Politécnico de Setúbal (IPS) - Escola Superior de Tecnologia de Setúbal (ESTSetúbal)**
+![IPS Logo](wwwroot/images/Manuals/ips_logo.png)
 
 ---
 
 <div align="center">
-  <p>Desenvolvido com ❤️ pela equipa ImoSphere</p>
-  <p>Projeto académico para a disciplina de Programação Web</p>
+  <p>Desenvolvido com ❤️ pela equipa <strong>ImoSphere</strong></p>
+  <p><strong>Unidade Curricular:</strong> Programação Visual</p>
+  <p><strong>Docente:</strong> José Cordeiro</p>
 </div>

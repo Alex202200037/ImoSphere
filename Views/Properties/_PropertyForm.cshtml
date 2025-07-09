@@ -85,6 +85,7 @@ else
     <div class="form-group">
         <label><i class="fas fa-user-tie"></i>Comercial Responsável</label>
         <input type="text" class="form-control" value="@safeModel.CreatedByUser?.UserName" readonly />
+        <input type="hidden" name="CreatedByUserId" value="@safeModel.CreatedByUserId" />
     </div>
 }
 
