@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="AddNewPropertyTitle" xml:space="preserve"><value>Adicionar Nova Propriedade</value></data>
+  <data name="AddNewPropertySubtitle" xml:space="preserve"><value>Preencha os detalhes da propriedade para criar uma nova listagem</value></data>
+</root> 

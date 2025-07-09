@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="EditPropertyTitle" xml:space="preserve"><value>Editar Propiedad</value></data>
+  <data name="EditPropertySubtitle" xml:space="preserve"><value>Modifique los detalles de la propiedad y guarde los cambios</value></data>
+</root> 

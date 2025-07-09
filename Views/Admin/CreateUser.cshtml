@@ -4,12 +4,13 @@
     var isSuperAdmin = agencies != null && agencies.Count > 0;
     var isAdmin = !isSuperAdmin;
 }
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 
 <div class="users-management-container">
     <div class="page-header mb-4">
-        <h2><i class="fas fa-user-plus"></i> Create User</h2>
+        <h2><i class="fas fa-user-plus"></i> @Localizer["CreateUser"]</h2>
         <a asp-action="Users" class="btn btn-outline-secondary">
-            <i class="fas fa-arrow-left"></i> Back to Manage Users
+            <i class="fas fa-arrow-left"></i> @Localizer["BackToManageUsers"]
         </a>
     </div>
 
@@ -24,7 +25,7 @@
     @if (!ViewData.ModelState.IsValid)
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <i class="fas fa-exclamation-triangle"></i> Please fix the errors below.
+            <i class="fas fa-exclamation-triangle"></i> @Localizer["PleaseFixErrors"]
             <ul class="mb-0 mt-2">
                 @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
                 {
@@ -38,7 +39,7 @@
     <div class="card shadow-lg p-4 mx-auto" style="max-width: 500px; border-radius: 18px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border: 1px solid rgba(136,68,255,0.15);">
         <form asp-action="CreateUser" method="post" autocomplete="off">
             <div class="mb-3">
-                <label for="role" class="form-label"><i class="fas fa-user-tag"></i> Role</label>
+                <label for="role" class="form-label"><i class="fas fa-user-tag"></i> @Localizer["Role"]</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
                     <select id="role" name="role" class="form-select" required>
@@ -60,7 +61,7 @@
             @if (isSuperAdmin)
             {
                 <div class="mb-3" id="agencyField">
-                    <label for="agencyId" class="form-label"><i class="fas fa-building"></i> Agency</label>
+                    <label for="agencyId" class="form-label"><i class="fas fa-building"></i> @Localizer["Agency"]</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-building"></i></span>
                         <select id="agencyId" name="agencyId" class="form-select">
@@ -72,7 +73,7 @@
                     </div>
                 </div>
                 <div class="mb-3" id="adminField" style="display:none;">
-                    <label for="adminId" class="form-label"><i class="fas fa-user-shield"></i> Admin responsável</label>
+                    <label for="adminId" class="form-label"><i class="fas fa-user-shield"></i> @Localizer["ResponsibleAdmin"]</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-user-shield"></i></span>
                         <select id="adminId" name="adminId" class="form-select">
@@ -83,7 +84,7 @@
             }
 
             <div class="mb-3" id="emailPrefixGroup">
-                <label class="form-label"><i class="fas fa-envelope"></i> Email</label>
+                <label class="form-label"><i class="fas fa-envelope"></i> @Localizer["Email"]</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-at"></i></span>
                     <input type="text" id="emailPrefix" name="emailPrefix" class="form-control" required placeholder="Email prefix" autocomplete="off" />
@@ -93,7 +94,7 @@
                 </div>
             </div>
             <div class="mb-3" id="emailFullGroup" style="display:none;">
-                <label class="form-label"><i class="fas fa-envelope"></i> Email</label>
+                <label class="form-label"><i class="fas fa-envelope"></i> @Localizer["Email"]</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-at"></i></span>
                     <input type="email" id="emailFull" name="email" class="form-control" placeholder="Email completo" autocomplete="off" />
@@ -101,7 +102,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="username" class="form-label"><i class="fas fa-user"></i> Username</label>
+                <label for="username" class="form-label"><i class="fas fa-user"></i> @Localizer["Username"]</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                     <input type="text" id="username" name="username" class="form-control" required placeholder="Username" />
@@ -109,7 +110,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label"><i class="fas fa-lock"></i> Password</label>
+                <label for="password" class="form-label"><i class="fas fa-lock"></i> @Localizer["Password"]</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                     <input type="password" id="password" name="password" class="form-control" required placeholder="Password" />
@@ -118,10 +119,10 @@
 
             <div class="d-flex gap-3 mt-4">
                 <button type="submit" class="btn btn-primary flex-fill py-2">
-                    <i class="fas fa-user-plus"></i> Create User
+                    <i class="fas fa-user-plus"></i> @Localizer["CreateUser"]
                 </button>
                 <a asp-action="Users" class="btn btn-outline-secondary flex-fill py-2">
-                    <i class="fas fa-times"></i> Cancel
+                    <i class="fas fa-times"></i> @Localizer["Cancel"]
                 </a>
             </div>
         </form>

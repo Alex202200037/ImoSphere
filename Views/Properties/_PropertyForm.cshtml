@@ -6,19 +6,19 @@
     var userRole = ViewBag.UserRole as string;
 }
 
-
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 
 <!-- Agency and User Selection -->
 @if (userRole == "SuperAdmin" && isCreate)
 {
     <div class="form-group">
-        <label for="AgencyId"><i class="fas fa-building"></i>Agência</label>
-        @Html.DropDownListFor(m => m.AgencyId, (SelectList)ViewBag.Agencies, "Selecione a agência", new { @class = "form-control", id = "agencyDropdown" })
+        <label for="AgencyId"><i class="fas fa-building"></i>@Localizer["Agency"]</label>
+        @Html.DropDownListFor(m => m.AgencyId, (SelectList)ViewBag.Agencies, Localizer["SelectAgency"].Value, new { @class = "form-control", id = "agencyDropdown" })
     </div>
     <div class="form-group">
-        <label for="CreatedByUserId"><i class="fas fa-user-tie"></i>Comercial Responsável</label>
+        <label for="CreatedByUserId"><i class="fas fa-user-tie"></i>@Localizer["ResponsibleSeller"]</label>
         <select id="comercialDropdown" name="CreatedByUserId" class="form-control">
-            <option value="">Selecione o comercial</option>
+            <option value="">@Localizer["SelectSeller"]</option>
             @if (ViewBag.AgencyComerciais != null)
             {
                 foreach (var comercial in (SelectList)ViewBag.AgencyComerciais)
@@ -35,7 +35,7 @@
             comercialDropdown.innerHTML = '';
             var defaultOpt = document.createElement('option');
             defaultOpt.value = '';
-            defaultOpt.text = 'Selecione o comercial';
+            defaultOpt.text = '@Localizer["SelectSeller"]';
             comercialDropdown.appendChild(defaultOpt);
             if (!agencyId) return;
             fetch('/Properties/GetComerciaisByAgency?agencyId=' + agencyId)
@@ -57,33 +57,33 @@
 else if (userRole == "SuperAdmin" && isEdit)
 {
     <div class="form-group">
-        <label><i class="fas fa-building"></i>Agência</label>
+        <label><i class="fas fa-building"></i>@Localizer["Agency"]</label>
         <input type="text" class="form-control" value="@safeModel.Agency?.Name" readonly />
     </div>
     <div class="form-group">
-        <label><i class="fas fa-user-tie"></i>Comercial Responsável</label>
+        <label><i class="fas fa-user-tie"></i>@Localizer["ResponsibleSeller"]</label>
         <input type="text" class="form-control" value="@safeModel.CreatedByUser?.UserName" readonly />
     </div>
 }
 else if (userRole == "Admin")
 {
     <div class="form-group">
-        <label><i class="fas fa-building"></i>Agência</label>
+        <label><i class="fas fa-building"></i>@Localizer["Agency"]</label>
         <input type="text" class="form-control" value="@safeModel.Agency?.Name" readonly />
     </div>
     <div class="form-group">
-        <label for="CreatedByUserId"><i class="fas fa-user-tie"></i>Comercial Responsável</label>
+        <label for="CreatedByUserId"><i class="fas fa-user-tie"></i>@Localizer["ResponsibleSeller"]</label>
         @Html.DropDownListFor(m => m.CreatedByUserId, (SelectList)ViewBag.Comerciais, "Selecione o comercial", new { @class = "form-control" })
     </div>
 }
 else
 {
     <div class="form-group">
-        <label><i class="fas fa-building"></i>Agência</label>
+        <label><i class="fas fa-building"></i>@Localizer["Agency"]</label>
         <input type="text" class="form-control" value="@safeModel.Agency?.Name" readonly />
     </div>
     <div class="form-group">
-        <label><i class="fas fa-user-tie"></i>Comercial Responsável</label>
+        <label><i class="fas fa-user-tie"></i>@Localizer["ResponsibleSeller"]</label>
         <input type="text" class="form-control" value="@safeModel.CreatedByUser?.UserName" readonly />
         <input type="hidden" name="CreatedByUserId" value="@safeModel.CreatedByUserId" />
     </div>
@@ -91,26 +91,26 @@ else
 
 <!-- Property Details -->
 <div class="form-group">
-    <label asp-for="Name"><i class="fas fa-home"></i>Nome da Propriedade</label>
-    <input asp-for="Name" class="form-control" value="@safeModel.Name" placeholder="Ex: Moradia T4 em Cascais" />
+    <label asp-for="Name"><i class="fas fa-home"></i>@Localizer["PropertyName"]</label>
+    <input asp-for="Name" class="form-control" value="@safeModel.Name" placeholder="@Localizer["PropertyNamePlaceholder"]" />
 </div>
 
 <div class="form-group">
-    <label asp-for="Description"><i class="fas fa-align-left"></i>Descrição</label>
-    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Descreva as características da propriedade...">@safeModel.Description</textarea>
+    <label asp-for="Description"><i class="fas fa-align-left"></i>@Localizer["Description"]</label>
+    <textarea asp-for="Description" class="form-control" rows="4" placeholder="@Localizer["DescriptionPlaceholder"]">@safeModel.Description</textarea>
 </div>
 
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            <label asp-for="Price"><i class="fas fa-euro-sign"></i>Preço (€)</label>
-            <input asp-for="Price" class="form-control" type="text" step="any" value="@((safeModel.Price % 1 == 0) ? ((long)safeModel.Price).ToString() : safeModel.Price.ToString(System.Globalization.CultureInfo.InvariantCulture))" placeholder="500000" />
+            <label asp-for="Price"><i class="fas fa-euro-sign"></i>@Localizer["Price"] (€)</label>
+            <input asp-for="Price" class="form-control" type="text" step="any" value="@((safeModel.Price % 1 == 0) ? ((long)safeModel.Price).ToString() : safeModel.Price.ToString(System.Globalization.CultureInfo.InvariantCulture))" placeholder="@Localizer["PricePlaceholder"]" />
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label asp-for="Area"><i class="fas fa-ruler-combined"></i>Área (m²)</label>
-            <input asp-for="Area" class="form-control" value="@safeModel.Area" placeholder="150" />
+            <label asp-for="Area"><i class="fas fa-ruler-combined"></i>@Localizer["Area"] (m²)</label>
+            <input asp-for="Area" class="form-control" value="@safeModel.Area" placeholder="@Localizer["AreaPlaceholder"]" />
         </div>
     </div>
 </div>
@@ -118,29 +118,29 @@ else
 <div class="row">
     <div class="col-md-4">
         <div class="form-group">
-            <label asp-for="Bedrooms"><i class="fas fa-bed"></i>Quartos</label>
-            <input asp-for="Bedrooms" class="form-control" value="@safeModel.Bedrooms" placeholder="3" />
+            <label asp-for="Bedrooms"><i class="fas fa-bed"></i>@Localizer["Bedrooms"]</label>
+            <input asp-for="Bedrooms" class="form-control" value="@safeModel.Bedrooms" placeholder="@Localizer["BedroomsPlaceholder"]" />
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label asp-for="Bathrooms"><i class="fas fa-bath"></i>WC's</label>
-            <input asp-for="Bathrooms" class="form-control" value="@safeModel.Bathrooms" placeholder="2" />
+            <label asp-for="Bathrooms"><i class="fas fa-bath"></i>@Localizer["Bathrooms"]</label>
+            <input asp-for="Bathrooms" class="form-control" value="@safeModel.Bathrooms" placeholder="@Localizer["BathroomsPlaceholder"]" />
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label asp-for="YearBuilt"><i class="fas fa-calendar-alt"></i>Ano de Construção</label>
-            <input asp-for="YearBuilt" class="form-control" value="@safeModel.YearBuilt" placeholder="2020" />
+            <label asp-for="YearBuilt"><i class="fas fa-calendar-alt"></i>@Localizer["YearBuilt"]</label>
+            <input asp-for="YearBuilt" class="form-control" value="@safeModel.YearBuilt" placeholder="@Localizer["YearBuiltPlaceholder"]" />
         </div>
     </div>
 </div>
 
 <div class="form-group">
-    <label asp-for="Location"><i class="fas fa-map-marker-alt"></i>Localização</label>
+    <label asp-for="Location"><i class="fas fa-map-marker-alt"></i>@Localizer["Location"]</label>
     <div class="location-input-group">
-        <input asp-for="Location" class="form-control location-input" id="locationInput" autocomplete="off" value="@safeModel.Location" placeholder="Ex: Cascais, Lisboa" />
-        <button type="button" id="openMapBtn" class="btn btn-secondary" title="Escolher no mapa">
+        <input asp-for="Location" class="form-control location-input" id="locationInput" autocomplete="off" value="@safeModel.Location" placeholder="@Localizer["LocationPlaceholder"]" />
+        <button type="button" id="openMapBtn" class="btn btn-secondary" title="@Localizer["ChooseOnMap"]">
             <i class="fas fa-map"></i>
         </button>
     </div>
@@ -156,14 +156,14 @@ else
 
 <!-- Image Upload -->
 <div class="form-group">
-    <label><i class="fas fa-images"></i>Imagens da Propriedade</label>
+    <label><i class="fas fa-images"></i>@Localizer["PropertyImages"]</label>
     <div class="image-upload-section">
         <div class="image-upload-icon">
             <i class="fas fa-cloud-upload-alt"></i>
         </div>
         <div class="image-upload-text">
-            <p>Arraste as imagens para aqui ou clique para selecionar</p>
-            <p class="text-muted">Formatos aceites: JPG, PNG, GIF (máx. 5MB cada)</p>
+            <p>@Localizer["DragOrClickImages"]</p>
+            <p class="text-muted">@Localizer["AcceptedFormats"]</p>
         </div>
         <input type="file" name="images" class="form-control" multiple accept="image/*" />
     </div>
@@ -172,7 +172,7 @@ else
 @if (safeModel.Images != null && safeModel.Images.Any())
 {
     <div class="form-group">
-        <label><i class="fas fa-images"></i>Imagens Existentes</label>
+        <label><i class="fas fa-images"></i>@Localizer["ExistingImages"]</label>
         <div class="existing-images">
             @for (int i = 0; i < safeModel.Images.Count(); i++)
             {
@@ -188,7 +188,7 @@ else
         </div>
         <small class="text-muted">
             <i class="fas fa-info-circle"></i>
-            Selecione as imagens a remover e clique em "Guardar Alterações".
+            @Localizer["SelectImagesToRemove"]
         </small>
     </div>
 }

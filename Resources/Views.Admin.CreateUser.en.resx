@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="CreateUser" xml:space="preserve"><value>Create User</value></data>
+  <data name="BackToManageUsers" xml:space="preserve"><value>Back to Manage Users</value></data>
+  <data name="PleaseFixErrors" xml:space="preserve"><value>Please fix the errors below.</value></data>
+  <data name="Role" xml:space="preserve"><value>Role</value></data>
+  <data name="Agency" xml:space="preserve"><value>Agency</value></data>
+  <data name="ResponsibleAdmin" xml:space="preserve"><value>Responsible Admin</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Username" xml:space="preserve"><value>Username</value></data>
+  <data name="Password" xml:space="preserve"><value>Password</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+</root> 

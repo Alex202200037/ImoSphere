@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="EditUser" xml:space="preserve"><value>Editar Usuario</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Username" xml:space="preserve"><value>Nombre de Usuario</value></data>
+  <data name="Role" xml:space="preserve"><value>Rol</value></data>
+  <data name="NewPassword" xml:space="preserve"><value>Nueva Contraseña</value></data>
+  <data name="Optional" xml:space="preserve"><value>(opcional)</value></data>
+  <data name="OnlyFillIfChange" xml:space="preserve"><value>Sólo rellenar si desea cambiar</value></data>
+  <data name="ConfirmNewPassword" xml:space="preserve"><value>Confirmar Nueva Contraseña</value></data>
+  <data name="Save" xml:space="preserve"><value>Guardar</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancelar</value></data>
+</root> 

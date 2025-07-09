@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Agency" xml:space="preserve"><value>Agency</value></data>
+  <data name="SelectAgency" xml:space="preserve"><value>Select agency</value></data>
+  <data name="ResponsibleSeller" xml:space="preserve"><value>Responsible Seller</value></data>
+  <data name="SelectSeller" xml:space="preserve"><value>Select seller</value></data>
+  <data name="PropertyName" xml:space="preserve"><value>Property Name</value></data>
+  <data name="PropertyNamePlaceholder" xml:space="preserve"><value>Ex: 4-bedroom house in Cascais</value></data>
+  <data name="Description" xml:space="preserve"><value>Description</value></data>
+  <data name="DescriptionPlaceholder" xml:space="preserve"><value>Describe the property's features...</value></data>
+  <data name="Price" xml:space="preserve"><value>Price</value></data>
+  <data name="PricePlaceholder" xml:space="preserve"><value>500000</value></data>
+  <data name="Area" xml:space="preserve"><value>Area</value></data>
+  <data name="AreaPlaceholder" xml:space="preserve"><value>150</value></data>
+  <data name="Bedrooms" xml:space="preserve"><value>Bedrooms</value></data>
+  <data name="BedroomsPlaceholder" xml:space="preserve"><value>3</value></data>
+  <data name="Bathrooms" xml:space="preserve"><value>Bathrooms</value></data>
+  <data name="BathroomsPlaceholder" xml:space="preserve"><value>2</value></data>
+  <data name="YearBuilt" xml:space="preserve"><value>Year Built</value></data>
+  <data name="YearBuiltPlaceholder" xml:space="preserve"><value>2020</value></data>
+  <data name="Location" xml:space="preserve"><value>Location</value></data>
+  <data name="LocationPlaceholder" xml:space="preserve"><value>Ex: Cascais, Lisbon</value></data>
+  <data name="ChooseOnMap" xml:space="preserve"><value>Choose on map</value></data>
+  <data name="PropertyImages" xml:space="preserve"><value>Property Images</value></data>
+  <data name="DragOrClickImages" xml:space="preserve"><value>Drag images here or click to select</value></data>
+  <data name="AcceptedFormats" xml:space="preserve"><value>Accepted formats: JPG, PNG, GIF (max. 5MB each)</value></data>
+  <data name="ExistingImages" xml:space="preserve"><value>Existing Images</value></data>
+  <data name="SelectImagesToRemove" xml:space="preserve"><value>Select the images to remove and click "Save Changes".</value></data>
+</root> 
