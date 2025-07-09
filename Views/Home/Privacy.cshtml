@@ -25,49 +25,45 @@
 <!-- Policy Content -->
 <section class="policy-content glass-section py-5">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <!-- Table of Contents -->
-                <div class="policy-nav sticky-top" style="top: 20px;">
-                    <div class="card glass-card">
-                        <div class="card-header">
-                            <h5 class="mb-0">
-                                <i class="fas fa-list me-2"></i>@Localizer["Contents"]
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <nav class="nav flex-column">
-                                <a class="nav-link" href="#introduction">
-                                    <i class="fas fa-info-circle me-2"></i>@Localizer["Introduction"]
-                                </a>
-                                <a class="nav-link" href="#information-collection">
-                                    <i class="fas fa-database me-2"></i>@Localizer["InformationCollection"]
-                                </a>
-                                <a class="nav-link" href="#information-use">
-                                    <i class="fas fa-cogs me-2"></i>@Localizer["HowWeUseInformation"]
-                                </a>
-                                <a class="nav-link" href="#information-sharing">
-                                    <i class="fas fa-share-alt me-2"></i>@Localizer["InformationSharing"]
-                                </a>
-                                <a class="nav-link" href="#data-security">
-                                    <i class="fas fa-lock me-2"></i>@Localizer["DataSecurity"]
-                                </a>
-                                <a class="nav-link" href="#your-rights">
-                                    <i class="fas fa-user-shield me-2"></i>@Localizer["YourRights"]
-                                </a>
-                                <a class="nav-link" href="#cookies">
-                                    <i class="fas fa-cookie-bite me-2"></i>@Localizer["CookiesPolicy"]
-                                </a>
-                                <a class="nav-link" href="#contact">
-                                    <i class="fas fa-envelope me-2"></i>@Localizer["ContactUs"]
-                                </a>
-                            </nav>
-                        </div>
+        <div class="d-flex align-items-start">
+            <div class="policy-nav" style="top: 32px;">
+                <div class="card glass-card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-list me-2"></i>@Localizer["Contents"]
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <nav class="nav flex-column">
+                            <a class="nav-link" href="#introduction">
+                                <i class="fas fa-info-circle me-2"></i>@Localizer["Introduction"]
+                            </a>
+                            <a class="nav-link" href="#information-collection">
+                                <i class="fas fa-database me-2"></i>@Localizer["InformationCollection"]
+                            </a>
+                            <a class="nav-link" href="#information-use">
+                                <i class="fas fa-cogs me-2"></i>@Localizer["HowWeUseInformation"]
+                            </a>
+                            <a class="nav-link" href="#information-sharing">
+                                <i class="fas fa-share-alt me-2"></i>@Localizer["InformationSharing"]
+                            </a>
+                            <a class="nav-link" href="#data-security">
+                                <i class="fas fa-lock me-2"></i>@Localizer["DataSecurity"]
+                            </a>
+                            <a class="nav-link" href="#your-rights">
+                                <i class="fas fa-user-shield me-2"></i>@Localizer["YourRights"]
+                            </a>
+                            <a class="nav-link" href="#cookies">
+                                <i class="fas fa-cookie-bite me-2"></i>@Localizer["CookiesPolicy"]
+                            </a>
+                            <a class="nav-link" href="#contact">
+                                <i class="fas fa-envelope me-2"></i>@Localizer["ContactUs"]
+                            </a>
+                        </nav>
                     </div>
                 </div>
             </div>
-            
-            <div class="col-lg-9">
+            <div class="flex-grow-1 ms-4">
                 <div class="policy-sections">
                     <!-- Introduction -->
                     <section id="introduction" class="policy-section glass-card">
@@ -272,7 +268,9 @@
                             
                             <div class="security-features">
                                 <div class="security-item">
-                                    <i class="fas fa-encryption text-success"></i>
+                                    <div class="security-item-icon">
+                                        <i class="fas fa-lock text-warning"></i>
+                                    </div>
                                     <div>
                                         <h6>@Localizer["Encryption"]</h6>
                                         <p>@Localizer["EncryptionDescription"]</p>
@@ -321,35 +319,35 @@
                                     <h6>@Localizer["RightToAccess"]</h6>
                                     <p>@Localizer["RightToAccessDescription"]</p>
                                 </div>
-                                <div class="right-item">
+                                <div class="right-item glass-card">
                                     <div class="right-icon">
                                         <i class="fas fa-edit text-success"></i>
                                     </div>
                                     <h6>@Localizer["RightToRectification"]</h6>
                                     <p>@Localizer["RightToRectificationDescription"]</p>
                                 </div>
-                                <div class="right-item">
+                                <div class="right-item glass-card">
                                     <div class="right-icon">
                                         <i class="fas fa-trash text-danger"></i>
                                     </div>
                                     <h6>@Localizer["RightToErasure"]</h6>
                                     <p>@Localizer["RightToErasureDescription"]</p>
                                 </div>
-                                <div class="right-item">
+                                <div class="right-item glass-card">
                                     <div class="right-icon">
                                         <i class="fas fa-pause text-warning"></i>
                                     </div>
                                     <h6>@Localizer["RightToRestriction"]</h6>
                                     <p>@Localizer["RightToRestrictionDescription"]</p>
                                 </div>
-                                <div class="right-item">
+                                <div class="right-item glass-card">
                                     <div class="right-icon">
                                         <i class="fas fa-download text-info"></i>
                                     </div>
                                     <h6>@Localizer["RightToPortability"]</h6>
                                     <p>@Localizer["RightToPortabilityDescription"]</p>
                                 </div>
-                                <div class="right-item">
+                                <div class="right-item glass-card">
                                     <div class="right-icon">
                                         <i class="fas fa-ban text-secondary"></i>
                                     </div>
@@ -358,7 +356,7 @@
                                 </div>
                             </div>
                             
-                            <div class="contact-info-box">
+                            <div class="contact-info-box glass-card">
                                 <h6>@Localizer["ExerciseYourRights"]</h6>
                                 <p>@Localizer["ExerciseYourRightsDescription"]</p>
                                 <div class="contact-methods">
@@ -376,7 +374,7 @@
                     </section>
 
                     <!-- Cookies Policy -->
-                    <section id="cookies" class="policy-section">
+                    <section id="cookies" class="policy-section glass-card">
                         <div class="section-header">
                             <h2>
                                 <i class="fas fa-cookie-bite text-primary me-2"></i>@Localizer["CookiesPolicy"]
@@ -386,24 +384,24 @@
                             <p>@Localizer["CookiesPolicyDescription"]</p>
                             
                             <div class="cookies-types">
-                                <div class="cookie-type">
+                                <div class="cookie-type glass-card">
                                     <h6>@Localizer["EssentialCookies"]</h6>
                                     <p>@Localizer["EssentialCookiesDescription"]</p>
                                     <span class="cookie-badge essential">@Localizer["CannotBeDisabled"]</span>
                                 </div>
-                                <div class="cookie-type">
+                                <div class="cookie-type glass-card">
                                     <h6>@Localizer["AnalyticsCookies"]</h6>
                                     <p>@Localizer["AnalyticsCookiesDescription"]</p>
                                     <span class="cookie-badge analytics">@Localizer["CanBeDisabled"]</span>
                                 </div>
-                                <div class="cookie-type">
+                                <div class="cookie-type glass-card">
                                     <h6>@Localizer["MarketingCookies"]</h6>
                                     <p>@Localizer["MarketingCookiesDescription"]</p>
                                     <span class="cookie-badge marketing">@Localizer["CanBeDisabled"]</span>
                                 </div>
                             </div>
                             
-                            <div class="cookie-controls">
+                            <div class="cookie-controls glass-card">
                                 <h6>@Localizer["CookiePreferences"]</h6>
                                 <p>@Localizer["CookiePreferencesDescription"]</p>
                                 <button class="btn btn-outline-primary" onclick="openCookieSettings()">
@@ -414,7 +412,7 @@
                     </section>
 
                     <!-- Contact -->
-                    <section id="contact" class="policy-section">
+                    <section id="contact" class="policy-section glass-card">
                         <div class="section-header">
                             <h2>
                                 <i class="fas fa-envelope text-primary me-2"></i>@Localizer["ContactUs"]
@@ -424,7 +422,7 @@
                             <p>@Localizer["ContactUsDescription"]</p>
                             
                             <div class="contact-details">
-                                <div class="contact-card">
+                                <div class="contact-card glass-card">
                                     <div class="contact-icon">
                                         <i class="fas fa-envelope text-primary"></i>
                                     </div>
@@ -433,7 +431,7 @@
                                         <p>@Localizer["EmailAddress"]</p>
                                     </div>
                                 </div>
-                                <div class="contact-card">
+                                <div class="contact-card glass-card">
                                     <div class="contact-icon">
                                         <i class="fas fa-phone text-primary"></i>
                                     </div>
@@ -442,7 +440,7 @@
                                         <p>@Localizer["PhoneNumber"]</p>
                                     </div>
                                 </div>
-                                <div class="contact-card">
+                                <div class="contact-card glass-card">
                                     <div class="contact-icon">
                                         <i class="fas fa-map-marker-alt text-primary"></i>
                                     </div>
@@ -461,51 +459,6 @@
 </section>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scrolling for navigation links
-    const navLinks = document.querySelectorAll('.policy-nav .nav-link');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-    
-    // Active navigation highlighting
-    const sections = document.querySelectorAll('.policy-section');
-    const navItems = document.querySelectorAll('.policy-nav .nav-link');
-    
-    window.addEventListener('scroll', function() {
-        let current = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            
-            if (pageYOffset >= sectionTop - 200) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        navItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('href') === '#' + current) {
-                item.classList.add('active');
-            }
-        });
-    });
-});
-
 function openCookieSettings() {
     // This would typically open a cookie consent modal
     alert('Cookie settings modal would open here. In a real implementation, this would show detailed cookie preferences.');
