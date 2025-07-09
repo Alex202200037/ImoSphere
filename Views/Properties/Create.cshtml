@@ -91,36 +91,6 @@
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>A processar...';
                 submitBtn.disabled = true;
             });
-            
-            // Auto-save draft functionality
-            let autoSaveTimeout;
-            const inputs = form.querySelectorAll('input, textarea, select');
-            inputs.forEach(input => {
-                input.addEventListener('input', function() {
-                    clearTimeout(autoSaveTimeout);
-                    autoSaveTimeout = setTimeout(() => {
-                        // Save to localStorage as draft
-                        const formData = new FormData(form);
-                        const draft = {};
-                        for (let [key, value] of formData.entries()) {
-                            draft[key] = value;
-                        }
-                        localStorage.setItem('propertyDraft', JSON.stringify(draft));
-                    }, 2000);
-                });
-            });
-            
-            // Load draft on page load
-            const savedDraft = localStorage.getItem('propertyDraft');
-            if (savedDraft) {
-                const draft = JSON.parse(savedDraft);
-                Object.keys(draft).forEach(key => {
-                    const input = form.querySelector(`[name="${key}"]`);
-                    if (input) {
-                        input.value = draft[key];
-                    }
-                });
-            }
         });
     </script>
 

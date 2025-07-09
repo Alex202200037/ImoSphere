@@ -101,6 +101,7 @@ namespace ImoSphere.Controllers
         [Authorize(Roles = "Admin,Comercial,SuperAdmin")]
         public async Task<IActionResult> Create()
         {
+            ModelState.Clear();
             ViewBag.IsCreate = true;
             var user = await _userManager.GetUserAsync(User);
             var isSuperAdmin = await _userManager.IsInRoleAsync(user, "SuperAdmin");
@@ -156,6 +157,16 @@ namespace ImoSphere.Controllers
         public async Task<IActionResult> Create(Property property, List<IFormFile> images)
         {
             ViewBag.IsCreate = true;
+            // Normalizar preço para aceitar vírgula ou ponto
+            var priceString = Request.Form["Price"].ToString();
+            if (!string.IsNullOrEmpty(priceString))
+            {
+                priceString = priceString.Replace(',', '.');
+                if (decimal.TryParse(priceString, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var parsedPrice))
+                {
+                    property.Price = parsedPrice;
+                }
+            }
             // Remover erros de validação destes campos antes de validar (igual ao Edit)
             ModelState.Remove("Agency");
             ModelState.Remove("property.Agency");
@@ -351,6 +362,16 @@ namespace ImoSphere.Controllers
             }
             try
             {
+                // Normalizar preço para aceitar vírgula ou ponto
+                var priceString = Request.Form["Price"].ToString();
+                if (!string.IsNullOrEmpty(priceString))
+                {
+                    priceString = priceString.Replace(".", "").Replace(',', '.');
+                    if (decimal.TryParse(priceString, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var parsedPrice))
+                    {
+                        property.Price = parsedPrice;
+                    }
+                }
                 // Atualizar campos editáveis
                 existingProperty.Name = property.Name;
                 existingProperty.Description = property.Description;

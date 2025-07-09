@@ -279,10 +279,12 @@
                                                         <a href="@Url.Action("Edit", "Properties", new { id = property.Id })" class="btn btn-outline-warning btn-sm" title="@Localizer["Edit"]">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <button type="button" class="btn btn-outline-danger btn-sm" title="@Localizer["Delete"]" 
-                                                                onclick="confirmDelete(@property.Id, '@property.Name')">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
+                                                        <form method="post" action="/Properties/Delete/@property.Id" style="display:inline;">
+                                                            @Html.AntiForgeryToken()
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm" title="@Localizer["Delete"]" onclick="return confirm('Tem a certeza que deseja eliminar esta propriedade? Esta ação não pode ser desfeita.');">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
                                                     }
                                                     <a href="@Url.Action("Details", "Properties", new { id = property.Id })" class="btn btn-outline-primary btn-sm">
                                                         <i class="fas fa-eye me-1"></i>@Localizer["ViewDetails"]

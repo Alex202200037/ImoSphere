@@ -113,9 +113,12 @@
             {
                 <div class="d-grid gap-2">
                     <a class="btn btn-outline-warning" href="/Properties/Edit/@Model.Id">Editar Propriedade</a>
-                    <button type="button" class="btn btn-outline-danger" onclick="confirmDelete(@Model.Id, '@Model.Name')">
-                        Eliminar Propriedade
-                    </button>
+                    <form method="post" action="/Properties/Delete/@Model.Id" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-outline-danger w-100" onclick="return confirm('Tem a certeza que deseja eliminar esta propriedade? Esta ação não pode ser desfeita.');">
+                            Eliminar Propriedade
+                        </button>
+                    </form>
                 </div>
             }
         </div>
@@ -257,7 +260,7 @@
             const form = document.createElement('form');
             form.method = 'POST';
             form.action = `/Properties/Delete/${propertyId}`;
-            
+            form.style.display = 'none';
             // Adicionar token CSRF
             const csrfToken = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
             if (csrfToken) {
@@ -267,7 +270,6 @@
                 csrfInput.value = csrfToken;
                 form.appendChild(csrfInput);
             }
-            
             document.body.appendChild(form);
             form.submit();
         }
