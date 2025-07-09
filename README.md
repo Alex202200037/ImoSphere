@@ -107,12 +107,15 @@ A **ImoSphere** é uma plataforma web desenvolvida em **ASP.NET Core MVC** que f
 
 4. **Executar a aplicação**
    ```bash
+   # Modo normal
    dotnet run
-   ```
    
-   Ou para desenvolvimento com auto-reload:
-   ```bash
+   # Modo desenvolvimento (hot reload)
    dotnet watch
+   
+   # Usar scripts (se disponíveis)
+   ./run.sh      # Modo normal
+   ./watch.sh    # Hot reload
    ```
 
 5. **Aceder à aplicação**
@@ -144,6 +147,25 @@ Para atualizar o esquema da base de dados:
 dotnet ef migrations add NomeDaMigracao
 dotnet ef database update
 ```
+
+### 🧪 Testes
+A aplicação inclui uma suite completa de testes unitários:
+
+```bash
+# Executar todos os testes
+dotnet test Tests/ImoSphere.Tests.csproj
+
+# Executar testes específicos
+dotnet test Tests/ImoSphere.Tests.csproj --filter "FullyQualifiedName~HomeController"
+
+# Usar script de testes
+./test.sh
+```
+
+**Tipos de Testes:**
+- **Controllers**: Testes de endpoints e lógica de negócio
+- **Base de Dados**: Testes de relacionamentos e operações CRUD
+- **Autenticação**: Mock de utilizadores e verificação de roles
 
 ## 👥 Tipos de Utilizador
 

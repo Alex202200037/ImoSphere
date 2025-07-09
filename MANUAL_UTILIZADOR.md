@@ -34,8 +34,15 @@ O **ImoSphere** é uma plataforma web moderna e intuitiva para mediação imobil
 # No terminal, navegar para a pasta do projeto
 cd ImoSphere
 
-# Executar a aplicação
+# Opção 1: Executar a aplicação (modo normal)
 dotnet run
+
+# Opção 2: Executar com hot reload (recomendado para desenvolvimento)
+dotnet watch
+
+# Opção 3: Usar scripts (se disponíveis)
+./run.sh      # Modo normal
+./watch.sh    # Hot reload
 
 # Abrir no browser
 https://localhost:5151

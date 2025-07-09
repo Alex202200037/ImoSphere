@@ -16,8 +16,12 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
-    <PackageReference Include="moq" Version="4.20.72" />
-    <PackageReference Include="xunit" Version="2.9.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Tests/**" />
+    <EmbeddedResource Remove="Tests/**" />
+    <Content Remove="Tests/**" />
   </ItemGroup>
 
 </Project>

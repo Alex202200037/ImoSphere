@@ -202,6 +202,84 @@ dotnet run
 dotnet watch
 ```
 
+### Scripts de Execução
+```bash
+# Executar projeto (modo normal)
+./run.sh
+
+# Executar projeto (hot reload)
+./watch.sh
+
+# Executar testes
+./test.sh
+```
+
+## 🧪 Testes
+
+### Estrutura de Testes
+```
+Tests/
+├── ImoSphere.Tests.csproj    # Projeto de testes
+├── TestBase.cs                # Classe base para testes
+├── Controllers/               # Testes dos controllers
+│   ├── HomeControllerTests.cs
+│   └── PropertyControllerTests.cs
+└── Data/                      # Testes da base de dados
+    └── ApplicationDbContextTests.cs
+```
+
+### Execução de Testes
+```bash
+# Compilar testes
+dotnet build Tests/ImoSphere.Tests.csproj
+
+# Executar todos os testes
+dotnet test Tests/ImoSphere.Tests.csproj
+
+# Executar testes específicos
+dotnet test Tests/ImoSphere.Tests.csproj --filter "FullyQualifiedName~HomeController"
+
+# Executar com relatório de cobertura
+dotnet test Tests/ImoSphere.Tests.csproj --collect:"XPlat Code Coverage"
+```
+
+### Tipos de Testes Implementados
+
+#### Testes de Controllers
+- **HomeController**: Testes de filtros de propriedades
+- **PropertyController**: Testes CRUD de propriedades
+- **Autenticação**: Mock de utilizadores autenticados
+- **Autorização**: Verificação de roles e permissões
+
+#### Testes de Base de Dados
+- **ApplicationDbContext**: Testes de relacionamentos
+- **In-Memory Database**: Base de dados em memória para testes
+- **Seed Data**: Dados de teste isolados por teste
+
+#### Testes de Modelos
+- **Validação**: Testes de validação de modelos
+- **Relacionamentos**: Testes de navegação entre entidades
+
+### Configuração de Testes
+```csharp
+// TestBase.cs - Configuração base
+public abstract class TestBase
+{
+    protected ApplicationDbContext Context { get; private set; }
+    protected UserManager<ApplicationUser> UserManager { get; private set; }
+    
+    // Base de dados única por teste
+    private void SetupTestDatabase()
+    {
+        var databaseName = Guid.NewGuid().ToString();
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(databaseName: databaseName)
+            .Options;
+        Context = new ApplicationDbContext(options);
+    }
+}
+```
+
 ## 🔌 APIs e Endpoints
 
 ### Endpoints Principais
