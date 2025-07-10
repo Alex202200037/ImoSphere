@@ -23,4 +23,4 @@ namespace ImoSphere.Models
         public List<Agency> Agencies { get; set; } = new List<Agency>();
         public List<ApplicationUser> Admins { get; set; } = new List<ApplicationUser>();
     }
-} 
+}

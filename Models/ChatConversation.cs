@@ -15,4 +15,4 @@ namespace ImoSphere.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public ICollection<ChatMessage> Messages { get; set; }
     }
-} 
+}

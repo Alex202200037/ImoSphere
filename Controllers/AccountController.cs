@@ -38,7 +38,7 @@ namespace ImoSphere.Controllers
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "User");
-                    return RedirectToAction("Login", "Account"); 
+                    return RedirectToAction("Login", "Account");
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace ImoSphere.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home"); 
+            return RedirectToAction("Index", "Home");
         }
 
 

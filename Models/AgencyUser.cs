@@ -15,4 +15,4 @@ namespace ImoSphere.Models
         public string? AdminId { get; set; } // UserId do admin responsável
         public ApplicationUser? Admin { get; set; }
     }
-} 
+}

@@ -15,7 +15,7 @@ namespace ImoSphere.Tests.Controllers
         public HomeControllerTests()
         {
             _controller = new HomeController(Context, UserManager);
-            
+
             // Set up controller context with authenticated user
             var user = CreateTestUser("test@test.com", "testuser", "Comercial").Result;
             var claims = new List<Claim>
@@ -118,4 +118,4 @@ namespace ImoSphere.Tests.Controllers
             base.Dispose();
         }
     }
-} 
+}

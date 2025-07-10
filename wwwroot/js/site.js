@@ -4,8 +4,8 @@
 // Write your JavaScript code.
 
 // --- Animated Counters ---
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.counter').forEach(function(counter) {
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.counter').forEach(function (counter) {
     const animate = () => {
       const target = +counter.getAttribute('data-target');
       const duration = 1200;
@@ -67,7 +67,7 @@ function createSimpleSlider(containerSelector, cardSelector, prevBtn, nextBtn) {
 
 // --- Scroll suave para âncoras ---
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
+  anchor.addEventListener('click', function (e) {
     const target = document.querySelector(this.getAttribute('href'));
     if (target) {
       e.preventDefault();
@@ -77,7 +77,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // --- Botão Voltar ao Topo ---
-(function() {
+(function () {
   const btn = document.createElement('button');
   btn.innerHTML = '<i class="fas fa-arrow-up"></i>';
   btn.className = 'btn btn-primary back-to-top';
@@ -87,17 +87,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   btn.style.display = 'none';
   btn.style.zIndex = '9999';
   document.body.appendChild(btn);
-  window.addEventListener('scroll', function() {
+  window.addEventListener('scroll', function () {
     btn.style.display = window.scrollY > 300 ? 'block' : 'none';
   });
-  btn.onclick = function() {
+  btn.onclick = function () {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 })();
 
 // --- Microinterações premium nos botões ---
 document.querySelectorAll('.btn').forEach(btn => {
-  btn.addEventListener('pointerdown', function(e) {
+  btn.addEventListener('pointerdown', function (e) {
     const ripple = document.createElement('span');
     ripple.className = 'ripple';
     ripple.style.left = `${e.offsetX}px`;
@@ -108,31 +108,31 @@ document.querySelectorAll('.btn').forEach(btn => {
 });
 
 function toggleTheme() {
-    const body = document.body;
-    const icon = document.getElementById('themeIcon');
-    const isWhite = body.classList.toggle('white-theme');
-    if (icon) {
-        icon.classList.toggle('fa-moon', !isWhite);
-        icon.classList.toggle('fa-sun', isWhite);
-    }
-    localStorage.setItem('theme', isWhite ? 'white' : 'dark');
+  const body = document.body;
+  const icon = document.getElementById('themeIcon');
+  const isWhite = body.classList.toggle('white-theme');
+  if (icon) {
+    icon.classList.toggle('fa-moon', !isWhite);
+    icon.classList.toggle('fa-sun', isWhite);
+  }
+  localStorage.setItem('theme', isWhite ? 'white' : 'dark');
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const savedTheme = localStorage.getItem('theme');
-    const body = document.body;
-    const icon = document.getElementById('themeIcon');
-    if (savedTheme === 'white') {
-        body.classList.add('white-theme');
-        if (icon) {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        }
-    } else {
-        body.classList.remove('white-theme');
-        if (icon) {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-        }
+document.addEventListener('DOMContentLoaded', function () {
+  const savedTheme = localStorage.getItem('theme');
+  const body = document.body;
+  const icon = document.getElementById('themeIcon');
+  if (savedTheme === 'white') {
+    body.classList.add('white-theme');
+    if (icon) {
+      icon.classList.remove('fa-moon');
+      icon.classList.add('fa-sun');
     }
+  } else {
+    body.classList.remove('white-theme');
+    if (icon) {
+      icon.classList.remove('fa-sun');
+      icon.classList.add('fa-moon');
+    }
+  }
 });

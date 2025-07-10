@@ -2,7 +2,8 @@
 @{
     var first = Model.First();
     var isOwnMessage = first.SenderId == ViewBag.CurrentUserId;
-    var senderRole = ViewBag.SenderRoles != null && ViewBag.SenderRoles.ContainsKey(first.SenderId) ? ViewBag.SenderRoles[first.SenderId] : "";
+    var senderRole = ViewBag.SenderRoles != null && ViewBag.SenderRoles.ContainsKey(first.SenderId) ?
+    ViewBag.SenderRoles[first.SenderId] : "";
     var roleColor = ViewBag.GetRoleColor != null ? ViewBag.GetRoleColor(senderRole) : "#fff";
     string avatarClass = senderRole == "Admin" ? "fa-user-shield" : (senderRole == "Comercial" ? "fa-user-tie" : "fa-user");
 }

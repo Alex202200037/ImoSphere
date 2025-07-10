@@ -279,14 +279,14 @@
     .hero-stats .row {
         gap: 1rem;
     }
-    
+
     .service-card,
     .specialized-service-card,
     .testimonial-card {
         padding: 1.5rem;
     }
-    
+
     .cta-card {
         padding: 2rem;
     }
-} 
+}

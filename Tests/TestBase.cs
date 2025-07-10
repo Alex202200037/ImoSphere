@@ -34,7 +34,7 @@ namespace ImoSphere.Tests
         private void SetupUserManager()
         {
             MockUserStore = new Mock<IUserStore<ApplicationUser>>();
-            
+
             // Use a consistent database name for in-memory database
             var databaseName = "TestDatabase_" + Guid.NewGuid().ToString("N")[..8];
             var services = new ServiceCollection();
@@ -55,12 +55,12 @@ namespace ImoSphere.Tests
 
             var serviceProvider = services.BuildServiceProvider();
             UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            
+
             // Create roles for testing
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             CreateRolesIfNotExist(roleManager);
         }
-        
+
         private void CreateRolesIfNotExist(RoleManager<IdentityRole> roleManager)
         {
             var roles = new[] { "Admin", "Comercial", "User", "SuperAdmin" };
@@ -77,7 +77,7 @@ namespace ImoSphere.Tests
         {
             // Generate unique username to avoid conflicts
             var uniqueUserName = $"{userName}_{Guid.NewGuid().ToString("N")[..8]}";
-            
+
             var user = new ApplicationUser
             {
                 UserName = uniqueUserName,
@@ -149,4 +149,4 @@ namespace ImoSphere.Tests
             Context?.Dispose();
         }
     }
-} 
+}

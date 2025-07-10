@@ -35,7 +35,7 @@ namespace ImoSphere.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
             var roles = await _userManager.GetRolesAsync(currentUser);
             var isSuperAdmin = roles.Contains("SuperAdmin");
-            
+
             if (isSuperAdmin)
             {
                 // Para SuperAdmin: mostrar hierarquia organizada
@@ -73,7 +73,7 @@ namespace ImoSphere.Controllers
                 var agencyUser = await _context.AgencyUsers.FirstOrDefaultAsync(au => au.UserId == currentUser.Id);
                 if (agencyUser == null)
                     return Forbid();
-                
+
                 // Só os comerciais supervisionados por este admin
                 var supervisedComerciais = _context.AgencyUsers
                     .Where(au => au.AdminId == currentUser.Id && au.Role == "Comercial")
@@ -81,7 +81,7 @@ namespace ImoSphere.Controllers
                     .ToList();
 
                 var users = _userManager.Users.Where(u => supervisedComerciais.Contains(u.Id)).ToList();
-                
+
                 List<UserWithRolesViewModel> userRoles = new();
                 foreach (var user in users)
                 {
@@ -92,7 +92,7 @@ namespace ImoSphere.Controllers
                         Roles = userRolesList
                     });
                 }
-                
+
                 ViewBag.IsSuperAdmin = false;
                 return View("UsersSimple", userRoles);
             }
@@ -177,17 +177,17 @@ namespace ImoSphere.Controllers
             }
             return hierarchy;
         }
-        
+
         private async Task<List<ApplicationUser>> GetAdminsForFilter(int? agencyId)
         {
             var query = _context.AgencyUsers
                 .Where(au => au.Role == "Admin");
-                
+
             if (agencyId.HasValue)
             {
                 query = query.Where(au => au.AgencyId == agencyId.Value);
             }
-            
+
             var adminUserIds = await query.Select(au => au.UserId).ToListAsync();
             return await _userManager.Users.Where(u => adminUserIds.Contains(u.Id)).ToListAsync();
         }
@@ -513,11 +513,11 @@ namespace ImoSphere.Controllers
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
                 return Json(new { canDelete = false, needsTransfer = false, message = "Utilizador não encontrado." });
-            
+
             // PROTEÇÃO CRÍTICA: Nunca permitir eliminar o SuperAdmin principal
             if (user.Email == "imosphere.admin@imosphere.com")
                 return Json(new { canDelete = false, needsTransfer = false, message = "Não é possível eliminar o SuperAdmin principal do sistema." });
-            
+
             var roles = await _userManager.GetRolesAsync(user);
             var role = roles.FirstOrDefault();
             if (role == "Comercial")
@@ -572,14 +572,14 @@ namespace ImoSphere.Controllers
                     Console.WriteLine($"[TransferAndDeleteUser] Utilizador não encontrado para id: {id}");
                     return Json(new { success = false, message = "Utilizador não encontrado." });
                 }
-                
+
                 // PROTEÇÃO CRÍTICA: Nunca permitir eliminar o SuperAdmin principal
                 if (user.Email == "imosphere.admin@imosphere.com")
                 {
                     Console.WriteLine($"[TransferAndDeleteUser] Tentativa de eliminar SuperAdmin principal bloqueada: {user.Email}");
                     return Json(new { success = false, message = "Não é possível eliminar o SuperAdmin principal do sistema." });
                 }
-                
+
                 var roles = await _userManager.GetRolesAsync(user);
                 var role = roles.FirstOrDefault();
                 if (role == "Comercial")

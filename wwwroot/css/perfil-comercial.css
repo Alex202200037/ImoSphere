@@ -55,7 +55,7 @@
     color: white;
     margin: 0 auto 1rem;
     border: 5px solid #fff;
-    box-shadow: 0 8px 32px #6c63ff33, 0 0 0 8px rgba(140,120,255,0.10);
+    box-shadow: 0 8px 32px #6c63ff33, 0 0 0 8px rgba(140, 120, 255, 0.10);
     position: relative;
     overflow: visible;
     transition: box-shadow 0.22s, border 0.22s;
@@ -64,7 +64,10 @@
 .profile-avatar::after {
     content: '';
     position: absolute;
-    top: -12px; left: -12px; right: -12px; bottom: -12px;
+    top: -12px;
+    left: -12px;
+    right: -12px;
+    bottom: -12px;
     border-radius: 50%;
     background: conic-gradient(from 0deg, #8f7cff 0%, #fff0 60%, #6c63ff 100%);
     opacity: 0.18;
@@ -74,9 +77,20 @@
 }
 
 @keyframes avatar-glow {
-    0% { filter: blur(0.5px) brightness(1.1); opacity: 0.18; }
-    50% { filter: blur(2.5px) brightness(1.3); opacity: 0.28; }
-    100% { filter: blur(0.5px) brightness(1.1); opacity: 0.18; }
+    0% {
+        filter: blur(0.5px) brightness(1.1);
+        opacity: 0.18;
+    }
+
+    50% {
+        filter: blur(2.5px) brightness(1.3);
+        opacity: 0.28;
+    }
+
+    100% {
+        filter: blur(0.5px) brightness(1.1);
+        opacity: 0.18;
+    }
 }
 
 .profile-badge {
@@ -196,11 +210,13 @@
     position: relative;
     overflow: visible;
 }
+
 .stat-card:hover {
     box-shadow: 0 16px 48px 0 #8f7cff55, 0 2px 12px 0 #0003;
     transform: translateY(-6px) scale(1.035);
     border: 1.5px solid #8f7cff;
 }
+
 .stat-icon {
     background: linear-gradient(135deg, #8f7cff 0%, #6c63ff 100%);
     color: #fff;
@@ -217,19 +233,25 @@
     z-index: 1;
     transition: box-shadow 0.22s, background 0.22s;
 }
+
 .stat-card:hover .stat-icon {
     box-shadow: 0 0 0 10px rgba(140, 120, 255, 0.18), 0 8px 32px #8f7cff55;
     background: linear-gradient(135deg, #a18fff 0%, #6c63ff 100%);
 }
+
 .stat-icon::after {
     content: '';
     position: absolute;
-    top: -8px; left: -8px; right: -8px; bottom: -8px;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(140,120,255,0.18) 0%, transparent 80%);
+    background: radial-gradient(circle, rgba(140, 120, 255, 0.18) 0%, transparent 80%);
     z-index: 0;
     pointer-events: none;
 }
+
 .stat-number {
     font-size: 1.7rem;
     font-weight: 800;
@@ -238,6 +260,7 @@
     letter-spacing: 1.2px;
     text-shadow: 0 2px 8px #6c63ff22;
 }
+
 .stat-label {
     color: #d1cfff;
     font-size: 1.05rem;
@@ -246,13 +269,14 @@
     letter-spacing: 0.6px;
     opacity: 0.92;
 }
+
 .stats-dashboard .row.g-4 {
     gap: 2.2rem 0;
 }
 
 /* Separador visual entre ícone e texto */
-.stat-icon + .stat-content {
-    border-top: 1.5px solid rgba(140,120,255,0.10);
+.stat-icon+.stat-content {
+    border-top: 1.5px solid rgba(140, 120, 255, 0.10);
     margin-top: 0.5rem;
     padding-top: 0.7rem;
 }
@@ -638,54 +662,54 @@
     .profile-header .row {
         text-align: center;
     }
-    
+
     .profile-actions {
         margin-top: 1.5rem;
         flex-direction: row;
         justify-content: center;
     }
-    
+
     .agency-info {
         justify-content: center;
         flex-direction: column;
         gap: 0.5rem;
     }
-    
+
     .profile-name {
         font-size: 2rem;
     }
-    
+
     .section-title {
         font-size: 2rem;
     }
-    
+
     .member-header {
         flex-direction: column;
         text-align: center;
         gap: 1rem;
     }
-    
+
     .member-stats {
         justify-content: center;
     }
-    
+
     .property-card {
         flex-direction: column;
         align-items: flex-start;
         gap: 1rem;
     }
-    
+
     .property-actions {
         align-self: stretch;
         justify-content: center;
     }
-    
+
     .stat-card {
         flex-direction: column;
         text-align: center;
         gap: 1rem;
     }
-    
+
     .action-card {
         padding: 2rem 1.2rem;
     }
@@ -695,17 +719,21 @@
     .property-image-container {
         height: 160px;
     }
+
     .card-body {
         padding: 1rem 1rem 0.5rem 1rem;
     }
+
     .card-footer {
         padding: 0.5rem 1rem;
     }
+
     .stat-card {
         min-width: 140px;
         min-height: 120px;
         padding: 1.2rem 0.7rem 1rem 0.7rem;
     }
+
     .action-card {
         padding: 2rem 1.2rem;
     }
@@ -786,9 +814,11 @@
         min-height: 120px;
         padding: 1.2rem 0.7rem 1rem 0.7rem;
     }
+
     .team-property-card .property-main {
         padding: 1rem 1rem 0.5rem 1rem;
     }
+
     .team-property-card .property-actions {
         margin-left: 0.7rem;
     }
@@ -894,10 +924,12 @@
     .property-card.pro-list .property-image-container {
         height: 160px;
     }
+
     .property-card.pro-list .card-body {
         padding: 1rem 1rem 0.5rem 1rem;
     }
+
     .property-card.pro-list .card-footer {
         padding: 0.5rem 1rem;
     }
-} 
+}

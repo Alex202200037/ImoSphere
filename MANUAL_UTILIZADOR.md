@@ -8,6 +8,7 @@
 - [🚀 Primeiros Passos](#-primeiros-passos)
 - [👤 Tipos de Utilizador](#-tipos-de-utilizador)
 - [🔍 Explorar Propriedades](#-explorar-propriedades)
+- [❤️ Sistema de Favoritos](#️-sistema-de-favoritos)
 - [🏗️ Gestão de Propriedades](#️-gestão-de-propriedades)
 - [👥 Gestão de Utilizadores](#-gestão-de-utilizadores)
 - [💬 Sistema de Comunicação](#-sistema-de-comunicação)
@@ -17,12 +18,13 @@
 
 ## 🏠 Sobre o ImoSphere
 
-O **ImoSphere** é uma plataforma web moderna e intuitiva para mediação imobiliária digital. Permite a gestão completa de propriedades, utilizadores e comunicação entre todos os intervenientes no processo imobiliário.
+O **ImoSphere** é uma plataforma web moderna e intuitiva para mediação imobiliária digital. Permite a gestão completa de propriedades, utilizadores hierárquicos e comunicação entre todos os intervenientes no processo imobiliário.
 
 ### 🎯 Principais Funcionalidades
 - **Gestão de Propriedades**: Criação, edição e eliminação de listagens
-- **Sistema de Utilizadores**: Hierarquia de permissões por agência
-- **Comunicação Integrada**: Chat em tempo real e sistema de mensagens
+- **Sistema de Utilizadores Hierárquico**: SuperAdmin → Admin → Comercial → User
+- **Sistema de Favoritos**: Marcar propriedades como favoritas
+- **Comunicação Integrada**: Chat em tempo real com SignalR
 - **Mapas Interativos**: Localização geográfica das propriedades
 - **Upload de Imagens**: Galeria de fotos para cada propriedade
 - **Filtros Avançados**: Pesquisa por múltiplos critérios
@@ -57,6 +59,7 @@ https://localhost:5151
 - **Menu Superior**: Acesso rápido a todas as funcionalidades
 - **Breadcrumbs**: Indicam a localização atual
 - **Notificações**: Feedback visual para todas as ações
+- **Modo Claro/Escuro**: Alternar tema no topo da página
 
 ## 👤 Tipos de Utilizador
 
@@ -67,6 +70,7 @@ https://localhost:5151
 - ✅ Aceder a páginas informativas (Sobre Nós, Serviços, Contactos)
 - ❌ Detalhes completos de propriedades
 - ❌ Sistema de mensagens
+- ❌ Sistema de favoritos
 
 **Como Utilizar:**
 1. Navegar pela página inicial
@@ -78,28 +82,32 @@ https://localhost:5151
 - ✅ Todas as funcionalidades do convidado
 - ✅ Detalhes completos de propriedades
 - ✅ Sistema de mensagens e chat
+- ✅ Sistema de favoritos
 - ✅ Perfil pessoal
 - ❌ Gestão de propriedades
 
 **Como Utilizar:**
 1. **Registar conta** ou fazer login
 2. **Explorar propriedades** com acesso completo
-3. **Utilizar o chat** para comunicar com outros utilizadores
-4. **Gerir perfil** pessoal
+3. **Marcar favoritos** com o botão de coração
+4. **Utilizar o chat** para comunicar com outros utilizadores
+5. **Gerir perfil** pessoal
 
-### 🏠 Comercial (Seller)
+### 🏠 Comercial (Comercial)
 **Funcionalidades Disponíveis:**
 - ✅ Todas as funcionalidades do User
 - ✅ Criar propriedades
 - ✅ Editar propriedades próprias
 - ✅ Upload de imagens
 - ✅ Gestão de listagens pessoais
+- ✅ Chat com clientes
 
 **Como Utilizar:**
 1. **Fazer login** com credenciais de comercial
 2. **Criar propriedades** através do botão "Adicionar Propriedade"
 3. **Gerir propriedades** na secção "Minhas Propriedades"
 4. **Upload de imagens** durante a criação/edição
+5. **Responder a mensagens** de clientes
 
 ### 👨‍💼 Administrador (Admin)
 **Funcionalidades Disponíveis:**
@@ -107,13 +115,15 @@ https://localhost:5151
 - ✅ Gestão de utilizadores da agência
 - ✅ Gestão de todas as propriedades da agência
 - ✅ Sistema de mensagens administrativo
-- ✅ Relatórios e estatísticas
+- ✅ Supervisão de comerciais
+- ✅ Relatórios da agência
 
 **Como Utilizar:**
 1. **Aceder ao painel administrativo**
 2. **Gerir utilizadores** da agência
 3. **Supervisionar propriedades** de todos os comerciais
 4. **Responder a mensagens** de contacto
+5. **Criar novos comerciais** e administradores
 
 ### 🔧 Super Administrador (SuperAdmin)
 **Funcionalidades Disponíveis:**
@@ -122,6 +132,7 @@ https://localhost:5151
 - ✅ Criação de administradores
 - ✅ Configurações globais
 - ✅ Relatórios completos
+- ✅ Gestão de mensagens de contacto
 
 **Como Utilizar:**
 1. **Aceder ao painel de controlo global**
@@ -153,6 +164,26 @@ https://localhost:5151
 - **Ordenação**: Por preço, área, data, etc.
 - **Vista de mapa**: Visualizar propriedades geograficamente
 - **Favoritos**: Marcar propriedades de interesse
+
+## ❤️ Sistema de Favoritos
+
+### Marcar como Favorito
+1. **Navegar** para uma propriedade
+2. **Clicar** no botão de coração (❤️)
+3. **O coração fica vermelho** quando marcado como favorito
+4. **Clicar novamente** para remover dos favoritos
+
+### Gerir Favoritos
+1. **Aceder ao perfil** pessoal
+2. **Ver secção "Favoritos"**
+3. **Visualizar** todas as propriedades favoritas
+4. **Remover favoritos** com o botão de toggle
+
+### Funcionalidades dos Favoritos
+- **Contador**: Número total de favoritos no perfil
+- **Grid responsivo**: 3 propriedades por linha em desktop
+- **Remoção instantânea**: Sem necessidade de refresh
+- **Animações**: Transições suaves ao adicionar/remover
 
 ## 🏗️ Gestão de Propriedades
 
@@ -215,6 +246,12 @@ https://localhost:5151
 3. **Escrever** mensagem
 4. **Enviar** com Enter ou botão
 
+### Conversas por Propriedade
+1. **Aceder** aos detalhes de uma propriedade
+2. **Clicar** em "Contactar" se disponível
+3. **Iniciar** conversa sobre a propriedade específica
+4. **Receber** notificações de novas mensagens
+
 ### Mensagens de Contacto
 1. **Aceder** à página "Contactos"
 2. **Preencher** formulário:
@@ -228,6 +265,11 @@ https://localhost:5151
 2. **Ver** lista de mensagens recebidas
 3. **Marcar** como lida
 4. **Responder** ou eliminar
+
+### Notificações
+- **Badge de mensagens**: Indicador de mensagens não lidas
+- **Notificações em tempo real**: Atualizações automáticas
+- **Som de notificação**: Alertas sonoros (se configurado)
 
 ## ⚙️ Configurações e Perfil
 
@@ -248,77 +290,70 @@ https://localhost:5151
 - **Idiomas**: Português (padrão), inglês e espanhol
 - **Densidade**: Compacto/normal
 
+### Perfil por Tipo de Utilizador
+
+#### 👤 Perfil de User
+- **Favoritos**: Lista de propriedades favoritas
+- **Informações pessoais**: Dados básicos
+- **Histórico**: Atividade recente
+
+#### 🏠 Perfil de Comercial
+- **Propriedades criadas**: Lista de imóveis próprios
+- **Estatísticas**: Número de propriedades
+- **Chat**: Conversas com clientes
+
+#### 👨‍💼 Perfil de Admin
+- **Gestão de utilizadores**: Lista de comerciais supervisionados
+- **Estatísticas da agência**: Dados da agência
+- **Relatórios**: Informações de performance
+
+#### 🔧 Perfil de SuperAdmin
+- **Gestão global**: Todas as agências
+- **Estatísticas globais**: Dados de toda a plataforma
+- **Relatórios completos**: Análises detalhadas
+
 ## ❓ FAQ
 
-### 🔐 Autenticação
-**Q: Esqueci-me da password. O que faço?**
-A: Contacte o administrador da sua agência para reset da password.
+### Como marcar uma propriedade como favorita?
+Clica no botão de coração (❤️) na listagem ou detalhes da propriedade. O coração fica vermelho quando marcado como favorito.
 
-**Q: Posso alterar o meu email?**
-A: Sim, através do perfil pessoal ou contactando o administrador.
+### Como remover um favorito?
+Clica novamente no coração vermelho ou vai ao perfil e remove da lista de favoritos.
 
-### 🏠 Propriedades
-**Q: Quantas imagens posso adicionar por propriedade?**
-A: Não há limite, mas recomendamos máximo 10 imagens de qualidade.
+### Como aceder ao chat?
+Faz login e clica em "Chat" no menu. Podes conversar com outros utilizadores em tempo real.
 
-**Q: Posso editar propriedades de outros utilizadores?**
-A: Apenas administradores podem editar propriedades de outros utilizadores.
+### Como criar uma propriedade?
+Se és Comercial, Admin ou SuperAdmin, clica em "Adicionar Propriedade" e preenche o formulário.
 
-**Q: Como funciona o sistema de coordenadas GPS?**
-A: As coordenadas são automaticamente obtidas ao inserir o endereço, ou podem ser definidas manualmente no mapa.
+### Como alterar o tema (claro/escuro)?
+Clica no botão de alternar tema no topo da página.
 
-### 💬 Comunicação
-**Q: O chat funciona em tempo real?**
-A: Sim, utiliza SignalR para comunicação instantânea.
+### Como filtrar propriedades?
+Na página de propriedades, utiliza os filtros por preço, localização, quartos, etc.
 
-**Q: Posso enviar ficheiros pelo chat?**
-A: Atualmente apenas texto é suportado no chat.
+### Como contactar um comercial?
+Nos detalhes da propriedade, clica em "Contactar" se disponível.
 
-### 🗺️ Mapas
-**Q: Que serviço de mapas é utilizado?**
-A: OpenStreetMap, um serviço gratuito e de código aberto.
-
-**Q: Posso adicionar coordenadas manualmente?**
-A: Sim, através do botão "Escolher no mapa" no formulário de propriedades.
+### Como ver as minhas propriedades favoritas?
+Acede ao teu perfil e vê a secção "Favoritos".
 
 ## 📞 Suporte
 
-### Contactos de Suporte
-- **Emails**: 202200037@estudante.ips.pt, 202200603@estudante.ips.pt
-- **Equipa**: Alexandre Miguel, Bruna Rossa
-- **Instituição**: ESTSetúbal - IPS
+### Contactos
+- **Email**: 202200037@estudantes.ips.pt, 202200603@estudantes.ips.pt
 
-### Horário de Suporte
-- **Segunda a Sexta**: 9:00 - 18:00
-- **Fim de semana**: Suporte por email
+### Recursos de Ajuda
+- **Manual Técnico**: Para administradores e desenvolvedores
+- **FAQ**: Perguntas frequentes
+- **Tutoriais**: Guias passo-a-passo
 
-### Informações Úteis
-- **Versão**: ImoSphere v2.0
-- **Navegadores Suportados**: Chrome, Firefox, Safari, Edge
-- **Dispositivos**: Desktop
-
----
-
-## 🎯 Dicas de Utilização
-
-### Para Comerciais
-- **Mantenha as propriedades atualizadas** com informações precisas
-- **Use imagens de qualidade** para atrair mais interesse
-- **Responda rapidamente** às mensagens dos clientes
-- **Utilize descrições detalhadas** para destacar características únicas
-
-### Para Administradores
-- **Monitore regularmente** a atividade dos comerciais
-- **Verifique as mensagens** de contacto diariamente
-- **Mantenha a base de dados** de utilizadores atualizada
-- **Analise os relatórios** para identificar tendências
-
-### Para Utilizadores
-- **Utilize os filtros** para encontrar propriedades específicas
-- **Guarde propriedades** de interesse para consulta posterior
-- **Contacte os comerciais** para mais informações
-- **Partilhe feedback** sobre a plataforma
+### Reportar Problemas
+1. **Descrever** o problema detalhadamente
+2. **Incluir** screenshots se possível
+3. **Especificar** o tipo de utilizador
+4. **Mencionar** o browser utilizado
 
 ---
 
-*Manual do Utilizador v2.0 - ImoSphere* 
+**ImoSphere** - Transformando a mediação imobiliária digital 🏠✨ 

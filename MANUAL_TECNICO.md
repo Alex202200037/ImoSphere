@@ -51,17 +51,23 @@ AspNetRoleClaims     -- Claims das roles
 #### Tabelas de Negócio
 ```sql
 Agencies             -- Agências imobiliárias
-AgencyUsers          -- Relação utilizador-agência
+AgencyUsers          -- Relação utilizador-agência com hierarquia
 Properties           -- Propriedades imobiliárias
 PropertyImages       -- Imagens das propriedades
-Messages             -- Sistema de mensagens
+Favorites            -- Sistema de favoritos (User-Property)
+ChatConversations    -- Conversas de chat
+ChatMessages         -- Mensagens de chat
+Messages             -- Sistema de mensagens de contacto
 ```
 
 ### Relacionamentos
-- **AgencyUsers**: N:N entre Users e Agencies
+- **AgencyUsers**: N:N entre Users e Agencies com hierarquia (AdminId)
 - **Properties**: N:1 com Agencies e Users (CreatedBy)
 - **PropertyImages**: N:1 com Properties
-- **Messages**: N:1 com Users (Sender/Receiver)
+- **Favorites**: N:N entre Users e Properties
+- **ChatConversations**: N:1 com Properties, Users (como User e Comercial)
+- **ChatMessages**: N:1 com ChatConversations e Users (Sender)
+- **Messages**: Sistema de contacto independente
 
 ### DER e MER do Sistema
 
@@ -74,7 +80,9 @@ O diagrama seguinte representa as principais entidades do sistema e os seus rela
 - **Property**: Imóvel
 - **PropertyImage**: Imagem de imóvel
 - **Favorite**: Favorito (ligação entre utilizador e imóvel)
-- **AgencyUser**: Relação N:N entre utilizador e agência
+- **AgencyUser**: Relação N:N entre utilizador e agência com hierarquia
+- **ChatConversation**: Conversa de chat por propriedade
+- **ChatMessage**: Mensagem individual de chat
 
 **Relações principais:**
 - Uma agência tem vários imóveis e vários utilizadores (AgencyUser)
@@ -82,6 +90,8 @@ O diagrama seguinte representa as principais entidades do sistema e os seus rela
 - Um imóvel é criado por um utilizador
 - Um utilizador pode ter vários favoritos (imóveis)
 - Um favorito liga um utilizador a um imóvel
+- Uma conversa de chat está associada a uma propriedade específica
+- Uma mensagem pertence a uma conversa e tem um remetente
 
 ## 📁 Estrutura do Projeto
 
@@ -248,215 +258,263 @@ dotnet test Tests/ImoSphere.Tests.csproj --collect:"XPlat Code Coverage"
 #### Testes de Controllers
 - **HomeController**: Testes de filtros de propriedades
 - **PropertyController**: Testes CRUD de propriedades
-- **Autenticação**: Mock de utilizadores autenticados
-- **Autorização**: Verificação de roles e permissões
 
 #### Testes de Base de Dados
-- **ApplicationDbContext**: Testes de relacionamentos
-- **In-Memory Database**: Base de dados em memória para testes
-- **Seed Data**: Dados de teste isolados por teste
-
-#### Testes de Modelos
-- **Validação**: Testes de validação de modelos
-- **Relacionamentos**: Testes de navegação entre entidades
-
-### Configuração de Testes
-```csharp
-// TestBase.cs - Configuração base
-public abstract class TestBase
-{
-    protected ApplicationDbContext Context { get; private set; }
-    protected UserManager<ApplicationUser> UserManager { get; private set; }
-    
-    // Base de dados única por teste
-    private void SetupTestDatabase()
-    {
-        var databaseName = Guid.NewGuid().ToString();
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(databaseName: databaseName)
-            .Options;
-        Context = new ApplicationDbContext(options);
-    }
-}
-```
+- **ApplicationDbContext**: Testes de relacionamentos e operações CRUD
 
 ## 🔌 APIs e Endpoints
 
-### Endpoints Principais
+### Controllers Principais
 
-#### Propriedades
-```
-GET    /Properties              # Listar propriedades
-GET    /Properties/{id}         # Detalhes da propriedade
-POST   /Properties              # Criar propriedade
-PUT    /Properties/{id}         # Atualizar propriedade
-DELETE /Properties/{id}         # Eliminar propriedade
-```
-
-#### Utilizadores
-```
-GET    /Admin/Users             # Listar utilizadores (Admin)
-POST   /Admin/CreateUser        # Criar utilizador
-PUT    /Admin/EditUser/{id}     # Editar utilizador
-DELETE /Admin/DeleteUser/{id}   # Eliminar utilizador
+#### HomeController
+```csharp
+// GET: /Home/Index
+// GET: /Home/Properties (com filtros)
+// GET: /Home/Perfil (perfil do utilizador)
+// POST: /Home/SubmitContactForm
+// GET: /Home/ContactUsMessages (SuperAdmin)
 ```
 
-#### Chat
-```
-GET    /Chat                    # Interface de chat
-POST   /Chat/SendMessage        # Enviar mensagem
-GET    /Chat/GetMessages        # Obter mensagens
+#### PropertyController
+```csharp
+// GET: /Properties/Index
+// GET: /Properties/Details/{id}
+// GET: /Properties/Create
+// POST: /Properties/Create
+// GET: /Properties/Edit/{id}
+// POST: /Properties/Edit/{id}
+// POST: /Properties/Delete/{id}
 ```
 
-### APIs AJAX
+#### FavoriteController
+```csharp
+// POST: /Favorite/ToggleFavorite
+// GET: /Favorite/GetFavorites
+// POST: /Favorite/RemoveFavorite
+// GET: /Favorite/CheckFavorite
+```
+
+#### ChatController
+```csharp
+// GET: /Chat/Index
+// GET: /Chat/Conversations
+// POST: /Chat/SendMessage
+// POST: /Chat/MarkAsRead
+```
+
+#### AdminController
+```csharp
+// GET: /Admin/Users
+// GET: /Admin/CreateUser
+// POST: /Admin/CreateUser
+// GET: /Admin/EditUser/{id}
+// POST: /Admin/EditUser/{id}
+```
+
+#### AccountController
+```csharp
+// GET: /Account/Login
+// POST: /Account/Login
+// GET: /Account/Register
+// POST: /Account/Register
+// POST: /Account/Logout
+```
+
+### Endpoints JSON (APIs)
+
+#### Sistema de Favoritos
 ```javascript
-// Exemplo: Obter comerciais por agência
-fetch('/Properties/GetComerciaisByAgency?agencyId=' + agencyId)
-    .then(response => response.json())
-    .then(data => {
-        // Processar dados
-    });
+// Toggle favorite
+POST /Favorite/ToggleFavorite
+Body: { "propertyId": 123 }
 
-// Exemplo: Verificar dependências de utilizador
-fetch('/Admin/CheckUserDependencies?id=' + userId)
-    .then(response => response.json())
-    .then(data => {
-        // Processar resposta
-    });
+// Remove favorite
+POST /Favorite/RemoveFavorite
+Body: { "favoriteId": 456 }
+
+// Check if favorite
+GET /Favorite/CheckFavorite?propertyId=123
+```
+
+#### Sistema de Chat
+```javascript
+// Send message
+POST /Chat/SendMessage
+Body: { "conversationId": 789, "text": "Hello" }
+
+// Mark as read
+POST /Chat/MarkAsRead
+Body: { "conversationId": 789 }
 ```
 
 ## 🔐 Autenticação e Autorização
 
 ### Roles e Permissões
+
+#### SuperAdmin
+- **Acesso total** a todas as funcionalidades
+- **Gestão de agências** e administradores
+- **Relatórios globais** e estatísticas
+- **Gestão de mensagens** de contacto
+
+#### Admin
+- **Gestão de utilizadores** da agência
+- **Supervisão de comerciais** da agência
+- **Gestão de propriedades** da agência
+- **Relatórios da agência**
+
+#### Comercial
+- **Criação e edição** de propriedades próprias
+- **Upload de imagens** para propriedades
+- **Chat com clientes** sobre propriedades
+- **Gestão de listagens** pessoais
+
+#### User
+- **Visualização** de propriedades
+- **Sistema de favoritos**
+- **Chat com comerciais**
+- **Perfil pessoal**
+
+### Políticas de Segurança
+
+#### Validação de Dados
+- **ModelState Validation**: Validação automática de formulários
+- **Anti-forgery Tokens**: Proteção CSRF em formulários
+- **Input Sanitization**: Limpeza de dados de entrada
+
+#### Autorização por Controller
 ```csharp
-// Roles definidas no sistema
-"SuperAdmin"  // Controlo total
-"Admin"       // Gestão de utilizadores e propriedades
-"Comercial"   // Gestão de propriedades próprias
-"User"        // Visualização e chat
-```
-
-### Autorização em Controllers
-```csharp
-[Authorize(Roles = "Admin")]
-public class AdminController : Controller
-{
-    // Apenas admins podem aceder
-}
-
-[Authorize]
-public class PropertyController : Controller
-{
-    // Utilizadores autenticados
-}
-```
-
-### Autorização em Views
-```razor
-@if (User.IsInRole("Admin"))
-{
-    <button>Admin Action</button>
-}
-
-@if (User.Identity.IsAuthenticated)
-{
-    <span>Bem-vindo, @User.Identity.Name!</span>
-}
+[Authorize]                    // Requer autenticação
+[Authorize(Roles = "Admin")]   // Requer role específica
+[AllowAnonymous]               // Permite acesso anónimo
 ```
 
 ## 📊 Migrações
+
+### Estrutura de Migrações
+```
+Migrations/
+├── 20250707191146_InitialCreate.cs
+├── 20250707191146_InitialCreate.Designer.cs
+├── 20250707214638_AddFavoritesTable.cs
+├── 20250707214638_AddFavoritesTable.Designer.cs
+└── ApplicationDbContextModelSnapshot.cs
+```
 
 ### Comandos de Migração
 ```bash
 # Criar nova migração
 dotnet ef migrations add NomeDaMigracao
 
-# Aplicar migrações pendentes
+# Aplicar migrações
 dotnet ef database update
 
-# Reverter última migração
+# Reverter migração
 dotnet ef database update NomeDaMigracaoAnterior
 
-# Gerar script SQL
-dotnet ef migrations script
-
-# Remover última migração
+# Remover migração
 dotnet ef migrations remove
 ```
 
-### Seed Data
-```csharp
-// Data/SeedData.cs
-public static async Task Initialize(IServiceProvider serviceProvider, ApplicationDbContext context)
-{
-    // Verificar se já existem dados
-    if (context.Properties.Any())
-        return;
-    
-    // Criar dados iniciais
-    // ...
-}
-```
+### Migrações Principais
+
+#### InitialCreate
+- Criação das tabelas base do sistema
+- Tabelas Identity (AspNetUsers, etc.)
+- Tabelas de negócio (Agencies, Properties, etc.)
+
+#### AddFavoritesTable
+- Adição do sistema de favoritos
+- Tabela Favorites com relacionamentos
 
 ## 🐛 Troubleshooting
 
 ### Problemas Comuns
 
-#### 1. Erro de Base de Dados
-```
-SQLite Error 1: 'no such table: Agencies'
-```
-**Solução:**
+#### Erro de Base de Dados
 ```bash
+# Reset da base de dados
+rm ImoSphereDb.db
 dotnet ef database update
 ```
 
-#### 2. Erro de Migração
-```
-table "AspNetRoles" already exists
-```
-**Solução:**
+#### Erro de Compilação
 ```bash
-# Eliminar base de dados e recriar
-rm ImoSphereDb.db*
-dotnet ef database update
+# Limpar e restaurar
+dotnet clean
+dotnet restore
+dotnet build
 ```
 
-#### 3. Erro de Dependências
-```
-Failed to resolve service for type 'ApplicationDbContext'
-```
-**Solução:** Verificar registo no `Program.cs`:
-```csharp
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+#### Erro de Dependências
+```bash
+# Atualizar pacotes
+dotnet list package --outdated
+dotnet add package NomeDoPacote --version NovaVersao
 ```
 
-#### 4. Erro de Permissões
-```
-Access denied for user
-```
-**Solução:** Verificar connection string e permissões de utilizador.
+#### Problemas de Chat (SignalR)
+- Verificar se o SignalR está configurado no Program.cs
+- Confirmar se o hub está registado corretamente
+- Verificar logs do browser para erros de JavaScript
+
+#### Problemas de Favoritos
+- Verificar se o FavoriteController está a aceitar JSON corretamente
+- Confirmar se o JavaScript está a enviar os dados no formato correto
+- Verificar logs do servidor para erros de binding
 
 ### Logs e Debugging
-```csharp
-// Habilitar logs detalhados
-"Logging": {
-  "LogLevel": {
-    "Default": "Debug",
-    "Microsoft.EntityFrameworkCore.Database.Command": "Information"
+
+#### Configuração de Logs
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "ImoSphere.Controllers": "Debug"
+    }
   }
 }
 ```
+
+#### Debug de JavaScript
+```javascript
+// No browser console
+console.log('Debug info:', data);
+```
+
+#### Debug de C#
+```csharp
+// No controller
+Console.WriteLine($"[DEBUG] Info: {data}");
+```
+
+### Performance
+
+#### Otimizações de Base de Dados
+- **Include()**: Carregar dados relacionados
+- **AsNoTracking()**: Para consultas só de leitura
+- **Pagination**: Limitar resultados grandes
+
+#### Otimizações de Frontend
+- **Lazy Loading**: Carregar imagens sob demanda
+- **Minificação**: CSS e JS minificados
+- **Caching**: Cache de recursos estáticos
+
 ---
 
-## 📞 Suporte
+## 📄 Licença
 
-Para questões técnicas ou problemas:
-- **Emails**: 202200037@estudante.ips.pt, 202200603@estudante.ips.pt
-- **Equipa**: Alexandre Miguel, Bruna Rossa
-- **Instituição**: ESTSetúbal - IPS
+Este projeto está licenciado sob a Licença MIT.
+
+## 👥 Equipa
+
+- **Alexandre Miguel** - Desenvolvimento Backend e Frontend
+- **Bruna Rossa** - Desenvolvimento Backend e Frontend
+- **Unidade Curricular** - Programação Visual
+- **Docente** - José Cordeiro
 
 ---
 
-*Manual Técnico v2.0 - ImoSphere* 
+**ImoSphere** - Transformando a mediação imobiliária digital 🏠✨ 

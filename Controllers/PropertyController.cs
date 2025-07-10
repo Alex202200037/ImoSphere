@@ -50,7 +50,7 @@ namespace ImoSphere.Controllers
             var isAdmin = roles.Contains("Admin");
             var isComercial = roles.Contains("Comercial");
             var agencyUser = user != null ? _context.AgencyUsers.FirstOrDefault(au => au.UserId == user.Id) : null;
-            
+
             // Lógica de permissões igual à da lista de propriedades
             bool canEdit = false;
             if (isSuperAdmin)
@@ -68,16 +68,16 @@ namespace ImoSphere.Controllers
                     .Where(au => au.AgencyId == agencyUser.AgencyId && au.Role == "Comercial" && au.AdminId == user.Id)
                     .Select(au => au.UserId)
                     .ToListAsync();
-                
+
                 if (supervisedComercialIds.Contains(property.CreatedByUserId))
                 {
                     canEdit = true;
                 }
             }
-            
+
             // Só mostra botão de chat se não for quem pode editar nem superadmin
             bool canContact = !canEdit && !isSuperAdmin;
-            
+
             // Info do comercial responsável
             var comercial = await _context.Users.FindAsync(property.CreatedByUserId);
             // Verificar se já existe conversa

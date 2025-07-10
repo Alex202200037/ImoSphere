@@ -81,7 +81,7 @@ namespace ImoSphere.Data
                 context.Agencies.Add(imoSphereAgency);
                 await context.SaveChangesAsync();
             }
-            
+
             // Garantir que o SuperAdmin está associado à agência ImoSphere
             var superAdmin = await userManager.FindByEmailAsync("imosphere.admin@imosphere.com");
             if (superAdmin != null && !context.AgencyUsers.Any(au => au.UserId == superAdmin.Id && au.AgencyId == imoSphereAgency.Id))
@@ -160,25 +160,25 @@ namespace ImoSphere.Data
                 new { Nome = "Portimão", Lat = 37.1366, Lng = -8.5378 },
                 new { Nome = "Funchal", Lat = 32.6669, Lng = -16.9241 }
             };
-            
+
             // Lista de imagens disponíveis (novas imagens da pasta Houses)
             var imagens = new[] {
-                "1Fotos-Projeto.jpg", "2Fotos-Projeto.jpg", "3Fotos-Projeto.jpg", "4Fotos-Projeto.jpeg", 
-                "5Fotos-Projeto.jpg", "6Fotos-Projeto.jpg", "7Fotos-Projeto.jpg", "8Fotos-Projeto.jpg", 
-                "9Fotos-Projeto.jpg", "10Fotos-Projeto.jpg", "11Fotos-Projeto.jpg", "12Fotos-Projeto.jpeg", 
-                "13Fotos-Projeto.jpg", "14Fotos-Projeto.jpg", "15Fotos-Projeto.jpeg", "16Fotos-Projeto.jpg", 
-                "17Fotos-Projeto.jpg", "18Fotos-Projeto.jpg", "19Fotos-Projeto.jpg", "20Fotos-Projeto.jpeg", 
-                "21Fotos-Projeto.jpg", "22Fotos-Projeto.jpeg", "23Fotos-Projeto.jpg", "24Fotos-Projeto.jpeg", 
-                "25Fotos-Projeto.jpg", "26Fotos-Projeto.jpg", "27Fotos-Projeto.jpg", "28Fotos-Projeto.jpg", 
-                "29Fotos-Projeto.jpg", "30Fotos-Projeto.jpg", "31Fotos-Projeto.jpeg", "32Fotos-Projeto.jpg", 
-                "33Fotos-Projeto.jpg", "34Fotos-Projeto.jpg", "35Fotos-Projeto.jpg", "36Fotos-Projeto.jpg", 
-                "37Fotos-Projeto.jpg", "38Fotos-Projeto.jpg", "39Fotos-Projeto.png", "40Fotos-Projeto.png", 
+                "1Fotos-Projeto.jpg", "2Fotos-Projeto.jpg", "3Fotos-Projeto.jpg", "4Fotos-Projeto.jpeg",
+                "5Fotos-Projeto.jpg", "6Fotos-Projeto.jpg", "7Fotos-Projeto.jpg", "8Fotos-Projeto.jpg",
+                "9Fotos-Projeto.jpg", "10Fotos-Projeto.jpg", "11Fotos-Projeto.jpg", "12Fotos-Projeto.jpeg",
+                "13Fotos-Projeto.jpg", "14Fotos-Projeto.jpg", "15Fotos-Projeto.jpeg", "16Fotos-Projeto.jpg",
+                "17Fotos-Projeto.jpg", "18Fotos-Projeto.jpg", "19Fotos-Projeto.jpg", "20Fotos-Projeto.jpeg",
+                "21Fotos-Projeto.jpg", "22Fotos-Projeto.jpeg", "23Fotos-Projeto.jpg", "24Fotos-Projeto.jpeg",
+                "25Fotos-Projeto.jpg", "26Fotos-Projeto.jpg", "27Fotos-Projeto.jpg", "28Fotos-Projeto.jpg",
+                "29Fotos-Projeto.jpg", "30Fotos-Projeto.jpg", "31Fotos-Projeto.jpeg", "32Fotos-Projeto.jpg",
+                "33Fotos-Projeto.jpg", "34Fotos-Projeto.jpg", "35Fotos-Projeto.jpg", "36Fotos-Projeto.jpg",
+                "37Fotos-Projeto.jpg", "38Fotos-Projeto.jpg", "39Fotos-Projeto.png", "40Fotos-Projeto.png",
                 "41Fotos-Projeto.jpeg", "moradia1.jpg", "moradia2.jpg", "moradia3.jpg"
             };
-            
+
             var imgIdx = 0;
             var rnd = new Random();
-            
+
             foreach (var agencySeed in agencySeedData)
             {
                 var agency = agencies.FirstOrDefault(a => a.Name == agencySeed.Name);
@@ -187,7 +187,7 @@ namespace ImoSphere.Data
                     // Se a agência não existe, continuar para a próxima
                     continue;
                 }
-                
+
                 // Admin
                 var adminUser = await userManager.FindByEmailAsync(agencySeed.Admin.Email);
                 AgencyUser adminAgencyUser = null;
@@ -224,7 +224,7 @@ namespace ImoSphere.Data
                     // Se o admin já existe, buscar o seu AgencyUser
                     adminAgencyUser = context.AgencyUsers.FirstOrDefault(au => au.UserId == adminUser.Id && au.AgencyId == agency.Id);
                 }
-                
+
                 // Comerciais
                 foreach (var comercialSeed in agencySeed.Comerciais)
                 {
@@ -269,7 +269,7 @@ namespace ImoSphere.Data
                             Console.WriteLine($"[SEED] AdminId atualizado para comercial existente: {comercialUser.UserName} - Admin: {adminAgencyUser.UserId}");
                         }
                     }
-                    
+
                     // Verificar novamente se o utilizador existe e tem ID válido
                     if (comercialUser != null && !string.IsNullOrEmpty(comercialUser.Id))
                     {
@@ -278,11 +278,11 @@ namespace ImoSphere.Data
                         for (int i = 0; i < casasCount; i++)
                         {
                             var cidade = cidadesPortugal[rnd.Next(cidadesPortugal.Length)];
-                            
+
                             // Adicionar variação nas coordenadas para evitar sobreposição
                             var latVariation = (rnd.NextDouble() - 0.5) * 0.01; // ±0.005 graus (~500m)
                             var lngVariation = (rnd.NextDouble() - 0.5) * 0.01; // ±0.005 graus (~500m)
-                            
+
                             var nomeCasa = $"{(i == 0 ? "Penthouse" : i == 1 ? "Moradia de Luxo" : "Vivenda Exclusiva")} em {cidade.Nome}";
                             var descricao = $"{nomeCasa} com piscina privativa, jardim paisagístico, acabamentos premium, vista panorâmica e localização privilegiada em {cidade.Nome}. Inclui garagem para vários carros, cozinha equipada com eletrodomésticos topo de gama, suite master com closet e spa, e sistema de domótica de última geração. Ideal para quem procura exclusividade, conforto e requinte.";
                             // Preço múltiplo de 100.000 entre 500.000 e 3.000.000
@@ -291,7 +291,7 @@ namespace ImoSphere.Data
                             var quartos = rnd.Next(3, 8);
                             var wc = rnd.Next(2, 6);
                             var ano = rnd.Next(2015, 2024);
-                            
+
                             var casa = new Property
                             {
                                 Name = nomeCasa,
@@ -308,7 +308,7 @@ namespace ImoSphere.Data
                                 CreatedByUserId = comercialUser.Id,
                                 Images = new List<PropertyImage>()
                             };
-                            
+
                             // 6-7 imagens por casa, sem repetir na mesma casa
                             int numImagens = rnd.Next(6, 8); // 6 ou 7 imagens
                             for (int img = 0; img < numImagens; img++)
@@ -316,13 +316,13 @@ namespace ImoSphere.Data
                                 casa.Images.Add(new PropertyImage { ImageUrl = "/images/Houses/" + imagens[imgIdx % imagens.Length] });
                                 imgIdx++;
                             }
-                            
+
                             context.Properties.Add(casa);
                         }
                     }
                 }
             }
-            
+
             await context.SaveChangesAsync();
             Console.WriteLine($"[SEED] {context.Properties.Count()} propriedades criadas com sucesso.");
 

@@ -1,5 +1,7 @@
 /* Chat StartContact Styles */
-.details-header { margin-bottom: 18px; } 
+.details-header {
+    margin-bottom: 18px;
+}
 
 .contact-container {
     max-width: 600px;
@@ -55,4 +57,4 @@
 
 .textarea-no-resize {
     resize: none;
-} 
+}

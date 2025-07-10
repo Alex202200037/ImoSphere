@@ -18,4 +18,4 @@ public class LanguageController : Controller
             returnUrl = "/";
         return LocalRedirect(returnUrl);
     }
-} 
+}

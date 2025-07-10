@@ -6,4 +6,4 @@ namespace ImoSphere.Models
     {
         // Campos personalizados podem ser adicionados aqui no futuro
     }
-} 
+}

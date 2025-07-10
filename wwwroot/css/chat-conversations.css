@@ -73,9 +73,11 @@
     box-shadow: 0 2px 12px #ff3b3b22;
     position: relative;
 }
+
 .conversation-item.unread:hover {
     background: #33294a;
 }
+
 .unread-badge {
     background: #ff3b3b;
     color: #fff;
@@ -95,13 +97,23 @@
     z-index: 2;
     transition: box-shadow 0.2s;
 }
+
 .unread-badge.pulse {
     animation: pulseBadge 1.2s infinite;
 }
+
 @keyframes pulseBadge {
-    0% { box-shadow: 0 0 0 2px #fff, 0 2px 8px #ff3b3b44, 0 0 0 0 #ff3b3b44; }
-    70% { box-shadow: 0 0 0 2px #fff, 0 2px 8px #ff3b3b44, 0 0 0 10px #ff3b3b22; }
-    100% { box-shadow: 0 0 0 2px #fff, 0 2px 8px #ff3b3b44, 0 0 0 0 #ff3b3b44; }
+    0% {
+        box-shadow: 0 0 0 2px #fff, 0 2px 8px #ff3b3b44, 0 0 0 0 #ff3b3b44;
+    }
+
+    70% {
+        box-shadow: 0 0 0 2px #fff, 0 2px 8px #ff3b3b44, 0 0 0 10px #ff3b3b22;
+    }
+
+    100% {
+        box-shadow: 0 0 0 2px #fff, 0 2px 8px #ff3b3b44, 0 0 0 0 #ff3b3b44;
+    }
 }
 
 .premium-list {
@@ -110,6 +122,7 @@
     gap: 1.5rem;
     margin-top: 2rem;
 }
+
 .premium-card {
     display: flex;
     align-items: center;
@@ -124,11 +137,13 @@
     text-decoration: none;
     margin-bottom: 0.5rem;
 }
+
 .premium-card:hover {
     box-shadow: 0 8px 32px #0005, 0 2px 12px #ff3b3b22;
     transform: translateY(-2px) scale(1.012);
     background: linear-gradient(135deg, #28213a 60%, #33294a 100%);
 }
+
 .premium-avatar {
     width: 72px;
     height: 72px;
@@ -144,25 +159,30 @@
     align-items: center;
     justify-content: center;
 }
+
 .premium-avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .premium-avatar.unread-glow {
     box-shadow: 0 0 0 4px #ff3b3b55, 0 2px 16px #ff3b3b33, 0 2px 12px #0002;
     border-color: #ff3b3b;
 }
+
 .premium-content {
     flex: 1;
     min-width: 0;
 }
+
 .premium-header {
     display: flex;
     align-items: center;
     gap: 0.7rem;
     margin-bottom: 0.2rem;
 }
+
 .premium-title {
     font-size: 1.25rem;
     font-weight: 800;
@@ -170,6 +190,7 @@
     margin: 0;
     letter-spacing: 0.01em;
 }
+
 .premium-agency-logo {
     height: 26px;
     width: auto;
@@ -178,12 +199,14 @@
     border-radius: 4px;
     box-shadow: 0 1px 6px #0002;
 }
+
 .premium-meta {
     display: flex;
     align-items: center;
     gap: 1.2rem;
     padding-right: 48px;
 }
+
 .premium-last-message {
     color: #d1d1e0;
     font-size: 1.05rem;
@@ -193,11 +216,13 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 .premium-time {
     font-size: 0.93rem;
     color: #a6a6b3;
     margin-left: auto;
 }
+
 .premium-badge {
     min-width: 32px;
     height: 32px;
@@ -212,29 +237,35 @@
     align-items: center;
     justify-content: center;
 }
+
 @media (max-width: 700px) {
     .premium-card {
         flex-direction: column;
         align-items: flex-start;
         padding: 1rem 1.1rem;
     }
+
     .premium-avatar {
         margin-right: 0;
         margin-bottom: 0.7rem;
     }
+
     .premium-meta {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.3rem;
         padding-right: 0;
     }
+
     .premium-title {
         font-size: 1.1rem;
     }
+
     .premium-last-message {
         max-width: 90vw;
     }
+
     .premium-badge {
         right: 10px;
     }
-} 
+}

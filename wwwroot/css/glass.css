@@ -47,34 +47,46 @@
 
 /* Glassmorphism Premium - Upgrade */
 
-.glass-section, .glass-card {
+.glass-section,
+.glass-card {
   background: rgba(40, 40, 60, 0.35);
   border-radius: 28px;
   box-shadow: 0 8px 48px 0 #6c63ff44, 0 1.5px 8px 0 #0002;
   backdrop-filter: blur(18px) saturate(1.2);
-  border: 1.5px solid rgba(255,255,255,0.18);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
   position: relative;
   overflow: hidden;
 }
 
-.glass-section::before, .glass-card::before {
+.glass-section::before,
+.glass-card::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; height: 60px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.02) 100%);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.02) 100%);
   pointer-events: none;
   z-index: 1;
 }
 
 /* Responsividade */
 @media (max-width: 900px) {
-  .glass-section, .glass-card, .glass-popup {
+
+  .glass-section,
+  .glass-card,
+  .glass-popup {
     border-radius: 14px;
     padding: 1rem;
   }
 }
+
 @media (max-width: 600px) {
-  .glass-section, .glass-card, .glass-popup {
+
+  .glass-section,
+  .glass-card,
+  .glass-popup {
     border-radius: 8px;
     padding: 0.5rem;
   }
@@ -85,7 +97,9 @@ img.rounded-4 {
   border-radius: 1.5rem !important;
   overflow: hidden;
 }
-.about-image-container, .story-image-container {
+
+.about-image-container,
+.story-image-container {
   border-radius: 1.5rem !important;
   overflow: hidden;
   background: none !important;
@@ -107,6 +121,7 @@ img.rounded-4 {
   min-width: 180px;
   padding: 0.5rem 0;
 }
+
 .dropdown-menu .dropdown-item {
   color: #fff !important;
   font-weight: 500;
@@ -114,7 +129,8 @@ img.rounded-4 {
   transition: background 0.18s, color 0.18s;
   padding: 0.75rem 1.2rem;
 }
-.dropdown-menu .dropdown-item:hover, 
+
+.dropdown-menu .dropdown-item:hover,
 .dropdown-menu .dropdown-item:focus {
   background: linear-gradient(90deg, #8f7cff 0%, #6c63ff 100%);
   color: #fff !important;
@@ -133,6 +149,7 @@ img.rounded-4 {
   justify-content: flex-start;
   gap: 0.5rem;
 }
+
 .nav-tabs .nav-link {
   border: none !important;
   border-radius: 12px !important;
@@ -144,10 +161,12 @@ img.rounded-4 {
   margin: 0 0.2rem;
   box-shadow: none;
 }
+
 .nav-tabs .nav-link:hover {
   background: rgba(140, 120, 255, 0.18);
   color: #8f7cff !important;
 }
+
 .nav-tabs .nav-link.active {
   background: linear-gradient(90deg, #8f7cff 0%, #6c63ff 100%);
   color: white !important;
@@ -161,4 +180,4 @@ img.rounded-4 {
     padding: 0.7rem 0.8rem;
     font-size: 0.98rem;
   }
-} 
+}

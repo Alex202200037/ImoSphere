@@ -95,7 +95,8 @@
 }
 
 /* Cabeçalho dos cartões - stats à direita */
-.agency-header, .imosphere-card .agency-header {
+.agency-header,
+.imosphere-card .agency-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -107,7 +108,8 @@
     color: white;
 }
 
-.agency-name, .imosphere-card .agency-name {
+.agency-name,
+.imosphere-card .agency-name {
     font-size: 1.4rem;
     font-weight: 600;
     display: flex;
@@ -300,7 +302,8 @@
 }
 
 /* Mensagens de estado */
-.no-comerciais, .no-admins {
+.no-comerciais,
+.no-admins {
     padding: 20px;
     text-align: center;
     color: #888;
@@ -309,7 +312,8 @@
     margin: 10px 20px;
 }
 
-.no-comerciais i, .no-admins i {
+.no-comerciais i,
+.no-admins i {
     font-size: 1.5rem;
     margin-bottom: 10px;
     display: block;
@@ -363,7 +367,7 @@
     background: linear-gradient(135deg, #2d1457 0%, #8844ff 100%);
     color: #fff;
     border-radius: 18px;
-    box-shadow: 0 8px 32px rgba(136,68,255,0.18), 0 1.5px 8px #8844ff44;
+    box-shadow: 0 8px 32px rgba(136, 68, 255, 0.18), 0 1.5px 8px #8844ff44;
     z-index: 99999;
     padding: 2rem 2.5rem 1.5rem 2.5rem;
     text-align: center;
@@ -387,18 +391,19 @@
     transition: opacity 0.2s;
 }
 
-.imospopup .close-btn:hover { 
-    opacity: 1; 
+.imospopup .close-btn:hover {
+    opacity: 1;
 }
 
 @keyframes imospopupfadein {
-    from { 
-        opacity: 0; 
-        transform: translate(-50%, -60%) scale(0.95); 
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%) scale(0.95);
     }
-    to   { 
-        opacity: 1; 
-        transform: translate(-50%, -50%) scale(1); 
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
     }
 }
 
@@ -462,39 +467,39 @@
     .users-management-container {
         padding: 15px;
     }
-    
+
     .page-header {
         flex-direction: column;
         gap: 15px;
         text-align: center;
     }
-    
+
     .agency-header {
         flex-direction: column;
         gap: 10px;
         text-align: center;
     }
-    
+
     .agency-stats {
         margin-left: 0;
     }
-    
+
     .admin-header {
         flex-direction: column;
         gap: 10px;
         text-align: center;
     }
-    
+
     .admin-actions {
         justify-content: center;
     }
-    
+
     .comercial-item {
         flex-direction: column;
         gap: 10px;
         text-align: center;
     }
-    
+
     .comercial-actions {
         justify-content: center;
     }
@@ -541,4 +546,4 @@
 
 ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, #a259ff 0%, #b366ff 100%);
-} 
+}

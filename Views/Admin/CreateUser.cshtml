@@ -1,6 +1,7 @@
 @{
     ViewBag.Title = "Create User";
-    var agencies = (ViewBag.Agencies as List<ImoSphere.Models.Agency>)?.Where(a => a.Name.ToLower() != "imosphere").ToList() ?? new List<ImoSphere.Models.Agency>();
+    var agencies = (ViewBag.Agencies as List<ImoSphere.Models.Agency>)?.Where(a => a.Name.ToLower() != "imosphere").ToList()
+    ?? new List<ImoSphere.Models.Agency>();
     var isSuperAdmin = agencies != null && agencies.Count > 0;
     var isAdmin = !isSuperAdmin;
 }
@@ -36,7 +37,8 @@
         </div>
     }
 
-    <div class="card shadow-lg p-4 mx-auto" style="max-width: 500px; border-radius: 18px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border: 1px solid rgba(136,68,255,0.15);">
+    <div class="card shadow-lg p-4 mx-auto"
+        style="max-width: 500px; border-radius: 18px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border: 1px solid rgba(136,68,255,0.15);">
         <form asp-action="CreateUser" method="post" autocomplete="off">
             <div class="mb-3">
                 <label for="role" class="form-label"><i class="fas fa-user-tag"></i> @Localizer["Role"]</label>
@@ -66,14 +68,18 @@
                         <span class="input-group-text"><i class="fas fa-building"></i></span>
                         <select id="agencyId" name="agencyId" class="form-select">
                             <option value="">Select agency</option>
-                            @foreach (var agency in agencies) {
-                                <option value="@agency.Id" data-domain="@($".{agency.Name.ToLower().Replace(" ", "")}")&#64;imosphere.com">@agency.Name</option>
+                            @foreach (var agency in agencies)
+                            {
+                                <option value="@agency.Id"
+                                    data-domain="@($".{agency.Name.ToLower().Replace(" ", "")}")&#64;imosphere.com">@agency.Name
+                                </option>
                             }
                         </select>
                     </div>
                 </div>
                 <div class="mb-3" id="adminField" style="display:none;">
-                    <label for="adminId" class="form-label"><i class="fas fa-user-shield"></i> @Localizer["ResponsibleAdmin"]</label>
+                    <label for="adminId" class="form-label"><i class="fas fa-user-shield"></i>
+                        @Localizer["ResponsibleAdmin"]</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-user-shield"></i></span>
                         <select id="adminId" name="adminId" class="form-select">
@@ -87,7 +93,8 @@
                 <label class="form-label"><i class="fas fa-envelope"></i> @Localizer["Email"]</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-at"></i></span>
-                    <input type="text" id="emailPrefix" name="emailPrefix" class="form-control" required placeholder="Email prefix" autocomplete="off" />
+                    <input type="text" id="emailPrefix" name="emailPrefix" class="form-control" required
+                        placeholder="Email prefix" autocomplete="off" />
                     <span class="input-group-text" id="emailDomain">
                         @(ViewBag.EmailDomain)
                     </span>
@@ -97,7 +104,8 @@
                 <label class="form-label"><i class="fas fa-envelope"></i> @Localizer["Email"]</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-at"></i></span>
-                    <input type="email" id="emailFull" name="email" class="form-control" placeholder="Email completo" autocomplete="off" />
+                    <input type="email" id="emailFull" name="email" class="form-control" placeholder="Email completo"
+                        autocomplete="off" />
                 </div>
             </div>
 
@@ -105,7 +113,8 @@
                 <label for="username" class="form-label"><i class="fas fa-user"></i> @Localizer["Username"]</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-user"></i></span>
-                    <input type="text" id="username" name="username" class="form-control" required placeholder="Username" />
+                    <input type="text" id="username" name="username" class="form-control" required
+                        placeholder="Username" />
                 </div>
             </div>
 
@@ -113,7 +122,8 @@
                 <label for="password" class="form-label"><i class="fas fa-lock"></i> @Localizer["Password"]</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                    <input type="password" id="password" name="password" class="form-control" required placeholder="Password" />
+                    <input type="password" id="password" name="password" class="form-control" required
+                        placeholder="Password" />
                 </div>
             </div>
 
@@ -130,7 +140,7 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const roleSelect = document.getElementById('role');
         const agencyField = document.getElementById('agencyField');
         const agencySelect = document.getElementById('agencyId');
@@ -203,7 +213,7 @@
         }
 
         roleSelect.addEventListener('change', updateAgencyAndDomain);
-        agencySelect.addEventListener('change', function() {
+        agencySelect.addEventListener('change', function () {
             if (roleSelect.value !== 'SuperAdmin') {
                 const selected = agencySelect.options[agencySelect.selectedIndex];
                 let domain = selected.getAttribute('data-domain');

@@ -43,7 +43,8 @@
                             <td>
                                 @if (!message.IsRead)
                                 {
-                                    <a asp-action="MarkAsRead" asp-route-id="@message.Id" class="btn btn-primary btn-sm">@Localizer["MarkAsRead"]</a>
+                                    <a asp-action="MarkAsRead" asp-route-id="@message.Id"
+                                        class="btn btn-primary btn-sm">@Localizer["MarkAsRead"]</a>
                                 }
                                 <a asp-action="DeleteMessage" asp-route-id="@message.Id" class="btn btn-danger btn-sm"
                                     onclick="return confirm('@Localizer["ConfirmDeleteMessage"]');">@Localizer["Delete"]</a>
@@ -56,6 +57,12 @@
     }
 </div>
 <style>
-.table-dark th, .table-dark td { color: #fff; }
-.table-dark { background: #23202b; }
-</style> 
+    .table-dark th,
+    .table-dark td {
+        color: #fff;
+    }
+
+    .table-dark {
+        background: #23202b;
+    }
+</style>

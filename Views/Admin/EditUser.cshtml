@@ -22,18 +22,21 @@
 }
 
 <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="edit-user-card p-4 shadow-lg rounded-4" style="background: #23202b; min-width: 420px; max-width: 480px; width: 100%;">
+    <div class="edit-user-card p-4 shadow-lg rounded-4"
+        style="background: #23202b; min-width: 420px; max-width: 480px; width: 100%;">
         <h2 class="text-center mb-4" style="color: #fff;">@Localizer["EditUser"]</h2>
         <form asp-action="EditUser" method="post" class="contact-form">
             <div class="form-group mb-3">
                 <label asp-for="Email" class="form-label" style="color: #bbb;">@Localizer["Email"]</label>
-                <input asp-for="Email" class="form-control bg-dark text-light rounded-3 border-0" placeholder="@Localizer["Email"]" />
+                <input asp-for="Email" class="form-control bg-dark text-light rounded-3 border-0"
+                    placeholder="@Localizer["Email"]" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="form-group mb-3">
                 <label asp-for="UserName" class="form-label" style="color: #bbb;">@Localizer["Username"]</label>
-                <input asp-for="UserName" class="form-control bg-dark text-light rounded-3 border-0" placeholder="@Localizer["Username"]" />
+                <input asp-for="UserName" class="form-control bg-dark text-light rounded-3 border-0"
+                    placeholder="@Localizer["Username"]" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
 
@@ -63,21 +66,29 @@
             </div>
 
             <div class="form-group mb-3">
-                <label for="NewPassword" class="form-label" style="color: #bbb;">@Localizer["NewPassword"] <span class="fw-normal" style="color: #888; font-size: 0.95em;">(@Localizer["Optional"])</span></label>
-                <input type="password" id="NewPassword" name="NewPassword" class="form-control bg-dark text-light rounded-3 border-0" placeholder="@Localizer["OnlyFillIfChange"]" autocomplete="new-password" />
+                <label for="NewPassword" class="form-label" style="color: #bbb;">@Localizer["NewPassword"] <span
+                        class="fw-normal"
+                        style="color: #888; font-size: 0.95em;">(@Localizer["Optional"])</span></label>
+                <input type="password" id="NewPassword" name="NewPassword"
+                    class="form-control bg-dark text-light rounded-3 border-0"
+                    placeholder="@Localizer["OnlyFillIfChange"]" autocomplete="new-password" />
                 <span class="text-danger"></span>
             </div>
 
             <div class="form-group mb-4">
-                <label for="ConfirmPassword" class="form-label" style="color: #bbb;">@Localizer["ConfirmNewPassword"]</label>
-                <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control bg-dark text-light rounded-3 border-0" placeholder="@Localizer["ConfirmNewPassword"]" autocomplete="new-password" />
+                <label for="ConfirmPassword" class="form-label"
+                    style="color: #bbb;">@Localizer["ConfirmNewPassword"]</label>
+                <input type="password" id="ConfirmPassword" name="ConfirmPassword"
+                    class="form-control bg-dark text-light rounded-3 border-0"
+                    placeholder="@Localizer["ConfirmNewPassword"]" autocomplete="new-password" />
                 <span class="text-danger"></span>
             </div>
 
             <input type="hidden" asp-for="Id" />
 
             <div class="d-flex gap-2">
-                <button type="submit" class="btn w-50 fw-bold" style="background: linear-gradient(90deg, #a259ff 0%, #5d26c1 100%); color: #fff; border: none;">@Localizer["Save"]</button>
+                <button type="submit" class="btn w-50 fw-bold"
+                    style="background: linear-gradient(90deg, #a259ff 0%, #5d26c1 100%); color: #fff; border: none;">@Localizer["Save"]</button>
                 <a asp-action="Users" class="btn btn-secondary w-50">@Localizer["Cancel"]</a>
             </div>
         </form>
@@ -89,20 +100,23 @@
 }
 
 <style>
-.edit-user-card {
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
-    border: 1px solid rgba(255,255,255,0.05);
-}
-.form-control:focus {
-    box-shadow: 0 0 0 2px #a259ff44;
-    border-color: #a259ff;
-}
-.btn-secondary {
-    background: #333;
-    color: #fff;
-    border: none;
-}
-.btn-secondary:hover {
-    background: #444;
-}
+    .edit-user-card {
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 2px #a259ff44;
+        border-color: #a259ff;
+    }
+
+    .btn-secondary {
+        background: #333;
+        color: #fff;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background: #444;
+    }
 </style>

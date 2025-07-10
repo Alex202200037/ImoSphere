@@ -37,4 +37,4 @@ namespace ImoSphere.Models
         public DateTime? LastMessageTime { get; set; }
         public int UnreadCount { get; set; }
     }
-} 
+}

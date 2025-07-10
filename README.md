@@ -6,7 +6,7 @@
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple.svg)](https://getbootstrap.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-> **Plataforma web completa para mediação imobiliária com gestão de propriedades, utilizadores e comunicação integrada.**
+> **Plataforma web completa para mediação imobiliária com gestão de propriedades, utilizadores hierárquicos, sistema de favoritos e comunicação integrada em tempo real.**
 
 [📖 Manual do Utilizador](/MANUAL_UTILIZADOR.md) | [📖 Manual do Utilizador (PDF)](/UserManual_ImoSphere.pdf) | [🔧 Manual Técnico](/MANUAL_TECNICO.md)
 
@@ -24,32 +24,37 @@
 
 ## 🏢 Sobre o Projeto
 
-A **ImoSphere** é uma plataforma web desenvolvida em **ASP.NET Core MVC** que facilita a mediação imobiliária digital. A aplicação oferece uma experiência completa para navegação, visualização e gestão de propriedades, com diferentes níveis de acesso baseados no tipo de utilizador.
+A **ImoSphere** é uma plataforma web desenvolvida em **ASP.NET Core MVC** que facilita a mediação imobiliária digital. A aplicação oferece uma experiência completa para navegação, visualização e gestão de propriedades, com diferentes níveis de acesso baseados no tipo de utilizador e hierarquia organizacional.
 
 ### 🎯 Objetivos
 
 - **Gestão de Propriedades**: Criação, edição e eliminação de listagens imobiliárias
-- **Sistema de Utilizadores**: Hierarquia de permissões (SuperAdmin, Admin, Comercial, User)
-- **Comunicação Integrada**: Sistema de mensagens e chat em tempo real
-- **Interface Responsiva**: Design moderno e adaptável a todos os dispositivos
+- **Sistema de Utilizadores Hierárquico**: Gestão de agências, administradores e comerciais
+- **Sistema de Favoritos**: Utilizadores podem marcar propriedades como favoritas
+- **Comunicação Integrada**: Sistema de chat em tempo real com SignalR
+- **Interface Responsiva**: Design moderno com modo claro/escuro
 - **Gestão de Agências**: Suporte a múltiplas agências imobiliárias
 
 ## ✨ Funcionalidades
 
 ### 🔍 Exploração de Propriedades
 - **Listagem Completa**: Visualização de todas as propriedades disponíveis
-- **Filtros Avançados**: Por preço, localização, quartos, área, etc.
+- **Filtros Avançados**: Por preço, localização, quartos, área, agência, etc.
 - **Detalhes Completos**: Informações detalhadas com galeria de imagens
 - **Mapa Interativo**: Localização geográfica com OpenStreetMap
+- **Sistema de Favoritos**: Marcar/desmarcar propriedades como favoritas
 
-### 👤 Sistema de Utilizadores
+### 👤 Sistema de Utilizadores Hierárquico
 - **Registo e Login**: Sistema de autenticação seguro
-- **Perfis Personalizados**: Diferentes níveis de acesso
-- **Gestão de Utilizadores**: Criação, edição e eliminação (Admin)
-- **Hierarquia de Agências**: Gestão de comerciais por agência
+- **Hierarquia de Agências**: SuperAdmin → Admin → Comercial → User
+- **Gestão de Utilizadores**: Criação, edição e eliminação por nível
+- **Perfis Personalizados**: Diferentes níveis de acesso por agência
+- **Sistema de Favoritos**: Gestão de propriedades favoritas por utilizador
 
-### 💬 Comunicação
-- **Chat em Tempo Real**: Sistema de mensagens com SignalR
+### 💬 Comunicação em Tempo Real
+- **Chat com SignalR**: Sistema de mensagens em tempo real
+- **Conversas por Propriedade**: Chat específico por imóvel
+- **Notificações**: Badge de mensagens não lidas
 - **Formulário de Contacto**: Comunicação direta com a plataforma
 - **Gestão de Mensagens**: Marcação como lidas e eliminação
 
@@ -58,6 +63,13 @@ A **ImoSphere** é uma plataforma web desenvolvida em **ASP.NET Core MVC** que f
 - **Validação de Dados**: Verificação automática de formulários
 - **Notificações**: Feedback visual para todas as ações
 - **Auto-save**: Guarda automática de rascunhos
+- **Gestão de Favoritos**: Interface para gerir propriedades favoritas
+
+### 🎨 Interface Moderna
+- **Design Responsivo**: Adaptável a todos os dispositivos
+- **Modo Claro/Escuro**: Alternância entre temas
+- **Animações**: Transições suaves e feedback visual
+- **Acessibilidade**: Contraste e navegação otimizados
 
 ## 🛠️ Tecnologias
 
@@ -74,6 +86,7 @@ A **ImoSphere** é uma plataforma web desenvolvida em **ASP.NET Core MVC** que f
 - **Font Awesome** - Ícones
 - **Leaflet.js** - Mapas interativos
 - **OpenStreetMap** - Serviço de mapas
+- **SignalR Client** - Comunicação em tempo real
 
 ### Ferramentas de Desenvolvimento
 - **Visual Studio 2022** / **VS Code**
@@ -175,33 +188,39 @@ dotnet test Tests/ImoSphere.Tests.csproj --filter "FullyQualifiedName~HomeContro
 - ✅ Ver listagens básicas
 - ❌ Detalhes completos de propriedades
 - ❌ Sistema de mensagens
+- ❌ Sistema de favoritos
 
 ### 👤 Utilizador Registado (User)
 - ✅ Todas as funcionalidades do convidado
 - ✅ Detalhes completos de propriedades
-- ✅ Sistema de mensagens
-- ✅ Chat em tempo real
+- ✅ Sistema de mensagens e chat
+- ✅ Sistema de favoritos
+- ✅ Perfil pessoal
 - ❌ Gestão de propriedades
 
-### 🏠 Comercial (Seller)
+### 🏠 Comercial (Comercial)
 - ✅ Todas as funcionalidades do User
 - ✅ Criar propriedades
 - ✅ Editar propriedades próprias
 - ✅ Upload de imagens
-- ✅ Gestão de listagens
+- ✅ Gestão de listagens pessoais
+- ✅ Chat com clientes
 
 ### 👨‍💼 Administrador (Admin)
 - ✅ Todas as funcionalidades do Comercial
-- ✅ Gestão de utilizadores
-- ✅ Gestão de todas as propriedades
+- ✅ Gestão de utilizadores da agência
+- ✅ Gestão de todas as propriedades da agência
 - ✅ Sistema de mensagens administrativo
-- ✅ Gestão de agências
+- ✅ Supervisão de comerciais
+- ✅ Relatórios da agência
 
 ### 🔧 Super Administrador (SuperAdmin)
 - ✅ Todas as funcionalidades do Admin
-- ✅ Gestão de agências
+- ✅ Gestão de todas as agências
 - ✅ Criação de administradores
 - ✅ Controlo total da plataforma
+- ✅ Relatórios globais
+- ✅ Gestão de mensagens de contacto
 
 ### 🔑 Contas de Teste
 
@@ -247,29 +266,27 @@ dotnet test Tests/ImoSphere.Tests.csproj --filter "FullyQualifiedName~HomeContro
 ### Listagem de Propriedades
 ![Propriedades](wwwroot/images/Manuals/screenshots/properties.png)
 
-### Formulário de Criação
-![Criar Propriedade](wwwroot/images/Manuals/screenshots/create-property.png)
-
 ### Sistema de Chat
 ![Chat](wwwroot/images/Manuals/screenshots/chat.png)
 
+### Criação de Propriedades
+![Criar Propriedade](wwwroot/images/Manuals/screenshots/create-property.png)
+
 ## 👨‍💻 Equipa
 
-### Desenvolvedores
-
-| Nome | Número | Email |
-|------|--------|-------|
-| **Alexandre Miguel** | 202200037 | 202200037@estudantes.ips.pt |
-| **Bruna Rossa** | 202200603 | 202200603@estudantes.ips.pt |
-
-### Instituição
-- **Instituto Politécnico de Setúbal (IPS) - Escola Superior de Tecnologia de Setúbal (ESTSetúbal)**
-![IPS Logo](wwwroot/images/Manuals/ips_logo.png)
+- **Alexandre Silva** - Desenvolvimento Backend e Frontend
+- **Professor Orientador** - Supervisão e orientação técnica
 
 ---
 
-<div align="center">
-  <p>Desenvolvido com ❤️ pela equipa <strong>ImoSphere</strong></p>
-  <p><strong>Unidade Curricular:</strong> Programação Visual</p>
-  <p><strong>Docente:</strong> José Cordeiro</p>
-</div>
+## 📄 Licença
+
+Este projeto está licenciado sob a Licença MIT - ver o ficheiro [LICENSE](LICENSE) para detalhes.
+
+## 🤝 Contribuições
+
+Contribuições são bem-vindas! Por favor, leia as diretrizes de contribuição antes de submeter um pull request.
+
+---
+
+**ImoSphere** - Transformando a mediação imobiliária digital 🏠✨

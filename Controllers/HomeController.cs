@@ -138,7 +138,7 @@ public class HomeController : Controller
                 var roles = await _userManager.GetRolesAsync(user);
                 userRole = roles.FirstOrDefault();
                 userId = user.Id;
-                
+
                 // Se for Admin, buscar os IDs dos comerciais que supervisiona
                 if (userRole == "Admin" && agencyUser != null)
                 {
@@ -177,7 +177,7 @@ public class HomeController : Controller
         ViewBag.UserRole = userRole;
         ViewBag.UserId = userId;
         ViewBag.SupervisedComercialIds = supervisedComercialIds;
-        
+
         return View(filterModel);
     }
 
@@ -195,7 +195,7 @@ public class HomeController : Controller
     {
         return View();
     }
-     [HttpPost]
+    [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult SubmitContactForm(string Name, string Email, string Message)
     {

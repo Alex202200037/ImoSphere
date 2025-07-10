@@ -4,4 +4,4 @@ namespace ImoSphere.Models
     {
         public int ConversationId { get; set; }
     }
-} 
+}

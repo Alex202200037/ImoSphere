@@ -24,7 +24,7 @@ namespace ImoSphere.Hubs
                 .Include(c => c.Messages)
                 .Include(c => c.Property)
                 .FirstOrDefaultAsync(c => c.Id.ToString() == conversationId);
-            
+
             if (conversation != null)
             {
                 // Obter o utilizador autenticado
@@ -60,16 +60,16 @@ namespace ImoSphere.Hubs
                     SentAt = DateTime.UtcNow,
                     SenderName = senderName
                 };
-                
+
                 _context.ChatMessages.Add(chatMessage);
                 await _context.SaveChangesAsync();
 
                 // Enviar para todos os clientes na conversa
-                await Clients.Group(conversationId).SendAsync("ReceiveMessage", 
-                    senderId, 
+                await Clients.Group(conversationId).SendAsync("ReceiveMessage",
+                    senderId,
                     senderName,
                     senderRole,
-                    message, 
+                    message,
                     chatMessage.SentAt.ToLocalTime().ToString("HH:mm"));
 
                 // Enviar notificação para o destinatário
@@ -102,13 +102,13 @@ namespace ImoSphere.Hubs
         {
             // Contar mensagens não lidas
             var unreadCount = await _context.ChatMessages
-                .Where(m => m.SenderId != userId && !m.IsRead && 
-                           _context.ChatConversations.Any(c => c.Id == m.ConversationId && 
+                .Where(m => m.SenderId != userId && !m.IsRead &&
+                           _context.ChatConversations.Any(c => c.Id == m.ConversationId &&
                                                               (c.UserId == userId || c.ComercialId == userId)))
                 .CountAsync();
 
             // Enviar notificação para o grupo do utilizador
-            await Clients.Group($"user_{userId}").SendAsync("ReceiveNotification", 
+            await Clients.Group($"user_{userId}").SendAsync("ReceiveNotification",
                 $"Nova mensagem sobre {propertyName}", unreadCount);
         }
 

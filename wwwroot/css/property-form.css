@@ -309,8 +309,8 @@
     transform: scale(1.05);
 }
 
-.remove-checkbox { 
-    display: none; 
+.remove-checkbox {
+    display: none;
 }
 
 .remove-label {
@@ -333,7 +333,8 @@
     outline: none !important;
 }
 
-.remove-label i, .remove-label span {
+.remove-label i,
+.remove-label span {
     color: var(--primary-color) !important;
     font-size: 1.5rem;
     font-weight: 900;
@@ -345,12 +346,13 @@
     justify-content: center;
 }
 
-.remove-checkbox:checked + .remove-label i,
-.remove-checkbox:checked + .remove-label span {
+.remove-checkbox:checked+.remove-label i,
+.remove-checkbox:checked+.remove-label span {
     color: #dc3545 !important;
 }
 
-.remove-label:hover i, .remove-label:hover span {
+.remove-label:hover i,
+.remove-label:hover span {
     color: #a259ff;
     transform: scale(1.18);
 }
@@ -404,28 +406,28 @@
     .form-title {
         font-size: 2rem;
     }
-    
+
     .form-card {
         padding: 2rem 1.5rem;
     }
-    
+
     .map-container {
         width: 95%;
         height: 90%;
     }
-    
+
     .map-header {
         padding: 1rem 1.5rem;
     }
-    
+
     .map-instructions {
         padding: 0.75rem 1.5rem;
     }
-    
+
     .location-input-group {
         flex-direction: column;
     }
-    
+
     #openMapBtn {
         width: 100%;
         margin-top: 0.5rem;
@@ -441,4 +443,4 @@
     margin-bottom: 1rem;
     font-size: 0.9rem;
     color: #ffc107;
-} 
+}

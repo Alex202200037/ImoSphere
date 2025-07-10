@@ -40,13 +40,13 @@
                     {
                         <div class="alert alert-danger">
                             <ul>
-                            @foreach (var entry in ViewData.ModelState)
-                            {
-                                foreach (var error in entry.Value.Errors)
+                                @foreach (var entry in ViewData.ModelState)
                                 {
-                                    <li>@entry.Key: @error.ErrorMessage</li>
+                                    foreach (var error in entry.Value.Errors)
+                                    {
+                                        <li>@entry.Key: @error.ErrorMessage</li>
+                                    }
                                 }
-                            }
                             </ul>
                         </div>
                     }
@@ -61,7 +61,8 @@
                             </ul>
                         </div>
                     }
-                    <form asp-action="Edit" method="post" class="property-edit-form" id="propertyForm" enctype="multipart/form-data">
+                    <form asp-action="Edit" method="post" class="property-edit-form" id="propertyForm"
+                        enctype="multipart/form-data">
                         @await Html.PartialAsync("_PropertyForm", Model, viewData)
                         <div class="form-actions">
                             <div class="row g-3">
@@ -71,7 +72,8 @@
                                     </button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a asp-controller="Home" asp-action="Properties" class="btn btn-outline-secondary btn-lg w-100">
+                                    <a asp-controller="Home" asp-action="Properties"
+                                        class="btn btn-outline-secondary btn-lg w-100">
                                         <i class="fas fa-times me-2"></i>Cancelar
                                     </a>
                                 </div>
@@ -101,7 +103,7 @@
         setTimeout(function () {
             popup.classList.remove("show");
             popup.classList.add("fade-out");
-            setTimeout(function() {
+            setTimeout(function () {
                 window.location.href = '@Url.Action("Properties", "Home")';
             }, 300);
         }, 2500);
@@ -119,7 +121,8 @@
         </div>
         <div id="map" class="map-content"></div>
         <div class="map-instructions">
-            <p><i class="fas fa-info-circle me-2"></i>Clique no mapa para selecionar a localização ou arraste o marcador</p>
+            <p><i class="fas fa-info-circle me-2"></i>Clique no mapa para selecionar a localização ou arraste o marcador
+            </p>
         </div>
     </div>
 </div>
@@ -137,7 +140,7 @@
         acList.className = 'autocomplete-list';
         acList.style.width = locInput.offsetWidth + 'px';
         locInput.parentNode.appendChild(acList);
-        locInput.addEventListener('input', function() {
+        locInput.addEventListener('input', function () {
             clearTimeout(acTimeout);
             if (this.value.length < 3) { acList.style.display = 'none'; return; }
             acTimeout = setTimeout(() => {
@@ -167,11 +170,11 @@
         const openMapBtn = document.getElementById('openMapBtn');
         const closeMapBtn = document.getElementById('closeMapBtn');
         let map, marker;
-        openMapBtn.onclick = function() {
+        openMapBtn.onclick = function () {
             mapModal.classList.add('show');
             setTimeout(() => { if (!map) initMap(); else map.invalidateSize(); }, 100);
         };
-        closeMapBtn.onclick = function() { mapModal.classList.remove('show'); };
+        closeMapBtn.onclick = function () { mapModal.classList.remove('show'); };
         function initMap() {
             let lat = parseFloat(latInput.value) || 38.7223;
             let lng = parseFloat(lngInput.value) || -9.1393;
@@ -180,8 +183,8 @@
                 maxZoom: 19,
                 attribution: '© OpenStreetMap'
             }).addTo(map);
-            marker = L.marker([lat, lng], {draggable:true}).addTo(map);
-            marker.on('dragend', function(e) {
+            marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+            marker.on('dragend', function (e) {
                 let pos = marker.getLatLng();
                 latInput.value = pos.lat;
                 lngInput.value = pos.lng;
@@ -189,7 +192,7 @@
                     .then(res => res.json())
                     .then(data => { locInput.value = data.display_name || `${pos.lat},${pos.lng}`; });
             });
-            map.on('click', function(e) {
+            map.on('click', function (e) {
                 marker.setLatLng(e.latlng);
                 latInput.value = e.latlng.lat;
                 lngInput.value = e.latlng.lng;

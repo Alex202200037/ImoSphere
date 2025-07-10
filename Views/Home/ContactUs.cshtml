@@ -62,17 +62,22 @@
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label text-light">@Localizer["FullName"]</label>
-                                    <input type="text" name="Name" class="form-control bg-dark text-light rounded-3 border-0" required placeholder="@Localizer["FullNamePlaceholder"]" />
+                                    <input type="text" name="Name"
+                                        class="form-control bg-dark text-light rounded-3 border-0" required
+                                        placeholder="@Localizer["FullNamePlaceholder"]" />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label text-light">@Localizer["Email"]</label>
-                                    <input type="email" name="Email" class="form-control bg-dark text-light rounded-3 border-0" required placeholder="@Localizer["EmailPlaceholder"]" />
+                                    <input type="email" name="Email"
+                                        class="form-control bg-dark text-light rounded-3 border-0" required
+                                        placeholder="@Localizer["EmailPlaceholder"]" />
                                 </div>
                             </div>
                             <div class="row g-3 mt-1">
                                 <div class="col-md-6">
                                     <label class="form-label text-light">@Localizer["Subject"]</label>
-                                    <select name="Subject" class="form-select bg-dark text-light rounded-3 border-0" required>
+                                    <select name="Subject" class="form-select bg-dark text-light rounded-3 border-0"
+                                        required>
                                         <option value="">@Localizer["SelectSubject"]</option>
                                         <option>@Localizer["PropertyInfo"]</option>
                                         <option>@Localizer["ScheduleVisit"]</option>
@@ -81,24 +86,30 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label text-light">@Localizer["Phone"] <span style="color:#aaa;font-size:0.95em;">(@Localizer["Optional"])</span></label>
-                                    <input type="tel" name="Telefone" class="form-control bg-dark text-light rounded-3 border-0" placeholder="@Localizer["PhonePlaceholder"]" autocomplete="off" />
+                                    <label class="form-label text-light">@Localizer["Phone"] <span
+                                            style="color:#aaa;font-size:0.95em;">(@Localizer["Optional"])</span></label>
+                                    <input type="tel" name="Telefone"
+                                        class="form-control bg-dark text-light rounded-3 border-0"
+                                        placeholder="@Localizer["PhonePlaceholder"]" autocomplete="off" />
                                 </div>
                             </div>
                             <div class="form-group mt-3">
                                 <label class="form-label text-light">@Localizer["Message"]</label>
-                                <textarea name="Message" class="form-control bg-dark text-light rounded-3 border-0" rows="5" required placeholder="@Localizer["MessagePlaceholder"]"></textarea>
+                                <textarea name="Message" class="form-control bg-dark text-light rounded-3 border-0"
+                                    rows="5" required placeholder="@Localizer["MessagePlaceholder"]"></textarea>
                             </div>
                             <div class="form-group mt-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="privacy" required />
                                     <label class="form-check-label text-light" for="privacy">
-                                        @Localizer["PrivacyAccept"] <a href="/Home/Privacy" target="_blank">@Localizer["PrivacyPolicy"]</a>
+                                        @Localizer["PrivacyAccept"] <a href="/Home/Privacy"
+                                            target="_blank">@Localizer["PrivacyPolicy"]</a>
                                     </label>
                                 </div>
                             </div>
                             <div class="text-center mt-4">
-                                <button type="submit" class="btn w-50 fw-bold" style="background: linear-gradient(90deg, #a259ff 0%, #5d26c1 100%); color: #fff; border: none;">@Localizer["SendMessage"]</button>
+                                <button type="submit" class="btn w-50 fw-bold"
+                                    style="background: linear-gradient(90deg, #a259ff 0%, #5d26c1 100%); color: #fff; border: none;">@Localizer["SendMessage"]</button>
                             </div>
                         </form>
                     </div>
@@ -115,7 +126,8 @@
                     <div class="accordion glass-card" id="faqAccordion">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq1">
                                     @Localizer["FAQ1Question"]
                                 </button>
                             </h2>
@@ -127,7 +139,8 @@
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq2">
                                     @Localizer["FAQ2Question"]
                                 </button>
                             </h2>
@@ -139,7 +152,8 @@
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq3">
                                     @Localizer["FAQ3Question"]
                                 </button>
                             </h2>
@@ -185,63 +199,65 @@
 </section>
 
 <style>
-.contact-form-card {
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
-    border: 1px solid rgba(255,255,255,0.05);
-}
-.form-control:focus, .form-select:focus {
-    box-shadow: 0 0 0 2px #a259ff44;
-    border-color: #a259ff;
-}
+    .contact-form-card {
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        box-shadow: 0 0 0 2px #a259ff44;
+        border-color: #a259ff;
+    }
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Form validation and submission
-    const contactForm = document.querySelector('.contact-form');
-    
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(contactForm);
-        
-        // Show success message (in real app, this would submit to server)
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
-        submitBtn.disabled = true;
-        
-        // Simulate form submission
-        setTimeout(() => {
-            submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Message Sent!';
-            submitBtn.classList.remove('btn-primary');
-            submitBtn.classList.add('btn-success');
-            
-            // Reset form
-            contactForm.reset();
-            
-            // Reset button after 3 seconds
+    document.addEventListener('DOMContentLoaded', function () {
+        // Form validation and submission
+        const contactForm = document.querySelector('.contact-form');
+
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(contactForm);
+
+            // Show success message (in real app, this would submit to server)
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+            submitBtn.disabled = true;
+
+            // Simulate form submission
             setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.classList.remove('btn-success');
-                submitBtn.classList.add('btn-primary');
-                submitBtn.disabled = false;
-            }, 3000);
-        }, 2000);
-    });
-    
-    // Phone number formatting
-    const phoneInput = document.querySelector('input[type="tel"]');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 0) {
-                value = '+351 ' + value.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
-            }
-            e.target.value = value;
+                submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Message Sent!';
+                submitBtn.classList.remove('btn-primary');
+                submitBtn.classList.add('btn-success');
+
+                // Reset form
+                contactForm.reset();
+
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.classList.remove('btn-success');
+                    submitBtn.classList.add('btn-primary');
+                    submitBtn.disabled = false;
+                }, 3000);
+            }, 2000);
         });
-    }
-});
+
+        // Phone number formatting
+        const phoneInput = document.querySelector('input[type="tel"]');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 0) {
+                    value = '+351 ' + value.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
+                }
+                e.target.value = value;
+            });
+        }
+    });
 </script>

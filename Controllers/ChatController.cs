@@ -175,8 +175,8 @@ namespace ImoSphere.Controllers
             // Procurar conversa existente - pode ser como user ou como comercial
             var conversation = await _context.ChatConversations
                 .Include(c => c.Messages)
-                .FirstOrDefaultAsync(c => c.PropertyId == propertyId && 
-                                         ((c.UserId == userId && c.ComercialId == comercialUserId) || 
+                .FirstOrDefaultAsync(c => c.PropertyId == propertyId &&
+                                         ((c.UserId == userId && c.ComercialId == comercialUserId) ||
                                           (c.ComercialId == userId && c.UserId == comercialUserId)));
             // Se não existir conversa, mostrar view para iniciar contacto
             if (conversation == null)

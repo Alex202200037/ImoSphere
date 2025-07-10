@@ -22,9 +22,11 @@ namespace ImoSphere.Controllers
 
         // POST: /Favorite/ToggleFavorite
         [HttpPost]
-        public async Task<IActionResult> ToggleFavorite(int propertyId)
+        public async Task<IActionResult> ToggleFavorite([FromBody] FavoriteRequest req)
         {
+            int propertyId = req.PropertyId;
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Console.WriteLine($"[DEBUG] ToggleFavorite: userId={userId}, propertyId={propertyId}");
             if (string.IsNullOrEmpty(userId))
             {
                 return Json(new { success = false, message = "Utilizador não autenticado" });
@@ -90,7 +92,7 @@ namespace ImoSphere.Controllers
 
         // POST: /Favorite/RemoveFavorite
         [HttpPost]
-        public async Task<IActionResult> RemoveFavorite(int favoriteId)
+        public async Task<IActionResult> RemoveFavorite([FromBody] RemoveFavoriteRequest req)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId))
@@ -99,7 +101,7 @@ namespace ImoSphere.Controllers
             }
 
             var favorite = await _context.Favorites
-                .FirstOrDefaultAsync(f => f.Id == favoriteId && f.UserId == userId);
+                .FirstOrDefaultAsync(f => f.Id == req.FavoriteId && f.UserId == userId);
 
             if (favorite == null)
             {
@@ -128,4 +130,18 @@ namespace ImoSphere.Controllers
             return Json(new { isFavorite });
         }
     }
-} 
+}
+
+// Mover FavoriteRequest para dentro do namespace
+namespace ImoSphere.Controllers
+{
+    public class FavoriteRequest
+    {
+        public int PropertyId { get; set; }
+    }
+
+    public class RemoveFavoriteRequest
+    {
+        public int FavoriteId { get; set; }
+    }
+}

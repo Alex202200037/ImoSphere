@@ -11,4 +11,4 @@ namespace ImoSphere.Models
         public ICollection<Property> Properties { get; set; }
         public ICollection<AgencyUser> AgencyUsers { get; set; }
     }
-} 
+}

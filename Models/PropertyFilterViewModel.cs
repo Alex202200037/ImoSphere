@@ -25,11 +25,11 @@ namespace ImoSphere.Models
         // Resultados
         public IEnumerable<Property> Properties { get; set; } = new List<Property>();
         public IEnumerable<Agency> AvailableAgencies { get; set; } = new List<Agency>();
-        
+
         // Contadores para mostrar quantos resultados
         public int TotalResults { get; set; }
         public int FilteredResults { get; set; }
 
         public bool ShowMap { get; set; } = false;
     }
-} 
+}

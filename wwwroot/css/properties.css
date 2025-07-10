@@ -102,7 +102,7 @@
     border-radius: 12px !important;
     font-weight: 700 !important;
     font-size: 0.92rem !important;
-    box-shadow: 0 2px 8px rgba(136,68,255,0.18);
+    box-shadow: 0 2px 8px rgba(136, 68, 255, 0.18);
     letter-spacing: 0.01em;
     display: flex;
     align-items: center;
@@ -125,7 +125,7 @@
     height: 34px !important;
     min-width: 30px !important;
     padding: 2px 8px !important;
-    background: rgba(255,255,255,0.7) !important;
+    background: rgba(255, 255, 255, 0.7) !important;
     border-radius: 5px !important;
     z-index: 11;
     position: absolute;
@@ -136,7 +136,7 @@
     justify-content: center;
 }
 
-div.property-card div.agency-logo-badge > img.agency-logo {
+div.property-card div.agency-logo-badge>img.agency-logo {
     height: 30px !important;
     width: auto !important;
     object-fit: contain !important;
@@ -258,7 +258,7 @@ div.property-card div.agency-logo-badge > img.agency-logo {
         flex-direction: column;
         gap: 0.25rem !important;
     }
-    
+
     .property-card .btn-sm {
         width: 100%;
         margin-bottom: 0.25rem;
@@ -269,13 +269,16 @@ div.property-card div.agency-logo-badge > img.agency-logo {
     .properties-container {
         padding: 20px 0;
     }
+
     .filter-sidebar {
         margin-bottom: 2rem;
     }
+
     .property-features {
         flex-direction: column;
         gap: 0.5rem;
     }
+
     .property-map {
         min-height: 250px;
         max-height: 400px;
@@ -380,7 +383,7 @@ div.property-card div.agency-logo-badge > img.agency-logo {
     background: #fff;
     border-radius: 50%;
     border: 2px solid #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     width: 32px;
     height: 32px;
     object-fit: cover;
@@ -497,7 +500,8 @@ div.property-card div.agency-logo-badge > img.agency-logo {
     display: inline-block;
 }
 
-#map, .property-map {
+#map,
+.property-map {
     height: 100% !important;
     min-height: 800px;
 }

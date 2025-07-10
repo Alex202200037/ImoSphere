@@ -35,7 +35,8 @@
                     </div>
                     <div class="col-lg-3 text-end">
                         <div class="profile-actions">
-                            <a href="@Url.Action("Properties", "Home", new { agency = agency })" class="btn btn-primary">
+                            <a href="@Url.Action("Properties", "Home", new { agency = agency })"
+                                class="btn btn-primary">
                                 <i class="fas fa-home me-2"></i>@Localizer["ViewProperties"]
                             </a>
                             <a href="@Url.Action("Create", "Properties")" class="btn btn-success mt-2">
@@ -63,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 col-md-6">
                     <div class="stat-card">
                         <div class="stat-icon">
@@ -75,14 +76,15 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 col-md-6">
                     <div class="stat-card">
                         <div class="stat-icon">
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <div class="stat-content">
-                            <h3 class="stat-number">@(casas != null && casas.Any() ? casas.Average(c => c.Price).ToString("N0") : "0")</h3>
+                            <h3 class="stat-number">@(casas != null && casas.Any() ? casas.Average(c =>
+                                                                c.Price).ToString("N0") : "0")</h3>
                             <p class="stat-label">@Localizer["AveragePrice"]</p>
                         </div>
                     </div>
@@ -100,14 +102,15 @@
                 </h2>
                 <p class="section-subtitle">@Localizer["MyPropertiesSubtitle"]</p>
             </div>
-            
+
             @if (casas != null && casas.Any())
             {
                 <div class="row g-4">
                     @foreach (var casa in casas)
                     {
                         <div class="col-lg-6 col-xl-4">
-                            <div class="card property-card pro-list h-100 hover-lift" data-property-id="@casa.Id" style="position:relative;">
+                            <div class="card property-card pro-list h-100 hover-lift" data-property-id="@casa.Id"
+                                style="position:relative;">
                                 @if (casa.Images != null && casa.Images.Any())
                                 {
                                     <img src="@casa.Images.First().ImageUrl" class="card-img-top property-image" alt="@casa.Name" />
@@ -118,7 +121,8 @@
                                         <i class="fas fa-home fa-3x text-muted"></i>
                                     </div>
                                 }
-                                <div class="property-price-badge" style="position: absolute; top: 10px; right: 10px; z-index: 12;">
+                                <div class="property-price-badge"
+                                    style="position: absolute; top: 10px; right: 10px; z-index: 12;">
                                     €@casa.Price.ToString("N0")
                                 </div>
                                 <div class="card-body">
@@ -127,7 +131,8 @@
                                     <div class="property-features d-flex gap-3 mb-2">
                                         <span class="feature"><i class="fas fa-bed text-primary"></i> @casa.Bedrooms</span>
                                         <span class="feature"><i class="fas fa-bath text-primary"></i> @casa.Bathrooms</span>
-                                        <span class="feature"><i class="fas fa-ruler-combined text-primary"></i> @casa.Area m²</span>
+                                        <span class="feature"><i class="fas fa-ruler-combined text-primary"></i> @casa.Area
+                                            m²</span>
                                     </div>
                                     <div class="agency-info mt-2">
                                         <small class="text-muted">
@@ -137,10 +142,12 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-flex justify-content-end align-items-center gap-2">
-                                        <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })" class="btn btn-outline-warning btn-sm" title="@Localizer["Edit"]">
+                                        <a href="@Url.Action("Edit", "Properties", new { id = casa.Id })"
+                                            class="btn btn-outline-warning btn-sm" title="@Localizer["Edit"]">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="@Url.Action("Details", "Properties", new { id = casa.Id })" class="btn btn-outline-primary btn-sm" title="@Localizer["ViewDetails"]">
+                                        <a href="@Url.Action("Details", "Properties", new { id = casa.Id })"
+                                            class="btn btn-outline-primary btn-sm" title="@Localizer["ViewDetails"]">
                                             <i class="fas fa-eye me-1"></i>@Localizer["View"]
                                         </a>
                                     </div>
@@ -175,7 +182,7 @@
                 </h2>
                 <p class="section-subtitle">@Localizer["QuickActionsSubtitle"]</p>
             </div>
-            
+
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
                     <div class="action-card">
@@ -189,7 +196,7 @@
                         </a>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 col-md-6">
                     <div class="action-card">
                         <div class="action-icon">
@@ -197,12 +204,13 @@
                         </div>
                         <h5>@Localizer["ViewAllProperties"]</h5>
                         <p class="text-muted">@Localizer["ViewAllPropertiesDesc"]</p>
-                        <a href="@Url.Action("Properties", "Home", new { agency = agency })" class="btn btn-primary btn-sm">
+                        <a href="@Url.Action("Properties", "Home", new { agency = agency })"
+                            class="btn btn-primary btn-sm">
                             <i class="fas fa-eye me-1"></i>@Localizer["View"]
                         </a>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 col-md-6">
                     <div class="action-card">
                         <div class="action-icon">
@@ -218,4 +226,4 @@
             </div>
         </div>
     </section>
-</section> 
+</section>

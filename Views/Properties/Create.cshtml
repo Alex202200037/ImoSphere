@@ -39,7 +39,7 @@
                 <div class="form-card">
                     <form asp-action="Create" method="post" id="propertyForm" enctype="multipart/form-data">
                         @await Html.PartialAsync("_PropertyForm", Model, viewData)
-                        
+
                         <div class="form-actions">
                             <div class="row g-3">
                                 <div class="col-md-6">
@@ -48,7 +48,8 @@
                                     </button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a asp-controller="Home" asp-action="Properties" class="btn btn-outline-secondary btn-lg w-100">
+                                    <a asp-controller="Home" asp-action="Properties"
+                                        class="btn btn-outline-secondary btn-lg w-100">
                                         <i class="fas fa-times me-2"></i>Cancelar
                                     </a>
                                 </div>
@@ -63,16 +64,24 @@
 
 <!-- Map Modal -->
 <div id="mapModal" class="map-modal">
-    <div class="map-container">
-        <div class="map-header">
-            <h3><i class="fas fa-map-marker-alt me-2"></i>Selecionar Localização</h3>
-            <button type="button" id="closeMapBtn" class="map-close-btn">
-                <i class="fas fa-times"></i>
-            </button>
+    <button type="button" id="closeMapBtn" class="map-close-btn"
+        style="position:fixed; top:32px; right:32px; z-index:11000; background:rgba(0,0,0,0.7); color:#fff; border:none; border-radius:50%; width:48px; height:48px; font-size:2rem; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px #0006; cursor:pointer;">
+        <span aria-label="Fechar" style="pointer-events:none;">&times;</span>
+    </button>
+    <div class="map-container"
+        style="background:#fff; border-radius:16px; margin:auto; box-shadow:0 0 32px #0002; display:flex; flex-direction:column; align-items:center; width:660px;">
+        <div class="map-header"
+            style="background:#8f4fff; color:#fff; border-radius:16px 16px 0 0; padding:16px 24px; width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+            <h3 style="margin:0; font-size:1.3rem; display:flex; align-items:center;"><i
+                    class="fas fa-map-marker-alt me-2"></i>Selecionar Localização</h3>
+            <button type="button" id="confirmMapBtn" class="btn btn-primary"
+                style="min-width:120px; margin-left:auto;">Confirmar</button>
         </div>
-        <div id="map" class="map-content"></div>
-        <div class="map-instructions">
-            <p><i class="fas fa-info-circle me-2"></i>Clique no mapa para selecionar a localização ou arraste o marcador</p>
+        <div id="map" class="map-content" style="width:660px; height:760px; border-radius:0 0 0 0; flex-shrink:0;">
+        </div>
+        <div class="map-instructions" style="padding:8px 24px 0 24px; width:100%;">
+            <p style="margin:0 0 8px 0;"><i class="fas fa-info-circle me-2"></i>Clique no mapa para selecionar a
+                localização ou arraste o marcador</p>
         </div>
     </div>
 </div>
@@ -80,15 +89,15 @@
 @section Scripts {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
+
     <script>
         // Form validation and enhancement
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('propertyForm');
             const submitBtn = form.querySelector('button[type="submit"]');
-            
+
             // Add loading state to submit button
-            form.addEventListener('submit', function() {
+            form.addEventListener('submit', function () {
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>A processar...';
                 submitBtn.disabled = true;
             });
@@ -105,7 +114,7 @@
         acList.className = 'autocomplete-list';
         acList.style.width = locInput.offsetWidth + 'px';
         locInput.parentNode.appendChild(acList);
-        locInput.addEventListener('input', function() {
+        locInput.addEventListener('input', function () {
             clearTimeout(acTimeout);
             if (this.value.length < 3) { acList.style.display = 'none'; return; }
             acTimeout = setTimeout(() => {
@@ -133,13 +142,22 @@
         // --- Modal do mapa ---
         const mapModal = document.getElementById('mapModal');
         const openMapBtn = document.getElementById('openMapBtn');
-        const closeMapBtn = document.getElementById('closeMapBtn');
+        const confirmMapBtn = document.getElementById('confirmMapBtn');
         let map, marker;
-        openMapBtn.onclick = function() {
+        openMapBtn.onclick = function () {
             mapModal.classList.add('show');
             setTimeout(() => { if (!map) initMap(); else map.invalidateSize(); }, 100);
         };
-        closeMapBtn.onclick = function() { mapModal.classList.remove('show'); };
+        // Fechar modal ao clicar em Confirmar
+        confirmMapBtn.onclick = function () { mapModal.classList.remove('show'); };
+        // Adicionar funcionalidade ao botão de fechar
+        const closeMapBtn = document.getElementById('closeMapBtn');
+        closeMapBtn.onclick = function () { mapModal.classList.remove('show'); };
+        document.addEventListener('keydown', function (e) {
+            if (mapModal.classList.contains('show') && e.key === 'Escape') {
+                mapModal.classList.remove('show');
+            }
+        });
         function initMap() {
             let lat = parseFloat(latInput.value) || 38.7223;
             let lng = parseFloat(lngInput.value) || -9.1393;
@@ -148,8 +166,8 @@
                 maxZoom: 19,
                 attribution: '© OpenStreetMap'
             }).addTo(map);
-            marker = L.marker([lat, lng], {draggable:true}).addTo(map);
-            marker.on('dragend', function(e) {
+            marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+            marker.on('dragend', function (e) {
                 let pos = marker.getLatLng();
                 latInput.value = pos.lat;
                 lngInput.value = pos.lng;
@@ -157,7 +175,7 @@
                     .then(res => res.json())
                     .then(data => { locInput.value = data.display_name || `${pos.lat},${pos.lng}`; });
             });
-            map.on('click', function(e) {
+            map.on('click', function (e) {
                 marker.setLatLng(e.latlng);
                 latInput.value = e.latlng.lat;
                 lngInput.value = e.latlng.lng;
@@ -188,7 +206,7 @@
         setTimeout(function () {
             popup.classList.remove("show");
             popup.classList.add("fade-out");
-            setTimeout(function() {
+            setTimeout(function () {
                 window.location.href = '@Url.Action("Properties", "Home")';
             }, 300);
         }, 2500);

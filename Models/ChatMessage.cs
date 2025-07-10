@@ -14,4 +14,4 @@ namespace ImoSphere.Models
         public bool IsRead { get; set; } = false;
         public string SenderName { get; set; }
     }
-} 
+}

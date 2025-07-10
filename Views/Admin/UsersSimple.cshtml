@@ -13,14 +13,16 @@
         </a>
     </div>
 
-    @if (TempData["SuccessMessage"] != null) {
+    @if (TempData["SuccessMessage"] != null)
+    {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
-    
-    @if (TempData["ErrorMessage"] != null) {
+
+    @if (TempData["ErrorMessage"] != null)
+    {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -48,7 +50,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var user in Model) {
+                    @foreach (var user in Model)
+                    {
                         <tr>
                             <td>
                                 <div class="user-info">
@@ -65,10 +68,12 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a class="btn btn-sm btn-info" asp-action="EditUser" asp-controller="Admin" asp-route-id="@user.User.Id" title="Edit User">
+                                    <a class="btn btn-sm btn-info" asp-action="EditUser" asp-controller="Admin"
+                                        asp-route-id="@user.User.Id" title="Edit User">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form class="delete-user-form" data-user-id="@user.User.Id" method="post" style="display:inline;">
+                                    <form class="delete-user-form" data-user-id="@user.User.Id" method="post"
+                                        style="display:inline;">
                                         <button type="submit" class="btn btn-sm btn-danger" title="Delete User">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -85,33 +90,33 @@
 
 <!-- Modal de transferência de dependências -->
 <div class="modal fade" id="transferModal" tabindex="-1" aria-labelledby="transferModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="transferModalLabel">Transferir dependências</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div id="transferModalMessage" class="mb-3"></div>
-        <div id="transferSelectContainer" style="display:none;">
-          <label for="transferSelect" class="form-label">Escolha o utilizador substituto:</label>
-          <select id="transferSelect" class="form-select"></select>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="transferModalLabel">Transferir dependências</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="transferModalMessage" class="mb-3"></div>
+                <div id="transferSelectContainer" style="display:none;">
+                    <label for="transferSelect" class="form-label">Escolha o utilizador substituto:</label>
+                    <select id="transferSelect" class="form-select"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmTransferBtn">Transferir e Eliminar</button>
+            </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" id="confirmTransferBtn">Transferir e Eliminar</button>
-      </div>
     </div>
-  </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Interceptar clique em Delete
         const deleteForms = document.querySelectorAll('.delete-user-form');
         deleteForms.forEach(form => {
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', function (e) {
                 e.preventDefault();
                 const userId = form.getAttribute('data-user-id');
                 // AJAX para verificar dependências
@@ -133,7 +138,7 @@
                                     opt.textContent = u.name;
                                     select.appendChild(opt);
                                 });
-                                document.getElementById('confirmTransferBtn').onclick = function() {
+                                document.getElementById('confirmTransferBtn').onclick = function () {
                                     confirmTransfer(userId, select.value);
                                 };
                             } else {
@@ -201,4 +206,4 @@
             setTimeout(() => popup.remove(), 2500);
         }
     });
-</script> 
+</script>
