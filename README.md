@@ -274,18 +274,9 @@ dotnet test Tests/ImoSphere.Tests.csproj --filter "FullyQualifiedName~HomeContro
 
 ## 👨‍💻 Equipa
 
-- **Alexandre Silva** - Desenvolvimento Backend e Frontend
-- **Professor Orientador** - Supervisão e orientação técnica
-
----
-
-## 📄 Licença
-
-Este projeto está licenciado sob a Licença MIT - ver o ficheiro [LICENSE](LICENSE) para detalhes.
-
-## 🤝 Contribuições
-
-Contribuições são bem-vindas! Por favor, leia as diretrizes de contribuição antes de submeter um pull request.
+- **Alexandre Miguel e Bruna Rossa** - Desenvolvimento
+- **Unidade Curricular** - Programação Visual
+- **Docente** - José Cordeiro
 
 ---
 
